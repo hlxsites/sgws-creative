@@ -1,9 +1,9 @@
-# Your Project's Title...
-Your project's description...
+# Southern Glazers Creative
+Franklin site for [sgcreative.southernglazers.com](sgcreative.southernglazers.com).
 
 ## Environments
-- Preview: https://main--{repo}--{owner}.hlx.page/
-- Live: https://main--{repo}--{owner}.hlx.live/
+- Preview: https://main--sgws-creative--hlxsites.hlx.page/
+- Live: https://main--sgws-creative--hlxsites.hlx.live/
 
 ## Installation
 
