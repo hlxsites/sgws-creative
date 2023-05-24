@@ -20,8 +20,8 @@
   --text-color: #000;
 
   /* fonts */
-  --body-font-family: 'helvetica neue', helvetica, ubuntu, roboto, noto, sans-serif;
   --heading-font-family: var(--body-font-family);
+  --body-font-family: 'helvetica neue', helvetica, ubuntu, roboto, noto, sans-serif;
   --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
 
   /* body sizes */
@@ -37,20 +37,6 @@
   --heading-font-size-s: 20px;
   --heading-font-size-xs: 18px;
 
-  /* nav height */
-  --nav-height: 64px;
-
-}
-
-@media (min-width: 900px) {
-  :root {
-    --heading-font-size-xxl: 60px;
-    --heading-font-size-xl: 48px;
-    --heading-font-size-l: 36px;
-    --heading-font-size-m: 30px;
-    --heading-font-size-s: 24px;
-    --heading-font-size-xs: 22px;
-  }
 }
 
 body {
@@ -68,7 +54,7 @@ body.appear {
 }
 
 header {
-  height: var(--nav-height);
+  display: none;
 }
 
 h1, h2, h3,
@@ -78,7 +64,6 @@ h4, h5, h6 {
   line-height: 1.25;
   margin-top: 1em;
   margin-bottom: .5em;
-  scroll-margin: calc(var(--nav-height) + 1em);
 }
 
 h1 { font-size: var(--heading-font-size-xxl) }
@@ -224,6 +209,12 @@ main .section {
   padding: 64px 16px;
 }
 
+/* section metadata */
+main .section.highlight {
+  background-color: var(--highlight-background-color);
+}
+
+
 @media (min-width: 600px) {
   main .section {
     padding: 64px 32px;
@@ -231,13 +222,17 @@ main .section {
 }
 
 @media (min-width: 900px) {
+  :root {
+    --heading-font-size-xxl: 60px;
+    --heading-font-size-xl: 48px;
+    --heading-font-size-l: 36px;
+    --heading-font-size-m: 30px;
+    --heading-font-size-s: 24px;
+    --heading-font-size-xs: 22px;
+  }
+
   .section > div {
     max-width: 1200px;
     margin: auto;
   }
-}
-
-/* section metadata */
-main .section.highlight {
-  background-color: var(--highlight-background-color);
 }
