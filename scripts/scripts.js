@@ -11,6 +11,7 @@ import {
   waitForLCP,
   loadBlocks,
   loadCSS,
+  createOptimizedPicture,
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
@@ -55,6 +56,37 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
+  decorateSectionBackgrounds(main);
+}
+
+/**
+ * Decorates the background of all highlighted sections.
+ * @param {Element} main The container element
+ */
+export function decorateSectionBackgrounds(main) {
+  const mediaMobileWidthQueryMatcher = window.matchMedia('only screen and (min-width: 1900px)');
+  const mediaMobileWidthChangeHandler = (event) => {
+    if (event.matches === false) {
+      main.querySelectorAll(':scope > div.section.highlight').forEach((section) => {
+        section.querySelectorAll('img').forEach((image) => {
+          image.closest('picture').replaceWith(
+              createOptimizedPicture(image.src, image.alt, false, [{ width: '1900' }])
+          );
+        });
+      });
+    }
+  };
+  mediaMobileWidthChangeHandler(mediaMobileWidthQueryMatcher);
+  mediaMobileWidthQueryMatcher.addEventListener('change', (event) => {
+    mediaMobileWidthChangeHandler(event);
+  });
+
+  main.querySelectorAll('.section.highlight').forEach((section) => {
+    const picture = section.querySelector('picture');
+    if (picture) {
+      section.appendChild(picture);
+    }
+  });
 }
 
 /**
