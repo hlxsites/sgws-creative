@@ -1,8 +1,6 @@
 import {
   sampleRUM,
   buildBlock,
-  loadHeader,
-  loadFooter,
   decorateButtons,
   decorateIcons,
   decorateSections,
@@ -13,7 +11,33 @@ import {
   loadCSS,
 } from './lib-franklin.js';
 
-const LCP_BLOCKS = []; // add your LCP blocks to the list
+const LCP_BLOCKS = ['hero']; // add your LCP blocks to the list
+
+export async function fetchFragment(path, init = {}) {
+  const resp = await fetch(`${path}.plain.html`, init);
+  if (resp.ok) {
+    const parent = document.createElement('div');
+    parent.innerHTML = await resp.text();
+    return parent;
+  }
+  return null;
+}
+
+/**
+ * Create an HTML tag in one line of code
+ * @param {string} tag Tag to create
+ * @param {object} attributes Key/value object of attributes
+ * @returns {HTMLElement} The created tag
+ */
+export function createTag(tag, attributes) {
+  const element = document.createElement(tag);
+  if (attributes) {
+    Object.entries(attributes).forEach(([key, val]) => {
+      element.setAttribute(key, val);
+    });
+  }
+  return element;
+}
 
 /**
  * Builds hero block and prepends to main in a new section.
@@ -24,9 +48,13 @@ function buildHeroBlock(main) {
   const picture = main.querySelector('picture');
   // eslint-disable-next-line no-bitwise
   if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
+    // include any other pictures in same section
+    const parentDiv = h1.closest('div');
+    const allPictures = parentDiv ? parentDiv.querySelectorAll('picture') : [picture];
     const section = document.createElement('div');
-    section.append(buildBlock('hero', { elems: [picture, h1] }));
+    section.append(buildBlock('hero', { elems: [...allPictures, h1] }));
     main.prepend(section);
+    parentDiv.parentElement.removeChild(parentDiv);
   }
 }
 
@@ -43,6 +71,28 @@ function buildAutoBlocks(main) {
   }
 }
 
+const INTERNAL_EXPR = [/^\/.+$/i, /^(.*?(\bsgcreative.southernglazers.com\b)[^$]*)$/i];
+
+function decorateExternalLinks(main) {
+  main.querySelectorAll('a').forEach((a) => {
+    const href = a.getAttribute('href');
+    const isInternal = INTERNAL_EXPR.some((exp) => exp.test(href));
+    if (!isInternal) {
+      a.setAttribute('target', '_blank');
+    }
+  });
+}
+
+export function decoratePictureParagraph(main) {
+  const pictures = main.querySelectorAll('p > picture:first-of-type, div > picture:first-of-type');
+  pictures.forEach((pic) => {
+    const siblingPictures = pic.parentElement.querySelectorAll(':scope > picture');
+    if (pic.parentElement.children.length === siblingPictures.length) {
+      pic.parentElement.classList.add('picture');
+    }
+  });
+}
+
 /**
  * Decorates the main element.
  * @param {Element} main The main element
@@ -51,7 +101,9 @@ function buildAutoBlocks(main) {
 export function decorateMain(main) {
   // hopefully forward compatible button decoration
   decorateButtons(main);
+  decorateExternalLinks(main);
   decorateIcons(main);
+  decoratePictureParagraph(main);
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
@@ -101,11 +153,11 @@ async function loadLazy(doc) {
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  loadHeader(doc.querySelector('header'));
-  loadFooter(doc.querySelector('footer'));
+  // loadHeader(doc.querySelector('header'));
+  // loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
-  addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.png`);
+  // addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.png`);
   sampleRUM('lazy');
   sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
   sampleRUM.observe(main.querySelectorAll('picture > img'));

@@ -1,27 +1,40 @@
 /* block specific CSS goes here */
 
+main .hero-container {
+  position: relative;
+  padding: 0;
+}
+
 main .hero-container > div {
   max-width: unset;
 }
   
-main .hero-container {
-  padding: 0;
-}
-  
 main .hero {
-  position: relative;
   padding: 32px;
-  min-height: 300px;
+  max-width: 500px;
+  min-height: 720px;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+main .hero > div > div {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
 }
 
 main .hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: white;
+  color: var(--text-color-background);
+  text-align: center;
 }
 
 main .hero picture {
+  display: block;
+}
+
+main .hero picture:first-child {
   position: absolute;
   z-index: -1;
   top: 0;
@@ -30,6 +43,15 @@ main .hero picture {
   right: 0;
   object-fit: cover;
   box-sizing: border-box;
+}
+
+main .hero picture:nth-child(2) {
+  margin-bottom: calc(2 * var(--layout-size-xxl));
+  width: 252px;
+}
+
+main .hero picture:nth-child(3) {
+  width: 64px;
 }
 
 main .hero img {

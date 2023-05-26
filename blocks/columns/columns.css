@@ -1,6 +1,17 @@
+.section.highlight .columns {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.section.highlight .columns h2,
+.section.highlight .columns h3 {
+  color: var(--text-color-highlight);
+}
+
 .columns > div {
   display: flex;
-  flex-direction: column;
+  flex-flow: row nowrap;
+  gap: var(--layout-size-xl);
 }
 
 .columns img {
@@ -8,7 +19,7 @@
 }
 
 .columns > div > div {
-  order: 1;
+  flex: 1;
 }
 
 .columns > div > .columns-img-col {
@@ -17,17 +28,4 @@
 
 .columns > div > .columns-img-col img {
   display: block;
-}
-
-@media (min-width: 900px) {
-  .columns > div {
-    align-items: center;
-    flex-direction: unset;
-    gap: 32px;
-  }
-
-  .columns > div > div {
-    flex: 1;
-    order: unset;
-  }
 }
