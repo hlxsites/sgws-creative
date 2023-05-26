@@ -13,6 +13,16 @@ import {
 
 const LCP_BLOCKS = ['hero']; // add your LCP blocks to the list
 
+export async function fetchFragment(path, init = {}) {
+  const resp = await fetch(`${path}.plain.html`, init);
+  if (resp.ok) {
+    const parent = document.createElement('div');
+    parent.innerHTML = await resp.text();
+    return parent;
+  }
+  return null;
+}
+
 /**
  * Create an HTML tag in one line of code
  * @param {string} tag Tag to create
