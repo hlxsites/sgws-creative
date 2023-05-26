@@ -96,19 +96,19 @@ h1 {
 }
 
 h2 {
-  font-size: var(--heading-font-size-xl)
-}
-
-h3 {
   font-size: var(--heading-font-size-l)
 }
 
-h4 {
+h3 {
   font-size: var(--heading-font-size-m)
 }
 
-h5 {
+h4 {
   font-size: var(--heading-font-size-s)
+}
+
+h5 {
+  font-size: var(--heading-font-size-xs)
 }
 
 h6 {
