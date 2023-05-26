@@ -524,31 +524,67 @@ export function decorateTemplateAndTheme() {
   if (theme) addClasses(document.body, theme);
 }
 
+function getButtonLabel(button) {
+  // try sibling text
+  const sibling = button.parentElement?.previousElementSibling;
+  if (sibling && sibling.textContent) {
+    return sibling.textContent;
+  }
+  // try href
+  if (button.href) {
+    return button.href.replace(/[^\w]/gi, '-');
+  }
+  return undefined;
+}
+
 /**
  * Decorates paragraphs containing a single link as buttons.
  * @param {Element} element container element
+ * @param {Object} options options object to control how decoration is performed
  */
-export function decorateButtons(element) {
+export function decorateButtons(element, options = {}) {
+  const mergedOptions = { ...{ decorateClasses: true }, ...options };
   element.querySelectorAll('a').forEach((a) => {
-    a.title = a.title || a.textContent;
     if (a.href !== a.textContent) {
       const up = a.parentElement;
       const twoup = a.parentElement.parentElement;
+      const down = a.firstElementChild;
       if (!a.querySelector('img')) {
-        if (up.childNodes.length === 1 && (up.tagName === 'P' || up.tagName === 'DIV')) {
-          a.className = 'button primary'; // default
-          up.classList.add('button-container');
+        if (mergedOptions.decorateClasses) {
+          if (up.childNodes.length === 1 && (up.tagName === 'P' || up.tagName === 'DIV')) {
+            up.classList.add('button-container');
+            if (down && down.tagName === 'EM') {
+              a.classList.add('button', 'secondary');
+            } else {
+              a.classList.add('button', 'primary');
+            }
+          }
+          if (up.childNodes.length === 1 && up.tagName === 'STRONG'
+            && twoup.childNodes.length === 1 && twoup.tagName === 'P') {
+            a.classList.add('button', 'primary');
+            twoup.classList.add('button-container');
+          }
+          if (up.childNodes.length === 1 && up.tagName === 'EM'
+            && twoup.childNodes.length === 1 && twoup.tagName === 'P') {
+            a.classList.add('button', 'secondary');
+            twoup.classList.add('button-container');
+          }
         }
-        if (up.childNodes.length === 1 && up.tagName === 'STRONG'
-          && twoup.childNodes.length === 1 && twoup.tagName === 'P') {
-          a.className = 'button primary';
-          twoup.classList.add('button-container');
+        if (a.classList.contains('button')) {
+          if (a.querySelector('span.icon')) {
+            a.classList.add('has-icon');
+          }
         }
-        if (up.childNodes.length === 1 && up.tagName === 'EM'
-          && twoup.childNodes.length === 1 && twoup.tagName === 'P') {
-          a.className = 'button secondary';
-          twoup.classList.add('button-container');
-        }
+      }
+    }
+    // add aria-label when included in options or when no text content
+    const hasAriaLabel = !!a.getAttribute('aria-label');
+    if (!hasAriaLabel && (mergedOptions.ariaLabel || !a.textContent)) {
+      const label = mergedOptions.ariaLabel || getButtonLabel(a);
+      if (label) {
+        a.setAttribute('aria-label', label);
+      } else {
+        a.setAttribute('aria-hidden', 'true');
       }
     }
   });

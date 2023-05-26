@@ -1,4 +1,5 @@
 import { getMetadata, decorateIcons } from '../../scripts/lib-franklin.js';
+import { fetchFragment } from '../../scripts/scripts.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -93,15 +94,13 @@ export default async function decorate(block) {
   // fetch nav content
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta).pathname : '/nav';
-  const resp = await fetch(`${navPath}.plain.html`);
+  const frag = await fetchFragment(navPath);
 
-  if (resp.ok) {
-    const html = await resp.text();
-
+  if (frag) {
     // decorate nav DOM
     const nav = document.createElement('nav');
     nav.id = 'nav';
-    nav.innerHTML = html;
+    nav.append(...frag.childNodes);
 
     const classes = ['brand', 'sections', 'tools'];
     classes.forEach((c, i) => {
