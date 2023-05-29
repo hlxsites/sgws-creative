@@ -13,16 +13,6 @@ import {
 
 const LCP_BLOCKS = ['hero']; // add your LCP blocks to the list
 
-export async function fetchFragment(path, init = {}) {
-  const resp = await fetch(`${path}.plain.html`, init);
-  if (resp.ok) {
-    const parent = document.createElement('div');
-    parent.innerHTML = await resp.text();
-    return parent;
-  }
-  return null;
-}
-
 /**
  * Create an HTML tag in one line of code
  * @param {string} tag Tag to create
@@ -107,6 +97,38 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
+}
+
+/**
+ * Fetch fragment HTML.
+ * @param path fragment path
+ * @param init request init
+ * @return {Promise<HTMLDivElement|null>}
+ */
+export async function fetchFragment(path, init = {}) {
+  const resp = await fetch(`${path}.plain.html`, init);
+  if (resp.ok) {
+    const parent = document.createElement('div');
+    parent.innerHTML = await resp.text();
+    return parent;
+  }
+  return null;
+}
+
+/**
+ * Decorate a fragment for inclusion in a page.
+ * @param fragment The plain fragment HTML
+ * @return {Promise<HTMLElement|null>} Decorated fragment HTML
+ */
+export async function decorateFragment(fragment) {
+  if (!fragment) {
+    return null;
+  }
+  const main = document.createElement('main');
+  main.append(...fragment.childNodes);
+  decorateMain(main);
+  await loadBlocks(main);
+  return main;
 }
 
 /**
