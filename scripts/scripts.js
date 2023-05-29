@@ -6,12 +6,41 @@ import {
   decorateSections,
   decorateBlocks,
   decorateTemplateAndTheme,
+  getMetadata,
   waitForLCP,
   loadBlocks,
   loadCSS,
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = ['hero']; // add your LCP blocks to the list
+
+async function loadTheme() {
+  let theme = {};
+  const configPath = getMetadata('themeconfig');
+
+  if (configPath) {
+    const resp = await fetch(`${configPath}`);
+    if (resp.status === 200) {
+      const json = await resp.json();
+      theme = json || theme;
+      const tokens = json.theme.data || {};
+      const root = document.querySelector(':root');
+      tokens.forEach((e) => {
+        root.style.setProperty(`--${e.token}`, `${e.value}`);
+      });
+    }
+  }
+  window.sgws = window.sgws || {};
+  window.sgws.config = theme;
+}
+
+export function hasTheme(name) {
+  return name in window.sgws.config;
+}
+export function getTheme(name) {
+  const [, theme] = Object.entries(window.sgws.config).find(([key]) => key === name) || [];
+  return theme;
+}
 
 /**
  * Create an HTML tag in one line of code
@@ -138,6 +167,9 @@ export async function decorateFragment(fragment) {
 async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
+
+  await loadTheme();
+
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);

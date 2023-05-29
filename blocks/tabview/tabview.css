@@ -1,0 +1,32 @@
+
+.tabview .button-container {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 2px;
+}
+
+.tabview .button-container button {
+  flex: 1;
+  min-width: unset;
+  height: 111px;
+  background-color: #f2f2f2;
+  padding: var(--layout-size-l)
+}
+
+.tabview .button-container button[aria-selected='true'] {
+  background-color: var(--background-color);
+}
+
+.tabview .button-container button img {
+  object-fit: cover;
+}
+
+.tabview .tab-content {
+  display: none;
+  background-color: var(--background-color);
+  overflow: hidden;
+}
+
+.tabview .tab-content.selected {
+  display: block;
+}
