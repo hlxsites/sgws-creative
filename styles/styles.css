@@ -221,14 +221,39 @@ main .section {
 }
 
 /* section metadata */
-main .section.highlight {
+main .section.highlight:not(.has-background-image) {
+  /* background styles, unless a background image is used. */
   background-image: var(--background-color-highlight);
   color: var(--text-color-background);
 }
 
-main .section.highlight h2,
-main .section.highlight h3 {
+main .section.highlight:not(.has-background-image) h2,
+main .section.highlight:not(.has-background-image) h3 {
+  /* background styles, unless a background image is used. */
   color: var(--text-color-background);
+}
+
+main .section.has-background-image {
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+main .section.has-background-image > .section-background {
+  position: absolute;
+  z-index: -5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+main .section.has-background-image > .section-background img {
+  width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  box-sizing: border-box;
 }
 
 @media (min-width: 900px) {
