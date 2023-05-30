@@ -1,0 +1,111 @@
+
+.slides-wrapper {
+  background-color: var(--primary-color);
+}
+
+.slides h3,
+.slides a:any-link,
+.slides {
+  color: var(--text-color-background);
+}
+
+svg #icons-sprite-arrow-small path {
+  fill: var(--text-color-background);
+}
+
+.slides h3 {
+  position: relative;
+  padding-bottom: var(--layout-size-m);
+  margin-bottom: 1em;
+}
+
+.slides h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 84px;
+  border-bottom: 2px solid var(--text-color-background);
+}
+
+.slides a:any-link {
+  font-weight: 700;
+}
+
+.slides a .icon-arrow-small {
+  transform: rotate(180deg);
+}
+
+.slides .slide {
+  display: none;
+}
+
+.slides .slide.selected {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.slides .slide .avatar {
+  position: relative;
+  padding: var(--layout-size-xl);
+  width: 241px;
+}
+
+.slides .slide .avatar picture:first-child img {
+  width: 241px;
+  height: 241px;
+  clip-path: circle(50% at 50% 50%);
+}
+
+.slides .slide .avatar picture:last-child {
+  position: absolute;
+  bottom: calc(var(--layout-size-xl) - 8px);
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.slides .slide .avatar picture:last-child img {
+  height: 269px;
+}
+
+.slides .slide > div:not(.avatar) {
+  flex: 1;
+  padding-right: 96px;
+}
+
+.slides-container .slide-nav {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: var(--layout-size-s);
+  align-items: center;
+  color: var(--secondary-color);
+}
+
+.slides-container .slide-nav button {
+  all: unset;
+  position: relative;
+  width: 42px;
+  min-width: unset;
+  height: 42px;
+  border-radius: 50%;
+  background-color: var(--secondary-color);
+}
+
+.slides-container .slide-nav button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 42px;
+  height: 42px;
+  transform: translate(-50%, -50%);
+  background: url('../../icons/arrow-small.svg') center no-repeat;
+}
+
+.slides-container .slide-nav button.slide-next::after {
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.slides-container .slide-nav p {
+  width: max-content;
+}

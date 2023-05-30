@@ -17,6 +17,7 @@ async function loadTabContent(tab) {
     const tabIndex = [...tab.parentElement.children].indexOf(tab);
     const buttonContainer = tab.closest('.tabview').querySelector('.button-container');
     const tabButton = [...buttonContainer.children].at(tabIndex);
+    // apply theme to tab content
     const themeName = [...tab.classList].find((className) => hasTheme(className));
     const theme = getTheme(themeName).data;
     theme.forEach(({ token, value }) => {
@@ -30,13 +31,13 @@ export default async function decorate(block) {
   const buttonGroup = createTag('div', { class: 'button-container' });
   const contentGroup = createTag('div', { class: 'content-container' });
 
-  [...block.children].forEach((group, index) => {
+  [...block.children].forEach((group, groupId) => {
     const [tabPicture, tabContent] = [...group.children];
     if (!tabPicture || !tabContent) {
       // invalid tab view structure
       return;
     }
-    const tabButton = createTag('button', { role: 'tab', 'aria-selected': index === 0 ? 'true' : 'false', 'aria-controls': `tabview${index}` });
+    const tabButton = createTag('button', { role: 'tab', 'aria-selected': groupId === 0 ? 'true' : 'false', 'aria-controls': `tabview${groupId}` });
     tabButton.append(...tabPicture.children);
     group.replaceChild(tabButton, tabPicture);
 
@@ -59,7 +60,7 @@ export default async function decorate(block) {
     tabContent.setAttribute('data-path', contentPath || '');
     tabContent.textContent = '';
     tabContent.className = 'tab-content';
-    tabContent.setAttribute('id', `tabview${index}`);
+    tabContent.setAttribute('id', `tabview${groupId}`);
     tabContent.setAttribute('role', 'tabpanel');
 
     buttonGroup.append(tabButton);

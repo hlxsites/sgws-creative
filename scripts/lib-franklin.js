@@ -555,7 +555,7 @@ export function decorateButtons(element, options = {}) {
             up.classList.add('button-container');
             if (down && down.tagName === 'EM') {
               a.classList.add('button', 'secondary');
-            } else {
+            } else if (down && down.tagName === 'STRONG') {
               a.classList.add('button', 'primary');
             }
           }
@@ -570,10 +570,8 @@ export function decorateButtons(element, options = {}) {
             twoup.classList.add('button-container');
           }
         }
-        if (a.classList.contains('button')) {
-          if (a.querySelector('span.icon')) {
-            a.classList.add('has-icon');
-          }
+        if (a.querySelector('span.icon')) {
+          a.classList.add('has-icon');
         }
       }
     }

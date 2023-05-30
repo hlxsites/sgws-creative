@@ -10,7 +10,13 @@
   min-width: unset;
   height: 111px;
   background-color: #f2f2f2;
-  padding: var(--layout-size-l)
+  border: none;
+  padding: var(--layout-size-l);
+  appearance: none;
+}
+
+.tabview .button-container button:focus:not(:focus-visible) {
+  outline: none
 }
 
 .tabview .button-container button[aria-selected='true'] {
@@ -18,7 +24,15 @@
 }
 
 .tabview .button-container button img {
-  object-fit: cover;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.5;
+}
+
+.tabview .button-container button:hover img,
+.tabview .button-container button:active img,
+.tabview .button-container button[aria-selected='true'] img {
+  opacity: unset;
 }
 
 .tabview .tab-content {
@@ -27,6 +41,31 @@
   overflow: hidden;
 }
 
+/* apply theme */
+.tabview .tab-content h2 {
+  font-size: var(--heading-font-size);
+  color: var(--secondary-color);
+}
+
 .tabview .tab-content.selected {
   display: block;
 }
+
+.tabview .tab-content .default-content-wrapper:first-child {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: var(--layout-size-l);
+  padding: var(--layout-size-l) 50px;
+}
+
+.tabview .tab-content .default-content-wrapper:first-child h2,
+.tabview .tab-content .default-content-wrapper:first-child p {
+  margin: 0;
+}
+
+.tabview .tab-content .default-content-wrapper:first-child h2 {
+  text-transform: uppercase;
+}
+
+
+
