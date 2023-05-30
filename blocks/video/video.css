@@ -1,7 +1,3 @@
-.video.block .video-content {
-  display: flex;
-}
-
 .video.block .video-content video {
   object-fit: cover;
   width: 100%;
