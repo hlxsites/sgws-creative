@@ -1,10 +1,9 @@
 import { createTag } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  // only one poster image (before or after the video link)
-  const image = block.querySelector('img');
-
   // only one video link per block
+  // so also only one poster image (before or after the video link)
+  const image = block.querySelector('img');
   const videoLink = block.querySelector('a');
   block.textContent = '';
 
