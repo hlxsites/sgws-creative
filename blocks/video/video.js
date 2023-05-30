@@ -10,6 +10,7 @@ export default function decorate(block) {
   block.querySelectorAll('a').forEach((videoLink) => {
     const divToReplace = videoLink.closest('div').parentNode;
     const videoDiv = document.createElement('div');
+
     videoDiv.classList.add('video-content');
     const videoElement = document.createElement('video');
     videoElement.innerHTML = `<source src="${videoLink.href}" type="video/mp4">`;
@@ -23,5 +24,7 @@ export default function decorate(block) {
     videoDiv.appendChild(videoElement);
     block.append(videoDiv);
     divToReplace.remove();
+
+    videoElement.play();
   });
 }
