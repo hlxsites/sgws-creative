@@ -46,10 +46,17 @@ export function createTag(tag, attributes) {
 function buildHeroBlock(main) {
   const h1 = main.querySelector('h1');
   const picture = main.querySelector('picture');
-  // eslint-disable-next-line no-bitwise
+  const contentLink = main.querySelector('a');
+
+  if(contentLink?.href?.endsWith('.mp4')){
+    // video block will be used instead
+    return;
+  }
+
   if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
-    // include any other pictures in same section
+    // auto-blocking hero section with image only
     const parentDiv = h1.closest('div');
+    // include any other pictures in same section
     const allPictures = parentDiv ? parentDiv.querySelectorAll('picture') : [picture];
     const section = document.createElement('div');
     section.append(buildBlock('hero', { elems: [...allPictures, h1] }));
