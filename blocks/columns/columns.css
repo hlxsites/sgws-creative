@@ -29,3 +29,41 @@
 .columns > div > .columns-img-col img {
   display: block;
 }
+
+.image-overlay > div > div:last-child {
+  flex-grow: 2;
+}
+
+.image-overlay  > div > div:first-child {
+  display: flex;
+  flex-direction: row;
+}
+
+.image-overlay img{
+  position: relative;
+  max-width: 60%;
+  max-height: auto;
+}
+
+.image-overlay > div > div > p:last-child img{
+  height: 95%;
+}
+
+.image-overlay > div > div > p:first-child img{
+  left:130px;
+  z-index: 1;
+}
+
+
+@media (min-width: 900px) {
+  .columns > div {
+    align-items: center;
+    flex-direction: unset;
+    gap: 32px;
+  }
+
+  .columns > div > div {
+    flex: 1;
+    order: unset;
+  }
+}
