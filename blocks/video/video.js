@@ -3,7 +3,6 @@ import { createTag } from '../../scripts/scripts.js';
 export default function decorate(block) {
   // only one poster image (before or after the video link)
   const image = block.querySelector('img');
-  const posterImage = image.src;
 
   // only one video link per block
   const videoLink = block.querySelector('a');
@@ -17,7 +16,7 @@ export default function decorate(block) {
   videoElement.autoplay = true;
   videoElement.loop = true;
   videoElement.playsinline = true;
-  videoElement.poster = posterImage;
+  videoElement.poster = image.src || '';
 
   videoDiv.appendChild(videoElement);
   block.append(videoDiv);
