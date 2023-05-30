@@ -10,13 +10,18 @@ export default function decorate(block) {
   block.querySelectorAll('a').forEach((videoLink) => {
     const divToReplace = videoLink.closest('div').parentNode;
     const videoDiv = document.createElement('div');
-    videoDiv.classList.add('video-link');
+    videoDiv.classList.add('video-content');
     const videoElement = document.createElement('video');
     videoElement.innerHTML = `<source src="${videoLink.href}" type="video/mp4">`;
+
     videoElement.muted = true;
+    videoElement.autoplay = true;
+    videoElement.loop = true;
+    videoElement.playsinline = true;
     videoElement.poster = posterImage;
+
     videoDiv.appendChild(videoElement);
-    divToReplace.remove();
     block.append(videoDiv);
+    divToReplace.remove();
   });
 }
