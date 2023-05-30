@@ -26,31 +26,39 @@
   order: 0;
 }
 
+.columns.image-overlay {
+  width: 95%;
+  margin: 0 auto;
+}
+
 .columns > div > .columns-img-col img {
   display: block;
 }
 
-.image-overlay > div > div:last-child {
-  flex-grow: 2;
+.columns.image-overlay > div > div:last-child {
+  flex-grow: 1.5;
+  padding: 150px;
 }
 
-.image-overlay  > div > div:first-child {
+.columns.image-overlay > div > div:first-child {
   display: flex;
   align-items: center;
   flex-direction: row;
 }
 
-.image-overlay img{
+.columns.image-overlay > div > div > p:last-child img {
   position: relative;
-  max-width: 60%;
+  max-width: 85%;
+  top: -90px;
+  left: 40px;
+  height: 30%;
+}
+
+.columns.image-overlay > div > div > p:first-child img {
+  position: relative;
+  max-width: 90%;
   max-height: auto;
-}
-
-.image-overlay > div > div > p:last-child img{
-  height: 95%;
-}
-
-.image-overlay > div > div > p:first-child img{
-  left:130px;
+  left: 130px;
+  top: -80px;
   z-index: 1;
 }
