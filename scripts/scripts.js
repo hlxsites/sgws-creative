@@ -9,7 +9,6 @@ import {
   waitForLCP,
   loadBlocks,
   loadCSS,
-  //createOptimizedPicture,
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = ['hero']; // add your LCP blocks to the list
@@ -95,6 +94,27 @@ export function decoratePictureParagraph(main) {
 }
 
 /**
+ * Decorates the background of all highlighted sections.
+ * @param {Element} main The container element
+ */
+export function decorateSectionBackgrounds(main) {
+  main.querySelectorAll('.section.highlight').forEach((section) => {
+    const wrapperDiv = section.firstElementChild;
+    const pictureParagraph = wrapperDiv ? wrapperDiv.firstElementChild : undefined;
+    // See if first "real" element is a picture - shall be used as the background.
+    if (pictureParagraph && pictureParagraph.classList.contains('picture')) {
+      const picture = pictureParagraph.querySelector('picture');
+      if (picture) {
+        section.classList.add('has-background-image');
+        picture.classList.add('section-background');
+        wrapperDiv.removeChild(pictureParagraph);
+        section.append(picture);
+      }
+    }
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -109,44 +129,6 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   decorateSectionBackgrounds(main);
-}
-
-/**
- * Decorates the background of all highlighted sections.
- * @param {Element} main The container element
- */
-export function decorateSectionBackgrounds(main) {
-  // const mediaMobileWidthQueryMatcher = window.matchMedia('only screen and (min-width: 1170px)');
-  // const mediaMobileWidthChangeHandler = (event) => {
-  //   if (event.matches === false) {
-  //     main.querySelectorAll('.section.highlight .section-background').forEach((backgroundPicture) => {
-  //       backgroundPicture.querySelectorAll('img').forEach((image) => {
-  //         const newPicture = createOptimizedPicture(image.src, image.alt, false, [{ width: '1170' }]);
-  //         newPicture.classList.add("section-background");
-  //         image.closest('picture').replaceWith(newPicture);
-  //       });
-  //     });
-  //   }
-  // };
-  // mediaMobileWidthChangeHandler(mediaMobileWidthQueryMatcher);
-  // mediaMobileWidthQueryMatcher.addEventListener('change', (event) => {
-  //   mediaMobileWidthChangeHandler(event);
-  // });
-
-  main.querySelectorAll('.section.highlight').forEach((section) => {
-    const wrapperDiv = section.firstElementChild;
-    const pictureParagraph = wrapperDiv ? wrapperDiv.firstElementChild : undefined;
-    // See if first "real" element is a picture - shall be used as the background.
-    if (pictureParagraph && pictureParagraph.classList.contains('picture')) {
-      const picture = pictureParagraph.querySelector('picture');
-      if (picture) {
-        section.classList.add("has-background-image");
-        picture.classList.add("section-background");
-        wrapperDiv.removeChild(pictureParagraph);
-        section.append(picture);
-      }
-    }
-  });
 }
 
 /**
