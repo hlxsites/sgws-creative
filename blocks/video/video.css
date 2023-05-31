@@ -36,5 +36,11 @@
 
 .section.video-container:not(.video-background) .default-content-wrapper > p > picture {
   position: absolute;
-  z-index: -1;
+    display: flex;
+    z-index: -1;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    align-items: center;
+    justify-content: center;
 }
