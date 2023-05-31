@@ -1,3 +1,4 @@
+import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 import {
   createTag, fetchFragment, decorateFragment, hasTheme, getTheme,
 } from '../../scripts/scripts.js';
@@ -39,11 +40,12 @@ export default async function decorate(block) {
       // invalid tab view structure
       return;
     }
-    const img = tabPicture.querySelector('img');
-    const buttonLabel = img?.getAttribute('alt') || `Tab ${groupId + 1}`;
+    const image = tabPicture.querySelector('img');
+    const buttonLabel = image?.getAttribute('alt') || `Tab ${groupId + 1}`;
     const tabButton = createTag('button', {
       id: `tab-${groupId}`, role: 'tab', 'aria-selected': groupId === 0 ? 'true' : 'false', 'aria-controls': `tabpanel-${groupId}`, 'aria-label': buttonLabel,
     });
+    image.closest('picture').replaceWith(createOptimizedPicture(image.src, image.alt, false, [{ width: '300' }]));
     tabButton.append(...tabPicture.children);
     group.replaceChild(tabButton, tabPicture);
 
