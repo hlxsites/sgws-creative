@@ -1,4 +1,8 @@
 
+.slides .slide .icon use {
+  fill: var(--text-color-background);
+}
+
 .slides-wrapper {
   background-color: var(--primary-color);
 }
@@ -7,10 +11,6 @@
 .slides a:any-link,
 .slides {
   color: var(--text-color-background);
-}
-
-svg #icons-sprite-arrow-small path {
-  fill: var(--text-color-background);
 }
 
 .slides h3 {

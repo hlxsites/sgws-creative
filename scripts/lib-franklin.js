@@ -129,6 +129,7 @@ export function toCamelCase(name) {
 }
 
 const ICONS_CACHE = {};
+
 /**
  * Replace icons with inline SVG and prefix with codeBasePath.
  * @param {Element} [element] Element containing icons
@@ -176,7 +177,12 @@ export async function decorateIcons(element) {
     }
   }));
 
-  const symbols = Object.values(ICONS_CACHE).filter((v) => !v.styled).map((v) => v.html).join('\n');
+  const symbols = Object
+    .keys(ICONS_CACHE).filter((k) => !svgSprite.querySelector(`#icons-sprite-${k}`))
+    .map((k) => ICONS_CACHE[k])
+    .filter((v) => !v.styled)
+    .map((v) => v.html)
+    .join('\n');
   svgSprite.innerHTML += symbols;
 
   icons.forEach((span) => {

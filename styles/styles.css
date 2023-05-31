@@ -242,6 +242,15 @@ main .section.highlight h3 {
   color: var(--text-color-background);
 }
 
+/* icon sprite styling */
+svg#franklin-svg-sprite symbol {
+  fill: inherit!important;
+}
+
+.icon svg use {
+  fill: #fff;
+}
+
 @media (min-width: 900px) {
   .section > div {
     max-width: 1200px;
