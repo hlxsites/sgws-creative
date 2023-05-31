@@ -43,28 +43,39 @@ export function createTag(tag, attributes) {
  * Builds hero block and prepends to main in a new section.
  * Rules for identifying hero block:
  * - first link is used in the hero, and is a video link
- * - if the video link has only one picture as previous sibling,
- *    the picture is used as poster and the video goes in the background
- * - otherwise, the (videoElement - 2) picture is used as background,
- *    and the the first (videoElement - 1) picture is used as video poster
+ * - to find the div holding the hero, we look at the link's parent div
+ * - if the parent has exactly 2 images, it's a foreground video with a background image
+ * - otherwise, the first image becomes the video poster, and other images are added in the section
  * @param {Element} main The container element
  */
 function buildHeroBlock(main) {
   const section = document.createElement('div');
-  section.classList.add('section', 'highlight');
+  section.classList.add('section');
 
   const heroVideo = main.querySelector('a');
   const heroParentDiv = heroVideo.closest('div');
-
   const heroImages = heroParentDiv.querySelectorAll('picture');
+
   if(heroImages.length === 2) {
     // background image and foreground video
-    section.classList.add('background-image');
+    section.classList.add('highlight', 'background-image');
     const videoBlock = buildBlock('video', [[heroImages[1], heroVideo]]);
     section.append(heroImages[0].parentElement);
     section.append(videoBlock);
   } else {
     // background video, with images in foreground
+    section.classList.add('background-video');
+    heroImages[0].parentNode.remove();
+    const videoBlock = buildBlock('video', [[heroImages[0], heroVideo]]);
+    const elementsToAdd = [];
+    heroParentDiv.childNodes.forEach((child) => {
+      if(child.innerHTML){
+        elementsToAdd.push(child);
+      }
+    });
+    const restOfContent = buildBlock('default-content', [elementsToAdd]);
+    section.append(videoBlock);
+    section.append(restOfContent);
   }
 
   main.prepend(section);
@@ -111,13 +122,11 @@ export function decoratePictureParagraph(main) {
  * @param {Element} main The container element
  */
 export function decorateSectionBackgrounds(main) {
-  console.log("Decorating section background");
   main.querySelectorAll('.section.highlight').forEach((section) => {
     const backgroundPicture = section.querySelector(
       ':scope > .default-content-wrapper:first-child > p.picture:first-child > picture:first-child',
     );
 
-    console.log("Background picture", backgroundPicture);
     // See if first element is a picture - used as the background since section is 'highlighted'
     if (backgroundPicture) {
       section.classList.add('background-image');
