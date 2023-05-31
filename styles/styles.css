@@ -221,26 +221,26 @@ main .section {
 }
 
 /* section metadata */
-main .section.highlight:not(.has-background-image) {
+main .section.highlight:not(.background-image) {
   /* background styles, unless a background image is used. */
   background-image: var(--background-color-highlight);
   color: var(--text-color-background);
 }
 
-main .section.highlight:not(.has-background-image) h2,
-main .section.highlight:not(.has-background-image) h3 {
+main .section.highlight:not(.background-image) h2,
+main .section.highlight:not(.background-image) h3 {
   /* background styles, unless a background image is used. */
   color: var(--text-color-background);
 }
 
-main .section.has-background-image {
+main .section.background-image {
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
   width: 100%;
 }
 
-main .section.has-background-image > .section-background {
+main .section.background-image > picture {
   position: absolute;
   z-index: -5;
   top: 0;
@@ -249,7 +249,7 @@ main .section.has-background-image > .section-background {
   right: 0;
 }
 
-main .section.has-background-image > .section-background img {
+main .section.background-image > picture img {
   width: 100%;
   min-height: 100%;
   object-fit: cover;

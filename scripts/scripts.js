@@ -100,16 +100,12 @@ export function decoratePictureParagraph(main) {
 export function decorateSectionBackgrounds(main) {
   main.querySelectorAll('.section.highlight').forEach((section) => {
     const wrapperDiv = section.firstElementChild;
-    const pictureParagraph = wrapperDiv ? wrapperDiv.firstElementChild : undefined;
-    // See if first "real" element is a picture - shall be used as the background.
-    if (pictureParagraph && pictureParagraph.classList.contains('picture')) {
-      const picture = pictureParagraph.querySelector('picture');
-      if (picture) {
-        section.classList.add('has-background-image');
-        picture.classList.add('section-background');
-        wrapperDiv.removeChild(pictureParagraph);
-        section.append(picture);
-      }
+    const backgroundPicture = section.querySelector(':scope > .default-content-wrapper:first-child > picture:first-child');
+    if (backgroundPicture) {
+      // See if first "real" element is a picture - shall be used as the background.
+      section.classList.add('background-image');
+      wrapperDiv.removeChild(section.querySelector(':scope > .default-content-wrapper:first-child')); // <p class=picture>
+      section.append(backgroundPicture);
     }
   });
 }
