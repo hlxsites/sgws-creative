@@ -50,7 +50,6 @@ export function createTag(tag, attributes) {
  */
 function buildHeroBlock(main) {
   const section = document.createElement('div');
-  section.classList.add('section');
 
   const heroVideo = main.querySelector('a');
   const heroParentDiv = heroVideo.closest('div');
