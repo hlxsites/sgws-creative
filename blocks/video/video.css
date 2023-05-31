@@ -24,9 +24,7 @@
 
 /* Product hero with video in foreground, image in background */
 .section.video-container:not(.video-background) .video-wrapper .video {
-  width: calc(50%);
-  margin-top: calc(12.5%);
-  margin-left: calc(25%);
+  width: 100%;
 }
 
 .section.video-container:not(.video-background) .default-content-wrapper {
@@ -36,13 +34,13 @@
 
 .section.video-container:not(.video-background) .default-content-wrapper > p > picture {
   position: absolute;
-    display: flex;
-    z-index: -1;
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  z-index: -1;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  align-items: center;
+  justify-content: center;
 }
 
 .section.video-container:not(.video-background) .default-content-wrapper > p.picture {
