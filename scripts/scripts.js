@@ -101,6 +101,25 @@ export function decoratePictureParagraph(main) {
 }
 
 /**
+ * Decorates the background of all highlighted sections.
+ * @param {Element} main The container element
+ */
+export function decorateSectionBackgrounds(main) {
+  main.querySelectorAll('.section.highlight').forEach((section) => {
+    const backgroundPicture = section.querySelector(
+      ':scope > .default-content-wrapper:first-child > p.picture:first-child > picture:first-child',
+    );
+    // See if first element is a picture - used as the background since section is 'highlighted'
+    if (backgroundPicture) {
+      section.classList.add('background-image');
+      const pictureParent = backgroundPicture.closest('p.picture');
+      section.append(backgroundPicture);
+      pictureParent.remove();
+    }
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -114,6 +133,7 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
+  decorateSectionBackgrounds(main);
 }
 
 /**

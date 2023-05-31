@@ -1,4 +1,5 @@
 .hlx/*
+.idea
 coverage/*
 logs/*
 node_modules/*
