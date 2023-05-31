@@ -60,6 +60,7 @@ function buildHeroBlock(main) {
     // background image and foreground video
     section.classList.add('highlight', 'background-image');
     const videoBlock = buildBlock('video', [[heroImages[1], heroVideo]]);
+
     section.append(heroImages[0].parentElement);
     section.append(videoBlock);
   } else {
@@ -67,15 +68,13 @@ function buildHeroBlock(main) {
     section.classList.add('background-video');
     heroImages[0].parentNode.remove();
     const videoBlock = buildBlock('video', [[heroImages[0], heroVideo]]);
-    const elementsToAdd = [];
+
+    section.append(videoBlock);
     heroParentDiv.childNodes.forEach((child) => {
       if(child.innerHTML){
-        elementsToAdd.push(child);
+        section.append(child);
       }
     });
-    const restOfContent = buildBlock('default-content', [elementsToAdd]);
-    section.append(videoBlock);
-    section.append(restOfContent);
   }
 
   main.prepend(section);
