@@ -1,0 +1,70 @@
+.tabview .tabs {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 2px;
+}
+
+.tabview [role="tablist"] button {
+  flex: 1;
+  min-width: unset;
+  height: 111px;
+  background-color: #f2f2f2;
+  padding: var(--layout-size-l);
+  border: none;
+  appearance: none;
+}
+
+.tabview [role="tablist"] button:focus:not(:focus-visible) {
+  outline: none
+}
+
+.tabview [role="tablist"] button[aria-selected='true'] {
+  background-color: var(--background-color);
+}
+
+.tabview [role="tablist"] button img {
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.5;
+}
+
+.tabview [role="tablist"] button:hover img,
+.tabview [role="tablist"] button:active img,
+.tabview [role="tablist"] button[aria-selected='true'] img {
+  opacity: unset;
+}
+
+.tabview [role="tabpanel"] {
+  display: none;
+  background-color: var(--background-color);
+  overflow: hidden;
+}
+
+/* apply theme */
+.tabview [role="tabpanel"]  h2 {
+  font-size: var(--heading-font-size);
+  color: var(--secondary-color);
+}
+
+.tabview [role="tabpanel"].active {
+  display: block;
+}
+
+.tabview [role="tabpanel"]  .default-content-wrapper:first-child {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: var(--layout-size-l);
+  padding: var(--layout-size-l) 50px;
+}
+
+.tabview [role="tabpanel"]  .default-content-wrapper:first-child h2,
+.tabview [role="tabpanel"]  .default-content-wrapper:first-child p {
+  margin: 0;
+}
+
+.tabview [role="tabpanel"]  .default-content-wrapper:first-child h2 {
+  text-transform: uppercase;
+}
+
+
+
