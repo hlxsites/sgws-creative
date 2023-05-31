@@ -14,33 +14,37 @@
   /* theme vars */
   --primary-color: #035fe6;
   --secondary-color: #136ff6;
-  --overlay-color: #eee;
-
-  /* colors */ --link-color: var(--primary-color);
-  --link-color-hover: var(--secondary-color);
   --background-color: #fff;
+  --overlay-color: #eee;
+  --text-color: #000;
+  --text-color-background: #fff;
+  --body-font-size: 13px;
+  --heading-font-size: 32px;
+
+
+  /* colors */
+  --link-color: var(--primary-color);
+  --link-color-hover: var(--secondary-color);
   --background-color-overlay: var(--overlay-color);
   --background-color-highlight: linear-gradient(270deg, var(--primary-color), var(--secondary-color));
-  --text-color: #000;
   --text-color-highlight: var(--secondary-color);
-  --text-color-background: #fff;
 
   /* fonts */
   --heading-font-family: 'Futura PT Bold-Normal', sans-serif;
   --body-font-family: 'Roboto', sans-serif;
 
   /* body sizes */
-  --body-font-size-m: 22px;
-  --body-font-size-s: 13px;
-  --body-font-size-xs: 11px;
+  --body-font-size-m: calc(var(--body-font-size) + 9px);
+  --body-font-size-s: var(--body-font-size);
+  --body-font-size-xs: calc(var(--body-font-size) - 2px);
 
   /* heading sizes */
-  --heading-font-size-xxl: 46px;
-  --heading-font-size-xl: 38px;
-  --heading-font-size-l: 32px;
-  --heading-font-size-m: 24px;
-  --heading-font-size-s: 20px;
-  --heading-font-size-xs: 18px;
+  --heading-font-size-xxl: calc(var(--heading-font-size) + 14px);
+  --heading-font-size-xl: calc(var(--heading-font-size) + 6px);
+  --heading-font-size-l: var(--heading-font-size);
+  --heading-font-size-m: calc(var(--heading-font-size) - 8px);
+  --heading-font-size-s: calc(var(--heading-font-size) - 12px);
+  --heading-font-size-xs: calc(var(--heading-font-size) - 14px);
 
   /* layout sizes */
   --layout-size-xxl: 64px;
@@ -64,6 +68,8 @@ body {
 }
 
 /* theme overrides */
+
+/* TODO: move to theme.json */
 body.constellation {
   --primary-color: #0076c0;
   --secondary-color: #001e5b;
@@ -142,7 +148,7 @@ p.button-container {
   margin: var(--layout-size-xs) 0;
 }
 
-a.button:any-link, button {
+a.button:any-link {
   font-family: var(--body-font-family);
   display: inline-block;
   box-sizing: border-box;
@@ -164,34 +170,44 @@ a.button:any-link, button {
   text-overflow: ellipsis;
 }
 
-a.button:hover, a.button:focus, button:hover, button:focus {
+a.button:hover,
+a.button:focus {
   background-color: var(--link-color-hover);
   cursor: pointer;
 }
 
-.button-full a.button:any-link, .button-full button {
-  width: 100%;
-  text-align: right;
-}
-
-button:disabled, button:disabled:hover {
-  background-color: var(--background-color-overlay);
-  cursor: unset;
+a:not(.button) {
+  font-weight: 700;
 }
 
 a.button > strong {
   font-weight: normal;
 }
 
-a.button.has-icon > strong {
+a.button > em {
+  font-style: normal;
+}
+
+a.has-icon,
+a.button.has-icon > strong,
+a.button.has-icon > em {
   display: inline-flex;
   align-items: center;
 }
 
-a.button.secondary, button.secondary {
+a.button.secondary {
   background-color: unset;
   border: 1px solid currentcolor;
   color: var(--text-color)
+}
+
+a:any-link span.icon-arrow-small {
+  transform: rotate(180deg);
+}
+
+.button-full a.button:any-link {
+  width: 100%;
+  text-align: right;
 }
 
 main img {
@@ -254,6 +270,15 @@ main .section.background-image > picture img {
   min-height: 100%;
   object-fit: cover;
   box-sizing: border-box;
+}
+
+/* icon sprite styling */
+svg#franklin-svg-sprite symbol {
+  fill: inherit!important;
+}
+
+.icon svg use {
+  fill: #fff;
 }
 
 @media (min-width: 900px) {
