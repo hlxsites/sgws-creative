@@ -44,3 +44,7 @@
     align-items: center;
     justify-content: center;
 }
+
+.section.video-container:not(.video-background) .default-content-wrapper > p.picture {
+  margin-block-start: -1em;
+}
