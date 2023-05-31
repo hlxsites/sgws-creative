@@ -41,21 +41,34 @@ export function createTag(tag, attributes) {
 
 /**
  * Builds hero block and prepends to main in a new section.
+ * Rules for identifying hero block:
+ * - first link is used in the hero, and is a video link
+ * - if the video link has only one picture as previous sibling,
+ *    the picture is used as poster and the video goes in the background
+ * - otherwise, the (videoElement - 2) picture is used as background,
+ *    and the the first (videoElement - 1) picture is used as video poster
  * @param {Element} main The container element
  */
 function buildHeroBlock(main) {
-  const h1 = main.querySelector('h1');
-  const picture = main.querySelector('picture');
-  // eslint-disable-next-line no-bitwise
-  if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
-    // include any other pictures in same section
-    const parentDiv = h1.closest('div');
-    const allPictures = parentDiv ? parentDiv.querySelectorAll('picture') : [picture];
-    const section = document.createElement('div');
-    section.append(buildBlock('hero', { elems: [...allPictures, h1] }));
-    main.prepend(section);
-    parentDiv.parentElement.removeChild(parentDiv);
+  const section = document.createElement('div');
+  section.classList.add('section', 'highlight');
+
+  const heroVideo = main.querySelector('a');
+  const heroParentDiv = heroVideo.closest('div');
+
+  const heroImages = heroParentDiv.querySelectorAll('picture');
+  if(heroImages.length === 2) {
+    // background image and foreground video
+    section.classList.add('background-image');
+    const videoBlock = buildBlock('video', [[heroImages[1], heroVideo]]);
+    section.append(heroImages[0].parentElement);
+    section.append(videoBlock);
+  } else {
+    // background video, with images in foreground
   }
+
+  main.prepend(section);
+  heroParentDiv.remove();
 }
 
 /**
@@ -98,10 +111,13 @@ export function decoratePictureParagraph(main) {
  * @param {Element} main The container element
  */
 export function decorateSectionBackgrounds(main) {
+  console.log("Decorating section background");
   main.querySelectorAll('.section.highlight').forEach((section) => {
     const backgroundPicture = section.querySelector(
       ':scope > .default-content-wrapper:first-child > p.picture:first-child > picture:first-child',
     );
+
+    console.log("Background picture", backgroundPicture);
     // See if first element is a picture - used as the background since section is 'highlighted'
     if (backgroundPicture) {
       section.classList.add('background-image');
