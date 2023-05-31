@@ -78,7 +78,7 @@ function buildHeroBlock(main) {
   const heroParentDiv = heroVideo.closest('div');
   const heroImages = heroParentDiv.querySelectorAll('picture');
 
-  if(heroImages.length === 2) {
+  if (heroImages.length === 2) {
     // background image and foreground video
     section.classList.add('highlight', 'background-image');
     const videoBlock = buildBlock('video', [[heroImages[1], heroVideo]]);
@@ -93,8 +93,8 @@ function buildHeroBlock(main) {
     section.append(videoBlock);
 
     heroImages.forEach((child, index) => {
-      if(index === 0) return;
-      if(child.innerHTML){
+      if (index === 0) return;
+      if (child.innerHTML) {
         section.append(child);
       }
     });

@@ -249,6 +249,11 @@ main .section.highlight:not(.background-image) h3 {
   color: var(--text-color-background);
 }
 
+main .section.background-video .video.block .video-content video {
+  position: absolute;
+  z-index: -1;
+}
+
 main .section.highlight:not(.background-video) .video.block .video-content video {
   object-fit: cover;
   width: 50%;
@@ -279,6 +284,46 @@ main .section.background-image > picture img {
   min-height: 100%;
   object-fit: cover;
   box-sizing: border-box;
+}
+
+main .section.background-video .video.block {
+  position: relative;
+}
+
+main .section.background-video {
+  padding: 0;
+  margin-block-start: -1em;
+  overflow: hidden;
+}
+
+
+
+main .section.background-video .default-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: 12.5%;
+  padding-bottom: 12.5%;
+}
+
+main .section.background-video .default-content-wrapper > picture:first-child > img {
+  width: calc(25vw);
+  margin-bottom: 7.5vw;
+}
+
+main .section.background-video .default-content-wrapper > picture:nth-child(2) > img {
+  width: calc(5vw);
+}
+
+main .section.background-video .default-content-wrapper h1 {
+  font-style: normal;
+  font-size: 4vw;
+  color: var(--text-color-background);
+  font-family: var(--heading-font-family);
+  line-height: 4vw;
+  letter-spacing: 0.125vw;
 }
 
 /* icon sprite styling */
