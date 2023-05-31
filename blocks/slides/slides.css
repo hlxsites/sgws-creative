@@ -1,0 +1,116 @@
+.slides-wrapper {
+  background-color: var(--primary-color);
+}
+
+.slides {
+  --avatar-background-size: 241px;
+  --avatar-size: 269px;
+}
+
+.slides .slide .icon use {
+  fill: var(--text-color-background);
+}
+
+.slides h3,
+.slides a:any-link,
+.slides {
+  color: var(--text-color-background);
+}
+
+.slides h3 {
+  position: relative;
+  padding-bottom: var(--layout-size-m);
+  margin-bottom: 1em;
+}
+
+.slides h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 84px;
+  border-bottom: 2px solid var(--text-color-background);
+}
+
+.slides .slide {
+  display: none;
+}
+
+.slides .slide.active {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.slides .slide .avatar {
+  position: relative;
+  padding: var(--layout-size-xl);
+}
+
+.slides .slide .avatar picture:first-child {
+  display: inline-flex;
+  width: var(--avatar-background-size);
+  height: var(--avatar-background-size);
+  clip-path: circle(50% at 50% 50%);
+}
+
+.slides .slide .avatar picture:first-child img {
+  object-fit: cover;
+}
+
+.slides .slide .avatar picture:last-child {
+  position: absolute;
+  bottom: calc(var(--layout-size-xl) - 8px);
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.slides .slide .avatar picture:last-child img {
+  height: var(--avatar-size);
+}
+
+.slides .slide > div:not(.avatar) {
+  flex: 1;
+  padding-right: 96px;
+}
+
+.slides-container .slide-nav {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: var(--layout-size-s);
+  align-items: center;
+  color: var(--secondary-color);
+}
+
+.slides-container .slide-nav button {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  min-width: unset;
+  border-radius: 50%;
+  background-color: var(--secondary-color);
+  border: none;
+  appearance: none;
+}
+
+.slides-container .slide-nav button:focus:not(:focus-visible) {
+  outline: none
+}
+
+.slides-container .slide-nav button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 42px;
+  height: 42px;
+  transform: translate(-50%, -50%);
+  background: url('../../icons/arrow-small.svg') center no-repeat;
+}
+
+.slides-container .slide-nav button.slide-next::after {
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.slides-container .slide-nav p {
+  width: max-content;
+}

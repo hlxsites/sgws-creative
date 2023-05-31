@@ -6,6 +6,7 @@ import {
   decorateSections,
   decorateBlocks,
   decorateTemplateAndTheme,
+  getMetadata,
   waitForLCP,
   loadBlocks,
   loadCSS,
@@ -13,14 +14,36 @@ import {
 
 const LCP_BLOCKS = ['hero']; // add your LCP blocks to the list
 
-export async function fetchFragment(path, init = {}) {
-  const resp = await fetch(`${path}.plain.html`, init);
-  if (resp.ok) {
-    const parent = document.createElement('div');
-    parent.innerHTML = await resp.text();
-    return parent;
+async function loadTheme() {
+  let theme = {};
+  let configPath = getMetadata('themeconfig');
+  if (!configPath) {
+    const pathParts = window.location.pathname.split('/');
+    configPath = `/${pathParts[1]}/theme.json`;
   }
-  return null;
+
+  if (configPath) {
+    const resp = await fetch(`${configPath}`);
+    if (resp?.ok) {
+      const json = await resp.json();
+      theme = json || theme;
+      const tokens = json.theme.data || {};
+      const root = document.querySelector(':root');
+      tokens.forEach((e) => {
+        root.style.setProperty(`--${e.token}`, `${e.value}`);
+      });
+    }
+  }
+  window.sgws = window.sgws || {};
+  window.sgws.config = theme;
+}
+
+export function hasTheme(name) {
+  return name in window.sgws.config;
+}
+export function getTheme(name) {
+  const [, theme] = Object.entries(window.sgws.config).find(([key]) => key === name) || [];
+  return theme;
 }
 
 /**
@@ -154,12 +177,47 @@ export function decorateMain(main) {
 }
 
 /**
+ * Fetch fragment HTML.
+ * @param path fragment path
+ * @param init request init
+ * @return {Promise<HTMLDivElement|null>}
+ */
+export async function fetchFragment(path, init = {}) {
+  const resp = await fetch(`${path}.plain.html`, init);
+  if (resp?.ok) {
+    const parent = document.createElement('div');
+    parent.innerHTML = await resp.text();
+    return parent;
+  }
+  return null;
+}
+
+/**
+ * Decorate a fragment for inclusion in a page.
+ * @param fragment The plain fragment HTML
+ * @return {Promise<HTMLElement|null>} Decorated fragment HTML
+ */
+export async function decorateFragment(fragment) {
+  if (!fragment) {
+    return null;
+  }
+  const main = document.createElement('main');
+  main.append(...fragment.childNodes);
+  decorateMain(main);
+  await loadBlocks(main);
+  return main;
+}
+
+/**
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
+
+  await loadTheme();
+
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
