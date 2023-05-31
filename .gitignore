@@ -1,9 +1,9 @@
 .hlx/*
+.idea
 coverage/*
 logs/*
 node_modules/*
+*.iml
 
 helix-importer-ui
 .DS_Store
-.idea
-*.iml
