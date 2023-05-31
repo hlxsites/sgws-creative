@@ -3,7 +3,7 @@ import {
 } from '../../scripts/scripts.js';
 
 function getSelectedSlide(block) {
-  return block.querySelector('.slide.selected');
+  return block.querySelector('.slide.active');
 }
 function getSlidePosition(slide) {
   return [...slide.parentElement.children].indexOf(slide) + 1;
@@ -11,7 +11,7 @@ function getSlidePosition(slide) {
 
 function moveSlide(block, direction, count) {
   let selectedSlide = getSelectedSlide(block);
-  selectedSlide.classList.remove('selected');
+  selectedSlide.classList.remove('active');
   if (direction > 0) {
     if (selectedSlide.nextElementSibling) {
       selectedSlide = selectedSlide.nextElementSibling;
@@ -23,7 +23,7 @@ function moveSlide(block, direction, count) {
   } else {
     selectedSlide = selectedSlide.parentElement.lastElementChild;
   }
-  selectedSlide.classList.add('selected');
+  selectedSlide.classList.add('active');
 
   // update nav
   count.textContent = `${getSlidePosition(selectedSlide)} of ${block.children.length}`;
@@ -37,10 +37,7 @@ export default function decorate(block) {
     block.setAttribute('role', 'group');
     block.setAttribute('aria-roledescription', 'Slide');
     if (index === 0) {
-      slide.classList.add('selected');
-      slide.setAttribute('aria-selected', 'true');
-    } else {
-      slide.setAttribute('aria-selected', 'false');
+      slide.classList.add('active');
     }
 
     // create avatar container

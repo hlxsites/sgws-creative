@@ -1,4 +1,3 @@
-
 .tabview .button-container {
   display: flex;
   flex-flow: row nowrap;
@@ -10,8 +9,8 @@
   min-width: unset;
   height: 111px;
   background-color: #f2f2f2;
-  border: none;
   padding: var(--layout-size-l);
+  border: none;
   appearance: none;
 }
 

@@ -1,10 +1,14 @@
+.slides-wrapper {
+  background-color: var(--primary-color);
+}
+
+.slides {
+  --avatar-background-size: 241px;
+  --avatar-size: 269px;
+}
 
 .slides .slide .icon use {
   fill: var(--text-color-background);
-}
-
-.slides-wrapper {
-  background-color: var(--primary-color);
 }
 
 .slides h3,
@@ -28,19 +32,11 @@
   border-bottom: 2px solid var(--text-color-background);
 }
 
-.slides a:any-link {
-  font-weight: 700;
-}
-
-.slides a .icon-arrow-small {
-  transform: rotate(180deg);
-}
-
 .slides .slide {
   display: none;
 }
 
-.slides .slide.selected {
+.slides .slide.active {
   display: flex;
   flex-flow: row nowrap;
 }
@@ -48,12 +44,12 @@
 .slides .slide .avatar {
   position: relative;
   padding: var(--layout-size-xl);
-  width: 241px;
+  width: var(--avatar-background-size);
 }
 
 .slides .slide .avatar picture:first-child img {
-  width: 241px;
-  height: 241px;
+  width: var(--avatar-background-size);
+  height: var(--avatar-background-size);
   clip-path: circle(50% at 50% 50%);
 }
 
@@ -65,7 +61,7 @@
 }
 
 .slides .slide .avatar picture:last-child img {
-  height: 269px;
+  height: var(--avatar-size);
 }
 
 .slides .slide > div:not(.avatar) {
@@ -82,13 +78,18 @@
 }
 
 .slides-container .slide-nav button {
-  all: unset;
   position: relative;
   width: 42px;
-  min-width: unset;
   height: 42px;
+  min-width: unset;
   border-radius: 50%;
   background-color: var(--secondary-color);
+  border: none;
+  appearance: none;
+}
+
+.slides-container .slide-nav button:focus:not(:focus-visible) {
+  outline: none
 }
 
 .slides-container .slide-nav button::after {

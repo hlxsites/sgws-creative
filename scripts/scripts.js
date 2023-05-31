@@ -20,7 +20,7 @@ async function loadTheme() {
 
   if (configPath) {
     const resp = await fetch(`${configPath}`);
-    if (resp.status === 200) {
+    if (resp?.ok) {
       const json = await resp.json();
       theme = json || theme;
       const tokens = json.theme.data || {};
@@ -136,7 +136,7 @@ export function decorateMain(main) {
  */
 export async function fetchFragment(path, init = {}) {
   const resp = await fetch(`${path}.plain.html`, init);
-  if (resp.ok) {
+  if (resp?.ok) {
     const parent = document.createElement('div');
     parent.innerHTML = await resp.text();
     return parent;
