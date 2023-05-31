@@ -3,3 +3,38 @@
   width: 100%;
   height: auto;
 }
+
+.section.video-container .video-wrapper {
+  position: relative;
+}
+
+.section.video-container .video-wrapper .video {
+  position: absolute;
+}
+
+.section.video-container {
+  padding: 0;
+}
+
+/* Product hero with video in background */
+.section.video-container.video-background .video-wrapper .video {
+  position: absolute;
+  z-index: -1;
+}
+
+/* Product hero with video in foreground, image in background */
+.section.video-container:not(.video-background) .video-wrapper .video {
+  width: calc(50%);
+  margin-top: calc(12.5%);
+  margin-left: calc(25%);
+}
+
+.section.video-container:not(.video-background) .default-content-wrapper {
+  position: relative;
+  max-width: unset;
+}
+
+.section.video-container:not(.video-background) .default-content-wrapper > p > picture {
+  position: absolute;
+  z-index: -1;
+}
