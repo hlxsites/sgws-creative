@@ -83,22 +83,25 @@ function buildHeroBlock(main) {
     section.classList.add('highlight', 'background-image');
     const videoBlock = buildBlock('video', [[heroImages[1], heroVideo]]);
 
-    section.append(heroImages[0].parentElement);
-    section.append(videoBlock);
+    section.append(heroImages[0].parentElement, videoBlock);
   } else {
     // background video, with images in foreground
     section.classList.add('background-video');
     heroImages[0].parentNode.remove();
     const videoBlock = buildBlock('video', [[heroImages[0], heroVideo]]);
-    section.append(videoBlock);
 
-    heroImages.forEach((child, index) => {
+    const restOfContent = [];
+    heroImages.forEach((heroImage, index) => {
       if (index === 0) return;
-      if (child.innerHTML) {
-        section.append(child);
+      if (heroImage.innerHTML) {
+        restOfContent.push(heroImage);
       }
     });
-    section.append(heroParentDiv.querySelector('h1'));
+    const h1Title = heroParentDiv.querySelector('h1');
+    if(h1Title){
+      restOfContent.push(h1Title);
+    }
+    section.append(videoBlock, ...restOfContent);
   }
 
   main.prepend(section);
