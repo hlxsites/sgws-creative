@@ -2,34 +2,34 @@ import {
   createTag, fetchFragment, decorateFragment, hasTheme, getTheme,
 } from '../../scripts/scripts.js';
 
-async function loadTabContent(tab) {
-  if (!tab) {
+async function loadTabPanel(panel) {
+  if (!panel) {
     return;
   }
-  const contentPath = tab.getAttribute('data-path');
+  const contentPath = panel.getAttribute('data-path');
   let fragment = await fetchFragment(contentPath);
   fragment = await decorateFragment(fragment);
   if (fragment) {
     const fragmentSection = fragment.querySelector(':scope .section');
-    tab.append(...fragmentSection.children);
-    tab.classList.add(...fragmentSection.classList);
-    tab.classList.remove('section');
-    const tabIndex = [...tab.parentElement.children].indexOf(tab);
-    const buttonContainer = tab.closest('.tabview').querySelector('.button-container');
+    panel.append(...fragmentSection.children);
+    panel.classList.add(...fragmentSection.classList);
+    panel.classList.remove('section');
+    const block = panel.closest('.tabview');
+    const tabIndex = [...block.querySelectorAll('[role="tabpanel"]')].indexOf(panel);
+    const buttonContainer = block.querySelector('[role="tablist"]');
     const tabButton = [...buttonContainer.children].at(tabIndex);
     // apply theme to tab content
-    const themeName = [...tab.classList].find((className) => hasTheme(className));
+    const themeName = [...panel.classList].find((className) => hasTheme(className));
     const theme = getTheme(themeName).data;
     theme.forEach(({ token, value }) => {
-      tab.style.setProperty(`--${token}`, `${value}`);
+      panel.style.setProperty(`--${token}`, `${value}`);
       tabButton?.style.setProperty(`--${token}`, `${value}`);
     });
   }
 }
 
 export default async function decorate(block) {
-  const buttonGroup = createTag('div', { class: 'button-container' });
-  const contentGroup = createTag('div', { class: 'content-container' });
+  const tabList = createTag('div', { class: 'tabs', role: 'tablist', 'aria-label': 'Tab List' });
 
   [...block.children].forEach((group, groupId) => {
     const [tabPicture, tabContent] = [...group.children];
@@ -37,20 +37,22 @@ export default async function decorate(block) {
       // invalid tab view structure
       return;
     }
-    const tabButton = createTag('button', { role: 'tab', 'aria-selected': groupId === 0 ? 'true' : 'false', 'aria-controls': `tabview${groupId}` });
+    const tabButton = createTag('button', {
+      id: `tab-${groupId}`, role: 'tab', 'aria-selected': groupId === 0 ? 'true' : 'false', 'aria-controls': `tabpanel-${groupId}`,
+    });
     tabButton.append(...tabPicture.children);
     group.replaceChild(tabButton, tabPicture);
 
     tabButton.addEventListener('click', () => {
-      buttonGroup.querySelectorAll('button').forEach((btn) => {
+      tabList.querySelectorAll('button').forEach((btn) => {
         btn.setAttribute('aria-selected', 'false');
       });
       tabButton.setAttribute('aria-selected', 'true');
-      contentGroup.querySelectorAll(':scope > .tab-content').forEach((content, index) => {
-        if ([...buttonGroup.children].indexOf(tabButton) === index) {
-          content.classList.add('selected');
+      block.querySelectorAll(':scope > [role="tabpanel"]').forEach((panel, index) => {
+        if ([...tabList.children].indexOf(tabButton) === index) {
+          panel.classList.add('active');
         } else {
-          content.classList.remove('selected');
+          panel.classList.remove('active');
         }
       });
     });
@@ -59,26 +61,26 @@ export default async function decorate(block) {
     const contentPath = anchor?.getAttribute('href');
     tabContent.setAttribute('data-path', contentPath || '');
     tabContent.textContent = '';
-    tabContent.className = 'tab-content';
-    tabContent.setAttribute('id', `tabview${groupId}`);
+    tabContent.removeAttribute('class');
+    tabContent.setAttribute('id', `tabpanel-${groupId}`);
     tabContent.setAttribute('role', 'tabpanel');
+    tabContent.setAttribute('aria-labelledby', `tab=${groupId}`);
 
-    buttonGroup.append(tabButton);
-    contentGroup.append(tabContent);
+    tabList.append(tabButton);
+    block.append(tabContent);
     block.removeChild(group);
   });
 
-  block.setAttribute('role', 'tablist');
-  block.append(buttonGroup, contentGroup);
+  block.prepend(tabList);
 
   // load content of first tab (lazy load the rest)
-  const firstTab = contentGroup.querySelector(':scope > .tab-content');
-  await loadTabContent(firstTab);
-  firstTab.classList.add('selected');
-
-  setTimeout(() => {
-    contentGroup.querySelectorAll(':scope > .tab-content:not(:first-child)').forEach((tabContent) => {
-      loadTabContent(tabContent);
-    });
-  }, 3000);
+  const firstTab = block.querySelector(':scope > [role="tabpanel"]');
+  await loadTabPanel(firstTab);
+  firstTab.classList.add('active');
+  // load the rest lazily
+  block.querySelectorAll(':scope > [role="tabpanel"]').forEach((tabPanel, index) => {
+    if (index > 0) {
+      loadTabPanel(tabPanel);
+    }
+  });
 }

@@ -1,10 +1,10 @@
-.tabview .button-container {
+.tabview .tabs {
   display: flex;
   flex-flow: row nowrap;
   gap: 2px;
 }
 
-.tabview .button-container button {
+.tabview [role="tablist"] button {
   flex: 1;
   min-width: unset;
   height: 111px;
@@ -14,55 +14,55 @@
   appearance: none;
 }
 
-.tabview .button-container button:focus:not(:focus-visible) {
+.tabview [role="tablist"] button:focus:not(:focus-visible) {
   outline: none
 }
 
-.tabview .button-container button[aria-selected='true'] {
+.tabview [role="tablist"] button[aria-selected='true'] {
   background-color: var(--background-color);
 }
 
-.tabview .button-container button img {
+.tabview [role="tablist"] button img {
   height: 100%;
   object-fit: contain;
   opacity: 0.5;
 }
 
-.tabview .button-container button:hover img,
-.tabview .button-container button:active img,
-.tabview .button-container button[aria-selected='true'] img {
+.tabview [role="tablist"] button:hover img,
+.tabview [role="tablist"] button:active img,
+.tabview [role="tablist"] button[aria-selected='true'] img {
   opacity: unset;
 }
 
-.tabview .tab-content {
+.tabview [role="tabpanel"] {
   display: none;
   background-color: var(--background-color);
   overflow: hidden;
 }
 
 /* apply theme */
-.tabview .tab-content h2 {
+.tabview [role="tabpanel"]  h2 {
   font-size: var(--heading-font-size);
   color: var(--secondary-color);
 }
 
-.tabview .tab-content.selected {
+.tabview [role="tabpanel"].active {
   display: block;
 }
 
-.tabview .tab-content .default-content-wrapper:first-child {
+.tabview [role="tabpanel"]  .default-content-wrapper:first-child {
   display: flex;
   flex-flow: row nowrap;
   gap: var(--layout-size-l);
   padding: var(--layout-size-l) 50px;
 }
 
-.tabview .tab-content .default-content-wrapper:first-child h2,
-.tabview .tab-content .default-content-wrapper:first-child p {
+.tabview [role="tabpanel"]  .default-content-wrapper:first-child h2,
+.tabview [role="tabpanel"]  .default-content-wrapper:first-child p {
   margin: 0;
 }
 
-.tabview .tab-content .default-content-wrapper:first-child h2 {
+.tabview [role="tabpanel"]  .default-content-wrapper:first-child h2 {
   text-transform: uppercase;
 }
 
