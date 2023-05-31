@@ -16,7 +16,11 @@ const LCP_BLOCKS = ['hero']; // add your LCP blocks to the list
 
 async function loadTheme() {
   let theme = {};
-  const configPath = getMetadata('themeconfig');
+  let configPath = getMetadata('themeconfig');
+  if (!configPath) {
+    const pathParts = window.location.pathname.split('/');
+    configPath = `/${pathParts[1]}/theme.json`;
+  }
 
   if (configPath) {
     const resp = await fetch(`${configPath}`);
