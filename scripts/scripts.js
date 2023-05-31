@@ -12,7 +12,7 @@ import {
   loadCSS,
 } from './lib-franklin.js';
 
-const LCP_BLOCKS = ['hero']; // add your LCP blocks to the list
+const LCP_BLOCKS = []; // add your LCP blocks to the list
 
 async function loadTheme() {
   let theme = {};
@@ -147,7 +147,6 @@ export function decorateSectionBackgrounds(main) {
     const backgroundPicture = section.querySelector(
       ':scope > .default-content-wrapper:first-child > p.picture:first-child > picture:first-child',
     );
-
     // See if first element is a picture - used as the background since section is 'highlighted'
     if (backgroundPicture) {
       section.classList.add('background-image');
