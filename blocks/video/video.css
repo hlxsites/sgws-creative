@@ -28,6 +28,12 @@ main .section.background-video .default-content-wrapper {
   padding-bottom: 12.5%;
 }
 
-main .section.background-video .default-content-wrapper > p > picture > img {
-  border: 3px solid red;
+main .section.background-video .default-content-wrapper > picture:first-child > img {
+  width: calc(60%);
+  border: 1px solid green;
+}
+
+main .section.background-video .default-content-wrapper > picture:nth-child(2) > img {
+  width: calc(60%);
+  border: 1px solid red;
 }

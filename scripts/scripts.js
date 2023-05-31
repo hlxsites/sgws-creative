@@ -90,13 +90,15 @@ function buildHeroBlock(main) {
     section.classList.add('background-video');
     heroImages[0].parentNode.remove();
     const videoBlock = buildBlock('video', [[heroImages[0], heroVideo]]);
-
     section.append(videoBlock);
-    heroParentDiv.childNodes.forEach((child) => {
+
+    heroImages.forEach((child, index) => {
+      if(index === 0) return;
       if(child.innerHTML){
         section.append(child);
       }
     });
+    section.append(heroParentDiv.querySelector('h1'));
   }
 
   main.prepend(section);
