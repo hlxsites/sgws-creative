@@ -249,6 +249,15 @@ main .section.highlight:not(.background-image) h3 {
   color: var(--text-color-background);
 }
 
+main .section.highlight .video.block .video-content video {
+  object-fit: cover;
+  width: 50%;
+  height: auto;
+  padding-bottom: 12.5%;
+  padding-top: 12.5%;
+  padding-left: 25%;
+}
+
 main .section.background-image {
   box-sizing: border-box;
   position: relative;
