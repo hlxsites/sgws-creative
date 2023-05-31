@@ -29,11 +29,18 @@ main .section.background-video .default-content-wrapper {
 }
 
 main .section.background-video .default-content-wrapper > picture:first-child > img {
-  width: calc(60%);
-  border: 1px solid green;
+  width: calc(25vw);
 }
 
 main .section.background-video .default-content-wrapper > picture:nth-child(2) > img {
-  width: calc(60%);
-  border: 1px solid red;
+  width: calc(5vw);
+}
+
+main .section.background-video .default-content-wrapper h1 {
+  font-style: normal;
+  font-size: 4vw;
+  color: var(--text-color-background);
+  font-family: var(--heading-font-family);
+  line-height: 4vw;
+  letter-spacing: 0.125vw;
 }
