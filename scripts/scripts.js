@@ -98,7 +98,7 @@ function buildHeroBlock(main) {
       }
     });
     const h1Title = heroParentDiv.querySelector('h1');
-    if(h1Title){
+    if (h1Title) {
       restOfContent.push(h1Title);
     }
     section.append(videoBlock, ...restOfContent);
