@@ -44,13 +44,17 @@
 .slides .slide .avatar {
   position: relative;
   padding: var(--layout-size-xl);
-  width: var(--avatar-background-size);
 }
 
-.slides .slide .avatar picture:first-child img {
+.slides .slide .avatar picture:first-child {
+  display: inline-flex;
   width: var(--avatar-background-size);
   height: var(--avatar-background-size);
   clip-path: circle(50% at 50% 50%);
+}
+
+.slides .slide .avatar picture:first-child img {
+  object-fit: cover;
 }
 
 .slides .slide .avatar picture:last-child {

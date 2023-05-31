@@ -1,6 +1,5 @@
-import {
-  createTag,
-} from '../../scripts/scripts.js';
+import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
+import { createTag } from '../../scripts/scripts.js';
 
 function getSelectedSlide(block) {
   return block.querySelector('.slide.active');
@@ -43,6 +42,9 @@ export default function decorate(block) {
     // create avatar container
     const avatar = createTag('div', { class: 'avatar' });
     avatar.append(...slide.querySelectorAll('picture'));
+    avatar.querySelectorAll('img').forEach((image) => {
+      image.closest('picture').replaceWith(createOptimizedPicture(image.src, image.alt, false, [{ width: '275' }]));
+    });
     slide.querySelectorAll('p.picture').forEach((p) => p.remove());
     slide.prepend(avatar);
   });
