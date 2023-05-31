@@ -1,0 +1,2 @@
+# Ensure even Windows development uses the LF line ending.
+*.js text eol=lf
