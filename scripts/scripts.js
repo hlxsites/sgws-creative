@@ -100,9 +100,9 @@ export function decoratePictureParagraph(main) {
 export function decorateSectionBackgrounds(main) {
   main.querySelectorAll('.section.highlight').forEach((section) => {
     const backgroundPicture = section.querySelector(
-      ':scope > .default-content-wrapper:first-child > p.picture:first-child > picture:first-child'
+      ':scope > .default-content-wrapper:first-child > p.picture:first-child > picture:first-child',
     );
-    // See if first element is a picture - shall be used as the background since section is 'highlighted'
+    // See if first element is a picture - used as the background since section is 'highlighted'
     if (backgroundPicture) {
       section.classList.add('background-image');
       const pictureParent = backgroundPicture.closest('p.picture');
