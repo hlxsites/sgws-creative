@@ -249,7 +249,7 @@ main .section.highlight:not(.background-image) h3 {
   color: var(--text-color-background);
 }
 
-main .section.highlight .video.block .video-content video {
+main .section.highlight:not(.background-video) .video.block .video-content video {
   object-fit: cover;
   width: 50%;
   height: auto;
