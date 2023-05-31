@@ -29,7 +29,9 @@ async function loadTabPanel(panel) {
 }
 
 export default async function decorate(block) {
-  const tabList = createTag('div', { class: 'tabs', role: 'tablist', 'aria-label': 'Tab List' });
+  const section = block.closest('.tabview-container');
+  const heading = section?.querySelector('h2');
+  const tabList = createTag('div', { class: 'tabs', role: 'tablist', 'aria-label': heading ? heading.textContent : 'Tab View' });
 
   [...block.children].forEach((group, groupId) => {
     const [tabPicture, tabContent] = [...group.children];
@@ -37,8 +39,10 @@ export default async function decorate(block) {
       // invalid tab view structure
       return;
     }
+    const img = tabPicture.querySelector('img');
+    const buttonLabel = img?.getAttribute('alt') || `Tab ${groupId + 1}`;
     const tabButton = createTag('button', {
-      id: `tab-${groupId}`, role: 'tab', 'aria-selected': groupId === 0 ? 'true' : 'false', 'aria-controls': `tabpanel-${groupId}`,
+      id: `tab-${groupId}`, role: 'tab', 'aria-selected': groupId === 0 ? 'true' : 'false', 'aria-controls': `tabpanel-${groupId}`, 'aria-label': buttonLabel,
     });
     tabButton.append(...tabPicture.children);
     group.replaceChild(tabButton, tabPicture);
@@ -59,12 +63,12 @@ export default async function decorate(block) {
 
     const anchor = tabContent.querySelector('a');
     const contentPath = anchor?.getAttribute('href');
-    tabContent.setAttribute('data-path', contentPath || '');
     tabContent.textContent = '';
     tabContent.removeAttribute('class');
     tabContent.setAttribute('id', `tabpanel-${groupId}`);
     tabContent.setAttribute('role', 'tabpanel');
     tabContent.setAttribute('aria-labelledby', `tab=${groupId}`);
+    tabContent.setAttribute('data-path', contentPath || '');
 
     tabList.append(tabButton);
     block.append(tabContent);
