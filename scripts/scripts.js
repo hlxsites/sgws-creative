@@ -101,8 +101,8 @@ export function decorateSectionBackgrounds(main) {
   main.querySelectorAll('.section.highlight').forEach((section) => {
     const wrapperDiv = section.firstElementChild;
     const backgroundPicture = section.querySelector(':scope > .default-content-wrapper:first-child > picture:first-child');
+    // See if first element is a picture - shall be used as the background since section is 'highlighted'
     if (backgroundPicture) {
-      // See if first "real" element is a picture - shall be used as the background.
       section.classList.add('background-image');
       wrapperDiv.removeChild(section.querySelector(':scope > .default-content-wrapper:first-child')); // <p class=picture>
       section.append(backgroundPicture);
