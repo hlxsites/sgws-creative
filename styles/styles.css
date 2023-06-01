@@ -316,53 +316,40 @@ svg#franklin-svg-sprite symbol {
 }
 
 /* ICONS block */
-main .section.icons-container .icons {
+
+main .icon-list > div {
+  text-align: center;
+  gap: 0;
   background-color: rgb(255 255 255);
   opacity: 0.95;
-  display: flex;
-  width: 80%;
-  margin: auto;
-  justify-content: space-around;
-  flex-flow: row nowrap;
 }
 
-main .section.icons-container .icons-wrapper {
-  margin: 0;
-}
-
-main .section.icons-container .icons > div {
-  padding-right: 12px;
-  padding-left: 12px;
-}
-
-main .section.icons-container .icons > div:not(:last-child) {
+main .icon-list > div > div:not(:last-child) {
   border-right: solid 1px #838383;
 }
 
-/* The SVG icon above the text */
-main .section.icons-container .icons > div span.icon {
-  height: 80%;
-  width: 80%;
-  margin: 39px 24px 15px;
+main .icon-list .icon {
+  height: auto;
+  width: 100%;
+  margin: 39px 0 15px;
 }
 
-main .section.icons-container .icons > div span.icon svg {
-  height: 220px !important;
-  width: 90% !important;
+main .icon-list .icon svg {
+  height: auto !important;
+  width: 45% !important;
   opacity: 1;
   margin-left: auto;
   margin-right: auto;
 }
 
-/* The text area. */
-main .section.icons-container .icons > div > div:last-child {
-  height: 100%;
-  width: 100%;
-  text-align: center;
+/* Text area */
+main .icon-list > div p:last-child {
+  margin: 0 20%;
+  font-family: Roboto, sans-serif;
   font-feature-settings: normal;
   font-kerning: auto;
   font-optical-sizing: auto;
-  font-size: 40px;
+  font-size: 24px;
   font-stretch: 100%;
   font-style: normal;
   font-variant-alternates: normal;
@@ -371,7 +358,8 @@ main .section.icons-container .icons > div > div:last-child {
   font-variant-ligatures: normal;
   font-variant-numeric: normal;
   font-variation-settings: normal;
-  font-weight: bold;
+  font-weight: 500;
+  line-height: 24px;
 }
 
 @media (min-width: 900px) {
