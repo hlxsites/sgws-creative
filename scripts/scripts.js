@@ -87,7 +87,7 @@ function buildHeroBlock(main) {
   } else {
     // background video, with images in foreground
     section.classList.add('background-video');
-    heroImages[0].parentNode.remove();
+    heroImages[0].parentElement.remove();
     const videoBlock = buildBlock('video', [[heroImages[0], heroVideo]]);
 
     const restOfContent = [];

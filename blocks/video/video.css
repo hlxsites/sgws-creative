@@ -3,3 +3,22 @@
   width: 100%;
   height: auto;
 }
+
+/* video styling for background video in section */
+main .section.background-video .video.block {
+  position: relative;
+}
+
+main .section.background-video .video.block .video-content video {
+  position: absolute;
+  z-index: -1;
+}
+
+main .section.highlight:not(.background-video) .video.block .video-content video {
+  object-fit: cover;
+  width: 50%;
+  height: auto;
+  padding-bottom: 12.5%;
+  padding-top: 12.5%;
+  padding-left: 25%;
+}
