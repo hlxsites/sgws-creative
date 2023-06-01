@@ -294,8 +294,9 @@ export function readBlockConfig(block) {
 }
 
 /**
- * Extracts the config from a block.
+ * Extracts the config from a block for predefined fields.
  * @param {Element} block The block element
+ * @param {Element} readOptions Configuration read options
  * @returns {object} The block config
  */
 export function readPredefinedBlockConfig(block, readOptions) {

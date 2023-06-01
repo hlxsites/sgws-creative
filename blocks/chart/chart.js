@@ -8,7 +8,7 @@ export default function decorate(block) {
                     'title',
                     'chart-scale',
                     'chart-scale-step',
-                    'scale-step-suffix'
+                    'scale-step-suffix',
                   ],
     removeAfterRead: true,
   };
