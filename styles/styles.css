@@ -275,6 +275,40 @@ main .section.background-image > picture img {
   box-sizing: border-box;
 }
 
+main .section.background-video {
+  padding: 0;
+  margin-block-start: -1em;
+  overflow: hidden;
+}
+
+main .section.background-video .default-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: 12.5%;
+  padding-bottom: 12.5%;
+}
+
+main .section.background-video .default-content-wrapper > p.picture:first-child > picture > img {
+  width: calc(25vw);
+  margin-bottom: 7.5vw;
+}
+
+main .section.background-video .default-content-wrapper > p.picture:nth-child(2) > picture > img {
+  width: calc(5vw);
+}
+
+main .section.background-video .default-content-wrapper h1 {
+  font-style: normal;
+  font-size: 4vw;
+  color: var(--text-color-background);
+  font-family: var(--heading-font-family);
+  line-height: 4vw;
+  letter-spacing: 0.125vw;
+}
+
 /* icon sprite styling */
 svg#franklin-svg-sprite symbol {
   fill: inherit!important;

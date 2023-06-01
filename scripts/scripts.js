@@ -12,7 +12,7 @@ import {
   loadCSS,
 } from './lib-franklin.js';
 
-const LCP_BLOCKS = ['hero']; // add your LCP blocks to the list
+const LCP_BLOCKS = []; // add your LCP blocks to the list
 
 async function loadTheme() {
   let theme = {};
@@ -64,20 +64,34 @@ export function createTag(tag, attributes) {
 
 /**
  * Builds hero block and prepends to main in a new section.
+ * Rules for identifying hero block:
+ * - first link is used in the hero, and is a video link
+ * - to find the div holding the hero, we look at the link's parent div
+ * - if the parent has exactly 2 images, it's a foreground video with a background image
+ * - otherwise, the first image becomes the video poster, and other images are added in the section
  * @param {Element} main The container element
  */
-function buildHeroBlock(main) {
-  const h1 = main.querySelector('h1');
-  const picture = main.querySelector('picture');
-  // eslint-disable-next-line no-bitwise
-  if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
-    // include any other pictures in same section
-    const parentDiv = h1.closest('div');
-    const allPictures = parentDiv ? parentDiv.querySelectorAll('picture') : [picture];
-    const section = document.createElement('div');
-    section.append(buildBlock('hero', { elems: [...allPictures, h1] }));
-    main.prepend(section);
-    parentDiv.parentElement.removeChild(parentDiv);
+function buildHeroSection(main) {
+  const heroVideo = main.querySelector('a');
+  if (!heroVideo?.href?.endsWith('.mp4')) return;
+
+  const heroSection = heroVideo.closest('div');
+  const heroImages = heroSection.querySelectorAll('picture');
+
+  if (heroImages.length === 2) {
+    // background image and foreground video
+    heroSection.classList.add('highlight', 'background-image');
+    heroSection.textContent = '';
+    const videoBlock = buildBlock('video', [[heroImages[1], heroVideo]]);
+
+    heroSection.append(heroImages[0].parentElement, videoBlock);
+  } else {
+    // background video, with images in foreground
+    heroSection.classList.add('background-video');
+    const videoBlock = buildBlock('video', [[heroImages[0], heroVideo]]);
+
+    heroSection.prepend(videoBlock);
+    heroSection.querySelectorAll(':scope > p').forEach((p) => !p.children.length && p.remove());
   }
 }
 
@@ -87,7 +101,7 @@ function buildHeroBlock(main) {
  */
 function buildAutoBlocks(main) {
   try {
-    buildHeroBlock(main);
+    buildHeroSection(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
