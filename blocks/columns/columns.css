@@ -1,11 +1,6 @@
-.section.highlight .columns {
+.columns-container.highlight .columns {
   background-color: var(--background-color);
   color: var(--text-color);
-}
-
-.section.highlight .columns h2,
-.section.highlight .columns h3 {
-  color: var(--text-color-highlight);
 }
 
 .columns > div {
@@ -20,6 +15,24 @@
 
 .columns > div > div {
   flex: 1;
+}
+
+.columns.heading > div {
+  gap: 15vw;
+}
+
+.columns.heading > div > div:first-child {
+  flex: unset;
+}
+
+.columns.heading > div > div h2,
+.columns.heading > div > div p {
+  margin-top: 0;
+}
+
+.columns-container.highlight .columns h2,
+.columns-container.highlight .columns h3 {
+  color: var(--text-color-highlight);
 }
 
 .columns > div > .columns-img-col {
