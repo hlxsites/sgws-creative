@@ -1,5 +1,20 @@
 import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
 
+function readBlockData(block){
+  const blockChildren = [...block.children];
+  const data = new Array(blockChildren.length);
+  blockChildren.forEach((row, index) => {
+    if(row.children.length !== 2) return;
+    data[index] = {
+      name: row.children[0].innerText,
+      value: row.children[1].innerText
+    };
+    row.remove();
+  });
+
+  return data;
+}
+
 export default function decorate(block) {
   const readOptions = {
     configFields: [
@@ -13,8 +28,11 @@ export default function decorate(block) {
     removeAfterRead: true,
   };
   const cfg = readPredefinedBlockConfig(block, readOptions);
+  const data = readBlockData(block);
 
   console.log("Read block config ~~~~~~~~~~~~~~~~");
   console.log(cfg);
+  console.log("Read block data ~~~~~~~~~~~~~~~~");
+  console.log(data);
   console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 }
