@@ -315,6 +315,65 @@ svg#franklin-svg-sprite symbol {
   fill: #fff;
 }
 
+/* ICONS block */
+main .section.icons-container .icons {
+  background-color: rgb(255 255 255);
+  opacity: 0.95;
+  display: flex;
+  width: 80%;
+  margin: auto;
+  justify-content: space-around;
+  flex-flow: row nowrap;
+}
+
+main .section.icons-container .icons-wrapper {
+  margin: 0;
+}
+
+main .section.icons-container .icons > div {
+  padding-right: 12px;
+  padding-left: 12px;
+}
+
+main .section.icons-container .icons > div:not(:last-child) {
+  border-right: solid 1px #838383;
+}
+
+/* The SVG icon above the text */
+main .section.icons-container .icons > div span.icon {
+  height: 80%;
+  width: 80%;
+  margin: 39px 24px 15px;
+}
+
+main .section.icons-container .icons > div span.icon svg {
+  height: 220px !important;
+  width: 90% !important;
+  opacity: 1;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* The text area. */
+main .section.icons-container .icons > div > div:last-child {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  font-feature-settings: normal;
+  font-kerning: auto;
+  font-optical-sizing: auto;
+  font-size: 40px;
+  font-stretch: 100%;
+  font-style: normal;
+  font-variant-alternates: normal;
+  font-variant-caps: normal;
+  font-variant-east-asian: normal;
+  font-variant-ligatures: normal;
+  font-variant-numeric: normal;
+  font-variation-settings: normal;
+  font-weight: bold;
+}
+
 @media (min-width: 900px) {
   .section > div {
     margin: auto;
