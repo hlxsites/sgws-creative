@@ -73,7 +73,7 @@ export function createTag(tag, attributes) {
  */
 function buildHeroSection(main) {
   const heroVideo = main.querySelector('a');
-  if (!heroVideo || !heroVideo.href || !heroVideo.href.endsWith('.mp4')) return;
+  if (!heroVideo?.href?.endsWith('.mp4')) return;
 
   const heroSection = heroVideo.closest('div');
   const heroImages = heroSection.querySelectorAll('picture');
