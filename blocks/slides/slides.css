@@ -20,7 +20,7 @@
 .slides h3 {
   position: relative;
   padding-bottom: var(--layout-size-m);
-  margin-bottom: 1em;
+  margin: 2.5em 0 1em;
 }
 
 .slides h3::after {
