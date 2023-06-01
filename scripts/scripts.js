@@ -71,41 +71,26 @@ export function createTag(tag, attributes) {
  * - otherwise, the first image becomes the video poster, and other images are added in the section
  * @param {Element} main The container element
  */
-function buildHeroBlock(main) {
-  const section = document.createElement('div');
-
+function buildHeroSection(main) {
   const heroVideo = main.querySelector('a');
-  const heroParentDiv = heroVideo.closest('div');
-  const heroImages = heroParentDiv.querySelectorAll('picture');
+  const heroSection = heroVideo.closest('div');
+  const heroImages = heroSection.querySelectorAll('picture');
 
   if (heroImages.length === 2) {
     // background image and foreground video
-    section.classList.add('highlight', 'background-image');
+    heroSection.classList.add('highlight', 'background-image');
+    heroSection.textContent = '';
     const videoBlock = buildBlock('video', [[heroImages[1], heroVideo]]);
 
-    section.append(heroImages[0].parentElement, videoBlock);
+    heroSection.append(heroImages[0].parentElement, videoBlock);
   } else {
     // background video, with images in foreground
-    section.classList.add('background-video');
-    heroImages[0].parentElement.remove();
+    heroSection.classList.add('background-video');
     const videoBlock = buildBlock('video', [[heroImages[0], heroVideo]]);
 
-    const restOfContent = [];
-    heroImages.forEach((heroImage, index) => {
-      if (index === 0) return;
-      if (heroImage.innerHTML) {
-        restOfContent.push(heroImage);
-      }
-    });
-    const h1Title = heroParentDiv.querySelector('h1');
-    if (h1Title) {
-      restOfContent.push(h1Title);
-    }
-    section.append(videoBlock, ...restOfContent);
+    heroSection.prepend(videoBlock);
+    heroSection.querySelectorAll(':scope > p').forEach((p) => !p.children.length && p.remove());
   }
-
-  main.prepend(section);
-  heroParentDiv.remove();
 }
 
 /**
@@ -114,7 +99,7 @@ function buildHeroBlock(main) {
  */
 function buildAutoBlocks(main) {
   try {
-    buildHeroBlock(main);
+    buildHeroSection(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
