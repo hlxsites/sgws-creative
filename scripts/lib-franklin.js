@@ -307,9 +307,7 @@ export function readPredefinedBlockConfig(block, readOptions) {
       if (cols[1]) {
         const col = cols[1];
         const name = toClassName(cols[0].textContent);
-
-        if(!readOptions?.configFields?.includes(name)) return;
-        console.log(`Read config for ${name}`);
+        if (!readOptions?.configFields?.includes(name)) return;
 
         let value = '';
         if (col.querySelector('a')) {
@@ -337,7 +335,7 @@ export function readPredefinedBlockConfig(block, readOptions) {
         config[name] = value;
       }
 
-      if(readOptions?.removeAfterRead){
+      if (readOptions?.removeAfterRead) {
         row.remove();
       }
     }
