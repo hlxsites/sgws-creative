@@ -2,7 +2,34 @@ import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
 
 function drawBarChart(chartData, chartConfig, chartHolder) {
   console.log("Build bar chart");
+
+  chartHolder.style.width = '600px';
+  chartHolder.style.height = '400px';
+
   const barChart = window.echarts.init(chartHolder);
+
+  var option = {
+    title: {
+      text: 'ECharts Getting Started Example'
+    },
+    tooltip: {},
+    legend: {
+      data: ['sales']
+    },
+    xAxis: {
+      data: ['Shirts', 'Cardigans', 'Chiffons', 'Pants', 'Heels', 'Socks']
+    },
+    yAxis: {},
+    series: [
+      {
+        name: 'sales',
+        type: 'bar',
+        data: [5, 20, 36, 10, 10, 20]
+      }
+    ]
+  };
+
+  barChart.setOption(option);
 }
 
 function drawChart(block, chartData, chartConfig, chartHolder) {
@@ -52,6 +79,8 @@ export default function decorate(block) {
 
   const chartHolder = document.createElement('div');
   chartHolder.id = `${Date.now()}-${Math.floor(Math.random() * 10000)}-chart-holder`;
+
+  block.append(chartHolder);
 
   // listen for charting library to be loaded before starting to draw
   document.addEventListener(
