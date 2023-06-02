@@ -20,10 +20,10 @@ const loadScript = (url, attrs) => {
 };
 
 // add more delayed functionality here
-// for charts
+// Charts
 if (document.querySelector('div.chart-container')) {
-  console.log("Loading charting library...")
   loadScript('https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js', {
     type: 'text/javascript',
   });
+  console.log("Charting library loaded!")
 }
