@@ -35,14 +35,26 @@
 }
 
 .tabview [role="tabpanel"] {
+  --heading-font-size-px: calc(var(--heading-font-size) * 1px);
+  --heading-font-size-min: calc(var(--heading-font-size) * 0.5);
+  --heading-font-size-min-px: calc(var(--heading-font-size-min) * 1px);
+  --heading-rise: calc(var(--heading-font-size) - var(--heading-font-size-min));
+  --heading-slope: calc(var(--heading-rise) / var(--viewport-run));
+  --fluid-heading-font-size-px: calc(var(--heading-slope) * (100vw - var(--min-vw-px)) + var(--heading-font-size-min-px));
+
   display: none;
   background-color: var(--background-color);
   overflow: hidden;
 }
 
 /* apply theme */
-.tabview [role="tabpanel"]  h2 {
+.tabview [role="tabpanel"]  h2,
+.tabview [role="tabpanel"]  h3 {
   font-size: var(--heading-font-size);
+  font-size: clamp(var(--heading-font-size-min-px), var(--fluid-heading-font-size-px), var(--heading-font-size-px));
+}
+
+.tabview [role="tabpanel"]  h2 {
   color: var(--secondary-color);
 }
 
