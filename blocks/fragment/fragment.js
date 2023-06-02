@@ -9,10 +9,15 @@ export default async function decorate(block) {
   let fragment = await fetchFragment(path);
   fragment = await decorateFragment(fragment);
   if (fragment) {
-    const fragmentSection = fragment.querySelector(':scope .section');
-    if (fragmentSection) {
-      block.closest('.section').classList.add(...fragmentSection.classList);
-      block.closest('.fragment-wrapper').replaceWith(...fragmentSection.childNodes);
+    const fragmentSections = fragment.querySelectorAll(':scope .section');
+    const section = block.closest('.section');
+    if (fragmentSections.length === 1) {
+      // add to section
+      section.classList.add(...fragmentSections[0].classList);
+      block.closest('.fragment-wrapper').replaceWith(...fragmentSections[0].childNodes);
+    } else {
+      // replace section
+      section.replaceWith(...fragment.childNodes);
     }
   }
 }
