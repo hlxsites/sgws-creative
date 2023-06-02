@@ -25,5 +25,5 @@ if (document.querySelector('div.chart-container')) {
   loadScript('https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js', {
     type: 'text/javascript',
   });
-  console.log("Charting library loaded!")
+  document.dispatchEvent(new Event('echartsloaded'));
 }
