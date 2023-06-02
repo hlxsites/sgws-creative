@@ -1,8 +1,5 @@
 /* portfolio block CSS */
 
-.portfolio {
-}
-
 .portfolio ul.portfolio-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -20,6 +17,7 @@
 }
 
 .portfolio ul.portfolio-grid li > a {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -38,3 +36,23 @@
   font-size: clamp(0.625rem, 0.195vw + 0.575rem, 0.75rem);
 }
 
+.portfolio ul.portfolio-grid li p.picture {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 20%;
+}
+
+.portfolio ul.portfolio-grid li p.picture-1 {
+  transform: translateX(-75%);
+}
+
+.portfolio ul.portfolio-grid li p.picture-2 {
+  z-index: 10;
+}
+
+.portfolio ul.portfolio-grid li p.picture-3 {
+  transform: translateX(75%);
+}
