@@ -539,8 +539,7 @@ function getButtonLabel(button) {
   // try href
   if (button.href) {
     const buttonURL = new URL(button.href);
-    const label = buttonURL.hostname.replace(/^www\./i, '');
-    return button.textContent.toLowerCase() === 'learn more' ? `Learn more about ${label}` : label;
+    return `Visit ${buttonURL.hostname.replace(/^www\./i, '')}`;
   }
   return undefined;
 }
@@ -585,8 +584,7 @@ export function decorateButtons(element, options = {}) {
     }
     // add aria-label when included in options or when no text content
     const hasAriaLabel = !!a.getAttribute('aria-label');
-    const buttonText = a.textContent;
-    if (!hasAriaLabel && (mergedOptions.ariaLabel || !buttonText || buttonText.toLowerCase() === 'learn more')) {
+    if (!hasAriaLabel && (mergedOptions.ariaLabel || !a.textContent)) {
       const label = mergedOptions.ariaLabel || getButtonLabel(a);
       if (label) {
         a.setAttribute('aria-label', label);
