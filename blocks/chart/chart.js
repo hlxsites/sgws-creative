@@ -1,5 +1,14 @@
 import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
 
+function drawChart(block, chartData, chartConfig, chartHolder){
+  const blockClassList = block.classList;
+  if(blockClassList.contains('bars')){
+    console.log("Build bar chart");
+  } else if (blockClassList.contains('pie')){
+    console.log("Build pie chart");
+  }
+}
+
 function readBlockData(block){
   const blockChildren = [...block.children];
   const data = new Array(blockChildren.length);
@@ -38,11 +47,9 @@ export default function decorate(block) {
   console.log(data);
   console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-  const blockClassList = block.classList;
+  const chartHolder = document.createElement('div');
+  chartHolder.id = `${Date.now()}-${Math.floor(Math.random() * 10000)}-chart-holder`;
+  console.log(`Chart holder element id is ${chartHolder.id}`);
 
-  if(blockClassList.contains('bars')){
-    console.log("Build bar chart");
-  } else if (blockClassList.contains('pie')){
-    console.log("Build pie chart");
-  }
+  drawChart(block, data, cfg, chartHolder);
 }
