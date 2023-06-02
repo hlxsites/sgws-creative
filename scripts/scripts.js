@@ -16,22 +16,29 @@ const LCP_BLOCKS = []; // add your LCP blocks to the list
 
 async function loadTheme() {
   let theme = {};
-  let configPath = getMetadata('themeconfig');
+  const template = getMetadata('template');
+  let configPath = getMetadata('themeconfig') || getMetadata('theme-config');
   if (!configPath) {
-    const pathParts = window.location.pathname.split('/');
-    configPath = `/${pathParts[1]}/theme.json`;
+    if (template === 'product') {
+      // use path as theme name
+      configPath = `${window.location.pathname}.json`;
+    } else {
+      // use theme.json in first level folder
+      const pathParts = window.location.pathname.split('/');
+      configPath = `/${pathParts[1]}/theme.json`;
+    }
   }
 
   if (configPath) {
     const resp = await fetch(`${configPath}`);
     if (resp?.ok) {
       const json = await resp.json();
-      theme = json || theme;
-      const tokens = json.theme.data || {};
+      const tokens = json?.data || json?.theme?.data || {};
       const root = document.querySelector(':root');
       tokens.forEach((e) => {
         root.style.setProperty(`--${e.token}`, `${e.value}`);
       });
+      theme = json || theme;
     }
   }
   window.sgws = window.sgws || {};
