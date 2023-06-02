@@ -329,11 +329,10 @@ svg#franklin-svg-sprite symbol {
 }
 
 /* ICONS block */
-
 main .icon-list > div {
   text-align: center;
   gap: 0;
-  background-color: rgb(255 255 255);
+  background-color: var(--background-color);
   opacity: 0.95;
 }
 
@@ -344,7 +343,7 @@ main .icon-list > div > div:not(:last-child) {
 main .icon-list .icon {
   height: auto;
   width: 100%;
-  margin: 39px 0 15px;
+  margin: 39px 0 0;
 }
 
 main .icon-list .icon svg {
@@ -355,24 +354,13 @@ main .icon-list .icon svg {
   margin-right: auto;
 }
 
-/* Text area */
+/* ICONS: Text area */
 main .icon-list > div p:last-child {
   margin: 0 20%;
-  font-family: Roboto, sans-serif;
-  font-feature-settings: normal;
-  font-kerning: auto;
-  font-optical-sizing: auto;
-  font-size: 24px;
-  font-stretch: 100%;
-  font-style: normal;
-  font-variant-alternates: normal;
-  font-variant-caps: normal;
-  font-variant-east-asian: normal;
-  font-variant-ligatures: normal;
-  font-variant-numeric: normal;
-  font-variation-settings: normal;
-  font-weight: 500;
-  line-height: 24px;
+  line-height: 1.3;
+  color: var(--secondary-color);
+  font-size: var(--layout-size-l);
+  word-wrap: break-word; /* Not needed if text scales */
 }
 
 @media (min-width: 900px) {

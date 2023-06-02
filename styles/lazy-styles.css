@@ -1,5 +1,7 @@
 /* below the fold CSS goes here */
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 @font-face {
   font-family: 'Futura PT Bold-Normal';
   font-style: normal;
