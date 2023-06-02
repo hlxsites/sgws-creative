@@ -1,6 +1,6 @@
 import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
 
-function drawBarChart(chartData, chartConfig, chartHolder) {
+function drawBarChart(chartData, chartConfig, chartHolder, theme) {
   chartHolder.style.width = '600px';
   chartHolder.style.height = '400px';
 
@@ -37,13 +37,13 @@ function drawBarChart(chartData, chartConfig, chartHolder) {
   barChart.setOption(chartDescription);
 }
 
-function drawChart(block, chartData, chartConfig, chartHolder) {
+function drawChart(block, chartData, chartConfig, chartHolder, theme) {
   const blockClassList = block.classList;
   if (blockClassList.contains('bars')) {
     chartConfig.legend = true;
   }
   if (blockClassList.contains('bars')) {
-    drawBarChart(chartData, chartConfig, chartHolder);
+    drawBarChart(chartData, chartConfig, chartHolder, theme);
   }
 }
 
@@ -96,7 +96,7 @@ export default function decorate(block) {
     'echartsloaded',
     () => {
       echartsLoaded = true;
-      drawChart(block, data, cfg, chartHolder);
+      drawChart(block, data, cfg, chartHolder, {});
     },
   );
 }
