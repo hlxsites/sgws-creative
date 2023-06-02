@@ -16,12 +16,12 @@ const LCP_BLOCKS = []; // add your LCP blocks to the list
 
 async function loadTheme() {
   let theme = {};
-  const template = getMetadata('template');
+  const themeMeta = getMetadata('theme');
   let configPath = getMetadata('themeconfig') || getMetadata('theme-config');
   if (!configPath) {
-    if (template === 'product') {
+    if (themeMeta) {
       // use path as theme name
-      configPath = `${window.location.pathname}.json`;
+      configPath = `/themes/${themeMeta}.json`;
     } else {
       // use theme.json in first level folder
       const pathParts = window.location.pathname.split('/');
