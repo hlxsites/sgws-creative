@@ -8,13 +8,9 @@ function drawBarChart(chartData, chartConfig, chartHolder) {
 
   const barChart = window.echarts.init(chartHolder);
 
-  var option = {
+  var chartDescription = {
     title: {
-      text: 'ECharts Getting Started Example'
-    },
-    tooltip: {},
-    legend: {
-      data: ['sales']
+      text: chartConfig.title
     },
     xAxis: {
       data: ['Shirts', 'Cardigans', 'Chiffons', 'Pants', 'Heels', 'Socks']
@@ -29,11 +25,20 @@ function drawBarChart(chartData, chartConfig, chartHolder) {
     ]
   };
 
-  barChart.setOption(option);
+  if(chartConfig.legend){
+    chartDescription.legend = {
+      data: ['TBD']
+    }
+  }
+
+  barChart.setOption(chartDescription);
 }
 
 function drawChart(block, chartData, chartConfig, chartHolder) {
   const blockClassList = block.classList;
+  if (blockClassList.contains('bars')) {
+    chartConfig.legend = true;
+  }
   if (blockClassList.contains('bars')) {
     drawBarChart(chartData, chartConfig, chartHolder);
   }
