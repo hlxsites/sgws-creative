@@ -2,6 +2,7 @@ import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
 
 function drawBarChart(chartData, chartConfig, chartHolder) {
   console.log("Build bar chart");
+  const barChart = window.echarts.init(chartHolder);
 }
 
 function drawChart(block, chartData, chartConfig, chartHolder) {
