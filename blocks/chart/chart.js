@@ -1,11 +1,13 @@
 import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
 
+function drawBarChart(chartData, chartConfig, chartHolder) {
+  console.log("Build bar chart");
+}
+
 function drawChart(block, chartData, chartConfig, chartHolder) {
   const blockClassList = block.classList;
   if (blockClassList.contains('bars')) {
-    console.log("Build bar chart");
-  } else if (blockClassList.contains('pie')) {
-    console.log("Build pie chart");
+    drawBarChart(chartData, chartConfig, chartHolder);
   }
 }
 
