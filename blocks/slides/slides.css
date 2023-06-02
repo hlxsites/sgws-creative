@@ -20,7 +20,7 @@
 .slides h3 {
   position: relative;
   padding-bottom: var(--layout-size-m);
-  margin-bottom: 1em;
+  margin: 2.5em 0 1em;
 }
 
 .slides h3::after {
@@ -59,7 +59,7 @@
 
 .slides .slide .avatar picture:last-child {
   position: absolute;
-  bottom: calc(var(--layout-size-xl) - 8px);
+  top: calc(var(--layout-size-xl) - 14px);
   left: 50%;
   transform: translate(-50%, 0);
 }
