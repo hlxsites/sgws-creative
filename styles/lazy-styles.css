@@ -1,5 +1,4 @@
 /* below the fold CSS goes here */
-
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 @font-face {
@@ -8,12 +7,4 @@
   font-weight: 400;
   font-display: swap;
   src: url('./fonts/futuraptbold.woff') format('woff');
-}
-
-@font-face {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu72xKKTU1Kvnz.woff2') format('woff2');
 }
