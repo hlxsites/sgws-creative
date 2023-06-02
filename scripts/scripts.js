@@ -16,22 +16,29 @@ const LCP_BLOCKS = []; // add your LCP blocks to the list
 
 async function loadTheme() {
   let theme = {};
-  let configPath = getMetadata('themeconfig');
+  const template = getMetadata('template');
+  let configPath = getMetadata('themeconfig') || getMetadata('theme-config');
   if (!configPath) {
-    const pathParts = window.location.pathname.split('/');
-    configPath = `/${pathParts[1]}/theme.json`;
+    if (template === 'product') {
+      // use path as theme name
+      configPath = `${window.location.pathname}.json`;
+    } else {
+      // use theme.json in first level folder
+      const pathParts = window.location.pathname.split('/');
+      configPath = `/${pathParts[1]}/theme.json`;
+    }
   }
 
   if (configPath) {
     const resp = await fetch(`${configPath}`);
     if (resp?.ok) {
       const json = await resp.json();
-      theme = json || theme;
-      const tokens = json.theme.data || {};
+      const tokens = json?.data || json?.theme?.data || {};
       const root = document.querySelector(':root');
       tokens.forEach((e) => {
         root.style.setProperty(`--${e.token}`, `${e.value}`);
       });
+      theme = json || theme;
     }
   }
   window.sgws = window.sgws || {};
@@ -71,28 +78,29 @@ export function createTag(tag, attributes) {
  * - otherwise, the first image becomes the video poster, and other images are added in the section
  * @param {Element} main The container element
  */
-function buildHeroSection(main) {
-  const heroVideo = main.querySelector('a');
-  if (!heroVideo?.href?.endsWith('.mp4')) return;
+function buildVideoSection(main) {
+  main.querySelectorAll(':scope > div').forEach((section) => {
+    const sectionLink = section.querySelector(':scope > p > a');
+    if (!sectionLink?.href?.endsWith('.mp4')) return;
 
-  const heroSection = heroVideo.closest('div');
-  const heroImages = heroSection.querySelectorAll('picture');
+    const sectionImages = section.querySelectorAll('picture');
 
-  if (heroImages.length === 2) {
-    // background image and foreground video
-    heroSection.classList.add('highlight', 'background-image');
-    heroSection.textContent = '';
-    const videoBlock = buildBlock('video', [[heroImages[1], heroVideo]]);
+    if (sectionImages.length === 2) {
+      // background image and foreground video
+      section.classList.add('highlight', 'background-image');
+      section.textContent = '';
+      const videoBlock = buildBlock('video', [[sectionImages[1], sectionLink]]);
 
-    heroSection.append(heroImages[0].parentElement, videoBlock);
-  } else {
-    // background video, with images in foreground
-    heroSection.classList.add('background-video');
-    const videoBlock = buildBlock('video', [[heroImages[0], heroVideo]]);
+      section.append(sectionImages[0].parentElement, videoBlock);
+    } else {
+      // background video, with images in foreground
+      section.classList.add('background-video');
+      const videoBlock = buildBlock('video', [[sectionImages[0], sectionLink]]);
 
-    heroSection.prepend(videoBlock);
-    heroSection.querySelectorAll(':scope > p').forEach((p) => !p.children.length && p.remove());
-  }
+      section.prepend(videoBlock);
+      section.querySelectorAll(':scope > p').forEach((p) => !p.children.length && p.remove());
+    }
+  });
 }
 
 /**
@@ -101,7 +109,7 @@ function buildHeroSection(main) {
  */
 function buildAutoBlocks(main) {
   try {
-    buildHeroSection(main);
+    buildVideoSection(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);

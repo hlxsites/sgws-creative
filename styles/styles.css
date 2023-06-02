@@ -10,6 +10,18 @@
  * governing permissions and limitations under the License.
  */
 
+/* Above the fold CSS font fallbacks */
+@font-face {
+  font-family: 'Futura PT Bold-Normal Fallback';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Arial Bold');
+  ascent-override: 98.87%;
+  descent-override: 30.20%;
+  line-gap-override: 0.00%;
+  size-adjust: 99.33%;
+}
+
 :root {
   /* theme vars */
   --primary-color: #035fe6;
@@ -18,33 +30,28 @@
   --overlay-color: #eee;
   --text-color: #000;
   --text-color-background: #fff;
-  --body-font-size: 13px;
-  --heading-font-size: 32px;
-
-
-  /* colors */
-  --link-color: var(--primary-color);
-  --link-color-hover: var(--secondary-color);
-  --background-color-overlay: var(--overlay-color);
-  --background-color-highlight: linear-gradient(270deg, var(--primary-color), var(--secondary-color));
-  --text-color-highlight: var(--secondary-color);
+  --body-font-size: 1rem;
+  --heading-font-size: 2rem;
+  --min-vw: 414;
+  --min-vw-px: calc(var(--min-vw) * 1px);
+  --max-vw: 1168;
+  --viewport-run: calc(var(--max-vw) - var(--min-vw));
 
   /* fonts */
-  --heading-font-family: 'Futura PT Bold-Normal', sans-serif;
+  --heading-font-family: 'Futura PT Bold-Normal', 'Futura PT Bold-Normal Fallback', sans-serif;
   --body-font-family: 'Roboto', sans-serif;
 
   /* body sizes */
-  --body-font-size-m: calc(var(--body-font-size) + 9px);
-  --body-font-size-s: var(--body-font-size);
-  --body-font-size-xs: calc(var(--body-font-size) - 2px);
+  --body-font-size-min: 0.75rem;
+  --body-font-size-max: var(--body-font-size);
 
   /* heading sizes */
-  --heading-font-size-xxl: calc(var(--heading-font-size) + 14px);
-  --heading-font-size-xl: calc(var(--heading-font-size) + 6px);
+  --heading-font-size-xxl: calc(var(--heading-font-size) + 0.875rem);
+  --heading-font-size-xl: calc(var(--heading-font-size) + 0.375rem);
   --heading-font-size-l: var(--heading-font-size);
-  --heading-font-size-m: calc(var(--heading-font-size) - 8px);
-  --heading-font-size-s: calc(var(--heading-font-size) - 12px);
-  --heading-font-size-xs: calc(var(--heading-font-size) - 14px);
+  --heading-font-size-m: calc(var(--heading-font-size) - 0.5rem);
+  --heading-font-size-s: calc(var(--heading-font-size) - 0.75rem);
+  --heading-font-size-xs: calc(var(--heading-font-size) - 0.875rem);
 
   /* layout sizes */
   --layout-size-xxl: 64px;
@@ -58,25 +65,21 @@
 }
 
 body {
-  font-size: var(--body-font-size-s);
-  margin: 0;
-  font-family: var(--body-font-family);
-  line-height: 1.6;
-  color: var(--text-color);
-  background-color: var(--background-color);
-  display: none;
-}
-
-/* theme overrides */
-
-/* TODO: move to theme.json */
-body.constellation {
-  --primary-color: #0076c0;
-  --secondary-color: #001e5b;
+  /* theme colors */
+  --background-color-overlay: var(--overlay-color);
   --background-color-highlight: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
   --text-color-highlight: var(--primary-color);
   --link-color: var(--primary-color);
   --link-color-hover: var(--primary-color);
+
+  font-size: var(--body-font-size);
+  font-size: clamp(var(--body-font-size-min), 0.39vw + 0.649rem, var(--body-font-size-max));
+  margin: 0;
+  font-family: var(--body-font-family);
+  line-height: 1.75;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  display: none;
 }
 
 body.appear {
@@ -98,27 +101,30 @@ h4, h5, h6 {
 }
 
 h1 {
-  font-size: var(--heading-font-size-xxl)
+  font-size: var(--heading-font-size-xxl);
+  font-size: clamp(calc(var(--heading-font-size-xxl) * 0.5), 2.242vw + 0.857rem, var(--heading-font-size-xxl));
 }
 
 h2 {
-  font-size: var(--heading-font-size-l)
+  font-size: var(--heading-font-size-l);
+  font-size: clamp(calc(var(--heading-font-size-l) * 0.5), 1.559vw + 0.596rem, var(--heading-font-size-l));
 }
 
 h3 {
-  font-size: var(--heading-font-size-m)
+  font-size: var(--heading-font-size-m);
+  font-size: clamp(calc(var(--heading-font-size-m) * 0.5), 1.17vw + 0.447rem, var(--heading-font-size-m));
 }
 
 h4 {
-  font-size: var(--heading-font-size-s)
+  font-size: var(--heading-font-size-s);
 }
 
 h5 {
-  font-size: var(--heading-font-size-xs)
+  font-size: var(--heading-font-size-xs);
 }
 
 h6 {
-  font-size: var(--heading-font-size-xs)
+  font-size: var(--heading-font-size-xs);
 }
 
 p, dl, ol, ul, pre, blockquote {
@@ -237,6 +243,15 @@ main .section {
 }
 
 /* section metadata */
+main .section.primary {
+  background-color: var(--primary-color);
+  color: var(--text-color-background);
+}
+
+main .section.secondary {
+  background-color: var(--secondary-color);
+}
+
 main .section.highlight:not(.background-image) {
   /* background styles, unless a background image is used. */
   background-image: var(--background-color-highlight);
@@ -274,8 +289,15 @@ main .section.background-image > picture img {
 
 main .section.background-video {
   padding: 0;
-  margin-block-start: -1em;
   overflow: hidden;
+}
+
+main .section.background-video:has(.default-content-wrapper) {
+  margin-block-start: -1em;
+}
+
+main .section.background-video:not(:has(.default-content-wrapper)) {
+  min-height: 50vw;
 }
 
 main .section.background-video .default-content-wrapper {
@@ -306,6 +328,19 @@ main .section.background-video .default-content-wrapper h1 {
   letter-spacing: 0.125vw;
 }
 
+/* product template styling */
+.product main .section.primary:has(div:only-child),
+.product main .section.secondary:has(div:only-child) {
+  padding: var(--layout-size-l) var(--layout-size-xxl);
+}
+
+.product main .section.primary > div:only-child p.picture,
+.product main .section.secondary > div:only-child  p.picture {
+  margin: 0 auto;
+  text-align: center;
+  width: 25vw;
+}
+
 /* icon sprite styling */
 svg#franklin-svg-sprite symbol {
   fill: inherit!important;
@@ -313,10 +348,4 @@ svg#franklin-svg-sprite symbol {
 
 .icon svg use {
   fill: #fff;
-}
-
-@media (min-width: 900px) {
-  .section > div {
-    margin: auto;
-  }
 }
