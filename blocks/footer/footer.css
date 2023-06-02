@@ -42,6 +42,6 @@ main .section.footer-container {
 }
 
 .footer .footer-content > div > div:first-child h2 {
-  font-size: var(--heading-font-size-xl);
+  font-size: clamp(calc(var(--heading-font-size-xl) * 0.5), 1.949vw + 0.621rem, var(--heading-font-size-xl));
   margin: 0;
 }

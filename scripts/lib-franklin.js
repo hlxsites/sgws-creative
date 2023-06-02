@@ -588,7 +588,8 @@ function getButtonLabel(button) {
   }
   // try href
   if (button.href) {
-    return button.href.replace(/[^\w]/gi, '-');
+    const buttonURL = new URL(button.href);
+    return `Visit ${buttonURL.hostname.replace(/^www\./i, '')}`;
   }
   return undefined;
 }
