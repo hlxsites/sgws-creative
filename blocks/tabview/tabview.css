@@ -1,7 +1,3 @@
-.tabview-container > div:not(:last-child) {
-  padding-bottom: var(--layout-size-xxl);
-}
-
 .tabview .tabs {
   display: flex;
   flex-flow: row nowrap;
