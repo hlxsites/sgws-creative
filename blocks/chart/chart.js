@@ -13,7 +13,7 @@ function drawBarChart(chartData, chartConfig, chartHolder) {
     dataValues[index] = row.value;
   });
 
-  var chartDescription = {
+  const chartDescription = {
     title: {
       text: chartConfig.title
     },
@@ -23,18 +23,12 @@ function drawBarChart(chartData, chartConfig, chartHolder) {
     yAxis: {},
     series: [
       {
-        name: 'Chart data',
+        name: chartConfig.title,
         type: 'bar',
         data: dataValues
       }
     ]
   };
-
-  if(chartConfig.legend){
-    chartDescription.legend = {
-      data: ['TBD']
-    }
-  }
 
   barChart.setOption(chartDescription);
 }
