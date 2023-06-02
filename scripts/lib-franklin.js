@@ -538,7 +538,9 @@ function getButtonLabel(button) {
   }
   // try href
   if (button.href) {
-    return button.href.replace(/[^\w]/gi, '-');
+    const buttonURL = new URL(button.href);
+    const label = buttonURL.hostname.replace(/^www\./i, '');
+    return button.textContent.toLowerCase() === 'learn more' ? `Learn more about ${label}` : label;
   }
   return undefined;
 }
@@ -583,7 +585,8 @@ export function decorateButtons(element, options = {}) {
     }
     // add aria-label when included in options or when no text content
     const hasAriaLabel = !!a.getAttribute('aria-label');
-    if (!hasAriaLabel && (mergedOptions.ariaLabel || !a.textContent)) {
+    const buttonText = a.textContent;
+    if (!hasAriaLabel && (mergedOptions.ariaLabel || !buttonText || buttonText.toLowerCase() === 'learn more')) {
       const label = mergedOptions.ariaLabel || getButtonLabel(a);
       if (label) {
         a.setAttribute('aria-label', label);

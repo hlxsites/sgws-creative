@@ -46,8 +46,8 @@
   --body-font-size-max: var(--body-font-size);
 
   /* heading sizes */
-  --heading-font-size-xxl: calc(var(--heading-font-size) + 0.875);
-  --heading-font-size-xl: calc(var(--heading-font-size) + 0.375);
+  --heading-font-size-xxl: calc(var(--heading-font-size) + 0.875rem);
+  --heading-font-size-xl: calc(var(--heading-font-size) + 0.375rem);
   --heading-font-size-l: var(--heading-font-size);
   --heading-font-size-m: calc(var(--heading-font-size) - 0.5rem);
   --heading-font-size-s: calc(var(--heading-font-size) - 0.75rem);

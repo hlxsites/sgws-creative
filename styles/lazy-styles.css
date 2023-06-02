@@ -1,19 +1,10 @@
 /* below the fold CSS goes here */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 @font-face {
   font-family: 'Futura PT Bold-Normal';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  unicode-range: U+0020-FB02;
   src: url('./fonts/futuraptbold.woff') format('woff');
-}
-
-@font-face {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-  src: local('Roboto'), local('Roboto-Regular'), url('https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu72xKKTU1Kvnz.woff2') format('woff2');
 }
