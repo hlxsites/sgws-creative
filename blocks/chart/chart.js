@@ -10,16 +10,10 @@ function drawBarChart(chartData, chartConfig, chartHolder) {
   const dataValues = new Array(chartData.length);
   chartData.forEach((row, index) => {
     barNames[index] = row.name;
-    if(index === 0){
     dataValues[index] = {
       value: row.value,
       itemStyle: {color: 'blue'},
-    }} else {
-      dataValues[index] = {
-        value: row.value,
-        itemStyle: {color: 'green'},
-      }
-    }
+    };
   });
 
   const chartDescription = {
@@ -34,6 +28,7 @@ function drawBarChart(chartData, chartConfig, chartHolder) {
       {
         name: chartConfig.title,
         type: 'bar',
+        colorBy: 'data',
         data: dataValues
       }
     ]
