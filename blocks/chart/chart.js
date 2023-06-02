@@ -1,26 +1,31 @@
 import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
 
 function drawBarChart(chartData, chartConfig, chartHolder) {
-  console.log("Build bar chart");
-
   chartHolder.style.width = '600px';
   chartHolder.style.height = '400px';
 
   const barChart = window.echarts.init(chartHolder);
+
+  const barNames = new Array(chartData.length);
+  const dataValues = new Array(chartData.length);
+  chartData.forEach((row, index) => {
+    barNames[index] = row.name;
+    dataValues[index] = row.value;
+  });
 
   var chartDescription = {
     title: {
       text: chartConfig.title
     },
     xAxis: {
-      data: ['Shirts', 'Cardigans', 'Chiffons', 'Pants', 'Heels', 'Socks']
+      data: barNames
     },
     yAxis: {},
     series: [
       {
-        name: 'sales',
+        name: 'Chart data',
         type: 'bar',
-        data: [5, 20, 36, 10, 10, 20]
+        data: dataValues
       }
     ]
   };
@@ -59,6 +64,7 @@ function readBlockData(block) {
   return data;
 }
 
+let echartsLoaded = false;
 export default function decorate(block) {
   const readOptions = {
     configFields: [
@@ -91,6 +97,7 @@ export default function decorate(block) {
   document.addEventListener(
     'echartsloaded',
     () => {
+      echartsLoaded = true;
       drawChart(block, data, cfg, chartHolder);
     },
   );
