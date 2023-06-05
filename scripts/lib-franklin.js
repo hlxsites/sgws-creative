@@ -332,8 +332,15 @@ export function readPredefinedBlockConfig(block, readOptions) {
             value = ps.map((p) => p.textContent);
           }
         } else {
-          console.log('##TODO: Handle multiple values (for charts)')
-          value = row.children[1].textContent;
+          if(row.children.length === 1){
+            value = row.children[1].textContent;
+          } else {
+            value = new Array(row.children.length - 1);
+            [...row.children].forEach((child, index) => {
+              if(index === 0) return;
+              value[index-1] = child.textContent;
+            });
+          }
         }
         config[name] = value;
       }
