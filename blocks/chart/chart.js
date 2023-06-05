@@ -3,6 +3,12 @@ import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
 const MIN_BAR_CHART_HEIGHT = '400px';
 
 function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
+  console.log('~~~~~~~~~~~~~~~~~~~~')
+  console.log(chartConfig);
+  console.log('~~')
+  console.log(chartData);
+  console.log('~~~~~~~~~~~~~~~~~~~~')
+
   const chartDescription = {
     title: {
       text: chartConfig.title
@@ -23,13 +29,13 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
           type: 'solid'
         }
       },
-      // splitNumber: 10, // scale step
-      // interval: 15 // make sure to force scale step
+      splitNumber: chartConfig['chart-scale-step'], // scale step (suggestion only...)
+      interval: chartConfig['chart-scale-step'], // (so... ) make sure to force scale step
       axisLabel: {
         formatter: `{value}${chartConfig['value-suffix']}`,
         align: 'center',
       },
-      // min: 'dataMin', // chart scale start
+      // min: 0, // chart scale start
       // max: 'dataMax' // chart scale end
       splitLine: { show: false },
     },
@@ -49,25 +55,22 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
   };
 }
 
+/**
+ * Draw a bar chart comparing two values/series
+ * @param {*} chartData Data to display in the bar chart (2 sets)
+ * @param {*} chartConfig Configuration of the chart (eg. unit, title, etc.)
+ * @param {*} chartHolder Div holding the chart
+ * @param {*} theme Theming details, optional
+ */
 function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
-  console.log(chartConfig);
+  const formattedData = prepareBarChartData(chartData);
 
   chartHolder.style.width = chartConfig.chartWidth;
   chartHolder.style.height = chartConfig.chartHeight;
-
   const barChart = window.echarts.init(chartHolder);
-  const barNames = new Array(chartData.length);
-  const dataValues = new Array(chartData.length);
-  chartData.forEach((row, index) => {
-    barNames[index] = row.name;
-    dataValues[index] = {
-      value: row.value
-    };
-  });
-
   // chart stylings
   // for comparison chart we have only two values, so...
-  dataValues[0].itemStyle = {
+  formattedData.dataValues[0].itemStyle = {
     color: {
       type: 'linear',
       x: 0,
@@ -81,7 +84,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       }],
     }
   };
-  dataValues[1].itemStyle = {
+  formattedData.dataValues[1].itemStyle = {
     color: {
       type: 'linear',
       x: 0,
@@ -124,7 +127,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       }
     },
     xAxis: {
-      data: barNames,
+      data: formattedData.barNames,
       axisTick: {
         show: false,
       },
@@ -154,7 +157,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
         type: 'bar',
         barWidth: '70%',
         colorBy: 'data',
-        data: dataValues,
+        data: formattedData.dataValues,
         label: {
           show: true,
           position: 'top',
@@ -169,6 +172,34 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
   barChart.setOption(chartDescription);
 }
 
+/**
+ * Prepare data to be displayed in a bar chart
+ * @param {Object} chartData Chart data as read from the block
+ * @returns {Object} Object containing barNames and corresponding dataValues
+ */
+function prepareBarChartData(chartData){
+  const barNames = new Array(chartData.length);
+  const dataValues = new Array(chartData.length);
+  chartData.forEach((row, index) => {
+    barNames[index] = row.name;
+    dataValues[index] = {
+      value: row.value
+    };
+  });
+  return {
+    barNames: barNames,
+    dataValues: dataValues,
+  }
+}
+
+/**
+ * Draw charts based on block styling (type) and data to represent
+ * @param {*} block Block to draw the chart in (will be used to determine which chart to draw)
+ * @param {*} chartData Chart data (will be used to determine which chart to draw)
+ * @param {*} chartConfig Chart configuration
+ * @param {*} chartHolder Element (div) holding the chart
+ * @param {*} theme Theming details, optional
+ */
 function drawChart(block, chartData, chartConfig, chartHolder, theme) {
   const blockClassList = block.classList;
   if (blockClassList.contains('bars')) {
@@ -179,9 +210,8 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
     console.log("Chart height: ", chartConfig.chartHeight)
 
     if (chartData.length === 2) {
-      console.log("Draw comparison bar chart")
       drawComparisonBarChart(chartData, chartConfig, chartHolder, theme);
-    } else if (blockClassList.contains('histogram')) {
+    } else {
       console.log("Draw histogram")
       drawHistogramChart(chartData, chartConfig, chartHolder, theme);
     }
