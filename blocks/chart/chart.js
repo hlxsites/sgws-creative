@@ -1,5 +1,7 @@
 import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
 
+const MIN_BAR_CHART_HEIGHT = '400px';
+
 function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
   const chartDescription = {
     title: {
@@ -48,8 +50,8 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
 }
 
 function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
-  chartHolder.style.width = '600px';
-  chartHolder.style.height = '400px';
+  chartHolder.style.width = chartConfig.chartWidth;
+  chartHolder.style.height = chartConfig.chartHeight;
 
   const barChart = window.echarts.init(chartHolder);
   const barNames = new Array(chartData.length);
@@ -146,7 +148,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       {
         name: chartConfig.title,
         type: 'bar',
-        barWidth: '40%',
+        barWidth: '70%',
         colorBy: 'data',
         data: dataValues,
         label: {
@@ -166,7 +168,14 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
 function drawChart(block, chartData, chartConfig, chartHolder, theme) {
   const blockClassList = block.classList;
   if (blockClassList.contains('bars')) {
-    if (blockClassList.contains('comparison') && chartData.length === 2) {
+    chartConfig.chartWidth = block.clientWidth;
+    chartConfig.chartHeight = block.clientHeight !== 0 ? block.clientHeight : MIN_BAR_CHART_HEIGHT;
+
+    console.log("Chart width: ", chartConfig.chartWidth)
+    console.log("Chart height: ", chartConfig.chartHeight)
+
+    if (chartData.length === 2) {
+      console.log("Draw comparison bar chart")
       drawComparisonBarChart(chartData, chartConfig, chartHolder, theme);
     } else if (blockClassList.contains('histogram')) {
       console.log("Draw histogram")
@@ -208,10 +217,9 @@ export default function decorate(block) {
   const cfg = readPredefinedBlockConfig(block, readOptions);
   const data = readBlockData(block);
 
-  const chartHolder = document.createElement('div');
+  let chartHolder = document.createElement('div');
   chartHolder.id = `${Date.now()}-${Math.floor(Math.random() * 10000)}-chart-holder`;
   block.append(chartHolder);
-
   // listen for charting library to be loaded before starting to draw
   document.addEventListener(
     'echartsloaded',
@@ -220,4 +228,19 @@ export default function decorate(block) {
       drawChart(block, data, cfg, chartHolder, {});
     },
   );
+
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      if(echartsLoaded){
+        // redraw scaled chart
+        chartHolder.remove();
+        chartHolder = document.createElement('div');
+        chartHolder.id = `${Date.now()}-${Math.floor(Math.random() * 10000)}-chart-holder`;
+        block.append(chartHolder);
+        drawChart(block, data, cfg, chartHolder, {});
+      }
+    }, 500);
+  });
 }
