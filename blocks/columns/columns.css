@@ -90,13 +90,13 @@
   border-right: 1px solid var(--secondary-color);
 }
 
-.columns.icon-list .icon {
+.columns.icon-list p:first-child {
   height: auto;
   width: 100%;
   margin: 39px 0 0;
 }
 
-.columns.icon-list .icon svg {
+.columns.icon-list span.icon {
   height: auto;
   width: 45%;
   opacity: 1;
@@ -104,7 +104,7 @@
 }
 
   /* ICONS: Text area */
-.columns.icon-list > div p:last-child {
+.columns.icon-list p:last-child {
   margin: 0 20%;
   line-height: 1.5;
   color: var(--secondary-color);
