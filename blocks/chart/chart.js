@@ -12,7 +12,7 @@ function drawBarChart(chartData, chartConfig, chartHolder, theme) {
     barNames[index] = row.name;
     dataValues[index] = {
       value: row.value,
-      itemStyle: {color: 'blue'},
+      itemStyle: { color: 'blue' },
     };
   });
 
@@ -23,7 +23,13 @@ function drawBarChart(chartData, chartConfig, chartHolder, theme) {
     xAxis: {
       data: barNames
     },
-    yAxis: {},
+    yAxis: {
+      axisLabel: {
+        formatter: '{value}k',
+        align: 'center'
+        // ...
+      }
+    },
     series: [
       {
         name: chartConfig.title,
@@ -43,6 +49,11 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
     chartConfig.legend = true;
   }
   if (blockClassList.contains('bars')) {
+    console.log("chartConfig ~~~~~~~~~~~~~~~~");
+    console.log(chartConfig);
+    console.log("chartData ~~~~~~~~~~~~~~~~");
+    console.log(chartData);
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     drawBarChart(chartData, chartConfig, chartHolder, theme);
   }
 }
@@ -80,15 +91,8 @@ export default function decorate(block) {
   const cfg = readPredefinedBlockConfig(block, readOptions);
   const data = readBlockData(block);
 
-  console.log("Read block config ~~~~~~~~~~~~~~~~");
-  console.log(cfg);
-  console.log("Read block data ~~~~~~~~~~~~~~~~");
-  console.log(data);
-  console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
   const chartHolder = document.createElement('div');
   chartHolder.id = `${Date.now()}-${Math.floor(Math.random() * 10000)}-chart-holder`;
-
   block.append(chartHolder);
 
   // listen for charting library to be loaded before starting to draw
