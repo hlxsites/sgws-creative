@@ -15,7 +15,10 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
   console.log('~~~~~~~~~~~~~~~~~~~~')
 
   // stylings
+  let max = Number.NEGATIVE_INFINITY;
   formattedData.dataValues.forEach((datapoint) => {
+    datapoint.value = Number(datapoint.value);
+    max = Math.max(max, datapoint.value);
     datapoint.itemStyle = {
       color: {
         type: 'linear',
@@ -31,6 +34,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
       }
     };
   });
+  console.log("max value is: ", max)
 
   // build chart representation
   const chartDescription = {
@@ -53,14 +57,15 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
           type: 'solid'
         }
       },
-      splitNumber: chartConfig['chart-scale-step'], // scale step (suggestion only...)
-      interval: chartConfig['chart-scale-step'], // (so... ) make sure to force scale step
+      //splitNumber: 8, // scale step (suggestion only...)
+      //interval: chartConfig['chart-scale-step'], // (so... ) make sure to force scale step
       axisLabel: {
         formatter: `{value}${chartConfig['value-suffix']}`,
         align: 'center',
+        margin: '20',
       },
       // min: 0, // chart scale start
-      // max: 'dataMax' // chart scale end
+      max: Math.floor(max*1.1), // chart scale end
       splitLine: { show: false },
     },
     series: [
@@ -69,11 +74,6 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
         type: 'bar',
         colorBy: 'data',
         data: formattedData.dataValues,
-        label: {
-          show: true,
-          position: 'top',
-          formatter: `{@score}${chartConfig['value-suffix']}`
-        },
       }
     ]
   };
