@@ -26,12 +26,18 @@ function drawBarChart(chartData, chartConfig, chartHolder, theme) {
     },
     yAxis: {
       type: 'value',
+      silent: true,
+      // splitNumber: 10, // scale step
+      // interval: 15 // make sure to force scale step
       axisLabel: {
         formatter: '{value}k',
         align: 'center'
       },
-      // min: 'dataMin',
-      // max: 'dataMax'
+      // min: 'dataMin', // chart scale start
+      // max: 'dataMax' // chart scale end
+      lineStyle: {
+        width: 0
+      }
     },
     series: [
       {
