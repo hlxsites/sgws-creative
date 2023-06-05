@@ -1,20 +1,6 @@
 import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
 
-function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
-  chartHolder.style.width = '600px';
-  chartHolder.style.height = '400px';
-
-  const barChart = window.echarts.init(chartHolder);
-  const barNames = new Array(chartData.length);
-  const dataValues = new Array(chartData.length);
-  chartData.forEach((row, index) => {
-    barNames[index] = row.name;
-    dataValues[index] = {
-      value: row.value,
-      itemStyle: { color: 'blue' },
-    };
-  });
-
+function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
   const chartDescription = {
     title: {
       text: chartConfig.title
@@ -59,6 +45,63 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       }
     ]
   };
+}
+
+function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
+  chartHolder.style.width = '600px';
+  chartHolder.style.height = '400px';
+
+  const barChart = window.echarts.init(chartHolder);
+  const barNames = new Array(chartData.length);
+  const dataValues = new Array(chartData.length);
+  chartData.forEach((row, index) => {
+    barNames[index] = row.name;
+    dataValues[index] = {
+      value: row.value,
+      itemStyle: { color: 'blue' },
+    };
+  });
+
+  const chartDescription = {
+    title: {
+      text: chartConfig.title
+    },
+    xAxis: {
+      data: barNames,
+      axisTick: {
+        show: false,
+      }
+    },
+    yAxis: {
+      type: 'value',
+      silent: true,
+      axisLine: {
+        show: true,
+        symbol: 'none',
+        lineStyle: {
+          type: 'solid'
+        }
+      },
+      axisLabel: {
+        formatter: `{value}${chartConfig['value-suffix']}`,
+        align: 'center',
+      },
+      splitLine:{ show: false },
+    },
+    series: [
+      {
+        name: chartConfig.title,
+        type: 'bar',
+        colorBy: 'data',
+        data: dataValues,
+        label: {
+          show: true,
+          position: 'top',
+          formatter: `{@score}${chartConfig['value-suffix']}`
+        },
+      }
+    ]
+  };
 
   barChart.setOption(chartDescription);
 }
@@ -70,6 +113,7 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
       drawComparisonBarChart(chartData, chartConfig, chartHolder, theme);
     } else if (blockClassList.contains('histogram')) {
       console.log("Draw histogram")
+      drawHistogramChart(chartData, chartConfig, chartHolder, theme);
     }
   }
 }
