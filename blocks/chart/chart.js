@@ -18,7 +18,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
 
   // stylings
   let max = Number.NEGATIVE_INFINITY;
-  formattedData.dataValues.forEach((datapoint) => {
+  formattedData.dataValuesHistogram.forEach((datapoint) => {
     datapoint.value = Number(datapoint.value);
     max = Math.max(max, datapoint.value);
     datapoint.itemStyle = {
@@ -92,7 +92,13 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
         name: chartConfig.title,
         type: 'bar',
         colorBy: 'data',
-        data: formattedData.dataValues,
+        data: formattedData.dataValuesHistogram,
+      },
+      {
+        name: chartConfig.title,
+        type: 'bar',
+        colorBy: 'data',
+        data: formattedData.dataValuesOverlay,
       }
     ]
   };
