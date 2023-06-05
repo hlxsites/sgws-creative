@@ -29,7 +29,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
       },
       // min: 'dataMin', // chart scale start
       // max: 'dataMax' // chart scale end
-      splitLine:{ show: false },
+      splitLine: { show: false },
     },
     series: [
       {
@@ -62,13 +62,22 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
     };
   });
 
+  // chart stylings
   const axisFontStyle = {
     align: 'center',
-      color: 'rgb(0, 0, 0)',
-      fontWeight: '400',
-      fontFamily: 'Roboto',
-      fontSize: '12px',
+    color: 'rgb(0, 0, 0)',
+    fontWeight: '400',
+    fontFamily: 'Roboto',
+    fontSize: '12px',
   };
+  const dataLabelFontStyle = {
+    color: 'rgb(2, 28, 73)',
+    fontWeight: '400',
+    fontFamily: 'Roboto',
+    fontSize: '15px',
+  };
+
+  // build chart
   const chartDescription = {
     title: {
       text: chartConfig.title,
@@ -99,10 +108,10 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       axisLabel: {
         formatter: `{value}${chartConfig['value-suffix']}`,
         align: 'center',
-          margin: '15',
-          ...axisFontStyle
+        margin: '15',
+        ...axisFontStyle
       },
-      splitLine:{ show: false },
+      splitLine: { show: false },
     },
     series: [
       {
@@ -114,15 +123,13 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
           show: true,
           position: 'top',
           formatter: `{@score}${chartConfig['value-suffix']}`,
-          color: 'rgb(2, 28, 73)',
-          fontWeight: '400',
-          fontFamily: 'Roboto',
-          fontSize: '15px',
+          ...dataLabelFontStyle
         },
       }
     ]
   };
 
+  // draw chart
   barChart.setOption(chartDescription);
 }
 
