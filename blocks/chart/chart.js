@@ -1,6 +1,6 @@
 import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
 
-function drawBarChart(chartData, chartConfig, chartHolder, theme) {
+function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
   chartHolder.style.width = '600px';
   chartHolder.style.height = '400px';
 
@@ -47,7 +47,12 @@ function drawBarChart(chartData, chartConfig, chartHolder, theme) {
         name: chartConfig.title,
         type: 'bar',
         colorBy: 'data',
-        data: dataValues
+        data: dataValues,
+        label: {
+          show: true,
+          position: 'top',
+          formatter: '{@score}k'
+        }
       }
     ]
   };
@@ -58,15 +63,11 @@ function drawBarChart(chartData, chartConfig, chartHolder, theme) {
 function drawChart(block, chartData, chartConfig, chartHolder, theme) {
   const blockClassList = block.classList;
   if (blockClassList.contains('bars')) {
-    chartConfig.legend = true;
-  }
-  if (blockClassList.contains('bars')) {
-    console.log("chartConfig ~~~~~~~~~~~~~~~~");
-    console.log(chartConfig);
-    console.log("chartData ~~~~~~~~~~~~~~~~");
-    console.log(chartData);
-    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    drawBarChart(chartData, chartConfig, chartHolder, theme);
+    if (blockClassList.contains('comparison')) {
+      drawComparisonBarChart(chartData, chartConfig, chartHolder, theme);
+    } else if (blockClassList.contains('histogram')) {
+      console.log("Draw histogram")
+    }
   }
 }
 
