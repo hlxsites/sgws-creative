@@ -36,6 +36,21 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
       }
     };
   });
+  const axisFontStyle = {
+    align: 'center',
+    color: 'rgb(0, 0, 0)',
+    fontWeight: '400',
+    fontFamily: 'Roboto',
+    fontSize: '12px',
+    width: '70',
+    overflow: 'break',
+  };
+  const dataLabelFontStyle = {
+    color: 'rgb(2, 28, 73)',
+    fontWeight: '400',
+    fontFamily: 'Roboto',
+    fontSize: '15px',
+  };
 
   // build chart representation
   const chartDescription = {
@@ -45,6 +60,8 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
     legend: {
       type: 'plain',
       formatter: chartConfig['unit'],
+      top: '10%',
+      right: '11.5%',
       itemStyle: {
         color: {
           type: 'linear',
@@ -58,13 +75,15 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
               offset: 1, color: 'rgb(195, 73, 87)'
           }],
         }
-      }
+      },
+      textStyle: axisFontStyle
     },
     xAxis: {
       data: formattedData.barNames,
       axisTick: {
         show: false,
-      }
+      },
+      axisLabel: axisFontStyle,
     },
     yAxis: {
       type: 'value',
@@ -83,6 +102,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
         formatter: `{value}${chartConfig['value-suffix']}`,
         align: 'center',
         margin: '20',
+        ...axisFontStyle,
       },
       // min: 0, // chart scale start
       max: (Math.floor(max / chartConfig['chart-scale-step']) + 1) * chartConfig['chart-scale-step'], // chart scale end
