@@ -63,6 +63,34 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
   });
 
   // chart stylings
+  dataValues[0].itemStyle = {
+    color: {
+      type: 'linear',
+      x: 0,
+      y: 0,
+      x2: 0,
+      y2: 1,
+      colorStops: [{
+          offset: 0, color: 'rgb(2, 28, 73)' // color at 0%
+      }, {
+          offset: 1, color: 'rgb(72, 114, 190)' // color at 100%
+      }],
+    }
+  };
+  dataValues[1].itemStyle = {
+    color: {
+      type: 'linear',
+      x: 0,
+      y: 0,
+      x2: 0,
+      y2: 1,
+      colorStops: [{
+          offset: 0, color: 'rgb(114, 114, 114)' // color at 0%
+      }, {
+          offset: 1, color: 'rgb(209, 209, 209)' // color at 100%
+      }],
+    }
+  };
   const axisFontStyle = {
     align: 'center',
     color: 'rgb(0, 0, 0)',
@@ -81,6 +109,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
   const chartDescription = {
     title: {
       text: chartConfig.title,
+      colorBy: 'data',
       textStyle: {
         color: 'rgb(2, 28, 73)',
         fontWeight: '400',
