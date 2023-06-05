@@ -97,8 +97,8 @@
 }
 
 .columns.icon-list .icon svg {
-  height: auto !important;
-  width: 45% !important;
+  height: auto;
+  width: 45%;
   opacity: 1;
   margin: 0 auto;
 }
