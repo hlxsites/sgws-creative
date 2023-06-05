@@ -3,18 +3,42 @@ import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
 const MIN_BAR_CHART_HEIGHT = '400px';
 
 function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
+  const formattedData = prepareBarChartData(chartData);
+
+  chartHolder.style.width = chartConfig.chartWidth;
+  chartHolder.style.height = chartConfig.chartHeight;
+  const barChart = window.echarts.init(chartHolder);
   console.log('~~~~~~~~~~~~~~~~~~~~')
   console.log(chartConfig);
   console.log('~~')
-  console.log(chartData);
+  console.log(formattedData);
   console.log('~~~~~~~~~~~~~~~~~~~~')
 
+  // stylings
+  formattedData.dataValues.forEach((datapoint) => {
+    datapoint.itemStyle = {
+      color: {
+        type: 'linear',
+        x: 0,
+        y: 0,
+        x2: 0,
+        y2: 1,
+        colorStops: [{
+            offset: 0, color: 'rgb(112, 43, 51)'
+        }, {
+            offset: 1, color: 'rgb(195, 73, 87)'
+        }],
+      }
+    };
+  });
+
+  // build chart representation
   const chartDescription = {
     title: {
       text: chartConfig.title
     },
     xAxis: {
-      data: barNames,
+      data: formattedData.barNames,
       axisTick: {
         show: false,
       }
@@ -44,7 +68,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
         name: chartConfig.title,
         type: 'bar',
         colorBy: 'data',
-        data: dataValues,
+        data: formattedData.dataValues,
         label: {
           show: true,
           position: 'top',
@@ -53,6 +77,9 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
       }
     ]
   };
+
+  // draw chart
+  barChart.setOption(chartDescription);
 }
 
 /**
@@ -114,7 +141,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
     fontSize: '15px',
   };
 
-  // build chart
+  // build chart representation
   const chartDescription = {
     title: {
       text: chartConfig.title,
