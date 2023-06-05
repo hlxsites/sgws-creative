@@ -7,6 +7,8 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
 
   chartHolder.style.width = chartConfig.chartWidth;
   chartHolder.style.height = chartConfig.chartHeight;
+  chartConfig['chart-scale-step'] = parseInt(chartConfig['chart-scale-step'], 10);
+
   const barChart = window.echarts.init(chartHolder);
   console.log('~~~~~~~~~~~~~~~~~~~~')
   console.log(chartConfig);
@@ -34,12 +36,29 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
       }
     };
   });
-  console.log("max value is: ", max)
 
   // build chart representation
   const chartDescription = {
     title: {
       text: chartConfig.title
+    },
+    legend: {
+      type: 'plain',
+      formatter: chartConfig['unit'],
+      itemStyle: {
+        color: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          colorStops: [{
+              offset: 0, color: 'rgb(112, 43, 51)'
+          }, {
+              offset: 1, color: 'rgb(195, 73, 87)'
+          }],
+        }
+      }
     },
     xAxis: {
       data: formattedData.barNames,
@@ -57,15 +76,16 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
           type: 'solid'
         }
       },
-      //splitNumber: 8, // scale step (suggestion only...)
-      //interval: chartConfig['chart-scale-step'], // (so... ) make sure to force scale step
+      //from to chartConfig['chart-scale']
+      //maxInterval: chartConfig['chart-scale-step'],
+      interval: chartConfig['chart-scale-step'], // (so... ) make sure to force scale step
       axisLabel: {
         formatter: `{value}${chartConfig['value-suffix']}`,
         align: 'center',
         margin: '20',
       },
       // min: 0, // chart scale start
-      max: Math.floor(max*1.1), // chart scale end
+      max: (Math.floor(max / chartConfig['chart-scale-step']) + 1) * chartConfig['chart-scale-step'], // chart scale end
       splitLine: { show: false },
     },
     series: [
