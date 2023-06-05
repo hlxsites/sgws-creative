@@ -57,27 +57,6 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
     title: {
       text: chartConfig.title
     },
-    legend: {
-      type: 'plain',
-      formatter: chartConfig['unit'],
-      top: '10%',
-      right: '11.5%',
-      itemStyle: {
-        color: {
-          type: 'linear',
-          x: 0,
-          y: 0,
-          x2: 0,
-          y2: 1,
-          colorStops: [{
-              offset: 0, color: 'rgb(112, 43, 51)'
-          }, {
-              offset: 1, color: 'rgb(195, 73, 87)'
-          }],
-        }
-      },
-      textStyle: axisFontStyle
-    },
     xAxis: {
       data: formattedData.barNames,
       axisTick: {
@@ -117,6 +96,30 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
       }
     ]
   };
+
+  if(chartConfig.legend){
+    chartDescription.legend = {
+      type: 'plain',
+      formatter: chartConfig['unit'],
+      top: '10%',
+      right: '11.5%',
+      itemStyle: {
+        color: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          colorStops: [{
+              offset: 0, color: 'rgb(112, 43, 51)'
+          }, {
+              offset: 1, color: 'rgb(195, 73, 87)'
+          }],
+        }
+      },
+      textStyle: axisFontStyle
+    }
+  }
 
   // draw chart
   barChart.setOption(chartDescription);
@@ -272,6 +275,7 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
   if (blockClassList.contains('bars')) {
     chartConfig.chartWidth = block.clientWidth;
     chartConfig.chartHeight = block.clientHeight !== 0 ? block.clientHeight : MIN_BAR_CHART_HEIGHT;
+    chartConfig.legend = blockClassList.contains('graph-legend');
 
     console.log("Chart width: ", chartConfig.chartWidth)
     console.log("Chart height: ", chartConfig.chartHeight)
