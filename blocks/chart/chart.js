@@ -96,7 +96,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       },
       {
         name: chartConfig.title,
-        type: 'bar',
+        type: 'line',
         colorBy: 'data',
         data: formattedData.dataValuesOverlay,
       }
