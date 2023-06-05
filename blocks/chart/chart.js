@@ -96,6 +96,14 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
     },
     {
       type: 'value',
+      silent: true,
+      axisLine: {
+        show: true,
+        symbol: 'none',
+        lineStyle: {
+          type: 'solid'
+        }
+      },
       min: 55,
       max: 85,
       interval: 5,
