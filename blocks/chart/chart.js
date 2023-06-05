@@ -8,6 +8,7 @@ function drawBarChart(chartData, chartConfig, chartHolder, theme) {
 
   const barNames = new Array(chartData.length);
   const dataValues = new Array(chartData.length);
+
   chartData.forEach((row, index) => {
     barNames[index] = row.name;
     dataValues[index] = {
@@ -24,11 +25,13 @@ function drawBarChart(chartData, chartConfig, chartHolder, theme) {
       data: barNames
     },
     yAxis: {
+      type: 'value',
       axisLabel: {
         formatter: '{value}k',
         align: 'center'
-        // ...
-      }
+      },
+      // min: 'dataMin',
+      // max: 'dataMax'
     },
     series: [
       {
