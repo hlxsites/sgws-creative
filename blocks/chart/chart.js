@@ -71,7 +71,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       },
       axisLabel: axisFontStyle,
     },
-    yAxis: {
+    yAxis: [{
       type: 'value',
       silent: true,
       axisLine: {
@@ -94,16 +94,27 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       max: (Math.floor(max / chartConfig['chart-scale-step']) + 1) * chartConfig['chart-scale-step'], // chart scale end
       splitLine: { show: false },
     },
+    {
+      type: 'value',
+      min: 55,
+      max: 85,
+      interval: 5,
+      axisLabel: {
+        formatter: '{value}%'
+      }
+    }],
     series: [
       {
         name: chartConfig.title,
         type: 'bar',
+        yAxisIndex: 0,
         colorBy: 'data',
         data: formattedData.dataValuesHistogram,
       },
       {
         name: chartConfig.title,
         type: 'line',
+        yAxisIndex: 1,
         symbol: 'circle',
         symbolSize: 8,
         lineStyle: {
@@ -468,10 +479,10 @@ function readBlockData(block) {
     if (row.children.length > 2) {
       data[index] = {};
       [...row.children].forEach((value, valueIndex) => {
-        if(valueIndex === 0){
+        if (valueIndex === 0) {
           // data label
           data[index].name = value.innerText;
-        } else if (valueIndex === 1){
+        } else if (valueIndex === 1) {
           // primary value
           data[index].value = value.innerText;
         } else {

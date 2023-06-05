@@ -331,7 +331,10 @@ export function readPredefinedBlockConfig(block, readOptions) {
           } else {
             value = ps.map((p) => p.textContent);
           }
-        } else value = row.children[1].textContent;
+        } else {
+          console.log('##TODO: Handle multiple values (for charts)')
+          value = row.children[1].textContent;
+        }
         config[name] = value;
       }
 
