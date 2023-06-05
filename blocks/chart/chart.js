@@ -142,7 +142,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
         margin: '15',
         ...axisFontStyle
       },
-      splitLine: { show: false },
+      //splitLine: { show: false },
     },
     series: [
       {
