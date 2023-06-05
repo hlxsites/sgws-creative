@@ -36,6 +36,13 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       }
     };
   });
+  formattedData.dataValuesOverlay.forEach((datapoint) => {
+    datapoint.value = Number(datapoint.value);
+    max = Math.max(max, datapoint.value);
+    datapoint.itemStyle = {
+      color: 'rgb(209, 209, 209)'
+    };
+  });
   const axisFontStyle = {
     align: 'center',
     color: 'rgb(0, 0, 0)',
@@ -97,6 +104,12 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       {
         name: chartConfig.title,
         type: 'line',
+        symbol: 'circle',
+        symbolSize: 8,
+        lineStyle: {
+          color: 'rgb(209, 209, 209)',
+          width: 1,
+        },
         colorBy: 'data',
         data: formattedData.dataValuesOverlay,
       }
@@ -350,7 +363,6 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
         margin: '20',
         ...axisFontStyle
       },
-      //splitLine: { show: false },
     },
     series: [
       {
