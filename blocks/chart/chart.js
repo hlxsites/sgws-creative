@@ -78,7 +78,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       //maxInterval: chartConfig['chart-scale-step'],
       interval: chartConfig['chart-scale-step'], // (so... ) make sure to force scale step
       axisLabel: {
-        formatter: `{value}${chartConfig['value-suffix']}`,
+        formatter: `${chartConfig['value-suffix']}{value}`,
         align: 'center',
         margin: '20',
         ...axisFontStyle,
@@ -209,7 +209,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
       //maxInterval: chartConfig['chart-scale-step'],
       interval: chartConfig['chart-scale-step'], // (so... ) make sure to force scale step
       axisLabel: {
-        formatter: `{value}${chartConfig['value-suffix']}`,
+        formatter: `${chartConfig['value-suffix']}{value}`,
         align: 'center',
         margin: '20',
         ...axisFontStyle,
@@ -345,7 +345,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
         }
       },
       axisLabel: {
-        formatter: `{value}${chartConfig['value-suffix'] || ''}${chartConfig['unit'] || ''}`,
+        formatter: `${chartConfig['unit'] || ''}{value}${chartConfig['value-suffix'] || ''}`,
         align: 'center',
         margin: '20',
         ...axisFontStyle
@@ -362,7 +362,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
         label: {
           show: true,
           position: 'top',
-          formatter: `{@score}${chartConfig['value-suffix'] || ''}${chartConfig['unit'] || ''}`,
+          formatter: `${chartConfig['unit'] || ''}{@score}${chartConfig['value-suffix'] || ''}`,
           ...dataLabelFontStyle
         },
       }
@@ -435,12 +435,15 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
 
     if (chartData.length === 2) {
       // comparison
+      console.log("// comparison")
       drawComparisonBarChart(chartData, chartConfig, chartHolder, theme);
     } else if (blockClassList.contains('overlay-data')) {
       // histogram with trend line
+      console.log("// histogram with trend line")
       drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, theme);
     } else {
       // default, histogram (one series)
+      console.log("default, histogram (one series)");
       drawHistogramChart(chartData, chartConfig, chartHolder, theme);
     }
   }
