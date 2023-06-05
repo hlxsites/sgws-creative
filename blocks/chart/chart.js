@@ -22,7 +22,10 @@ function drawBarChart(chartData, chartConfig, chartHolder, theme) {
       text: chartConfig.title
     },
     xAxis: {
-      data: barNames
+      data: barNames,
+      axisTick: {
+        show: false,
+      }
     },
     yAxis: {
       type: 'value',
@@ -31,13 +34,13 @@ function drawBarChart(chartData, chartConfig, chartHolder, theme) {
       // interval: 15 // make sure to force scale step
       axisLabel: {
         formatter: '{value}k',
-        align: 'center'
+        align: 'center',
       },
       // min: 'dataMin', // chart scale start
       // max: 'dataMax' // chart scale end
       lineStyle: {
-        width: 0
-      }
+        width: 0,
+      },
     },
     series: [
       {
