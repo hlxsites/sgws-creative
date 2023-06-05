@@ -3,6 +3,7 @@ import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
 function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
   chartHolder.style.width = '600px';
   chartHolder.style.height = '400px';
+  console.log(chartConfig)
 
   const barChart = window.echarts.init(chartHolder);
 
@@ -33,7 +34,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       // splitNumber: 10, // scale step
       // interval: 15 // make sure to force scale step
       axisLabel: {
-        formatter: '{value}k',
+        formatter: `{value}${chartConfig['value-suffix']}`,
         align: 'center',
       },
       // min: 'dataMin', // chart scale start
@@ -51,7 +52,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
         label: {
           show: true,
           position: 'top',
-          formatter: '{@score}k'
+          formatter: `{@score}${chartConfig['value-suffix']}`
         }
       }
     ]
