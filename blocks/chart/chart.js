@@ -109,7 +109,8 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       interval: 5,
       axisLabel: {
         formatter: '{value}%'
-      }
+      },
+      splitLine: { show: false },
     }],
     series: [
       {
