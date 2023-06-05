@@ -3,13 +3,10 @@ import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
 function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
   chartHolder.style.width = '600px';
   chartHolder.style.height = '400px';
-  console.log(chartConfig)
 
   const barChart = window.echarts.init(chartHolder);
-
   const barNames = new Array(chartData.length);
   const dataValues = new Array(chartData.length);
-
   chartData.forEach((row, index) => {
     barNames[index] = row.name;
     dataValues[index] = {
@@ -31,6 +28,13 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
     yAxis: {
       type: 'value',
       silent: true,
+      axisLine: {
+        show: true,
+        symbol: 'none',
+        lineStyle: {
+          type: 'solid'
+        }
+      },
       // splitNumber: 10, // scale step
       // interval: 15 // make sure to force scale step
       axisLabel: {
@@ -39,9 +43,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       },
       // min: 'dataMin', // chart scale start
       // max: 'dataMax' // chart scale end
-      lineStyle: {
-        width: 0,
-      },
+      splitLine:{ show: false },
     },
     series: [
       {
@@ -53,7 +55,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
           show: true,
           position: 'top',
           formatter: `{@score}${chartConfig['value-suffix']}`
-        }
+        },
       }
     ]
   };
