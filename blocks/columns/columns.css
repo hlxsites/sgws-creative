@@ -106,8 +106,8 @@
   /* ICONS: Text area */
 .columns.icon-list > div p:last-child {
   margin: 0 20%;
-  line-height: 1.3;
+  line-height: 1.5;
   color: var(--secondary-color);
-  font-size: var(--layout-size-l);
-  word-wrap: break-word; /* Not needed if text scales */
+  font-size: 2vw;
+  word-wrap: break-word;
 }
