@@ -85,7 +85,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       //maxInterval: chartConfig['chart-scale-step'],
       interval: chartConfig['chart-scale-step'], // (so... ) make sure to force scale step
       axisLabel: {
-        formatter: `${chartConfig['value-suffix']}{value}`,
+        formatter: `{value}${chartConfig['value-suffix']}`,
         align: 'center',
         margin: '20',
         ...axisFontStyle,
@@ -222,7 +222,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
       //maxInterval: chartConfig['chart-scale-step'],
       interval: chartConfig['chart-scale-step'], // (so... ) make sure to force scale step
       axisLabel: {
-        formatter: `${chartConfig['value-suffix']}{value}`,
+        formatter: `{value}${chartConfig['value-suffix']}`,
         align: 'center',
         margin: '20',
         ...axisFontStyle,
