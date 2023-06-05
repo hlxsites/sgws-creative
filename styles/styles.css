@@ -351,3 +351,14 @@ svg#franklin-svg-sprite symbol {
 .icon svg use {
   fill: #fff;
 }
+
+/* animations */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes fade-in-bottom {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to { opacity: 1 }
+  }
+}
