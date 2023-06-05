@@ -99,6 +99,8 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
     fontWeight: '400',
     fontFamily: 'Roboto',
     fontSize: '12px',
+    width: '70',
+    overflow: 'break',
   };
   const dataLabelFontStyle = {
     color: 'rgb(2, 28, 73)',
