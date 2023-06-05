@@ -50,6 +50,8 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
 }
 
 function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
+  console.log(chartConfig);
+
   chartHolder.style.width = chartConfig.chartWidth;
   chartHolder.style.height = chartConfig.chartHeight;
 
@@ -139,9 +141,9 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
         }
       },
       axisLabel: {
-        formatter: `{value}${chartConfig['value-suffix']}`,
+        formatter: `{value}${chartConfig['value-suffix'] || ''}${chartConfig['unit'] || ''}`,
         align: 'center',
-        margin: '15',
+        margin: '20',
         ...axisFontStyle
       },
       //splitLine: { show: false },
@@ -156,7 +158,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
         label: {
           show: true,
           position: 'top',
-          formatter: `{@score}${chartConfig['value-suffix']}`,
+          formatter: `{@score}${chartConfig['value-suffix'] || ''}${chartConfig['unit'] || ''}`,
           ...dataLabelFontStyle
         },
       }
