@@ -87,7 +87,7 @@
 }
 
 .columns.icon-list > div > div:not(:last-child) {
-  border-right: 1px solid #838383;
+  border-right: 1px solid var(--secondary-color);
 }
 
 .columns.icon-list .icon {
