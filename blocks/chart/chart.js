@@ -57,12 +57,12 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
   chartData.forEach((row, index) => {
     barNames[index] = row.name;
     dataValues[index] = {
-      value: row.value,
-      itemStyle: { color: 'blue' },
+      value: row.value
     };
   });
 
   // chart stylings
+  // for comparison chart we have only two values, so...
   dataValues[0].itemStyle = {
     color: {
       type: 'linear',
@@ -71,9 +71,9 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       x2: 0,
       y2: 1,
       colorStops: [{
-          offset: 0, color: 'rgb(2, 28, 73)' // color at 0%
+          offset: 0, color: 'rgb(2, 28, 73)'
       }, {
-          offset: 1, color: 'rgb(72, 114, 190)' // color at 100%
+          offset: 1, color: 'rgb(72, 114, 190)'
       }],
     }
   };
@@ -85,9 +85,9 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       x2: 0,
       y2: 1,
       colorStops: [{
-          offset: 0, color: 'rgb(114, 114, 114)' // color at 0%
+          offset: 0, color: 'rgb(114, 114, 114)'
       }, {
-          offset: 1, color: 'rgb(209, 209, 209)' // color at 100%
+          offset: 1, color: 'rgb(209, 209, 209)'
       }],
     }
   };
@@ -146,6 +146,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       {
         name: chartConfig.title,
         type: 'bar',
+        barWidth: '40%',
         colorBy: 'data',
         data: dataValues,
         label: {
@@ -165,7 +166,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
 function drawChart(block, chartData, chartConfig, chartHolder, theme) {
   const blockClassList = block.classList;
   if (blockClassList.contains('bars')) {
-    if (blockClassList.contains('comparison')) {
+    if (blockClassList.contains('comparison') && chartData.length === 2) {
       drawComparisonBarChart(chartData, chartConfig, chartHolder, theme);
     } else if (blockClassList.contains('histogram')) {
       console.log("Draw histogram")
