@@ -62,6 +62,13 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
     };
   });
 
+  const axisFontStyle = {
+    align: 'center',
+      color: 'rgb(0, 0, 0)',
+      fontWeight: '400',
+      fontFamily: 'Roboto',
+      fontSize: '12px',
+  };
   const chartDescription = {
     title: {
       text: chartConfig.title,
@@ -77,6 +84,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       axisTick: {
         show: false,
       },
+      axisLabel: axisFontStyle,
     },
     yAxis: {
       type: 'value',
@@ -91,11 +99,8 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       axisLabel: {
         formatter: `{value}${chartConfig['value-suffix']}`,
         align: 'center',
-          color: 'rgb(0, 0, 0)',
-          fontWeight: '400',
-          fontFamily: 'Roboto',
-          fontSize: '10px',
-          margin: '15'
+          margin: '15',
+          ...axisFontStyle
       },
       splitLine:{ show: false },
     },
