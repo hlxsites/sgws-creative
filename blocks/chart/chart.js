@@ -3,6 +3,51 @@ import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
 const MIN_BAR_CHART_HEIGHT = '400px';
 
 /**
+ * Prepare data to be displayed in a bar chart
+ * @param {Object} chartData Chart data as read from the block
+ * @returns {Object} Object containing barNames and corresponding dataValues
+ */
+function prepareBarChartData(chartData) {
+  const barNames = new Array(chartData.length);
+  const dataValues = new Array(chartData.length);
+  chartData.forEach((row, index) => {
+    barNames[index] = row.name;
+    dataValues[index] = {
+      value: row.value,
+    };
+  });
+  return {
+    barNames,
+    dataValues,
+  };
+}
+
+/**
+ * Prepare data to be displayed as two series in a bar chart
+ * @param {Object} chartData Chart data as read from the block
+ * @returns {Object} Object containing barNames and corresponding dataValues
+ */
+function prepareBarChartDataWithOverlay(chartData) {
+  const barNames = new Array(chartData.length / 2);
+  const dataValues = new Array(chartData.length);
+  const overlayValues = new Array(chartData.length);
+  chartData.forEach((row, index) => {
+    barNames[index] = row.name;
+    dataValues[index] = {
+      value: row.value,
+    };
+    overlayValues[index] = {
+      value: row.additionalValues[0],
+    };
+  });
+  return {
+    barNames,
+    dataValuesHistogram: dataValues,
+    dataValuesOverlay: overlayValues,
+  };
+}
+
+/**
  * Draw a histogram chart with an overlayed trend line
  * @param {*} chartData Chart data (will be used to determine which chart to draw)
  * @param {*} chartConfig Chart configuration
@@ -32,40 +77,34 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
         x2: 0,
         y2: 1,
         colorStops: [{
-          offset: 0, color: 'rgb(112, 43, 51)'
+          offset: 0, color: theme['primary-gradient-end'],
         }, {
-          offset: 1, color: 'rgb(195, 73, 87)'
+          offset: 1, color: theme['primary-gradient-start'],
         }],
-      }
+      },
     };
   });
   formattedData.dataValuesOverlay.forEach((datapoint) => {
     datapoint.value = Number(datapoint.value);
     max = Math.max(max, datapoint.value);
     datapoint.itemStyle = {
-      color: 'rgb(209, 209, 209)'
+      color: theme['secondary-gradient-start'],
     };
   });
   const axisFontStyle = {
     align: 'center',
     color: 'rgb(0, 0, 0)',
     fontWeight: '400',
-    fontFamily: 'Roboto',
+    fontFamily: theme['font-family'],
     fontSize: '12px',
     width: '70',
     overflow: 'break',
-  };
-  const dataLabelFontStyle = {
-    color: 'rgb(2, 28, 73)',
-    fontWeight: '400',
-    fontFamily: 'Roboto',
-    fontSize: '15px',
   };
 
   // build chart representation
   const chartDescription = {
     title: {
-      text: chartConfig.title
+      text: chartConfig.title,
     },
     xAxis: {
       data: formattedData.barNames,
@@ -81,19 +120,17 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
         show: true,
         symbol: 'none',
         lineStyle: {
-          type: 'solid'
-        }
+          type: 'solid',
+        },
       },
-      //from to chartConfig['chart-scale']
-      //maxInterval: chartConfig['chart-scale-step'],
-      interval: chartConfig['chart-scale-step'], // (so... ) make sure to force scale step
+      interval: chartConfig['chart-scale-step'],
       axisLabel: {
         formatter: `{value}${chartConfig['value-suffix']}`,
         align: 'center',
         margin: '20',
         ...axisFontStyle,
       },
-      max: (Math.floor(max / chartConfig['chart-scale-step']) + 1) * chartConfig['chart-scale-step'], // chart scale end
+      max: (Math.floor(max / chartConfig['chart-scale-step']) + 1) * chartConfig['chart-scale-step'],
       splitLine: { show: false },
     },
     {
@@ -103,21 +140,20 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
         show: true,
         symbol: 'none',
         lineStyle: {
-          type: 'solid'
-        }
+          type: 'solid',
+        },
       },
       min: chartConfig['chart-scale-overlay-min'],
       max: chartConfig['chart-scale-overlay-max'],
       interval: chartConfig['chart-scale-overlay-step'],
       axisLabel: {
-        formatter: `{value}${chartConfig['scale-overlay-label-suffix']}`
+        formatter: `{value}${chartConfig['scale-overlay-label-suffix']}`,
       },
       splitLine: { show: false },
     }],
     series: [
       {
-        name: chartConfig['unit'],
-        // seriesName: chartConfig['unit'],
+        name: chartConfig.unit,
         type: 'bar',
         yAxisIndex: 0,
         colorBy: 'data',
@@ -125,37 +161,35 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       },
       {
         name: chartConfig['overlay-unit'],
-        // seriesName: chartConfig['overlay-unit'],
         type: 'line',
         yAxisIndex: 1,
         symbol: 'circle',
         symbolSize: 8,
         lineStyle: {
-          color: 'rgb(209, 209, 209)',
+          color: theme['secondary-gradient-start'],
           width: 1,
         },
         colorBy: 'data',
         data: formattedData.dataValuesOverlay,
-      }
-    ]
+      },
+    ],
   };
 
   if (chartConfig.legend) {
-    console.log(chartConfig['overlay-unit'])
     chartDescription.legend = {
       type: 'plain',
       data: [
         {
-          name: chartConfig['unit']
+          name: chartConfig.unit,
         }, {
           name: chartConfig['overlay-unit'],
           itemStyle: {
-            color: 'rgb(209, 209, 209)',
+            color: theme['secondary-gradient-start'],
           },
           lineStyle: {
-            color: 'rgb(209, 209, 209)',
+            color: theme['secondary-gradient-start'],
             width: 1,
-          }
+          },
         }],
       top: '10%',
       right: '11.5%',
@@ -167,14 +201,14 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
           x2: 0,
           y2: 1,
           colorStops: [{
-            offset: 0, color: 'rgb(112, 43, 51)'
+            offset: 0, color: theme['primary-gradient-end'],
           }, {
-            offset: 1, color: 'rgb(195, 73, 87)'
+            offset: 1, color: theme['primary-gradient-start'],
           }],
-        }
+        },
       },
-      textStyle: axisFontStyle
-    }
+      textStyle: axisFontStyle,
+    };
   }
 
   // draw chart
@@ -210,33 +244,27 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
         x2: 0,
         y2: 1,
         colorStops: [{
-          offset: 0, color: 'rgb(112, 43, 51)'
+          offset: 0, color: theme['primary-gradient-end'],
         }, {
-          offset: 1, color: 'rgb(195, 73, 87)'
+          offset: 1, color: theme['primary-gradient-start'],
         }],
-      }
+      },
     };
   });
   const axisFontStyle = {
     align: 'center',
     color: 'rgb(0, 0, 0)',
     fontWeight: '400',
-    fontFamily: 'Roboto',
+    fontFamily: theme['font-family'],
     fontSize: '12px',
     width: '70',
     overflow: 'break',
-  };
-  const dataLabelFontStyle = {
-    color: 'rgb(2, 28, 73)',
-    fontWeight: '400',
-    fontFamily: 'Roboto',
-    fontSize: '15px',
   };
 
   // build chart representation
   const chartDescription = {
     title: {
-      text: chartConfig.title
+      text: chartConfig.title,
     },
     xAxis: {
       data: formattedData.barNames,
@@ -252,19 +280,16 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
         show: true,
         symbol: 'none',
         lineStyle: {
-          type: 'solid'
-        }
+          type: 'solid',
+        },
       },
-      //from to chartConfig['chart-scale']
-      //maxInterval: chartConfig['chart-scale-step'],
-      interval: chartConfig['chart-scale-step'], // (so... ) make sure to force scale step
+      interval: chartConfig['chart-scale-step'],
       axisLabel: {
         formatter: `{value}${chartConfig['value-suffix']}`,
         align: 'center',
         margin: '20',
         ...axisFontStyle,
       },
-      // min: 0, // chart scale start
       max: (Math.floor(max / chartConfig['chart-scale-step']) + 1) * chartConfig['chart-scale-step'], // chart scale end
       splitLine: { show: false },
     },
@@ -274,14 +299,14 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
         type: 'bar',
         colorBy: 'data',
         data: formattedData.dataValues,
-      }
-    ]
+      },
+    ],
   };
 
   if (chartConfig.legend) {
     chartDescription.legend = {
       type: 'plain',
-      formatter: chartConfig['unit'],
+      formatter: chartConfig.unit,
       top: '10%',
       right: '11.5%',
       itemStyle: {
@@ -292,14 +317,14 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
           x2: 0,
           y2: 1,
           colorStops: [{
-            offset: 0, color: 'rgb(112, 43, 51)'
+            offset: 0, color: theme['primary-gradient-end'],
           }, {
-            offset: 1, color: 'rgb(195, 73, 87)'
+            offset: 1, color: theme['primary-gradient-start'],
           }],
-        }
+        },
       },
-      textStyle: axisFontStyle
-    }
+      textStyle: axisFontStyle,
+    };
   }
 
   // draw chart
@@ -329,11 +354,11 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       x2: 0,
       y2: 1,
       colorStops: [{
-        offset: 0, color: theme['primary-gradient-end']
+        offset: 0, color: theme['primary-gradient-end'],
       }, {
-        offset: 1, color: theme['primary-gradient-start']
+        offset: 1, color: theme['primary-gradient-start'],
       }],
-    }
+    },
   };
   formattedData.dataValues[1].itemStyle = {
     color: {
@@ -343,11 +368,11 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       x2: 0,
       y2: 1,
       colorStops: [{
-        offset: 0, color: theme['secondary-gradient-end']
+        offset: 0, color: theme['secondary-gradient-end'],
       }, {
-        offset: 1, color: theme['secondary-gradient-start']
+        offset: 1, color: theme['secondary-gradient-start'],
       }],
-    }
+    },
   };
   const axisFontStyle = {
     align: 'center',
@@ -359,9 +384,9 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
     overflow: 'break',
   };
   const dataLabelFontStyle = {
-    color: 'rgb(2, 28, 73)',
+    color: theme['font-color'],
     fontWeight: '400',
-    fontFamily: 'Roboto',
+    fontFamily: theme['font-family'],
     fontSize: '15px',
   };
 
@@ -371,11 +396,11 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       text: chartConfig.title,
       colorBy: 'data',
       textStyle: {
-        color: 'rgb(2, 28, 73)',
+        color: theme['font-color'],
         fontWeight: '400',
         fontFamily: theme['font-family'],
         fontSize: '15px',
-      }
+      },
     },
     xAxis: {
       data: formattedData.barNames,
@@ -391,14 +416,14 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
         show: true,
         symbol: 'none',
         lineStyle: {
-          type: 'solid'
-        }
+          type: 'solid',
+        },
       },
       axisLabel: {
-        formatter: `${chartConfig['unit'] || ''}{value}${chartConfig['value-suffix'] || ''}`,
+        formatter: `${chartConfig.unit || ''}{value}${chartConfig['value-suffix'] || ''}`,
         align: 'center',
         margin: '20',
-        ...axisFontStyle
+        ...axisFontStyle,
       },
     },
     series: [
@@ -411,60 +436,15 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
         label: {
           show: true,
           position: 'top',
-          formatter: `${chartConfig['unit'] || ''}{@score}${chartConfig['value-suffix'] || ''}`,
-          ...dataLabelFontStyle
+          formatter: `${chartConfig.unit || ''}{@score}${chartConfig['value-suffix'] || ''}`,
+          ...dataLabelFontStyle,
         },
-      }
-    ]
+      },
+    ],
   };
 
   // draw chart
   barChart.setOption(chartDescription);
-}
-
-/**
- * Prepare data to be displayed in a bar chart
- * @param {Object} chartData Chart data as read from the block
- * @returns {Object} Object containing barNames and corresponding dataValues
- */
-function prepareBarChartData(chartData) {
-  const barNames = new Array(chartData.length);
-  const dataValues = new Array(chartData.length);
-  chartData.forEach((row, index) => {
-    barNames[index] = row.name;
-    dataValues[index] = {
-      value: row.value
-    };
-  });
-  return {
-    barNames: barNames,
-    dataValues: dataValues,
-  }
-}
-
-/**
- * Prepare data to be displayed as two series in a bar chart
- * @param {Object} chartData Chart data as read from the block
- * @returns {Object} Object containing barNames and corresponding dataValues
- */
-function prepareBarChartDataWithOverlay(chartData) {
-  const barNames = new Array(chartData.length / 2);
-  const dataValues = new Array(chartData.length);
-  const overlayValues = new Array(chartData.length);
-  chartData.forEach((row, index) => {
-    barNames[index] = row.name;
-    dataValues[index] = {
-      value: row.value
-    };
-    overlayValues[index] = {
-      value: row.additionalValues[0]
-    }
-  });
-  return {
-    barNames: barNames,
-    dataValuesHistogram: dataValues,
-    dataValuesOverlay: overlayValues,
-  }
 }
 
 /**
@@ -559,10 +539,6 @@ export default function decorate(block) {
   windowTheme.forEach((themeElement) => {
     theme[themeElement.token] = themeElement.value;
   });
-
-  console.log("~~~~~~~~~~~~~")
-  console.log(theme)
-  console.log("~~~~~~~~~~~~~")
 
   document.addEventListener(
     'echartsloaded',

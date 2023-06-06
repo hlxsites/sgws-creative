@@ -332,7 +332,7 @@ export function readPredefinedBlockConfig(block, readOptions) {
             value = ps.map((p) => p.textContent);
           }
         } else {
-            value = row.children[1].textContent;
+          value = row.children[1].textContent;
         }
         config[name] = value;
       }
