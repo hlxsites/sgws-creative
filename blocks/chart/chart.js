@@ -99,6 +99,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
     fontSize: theme['axis-font-size'],
     width: '70',
     overflow: 'break',
+    cursor: 'auto',
   };
 
   // build chart representation
@@ -186,6 +187,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
   if (chartConfig.legend) {
     chartDescription.legend = {
       type: 'plain',
+      selectedMode : false,
       data: [
         {
           name: chartConfig.unit,
@@ -267,6 +269,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
     fontSize: theme['axis-font-size'],
     width: '70',
     overflow: 'break',
+    cursor: 'auto',
   };
 
   // build chart representation
@@ -318,6 +321,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
   if (chartConfig.legend) {
     chartDescription.legend = {
       type: 'plain',
+      selectedMode : false,
       formatter: chartConfig.unit,
       top: '10%',
       right: '11.5%',
@@ -394,12 +398,14 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
     fontSize: theme['axis-font-size'],
     width: '70',
     overflow: 'break',
+    cursor: 'auto',
   };
   const dataLabelFontStyle = {
     color: theme['font-color'],
     fontWeight: theme['font-weight'],
     fontFamily: theme['font-family'],
     fontSize: theme['font-size'],
+    cursor: 'auto',
   };
 
   // build chart representation
