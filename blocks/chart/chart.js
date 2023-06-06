@@ -563,8 +563,9 @@ export default function decorate(block) {
   });
   // add things shared by all charts in theming here for now
   let computedStyles = window.getComputedStyle(block);
-  theme['font-size'] = `${parseInt(computedStyles.fontSize, 10) * 1.1}px`;
-  theme['axis-font-size'] = `${parseInt(computedStyles.fontSize, 10) * 0.8}px`;
+  let computedFontSize = parseInt(computedStyles.fontSize, 10);
+  theme['font-size'] = `${computedFontSize * 1.1}px`;
+  theme['axis-font-size'] = `${computedFontSize * 0.8}px`;
   theme['axis-color'] = 'rgb(0, 0, 0)';
   theme['font-weight'] = computedStyles.fontWeight;
 
@@ -584,7 +585,8 @@ export default function decorate(block) {
         // get updated theme styles, if any
         computedStyles = window.getComputedStyle(block);
         theme['font-size'] = computedStyles.fontSize;
-        theme['axis-font-size'] = `${parseInt(computedStyles.fontSize, 10) * 0.8}px`;
+        computedFontSize = parseInt(computedStyles.fontSize, 10);
+        theme['axis-font-size'] = `${ computedFontSize * 0.8}px`;
 
         // redraw scaled chart
         chartHolder.remove();
