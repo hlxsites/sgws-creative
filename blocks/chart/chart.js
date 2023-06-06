@@ -8,6 +8,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
   chartHolder.style.width = chartConfig.chartWidth;
   chartHolder.style.height = chartConfig.chartHeight;
   chartConfig['chart-scale-step'] = parseInt(chartConfig['chart-scale-step'], 10);
+  chartConfig['chart-scale-overlay-step'] = parseInt(chartConfig['chart-scale-overlay-step'], 10);
 
   const barChart = window.echarts.init(chartHolder);
   console.log('~~~~~~~~~~~~~~~~~~~~')
@@ -90,7 +91,6 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
         margin: '20',
         ...axisFontStyle,
       },
-      // min: 0, // chart scale start
       max: (Math.floor(max / chartConfig['chart-scale-step']) + 1) * chartConfig['chart-scale-step'], // chart scale end
       splitLine: { show: false },
     },
@@ -106,7 +106,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       },
       min: 55,
       max: 85,
-      interval: 5,
+      interval: chartConfig['chart-scale-overlay-step'],
       axisLabel: {
         formatter: '{value}%'
       },
@@ -519,15 +519,23 @@ export default function decorate(block) {
       'value-suffix',
       'value-prefix',
       'unit',
+      'overlay-unit',
       'title',
       'chart-scale',
       'chart-scale-step',
+      'chart-scale-overlay-step',
+      'chart-scale-overlay-min',
+      'chart-scale-overlay-max',
       'scale-step-suffix',
+      'scale-step-overlay-suffix',
       'scale-step-prefix',
     ],
     removeAfterRead: true,
   };
   const cfg = readPredefinedBlockConfig(block, readOptions);
+  console.log('======')
+  console.log(cfg)
+  console.log('======')
   const data = readBlockData(block);
 
   let chartHolder = document.createElement('div');
