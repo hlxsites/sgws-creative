@@ -539,10 +539,12 @@ export default function decorate(block) {
   windowTheme.forEach((themeElement) => {
     theme[themeElement.token] = themeElement.value;
   });
-  theme['font-size'] = '15px';
-  theme['axis-font-size'] = '12px';
+  // add things shared by all charts in theming here for now
+  let computedStyles = window.getComputedStyle(block);
+  theme['font-size'] = computedStyles.fontSize;
+  theme['axis-font-size'] = `${parseInt(computedStyles.fontSize, 10) * 0.8}px`;
   theme['axis-color'] = 'rgb(0, 0, 0)';
-  theme['font-weight'] = '400';
+  theme['font-weight'] = computedStyles.fontWeight;
 
   document.addEventListener(
     'echartsloaded',
@@ -557,6 +559,10 @@ export default function decorate(block) {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
       if (echartsLoaded) {
+        // get updated theme styles, if any
+        computedStyles = window.getComputedStyle(block);
+        theme['font-size'] = computedStyles.fontSize;
+
         // redraw scaled chart
         chartHolder.remove();
         chartHolder = document.createElement('div');
