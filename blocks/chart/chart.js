@@ -187,7 +187,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
   if (chartConfig.legend) {
     chartDescription.legend = {
       type: 'plain',
-      selectedMode : false,
+      selectedMode: false,
       data: [
         {
           name: chartConfig.unit,
@@ -321,7 +321,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
   if (chartConfig.legend) {
     chartDescription.legend = {
       type: 'plain',
-      selectedMode : false,
+      selectedMode: false,
       formatter: chartConfig.unit,
       top: '10%',
       right: '11.5%',
