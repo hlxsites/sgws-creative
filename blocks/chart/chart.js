@@ -497,6 +497,11 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
   }
 }
 
+/**
+ * Read block data (assumes only data left to read in block)
+ * @param {*} block Holding block
+ * @returns {Array} Array of read data elements
+ */
 function readBlockData(block) {
   const blockChildren = [...block.children];
   const data = new Array(blockChildren.length);
@@ -554,7 +559,6 @@ export default function decorate(block) {
   let chartHolder = document.createElement('div');
   chartHolder.id = `${Date.now()}-${Math.floor(Math.random() * 10000)}-chart-holder`;
   block.append(chartHolder);
-  // listen for charting library to be loaded before starting to draw
 
   const windowTheme = window.sgws?.config?.data;
   const theme = {};
@@ -569,6 +573,7 @@ export default function decorate(block) {
   theme['axis-color'] = 'rgb(0, 0, 0)';
   theme['font-weight'] = computedStyles.fontWeight;
 
+  // listen for charting library to be loaded before starting to draw
   document.addEventListener(
     'echartsloaded',
     () => {
@@ -586,7 +591,7 @@ export default function decorate(block) {
         computedStyles = window.getComputedStyle(block);
         theme['font-size'] = computedStyles.fontSize;
         computedFontSize = parseInt(computedStyles.fontSize, 10);
-        theme['axis-font-size'] = `${ computedFontSize * 0.8}px`;
+        theme['axis-font-size'] = `${computedFontSize * 0.8}px`;
 
         // redraw scaled chart
         chartHolder.remove();
