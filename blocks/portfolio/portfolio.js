@@ -33,9 +33,11 @@ export default async function decorate(block) {
       const card = createTag('li');
       card.innerHTML = `<a href="${product.url}" target="_blank">
         <div>
-        <p class="picture picture-1"/>
-        <p class="picture picture-2"/>
-        <p class="picture picture-3"/>
+        <div class="picture-container">
+            <p class="picture picture-1"/>
+            <p class="picture picture-2"/>
+            <p class="picture picture-3"/>
+        </div>
         <p>${product.name}</p>
         <p class="variant">${product.variant}</p>
         </div>
