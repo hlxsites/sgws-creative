@@ -109,14 +109,16 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
     }],
     series: [
       {
-        name: chartConfig.title,
+        name: chartConfig['unit'],
+        // seriesName: chartConfig['unit'],
         type: 'bar',
         yAxisIndex: 0,
         colorBy: 'data',
         data: formattedData.dataValuesHistogram,
       },
       {
-        name: chartConfig.title,
+        name: chartConfig['overlay-unit'],
+        // seriesName: chartConfig['overlay-unit'],
         type: 'line',
         yAxisIndex: 1,
         symbol: 'circle',
@@ -132,9 +134,22 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
   };
 
   if (chartConfig.legend) {
+    console.log(chartConfig['overlay-unit'])
     chartDescription.legend = {
       type: 'plain',
-      formatter: chartConfig['unit'],
+      data: [
+        {
+          name: chartConfig['unit']
+        }, {
+          name: chartConfig['overlay-unit'],
+          itemStyle: {
+            color: 'rgb(209, 209, 209)',
+          },
+          lineStyle: {
+            color: 'rgb(209, 209, 209)',
+            width: 1,
+          }
+        }],
       top: '10%',
       right: '11.5%',
       itemStyle: {
