@@ -11,11 +11,6 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
   chartConfig['chart-scale-overlay-step'] = parseInt(chartConfig['chart-scale-overlay-step'], 10);
 
   const barChart = window.echarts.init(chartHolder);
-  console.log('~~~~~~~~~~~~~~~~~~~~')
-  console.log(chartConfig);
-  console.log('~~')
-  console.log(formattedData);
-  console.log('~~~~~~~~~~~~~~~~~~~~')
 
   // stylings
   let max = Number.NEGATIVE_INFINITY;
@@ -104,11 +99,11 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
           type: 'solid'
         }
       },
-      min: 55,
-      max: 85,
+      min: chartConfig['chart-scale-overlay-min'],
+      max: chartConfig['chart-scale-overlay-max'],
       interval: chartConfig['chart-scale-overlay-step'],
       axisLabel: {
-        formatter: '{value}%'
+        formatter: `{value}${chartConfig['scale-overlay-label-suffix']}`
       },
       splitLine: { show: false },
     }],
@@ -527,7 +522,7 @@ export default function decorate(block) {
       'chart-scale-overlay-min',
       'chart-scale-overlay-max',
       'scale-step-suffix',
-      'scale-step-overlay-suffix',
+      'scale-overlay-label-suffix',
       'scale-step-prefix',
     ],
     removeAfterRead: true,

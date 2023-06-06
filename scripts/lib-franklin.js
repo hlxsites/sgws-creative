@@ -334,7 +334,6 @@ export function readPredefinedBlockConfig(block, readOptions) {
         } else {
             value = row.children[1].textContent;
         }
-        console.log(`config ${name} is ${JSON.stringify(value)}`)
         config[name] = value;
       }
 
@@ -344,9 +343,6 @@ export function readPredefinedBlockConfig(block, readOptions) {
     }
   });
 
-  console.log('!! ~~~~~~~')
-  console.log(config)
-  console.log('!! ~~~~~~~')
   return config;
 }
 
