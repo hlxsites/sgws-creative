@@ -155,6 +155,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       {
         name: chartConfig.unit,
         type: 'bar',
+        cursor: 'auto',
         yAxisIndex: 0,
         colorBy: 'data',
         data: formattedData.dataValuesHistogram,
@@ -165,6 +166,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       {
         name: chartConfig['overlay-unit'],
         type: 'line',
+        cursor: 'auto',
         yAxisIndex: 1,
         symbol: 'circle',
         symbolSize: 8,
@@ -303,6 +305,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
       {
         name: chartConfig.title,
         type: 'bar',
+        cursor: 'auto',
         colorBy: 'data',
         data: formattedData.dataValues,
         emphasis: {
@@ -439,6 +442,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       {
         name: chartConfig.title,
         type: 'bar',
+        cursor: 'auto',
         barWidth: '70%',
         colorBy: 'data',
         data: formattedData.dataValues,
