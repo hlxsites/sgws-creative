@@ -2,6 +2,13 @@ import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
 
 const MIN_BAR_CHART_HEIGHT = '400px';
 
+/**
+ * Draw a histogram chart with an overlayed trend line
+ * @param {*} chartData Chart data (will be used to determine which chart to draw)
+ * @param {*} chartConfig Chart configuration
+ * @param {*} chartHolder Element (div) holding the chart
+ * @param {*} theme Theming details, optional
+ */
 function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, theme) {
   const formattedData = prepareBarChartDataWithOverlay(chartData);
 
@@ -322,9 +329,9 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       x2: 0,
       y2: 1,
       colorStops: [{
-        offset: 0, color: 'rgb(2, 28, 73)'
+        offset: 0, color: theme['primary-gradient-end']
       }, {
-        offset: 1, color: 'rgb(72, 114, 190)'
+        offset: 1, color: theme['primary-gradient-start']
       }],
     }
   };
@@ -336,9 +343,9 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       x2: 0,
       y2: 1,
       colorStops: [{
-        offset: 0, color: 'rgb(114, 114, 114)'
+        offset: 0, color: theme['secondary-gradient-end']
       }, {
-        offset: 1, color: 'rgb(209, 209, 209)'
+        offset: 1, color: theme['secondary-gradient-start']
       }],
     }
   };
@@ -346,7 +353,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
     align: 'center',
     color: 'rgb(0, 0, 0)',
     fontWeight: '400',
-    fontFamily: 'Roboto',
+    fontFamily: theme['font-family'],
     fontSize: '12px',
     width: '70',
     overflow: 'break',
@@ -366,7 +373,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       textStyle: {
         color: 'rgb(2, 28, 73)',
         fontWeight: '400',
-        fontFamily: 'Roboto',
+        fontFamily: theme['font-family'],
         fontSize: '15px',
       }
     },
@@ -477,15 +484,12 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
 
     if (chartData.length === 2) {
       // comparison
-      console.log("// comparison")
       drawComparisonBarChart(chartData, chartConfig, chartHolder, theme);
     } else if (blockClassList.contains('overlay-data')) {
       // histogram with trend line
-      console.log("// histogram with trend line")
       drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, theme);
     } else {
       // default, histogram (one series)
-      console.log("default, histogram (one series)");
       drawHistogramChart(chartData, chartConfig, chartHolder, theme);
     }
   }
@@ -543,20 +547,28 @@ export default function decorate(block) {
     removeAfterRead: true,
   };
   const cfg = readPredefinedBlockConfig(block, readOptions);
-  console.log('======')
-  console.log(cfg)
-  console.log('======')
   const data = readBlockData(block);
 
   let chartHolder = document.createElement('div');
   chartHolder.id = `${Date.now()}-${Math.floor(Math.random() * 10000)}-chart-holder`;
   block.append(chartHolder);
   // listen for charting library to be loaded before starting to draw
+
+  const windowTheme = window.sgws?.config?.data;
+  const theme = {};
+  windowTheme.forEach((themeElement) => {
+    theme[themeElement.token] = themeElement.value;
+  });
+
+  console.log("~~~~~~~~~~~~~")
+  console.log(theme)
+  console.log("~~~~~~~~~~~~~")
+
   document.addEventListener(
     'echartsloaded',
     () => {
       echartsLoaded = true;
-      drawChart(block, data, cfg, chartHolder, {});
+      drawChart(block, data, cfg, chartHolder, theme);
     },
   );
 
@@ -570,7 +582,7 @@ export default function decorate(block) {
         chartHolder = document.createElement('div');
         chartHolder.id = `${Date.now()}-${Math.floor(Math.random() * 10000)}-chart-holder`;
         block.append(chartHolder);
-        drawChart(block, data, cfg, chartHolder, {});
+        drawChart(block, data, cfg, chartHolder, theme);
       }
     }, 500);
   });
