@@ -158,6 +158,9 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
         yAxisIndex: 0,
         colorBy: 'data',
         data: formattedData.dataValuesHistogram,
+        emphasis: {
+          disabled: true,
+        },
       },
       {
         name: chartConfig['overlay-unit'],
@@ -171,6 +174,9 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
         },
         colorBy: 'data',
         data: formattedData.dataValuesOverlay,
+        emphasis: {
+          disabled: true,
+        },
       },
     ],
   };
@@ -299,6 +305,9 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
         type: 'bar',
         colorBy: 'data',
         data: formattedData.dataValues,
+        emphasis: {
+          disabled: true,
+        },
       },
     ],
   };
@@ -438,6 +447,9 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
           position: 'top',
           formatter: `${chartConfig.unit || ''}{@score}${chartConfig['value-suffix'] || ''}`,
           ...dataLabelFontStyle,
+        },
+        emphasis: {
+          disabled: true,
         },
       },
     ],
