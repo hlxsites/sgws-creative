@@ -93,10 +93,10 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
   });
   const axisFontStyle = {
     align: 'center',
-    color: 'rgb(0, 0, 0)',
-    fontWeight: '400',
+    color: theme['axis-color'],
+    fontWeight: theme['font-weight'],
     fontFamily: theme['font-family'],
-    fontSize: '12px',
+    fontSize: theme['axis-font-size'],
     width: '70',
     overflow: 'break',
   };
@@ -127,7 +127,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       axisLabel: {
         formatter: `{value}${chartConfig['value-suffix']}`,
         align: 'center',
-        margin: '20',
+        margin: '22',
         ...axisFontStyle,
       },
       max: (Math.floor(max / chartConfig['chart-scale-step']) + 1) * chartConfig['chart-scale-step'],
@@ -253,10 +253,10 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
   });
   const axisFontStyle = {
     align: 'center',
-    color: 'rgb(0, 0, 0)',
-    fontWeight: '400',
+    color: theme['axis-color'],
+    fontWeight: theme['font-weight'],
     fontFamily: theme['font-family'],
-    fontSize: '12px',
+    fontSize: theme['axis-font-size'],
     width: '70',
     overflow: 'break',
   };
@@ -287,7 +287,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
       axisLabel: {
         formatter: `{value}${chartConfig['value-suffix']}`,
         align: 'center',
-        margin: '20',
+        margin: '22',
         ...axisFontStyle,
       },
       max: (Math.floor(max / chartConfig['chart-scale-step']) + 1) * chartConfig['chart-scale-step'], // chart scale end
@@ -376,18 +376,18 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
   };
   const axisFontStyle = {
     align: 'center',
-    color: 'rgb(0, 0, 0)',
-    fontWeight: '400',
+    color: theme['axis-color'],
+    fontWeight: theme['font-weight'],
     fontFamily: theme['font-family'],
-    fontSize: '12px',
+    fontSize: theme['axis-font-size'],
     width: '70',
     overflow: 'break',
   };
   const dataLabelFontStyle = {
     color: theme['font-color'],
-    fontWeight: '400',
+    fontWeight: theme['font-weight'],
     fontFamily: theme['font-family'],
-    fontSize: '15px',
+    fontSize: theme['font-size'],
   };
 
   // build chart representation
@@ -397,9 +397,9 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       colorBy: 'data',
       textStyle: {
         color: theme['font-color'],
-        fontWeight: '400',
+        fontWeight: theme['font-weight'],
         fontFamily: theme['font-family'],
-        fontSize: '15px',
+        fontSize: theme['font-size'],
       },
     },
     xAxis: {
@@ -422,7 +422,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       axisLabel: {
         formatter: `${chartConfig.unit || ''}{value}${chartConfig['value-suffix'] || ''}`,
         align: 'center',
-        margin: '20',
+        margin: '22',
         ...axisFontStyle,
       },
     },
@@ -539,6 +539,10 @@ export default function decorate(block) {
   windowTheme.forEach((themeElement) => {
     theme[themeElement.token] = themeElement.value;
   });
+  theme['font-size'] = '15px';
+  theme['axis-font-size'] = '12px';
+  theme['axis-color'] = 'rgb(0, 0, 0)';
+  theme['font-weight'] = '400';
 
   document.addEventListener(
     'echartsloaded',
