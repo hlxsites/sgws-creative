@@ -1,7 +1,44 @@
 /* footer styles */
 
-main .section.footer-container {
+footer {
+  background-image: var(--background-color-highlight);
   padding: 122px 80px;
+}
+
+.product footer {
+  position: relative;
+  background-image: unset;
+  background-color: var(--primary-color);
+  padding : 0;
+}
+
+footer h2,
+footer p {
+  color: var(--text-color-background);
+}
+
+.product .footer > div {
+  display: flex;
+  flex-flow: row nowrap;
+  padding-left: var(--layout-size-l);
+}
+
+.product .footer p.picture {
+  position: absolute;
+  top: 0;
+  margin: 0;
+}
+
+.product .footer p.picture.animate {
+  animation-delay: 0.5s;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: fade-in-bottom;
+}
+
+.product .footer picture img {
+  width: 8vw;
+  height: auto;
 }
 
 .footer .footer-content > div {
@@ -20,7 +57,7 @@ main .section.footer-container {
   background-color: var(--secondary-color);
 }
 
-.footer p.picture {
+.footer .footer-content p.picture {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -39,9 +76,21 @@ main .section.footer-container {
 
 .footer .footer-content > div > div:last-child p.picture img {
   width: 245px;
+  height: auto;
 }
 
 .footer .footer-content > div > div:first-child h2 {
   font-size: clamp(calc(var(--heading-font-size-xl) * 0.5), 1.949vw + 0.621rem, var(--heading-font-size-xl));
   margin: 0;
+}
+
+.product .footer > div > div:first-child {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .product .footer p.picture {
+    opacity: 0;
+  }
 }

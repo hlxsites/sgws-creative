@@ -86,7 +86,7 @@ body.appear {
   display: unset;
 }
 
-header, footer {
+header {
   display: none;
 }
 
