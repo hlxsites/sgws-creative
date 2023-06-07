@@ -29,77 +29,56 @@
   gap: 15vw;
 }
 
-.columns-container.highlight .columns h2,
-.columns-container.highlight .columns h3 {
-  color: var(--text-color-highlight);
-}
+
 
 .columns > div > .columns-img-col img {
   display: block;
 }
 
-.columns-container.highlight .stats {
-  background-color: transparent;
-}
-
 .columns.stats > div {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  column-gap: 0.5rem;
-  text-align: start;
-}
-
-.columns.stats > div > div {
-  height: 208px; 
-  background-color: transparent;
-  background-image: linear-gradient(0deg, #0076C0 0%, #001E5B 100%);
-  padding: 3rem 3rem 0;
-  color: white;
-}
-
-.columns.stats-fragment {
   display: flex;
-  flex-direction: column;
-
-}
-
-.columns.stats-fragment > div:nth-child(2) {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-  gap: 0;
-  height: 10rem;
+  flex-direction: row;
+  height: 9rem;
   text-align: center;
+  justify-items: center;
+  align-items: center;
+  margin-top: -2.8%;
   background-color: var(--stats-text-background-color);
   background-size: cover;
   background-position: center;
   background-image: var(--stats-background-image);
 }
 
-.columns.stats-fragment > div:first-child img {
-  position: relative;
-  top: 3rem;
-  transform: rotate(180deg);
-  background-color: var(--stats-border-background-color);
-  filter: var(--stats-border-filter);
+.columns.stats > div > div > h2 {
+  color: var(--stats-heading-text-color);
 }
 
-.columns.stats-fragment > div:first-child {
-  background-color: var(--primary-color);
-}
-
-.columns.stats-fragment > div:nth-child(2) > div > h2 {
-  padding-top: 3rem;
-  color: var(--stats-text-h2);
-}
-
-.columns.stats-fragment > div:nth-child(2) > div > p {
-  color: var(--stats-text-p);
+.columns.stats > div > div > p {
+  color: var(--stats-body-text-color);
 } 
 
-.columns.stats-fragment > div:last-child:has(img) {
-  height: 0;
-  filter: drop-shadow(#00000080 0 4px 1px);
-  z-index: 1;
+.columns-container.highlight .stats-wide {
+  background-color: transparent;
+}
+
+.columns.stats-wide > div {
+  display: flex;
+  flex-direction: row;  
+  column-gap: 5px;
+  text-align: start;
+}
+
+.columns.stats-wide > div > div {
+  height: 12rem; 
+  background-color: transparent;
+  background-image: linear-gradient(0deg, #0076C0 0%, #001E5B 100%);
+  padding: 3rem 3rem 0;
+  color: #fff;
+}
+
+.columns-container.highlight .columns h2,
+.columns-container.highlight .columns h3 {
+  color: var(--text-color-highlight);
 }
 
 .columns.heading > div > div:first-child {

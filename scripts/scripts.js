@@ -128,6 +128,17 @@ function decorateExternalLinks(main) {
   });
 }
 
+function decorateBorders(main) {
+  const selections = main.querySelectorAll('.section .default-content-wrapper p.picture:only-child');
+  selections.forEach((selection, selectionId) => {
+    const pre = selection.parentElement.previousElementSibling;
+    const post = selection.parentElement.nextElementSibling;
+    if (pre && !pre.classList.contains('default-content-wrapper') && post && !post.classList.contains('default-content-wrapper')) {
+      selection.classList.add(`border-${selectionId}`);
+    }
+  });
+}
+
 export function decoratePictureParagraph(main) {
   const pictures = main.querySelectorAll('p > picture:first-of-type, div > picture:first-of-type');
   pictures.forEach((pic) => {
@@ -172,6 +183,7 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   decorateSectionBackgrounds(main);
+  decorateBorders(main);
 }
 
 /**

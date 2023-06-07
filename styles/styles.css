@@ -36,10 +36,8 @@
   --min-vw-px: calc(var(--min-vw) * 1px);
   --max-vw: 1168;
   --viewport-run: calc(var(--max-vw) - var(--min-vw));
-  --stats-text-h2: var(--secondary-color);
-  --stats-text-p: var(--text-color);
-  --stats-border-background-color: transparent;
-  --stats-border-filter: none;
+  --stats-heading-text-color: var(--secondary-color);
+  --stats-body-text-color: var(--text-color);
   --stats-text-background-color: transparent;
   --stats-background-image: none;
 
@@ -354,4 +352,32 @@ svg#franklin-svg-sprite symbol {
 
 .icon svg use {
   fill: #fff;
+}
+
+/* border styling */
+main .section .default-content-wrapper .border-0 {
+  background-color: transparent;
+  margin: 0 auto;
+  max-height: 50px;
+  position: relative;
+  transform: rotate(180deg);
+}
+
+main .section .outback .default-content-wrapper .border-0 {
+  filter: drop-shadow(#00000080 0 -4px 1px);
+}
+
+main .section .tabview .carrabbas .default-content-wrapper .border-0 {
+  padding-top: 2.5%;
+} 
+
+main .section .default-content-wrapper .border-1 {
+  background-color: transparent;
+  height: 0;
+  margin: 0 auto;
+  position: relative;
+} 
+
+main .section .outback .default-content-wrapper .border-1 {
+  filter: drop-shadow(#00000080 0 4px 1px);
 }
