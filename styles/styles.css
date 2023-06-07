@@ -36,10 +36,6 @@
   --min-vw-px: calc(var(--min-vw) * 1px);
   --max-vw: 1168;
   --viewport-run: calc(var(--max-vw) - var(--min-vw));
-  --stats-heading-text-color: var(--secondary-color);
-  --stats-body-text-color: var(--text-color);
-  --stats-text-background-color: transparent;
-  --stats-background-image: none;
 
   /* fonts */
   --heading-font-family: 'Futura PT Bold-Normal', 'Futura PT Bold-Normal Fallback', sans-serif;
