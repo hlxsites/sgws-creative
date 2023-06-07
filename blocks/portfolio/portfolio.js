@@ -30,27 +30,25 @@ export default async function decorate(block) {
     const { data = [] } = json[sheet];
     const grid = createTag('ul', { class: 'portfolio-grid' });
     data.forEach((product) => {
-      const card = createTag('li');
+      const card = createTag('li', {});
       card.innerHTML = `<a href="${product.url}" target="_blank">
         <div>
-        <div class="picture-container">
-            <p class="picture picture-1"/>
-            <p class="picture picture-2"/>
-            <p class="picture picture-3"/>
-        </div>
-        <p>${product.name}</p>
-        <p class="variant">${product.variant}</p>
+            <div class="picture-container"></div>
+            <p>${product.name}</p>
+            <p class="variant">${product.variant}</p>
         </div>
       </a>`;
       // add images
-      card.querySelectorAll('p.picture').forEach((parent, i) => {
-        const imageUrl = product[`image${i + 1}`];
-        if (!imageUrl) {
-          return;
-        }
-        const picture = createOptimizedPicture(imageUrl, product.name, false, [{ width: 64 }]);
-        parent.append(picture);
-      });
+      const pictureContainer = card.querySelector('.picture-container');
+      Object.entries(product)
+        .filter(([key, value]) => key.startsWith('image') && value)
+        .forEach(([, value]) => {
+          const picture = createOptimizedPicture(value, product.name, false, [{ width: 64 }]);
+          const para = createTag('p', { class: 'picture' });
+          para.append(picture);
+          pictureContainer.append(para);
+        });
+      pictureContainer.classList.add(`picture-container-${pictureContainer.children.length}`);
       grid.append(card);
     });
 
