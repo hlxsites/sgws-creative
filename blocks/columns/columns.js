@@ -2,6 +2,11 @@ export default function decorate(block) {
   const cols = [...block.firstElementChild.children];
   block.classList.add(`columns-${cols.length}-cols`);
 
+  const iconCols = block.querySelectorAll(':scope > div > div > *:first-child:has(span.icon)');
+  if (iconCols.length === cols.length) {
+    block.classList.add('icon-list');
+  }
+
   // setup image columns
   [...block.children].forEach((row) => {
     [...row.children].forEach((col) => {
