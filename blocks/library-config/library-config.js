@@ -1,8 +1,8 @@
 import { createTag } from '../../scripts/scripts.js';
 
-const validListTypes = ['blocks', 'sections', 'buttons', 'placeholders', 'assets', 'templates'];
+const validListTypes = ['blocks', 'sections', 'buttons', 'templates', 'icons'];
 
-const LIBRARY_PATH = '/careers/block-library/library.json';
+const LIBRARY_PATH = '/block-library/library.json';
 
 async function executeList(name, content, list) {
   const { default: listFn } = await import(`./lists/${name}.js`);
@@ -149,6 +149,6 @@ export default async function init(el) {
   // add styles
   const link = document.createElement('link');
   link.setAttribute('rel', 'stylesheet');
-  link.setAttribute('href', '/careers/blocks/library-config/library-config.css');
+  link.setAttribute('href', '/blocks/library-config/library-config.css');
   el.shadowRoot.appendChild(link);
 }

@@ -1,15 +1,19 @@
 {
-  "project": "Souther Glazers Bloomin' Brands",
-  "host": "https://sgcreative.southernglazers.com/bloominbrands",
-  "plugins": [
-      {
-          "id": "library",
-          "title": "Library",
-          "environments": [ "edit" ],
-          "isPalette": true,
-          "paletteRect": "top: auto; bottom: 20px; left: 20px; height: 398px; width: 360px;",
-          "url": "/block-library/library",
-          "includePaths": [ "**.docx**" ]
-      }
-  ]
+    "project": "Southern Glazers Bloomin Brands",
+    "host": "www.sgcreative.southernglazers.com",
+    "plugins": [
+        {
+            "id": "library",
+            "title": "Library",
+            "environments": [ "edit" ],
+            "isPalette": true,
+            "paletteRect": "top: auto; bottom: 20px; left: 20px; height: 398px; width: 360px;",
+            "url": "/block-library/library",
+            "includePaths": [ "**.docx**" ]
+        },
+        {
+            "id": "publish",
+            "excludePaths": [ "**/drafts/**","**%2Fdrafts**" ]
+        }
+    ]
 }

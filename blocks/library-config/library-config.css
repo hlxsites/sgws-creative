@@ -1,6 +1,26 @@
-/* Block Library CSS  */
-section.library-config-container {
+/* Override main site styles */
+header {
+    display: none;
+}
+
+main:has(.library-config-container) {
+    padding-top: 0;
+}
+
+main .section.library-config-container {
     padding: 0;
+}
+
+main .section.library-config-container > div:first-child {
+    padding-top: 0;
+}
+
+main .section.library-config-container > div:last-child {
+    padding-bottom: 0;
+}
+
+main .back-to-top section {
+    display: none;
 }
 
 .sk-library {
@@ -121,7 +141,7 @@ section.library-config-container {
     list-style: none;
     padding: 0;
     margin: 0;
-    overflow: scroll;
+    overflow-y: auto;
     position: absolute;
     inset: 0;
     transition: transform 0.2s ease-in-out;
@@ -247,16 +267,4 @@ ul.con-type-list.con-assets-list {
     align-items: start;
     width: 360px;
     flex-wrap: wrap;
-}
-
-header {
-    display: none;
-}
-
-main:has(.library-config-container) {
-    padding-top: 0;
-}
-
-.section.library-config-container {
-    padding: 0;
 }
