@@ -546,9 +546,10 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
       value: 100 - parseInt(formattedData.dataValues[0].value, 10),
       itemStyle: {
         color: theme['primary-color'],
-        //borderColor: 'red',
-        //borderWidth: 6,
-        borderJoin: 'miter',
+        opacity: 0.8
+        //borderColor: 'white',
+        //borderWidth: 30,
+        //borderJoin: 'miter',
       }
     }
   ];
@@ -563,7 +564,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
       value: 100 - parseInt(formattedData.dataValues[1].value, 10),
       itemStyle: {
         color: theme['secondary-color'],
-        opacity: 0.5
+        opacity: 0.8
       }
     }
   ];
