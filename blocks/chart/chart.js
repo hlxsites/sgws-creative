@@ -525,11 +525,8 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
   const pieChart = window.echarts.init(chartHolder);
 
   const baseChartDescription = buildChartRepresentation(chartData, chartConfig, chartHolder, theme);
-  console.log("~~~~~~~~~ Base charts representation")
-  console.log(baseChartDescription);
-  console.log("~~~~~~~~~ ")
-  console.log("~~~~~~~~~ Data")
-  console.log(formattedData);
+  console.log("~~~~~~~~~ chartConfig")
+  console.log(chartConfig);
   console.log("~~~~~~~~~ ")
   console.log("~~~~~~~~~ Theme")
   console.log(theme);
@@ -540,7 +537,8 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
       value: formattedData.dataValues[0].value,
       itemStyle: {
         color: theme['primary-color'],
-      }
+      },
+      name: formattedData.dataValues[0].value,
     },
     {
       value: 100 - parseInt(formattedData.dataValues[0].value, 10),
@@ -550,18 +548,21 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
         //borderColor: 'white',
         //borderWidth: 30,
         //borderJoin: 'miter',
-      }
+      },
+      name: formattedData.dataValues[0].value,
     }
   ];
   const secondSeries = [
     {
-      value: formattedData.dataValues[0].value,
+      value: formattedData.dataValues[1].value,
+      name: formattedData.dataValues[1].value,
       itemStyle: {
         color: theme['secondary-color'],
       }
     },
     {
       value: 100 - parseInt(formattedData.dataValues[1].value, 10),
+      name: formattedData.dataValues[1].value,
       itemStyle: {
         color: theme['secondary-color'],
         opacity: 0.8
@@ -578,6 +579,14 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
         center: ['33%', '50%'],
         colorBy: 'data',
         label: {
+          show: true,
+          position: 'center',
+          fontSize: `${parseInt(theme['font-size'],10)*3}`,
+          fontWeight: theme['font-weight'],
+          color: theme['font-color'],
+          formatter: `{@value}${chartConfig['value-suffix']}`
+        },
+        labelLine: {
           show: false
         },
         silent: true,
@@ -599,6 +608,14 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
         center: ['66%', '66%%'],
         colorBy: 'data',
         label: {
+          show: true,
+          position: 'center',
+          fontSize: `${parseInt(theme['font-size'],10)*2}`,
+          fontWeight: theme['font-weight'],
+          color: theme['font-color'],
+          formatter: `{@value}${chartConfig['value-suffix']}`
+        },
+        labelLine: {
           show: false
         },
         silent: true,
