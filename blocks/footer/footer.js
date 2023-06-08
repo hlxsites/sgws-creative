@@ -107,12 +107,16 @@ export default async function decorate(block) {
     });
 
     // add navigation buttons
-    const previousButton = createTag('button', {
+    const previousButton = createTag('a', {
+      href: '#',
       class: 'sources-prev',
       'aria-label': 'Previous sources',
+      role: 'button',
     });
     previousButton.append(createIcon('arrow-small'));
-    const nextButton = createTag('button', { class: 'sources-next', 'aria-label': 'More sources' });
+    const nextButton = createTag('a', {
+      href: '#', class: 'sources-next', 'aria-label': 'More sources', role: 'button',
+    });
     nextButton.append(createIcon('arrow-small'));
     const pageCount = createTag('p');
 
@@ -123,11 +127,13 @@ export default async function decorate(block) {
     });
     navGroup.append(previousButton, nextButton, pageCount);
 
-    previousButton.addEventListener('click', () => {
+    previousButton.addEventListener('click', (e) => {
+      e.preventDefault();
       showSources(block, -1, pageCount);
     });
 
-    nextButton.addEventListener('click', () => {
+    nextButton.addEventListener('click', (e) => {
+      e.preventDefault();
       showSources(block, 1, pageCount);
     });
 

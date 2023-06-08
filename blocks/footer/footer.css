@@ -26,10 +26,20 @@ footer p.animate {
   animation-name: fade-in-bottom;
 }
 
-.footer a.button:any-link, button {
-  width: 350px;
+.footer a.button:any-link,
+.footer button {
+  width: 25vw;
+  height: 5vw;
+  line-height: 5vw;
   border: 2px solid #fff;
   background-color: var(--secondary-color);
+  transition: 0.5s;
+}
+
+.footer a.button:hover,
+.footer button:hover {
+  background-color: var(--background-color);
+  color: var(--secondary-color);
 }
 
 footer .sources {
@@ -39,11 +49,10 @@ footer .sources {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #fff;
-  opacity: 0.9;
+  background-color: rgb(255 255 255 / 95%);
   overflow: hidden;
   padding: 2vw 4vw;
-  font-size: clamp(0.5rem, 0.704vw + 0.236rem, 0.75rem);;
+  font-size: clamp(0.5rem, 0.704vw + 0.236rem, 0.75rem);
 }
 
 footer .sources.open {
@@ -59,7 +68,8 @@ footer .sources .header {
 
 footer .sources .header h2,
 footer .sources .header p,
-footer .sources .header button {
+footer .sources .header button,
+footer .sources .header a.button {
   animation-duration: 1s;
   animation-fill-mode: both;
   animation-name: fade-in;
@@ -68,22 +78,11 @@ footer .sources .header button {
 footer .sources .header h2 {
   margin: 0;
   color: var(--text-color-highlight);
+  text-transform: uppercase;
 }
 
 footer .sources .header .icon use {
   fill: var(--text-color-highlight);
-}
-
-footer .sources .header button {
-  display: inline-flex;
-  flex-direction: column;
-  min-width: unset;
-  min-height: unset;
-  width: unset;
-  height: unset;
-  background-color: unset;
-  border: unset;
-  line-height: unset;
 }
 
 footer .sources .header .sources-nav {
@@ -95,18 +94,17 @@ footer .sources .header .sources-nav {
   color: var(--secondary-color);
 }
 
-footer .sources .header .sources-nav button {
+footer .sources .header .sources-nav a {
   position: relative;
-  width: 42px;
-  height: 42px;
-  min-width: unset;
+  width: 4em;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   background-color: rgb(5 25 49 / 10%);
   border: none;
   appearance: none;
 }
 
-footer .sources .header .sources-nav button:hover::before {
+footer .sources .header .sources-nav a:hover::before {
   content: '';
   position: absolute;
   top: 0;
@@ -119,16 +117,14 @@ footer .sources .header .sources-nav button:hover::before {
   background-color: #000;
 }
 
-footer .sources .header .sources-nav button:focus:not(:focus-visible) {
-  outline: none
-}
-
-footer .sources .header .sources-nav button.sources-next {
+footer .sources .header .sources-nav a.sources-next {
   transform: rotate(180deg);
 }
 
-footer .sources .header .sources-nav button > span.icon {
+footer .sources .header .sources-nav a > span.icon {
   position: absolute;
+  width: 2em;
+  height: 2em;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -137,6 +133,19 @@ footer .sources .header .sources-nav button > span.icon {
 footer .sources .header .sources-nav p {
   color: var(--text-color-highlight);
   width: max-content;
+  margin-left: var(--layout-size-m);
+}
+
+footer .sources .header button.close {
+  display: inline-flex;
+  flex-direction: column;
+  min-width: unset;
+  min-height: unset;
+  width: unset;
+  height: unset;
+  background-color: unset;
+  border: unset;
+  line-height: unset;
 }
 
 footer .sources .header .close .icon {
@@ -205,6 +214,10 @@ footer .sources ol > li::marker {
 
 .footer .footer-content > div > div:first-child {
   flex: 1;
+}
+
+.footer .footer-content p.button-container {
+  text-align: right;
 }
 
 .footer .footer-content p.picture {

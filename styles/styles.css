@@ -189,15 +189,15 @@ a.button:focus {
   cursor: pointer;
 }
 
-a:not(.button) {
+a:any-link:not(.button) {
   font-weight: 700;
 }
 
-a.button > strong {
+a:any-link.button > strong {
   font-weight: normal;
 }
 
-a.button > em {
+a:any-link.button > em {
   font-style: normal;
 }
 
