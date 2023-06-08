@@ -561,7 +561,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
         name: chartConfig.title,
         type: 'pie',
         radius: [60, 100],
-        center: ['66%', '50%'],
+        center: ['66%', '66%%'],
         colorBy: 'data',
         label: {
           show: false
