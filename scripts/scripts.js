@@ -14,18 +14,26 @@ import {
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
+export function getParentPath(level = undefined) {
+  const pathParts = window.location.pathname.split('/');
+  pathParts.shift();
+  if (!level) {
+    pathParts.pop();
+    return pathParts.join('/');
+  }
+  return pathParts.slice(0, level).join('/');
+}
 async function loadTheme() {
   let theme = {};
-  const template = getMetadata('template');
+  const themeMeta = getMetadata('theme');
   let configPath = getMetadata('themeconfig') || getMetadata('theme-config');
   if (!configPath) {
-    if (template === 'product') {
+    if (themeMeta) {
       // use path as theme name
-      configPath = `${window.location.pathname}.json`;
+      configPath = `/themes/${themeMeta}.json`;
     } else {
       // use theme.json in first level folder
-      const pathParts = window.location.pathname.split('/');
-      configPath = `/${pathParts[1]}/theme.json`;
+      configPath = `/${getParentPath(1)}/theme.json`;
     }
   }
 
