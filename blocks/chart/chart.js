@@ -48,7 +48,6 @@ function prepareBarChartDataWithOverlay(chartData) {
 }
 
 /**
-<<<<<<< HEAD
  * Build shared parts of chart representation
  * @param {*} chartData Chart data (will be used to determine which chart to draw)
  * @param {*} chartConfig Chart configuration
@@ -95,8 +94,6 @@ function buildChartRepresentation(chartData, chartConfig, chartHolder, theme) {
 }
 
 /**
-=======
->>>>>>> main
  * Draw a histogram chart with an overlayed trend line
  * @param {*} chartData Chart data (will be used to determine which chart to draw)
  * @param {*} chartConfig Chart configuration
