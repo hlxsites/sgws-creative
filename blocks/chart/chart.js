@@ -545,9 +545,6 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
       itemStyle: {
         color: theme['primary-color'],
         opacity: 0.8
-        //borderColor: 'white',
-        //borderWidth: 30,
-        //borderJoin: 'miter',
       },
       name: formattedData.dataValues[0].value,
     }
@@ -557,14 +554,27 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
       value: formattedData.dataValues[1].value,
       name: formattedData.dataValues[1].value,
       itemStyle: {
-        color: theme['secondary-color'],
+        color: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          colorStops: [{
+            offset: 0, color: theme['secondary-gradient-end'],
+          }, {
+            offset: 0.5, color: theme['secondary-gradient-start'],
+          },{
+            offset: 1, color: theme['secondary-gradient-end'],
+          }],
+        },
       }
     },
     {
       value: 100 - parseInt(formattedData.dataValues[1].value, 10),
       name: formattedData.dataValues[1].value,
       itemStyle: {
-        color: theme['secondary-color'],
+        color: theme['secondary-gradient-end'],
         opacity: 0.8
       }
     }
@@ -604,7 +614,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
         name: chartConfig.title,
         type: 'pie',
         roseType: 'radius',
-        radius: [60, 100],
+        radius: [70, 100],
         center: ['66%', '66%%'],
         colorBy: 'data',
         label: {
