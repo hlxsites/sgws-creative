@@ -95,7 +95,7 @@ function buildChartRepresentation(chartData, chartConfig, chartHolder, theme) {
 
 function initializeChartHolder(chartConfig, chartHolder){
   chartHolder.style.width = chartConfig.chartWidth;
-  chartHolder.style.height = chartConfig.chartHeight;
+  chartHolder.style.height = chartConfig.chartHeight || MIN_BAR_CHART_HEIGHT;
   return window.echarts.init(chartHolder);
 }
 
@@ -522,8 +522,14 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
 }
 
 function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
+  console.log('## drawComparisonPieChart');
   const formattedData = prepareBarChartData(chartData);
-  const pieChart = initializeChartHolder(chartConfig, chartHolder);
+
+  chartHolder.style.width = chartConfig.chartWidth;
+  chartHolder.style.height = chartConfig.chartHeight || MIN_BAR_CHART_HEIGHT;
+  chartConfig['chart-scale-step'] = parseInt(chartConfig['chart-scale-step'], 10);
+
+  const pieChart = initializeChartHolder(chartHolder, theme);
 
   const baseChartDescription = buildChartRepresentation(chartData, chartConfig, chartHolder, theme);
   console.log("~~~~~~~~~ Base charts representation")
@@ -535,27 +541,89 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
 
   const pieChartSpecificDescription = {
     title: {
-      colorBy: 'data',
+      text: 'Nightingale Chart',
+      subtext: 'Fake Data',
+      left: 'center'
+    },
+    tooltip: {
+      trigger: 'item',
+      formatter: '{a} <br/>{b} : {c} ({d}%)'
+    },
+    legend: {
+      left: 'center',
+      top: 'bottom',
+      data: [
+        'rose1',
+        'rose2',
+        'rose3',
+        'rose4',
+        'rose5',
+        'rose6',
+        'rose7',
+        'rose8'
+      ]
+    },
+    toolbox: {
+      show: true,
+      feature: {
+        mark: { show: true },
+        dataView: { show: true, readOnly: false },
+        restore: { show: true },
+        saveAsImage: { show: true }
+      }
     },
     series: [
       {
-        name: chartConfig.title,
+        name: 'Radius Mode',
         type: 'pie',
-        cursor: 'auto',
-        data: formattedData.dataValues,
+        radius: [20, 140],
+        center: ['25%', '50%'],
+        roseType: 'radius',
+        itemStyle: {
+          borderRadius: 5
+        },
         label: {
-          show: true,
-          position: 'top',
-          formatter: `${chartConfig.unit || ''}{@score}${chartConfig['value-suffix'] || ''}`,
-          ...dataLabelFontStyle,
+          show: false
         },
         emphasis: {
-          disabled: true,
+          label: {
+            show: true
+          }
         },
+        data: [
+          { value: 40, name: 'rose 1' },
+          { value: 33, name: 'rose 2' },
+          { value: 28, name: 'rose 3' },
+          { value: 22, name: 'rose 4' },
+          { value: 20, name: 'rose 5' },
+          { value: 15, name: 'rose 6' },
+          { value: 12, name: 'rose 7' },
+          { value: 10, name: 'rose 8' }
+        ]
       },
-    ],
+      {
+        name: 'Area Mode',
+        type: 'pie',
+        radius: [20, 140],
+        center: ['75%', '50%'],
+        roseType: 'area',
+        itemStyle: {
+          borderRadius: 5
+        },
+        data: [
+          { value: 30, name: 'rose 1' },
+          { value: 28, name: 'rose 2' },
+          { value: 26, name: 'rose 3' },
+          { value: 24, name: 'rose 4' },
+          { value: 22, name: 'rose 5' },
+          { value: 20, name: 'rose 6' },
+          { value: 18, name: 'rose 7' },
+          { value: 16, name: 'rose 8' }
+        ]
+      }
+    ]
   };
-  const chartDescription = Object.assign(baseChartDescription, pieChartSpecificDescription);
+  const chartDescription = pieChartSpecificDescription; // Object.assign(baseChartDescription, pieChartSpecificDescription);
   console.log("~~~~~~~~~ PIE charts representation")
   console.log(chartDescription);
   console.log("~~~~~~~~~ ")

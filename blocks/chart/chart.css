@@ -1,1 +1,5 @@
 /* charts css */
+
+.block.chart {
+  border: 2px solid red;
+}
