@@ -536,7 +536,17 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
     {
       value: formattedData.dataValues[0].value,
       itemStyle: {
-        color: theme['primary-color'],
+          color: {
+            type: 'radial',
+            x: 0.5,
+  y: 0.5,
+  r: 0.70,
+            colorStops: [{
+              offset: 0, color: theme['primary-gradient-start']
+            }, {
+              offset: 1, color: theme['primary-gradient-end']
+            }],
+          },
       },
       name: formattedData.dataValues[0].value,
     },
@@ -555,17 +565,14 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
       name: formattedData.dataValues[1].value,
       itemStyle: {
         color: {
-          type: 'linear',
-          x: 0,
-          y: 0,
-          x2: 0,
-          y2: 1,
+          type: 'radial',
+          x: 0.66,
+          y: 0.66,
+          r: 0.75,
           colorStops: [{
-            offset: 0, color: theme['secondary-gradient-end'],
+            offset: 0, color: theme['secondary-gradient-start'] // color at 0%
           }, {
-            offset: 0.5, color: theme['secondary-gradient-start'],
-          },{
-            offset: 1, color: theme['secondary-gradient-end'],
+            offset: 1, color: theme['secondary-gradient-end'] // color at 100%
           }],
         },
       }
@@ -591,7 +598,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
         label: {
           show: true,
           position: 'center',
-          fontSize: `${parseInt(theme['font-size'],10)*3}`,
+          fontSize: `${parseInt(theme['font-size'], 10) * 3}`,
           fontWeight: theme['font-weight'],
           color: theme['font-color'],
           formatter: `{@value}${chartConfig['value-suffix']}`
@@ -615,12 +622,12 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
         type: 'pie',
         roseType: 'radius',
         radius: [70, 100],
-        center: ['66%', '66%%'],
+        center: ['66%', '66%'],
         colorBy: 'data',
         label: {
           show: true,
           position: 'center',
-          fontSize: `${parseInt(theme['font-size'],10)*2}`,
+          fontSize: `${parseInt(theme['font-size'], 10) * 2}`,
           fontWeight: theme['font-weight'],
           color: theme['font-color'],
           formatter: `{@value}${chartConfig['value-suffix']}`
