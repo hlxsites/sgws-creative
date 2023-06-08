@@ -537,19 +537,21 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
       {
         name: chartConfig.title,
         type: 'pie',
-        radius: [20, 140],
+        radius: [100, 140],
         center: ['33%', '50%'],
         colorBy: 'data',
         label: {
           show: false
         },
+        silent: true,
         legendHoverLink: false,
         selectedMode: false,
         emphasis: {
-          label: {
-            show: false
-          }
+          disabled: true
         },
+        percentPrecision: 1,
+        showEmptyCircle: true,
+        stillShowZeroSum: true,
         data: [
           formattedData.dataValues[0],
           { value: 100 - parseInt(formattedData.dataValues[0].value, 10)}
@@ -558,19 +560,21 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
       {
         name: chartConfig.title,
         type: 'pie',
-        radius: [20, 140],
+        radius: [60, 100],
         center: ['66%', '50%'],
         colorBy: 'data',
         label: {
           show: false
         },
+        silent: true,
         legendHoverLink: false,
         selectedMode: false,
         emphasis: {
-          label: {
-            show: false
-          }
+          disabled: true
         },
+        percentPrecision: 1,
+        showEmptyCircle: true,
+        stillShowZeroSum: true,
         data: [
           formattedData.dataValues[0],
           { value: 100 - parseInt(formattedData.dataValues[1].value, 10)}
