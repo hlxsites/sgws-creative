@@ -353,6 +353,7 @@ svg#franklin-svg-sprite symbol {
 }
 
 /* border styling */
+
 /* TODO: remove brand specific styling for borders */
 main .section .default-content-wrapper .border-0 {
   background-color: transparent;
