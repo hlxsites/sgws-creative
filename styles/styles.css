@@ -30,16 +30,18 @@
   --overlay-color: #eee;
   --text-color: #000;
   --text-color-background: #fff;
+
+  /* fonts */
+  --heading-font-family: 'Futura PT Bold-Normal', 'Futura PT Bold-Normal Fallback', sans-serif;
+  --body-font-family: 'Roboto', sans-serif;
+
+  /* fluid font sizing */
   --body-font-size: 1rem;
   --heading-font-size: 2rem;
   --min-vw: 600;
   --min-vw-px: calc(var(--min-vw) * 1px);
   --max-vw: 1168;
   --viewport-run: calc(var(--max-vw) - var(--min-vw));
-
-  /* fonts */
-  --heading-font-family: 'Futura PT Bold-Normal', 'Futura PT Bold-Normal Fallback', sans-serif;
-  --body-font-family: 'Roboto', sans-serif;
 
   /* body sizes */
   --body-font-size-min: 0.625rem;
@@ -154,8 +156,15 @@ p.button-container {
   margin: var(--layout-size-xs) 0;
 }
 
-a.button:any-link {
-  font-family: var(--body-font-family);
+button {
+  font-size: inherit;
+  border: none;
+  appearance: none;
+}
+
+a.button:any-link, button {
+  font-style: normal;
+  font-weight: normal;
   display: inline-block;
   box-sizing: border-box;
   text-decoration: none;
@@ -166,8 +175,6 @@ a.button:any-link {
   padding: 0 var(--layout-size-l);
   margin: 0;
   text-align: center;
-  font-style: normal;
-  font-weight: normal;
   cursor: pointer;
   color: var(--text-color-background);
   background-color: var(--link-color);
@@ -369,14 +376,14 @@ main .section .outback .default-content-wrapper .border-0 {
 
 main .section .tabview .carrabbas .default-content-wrapper .border-0 {
   padding-top: 2.5%;
-} 
+}
 
 main .section .default-content-wrapper .border-1 {
   background-color: transparent;
   height: 0;
   margin: 0 auto;
   position: relative;
-} 
+}
 
 main .section .outback .default-content-wrapper .border-1 {
   filter: drop-shadow(#00000080 0 4px 1px);
@@ -384,11 +391,38 @@ main .section .outback .default-content-wrapper .border-1 {
 
 /* animations */
 @media (prefers-reduced-motion: no-preference) {
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to { opacity: 1 }
+  }
+
   @keyframes fade-in-bottom {
     from {
       opacity: 0;
       transform: translateY(100%);
     }
     to { opacity: 1 }
+  }
+
+  @keyframes fade-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(25%);
+    }
+    to { opacity: 1 }
+  }
+
+  @keyframes zoom-center {
+    from {
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 }

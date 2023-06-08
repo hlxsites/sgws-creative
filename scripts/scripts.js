@@ -78,6 +78,15 @@ export function createTag(tag, attributes) {
   return element;
 }
 
+export function createIcon(iconName) {
+  if (!iconName) {
+    return undefined;
+  }
+  const element = document.createElement('span');
+  element.classList.add('icon', `icon-${iconName}`);
+  return element;
+}
+
 /**
  * Builds hero block and prepends to main in a new section.
  * Rules for identifying hero block:

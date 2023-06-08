@@ -1,6 +1,7 @@
 /* footer styles */
 
 footer {
+  position: relative;
   background-image: var(--background-color-highlight);
   padding: 122px 80px;
 }
@@ -15,6 +16,161 @@ footer {
 footer h2,
 footer p {
   color: var(--text-color-background);
+}
+
+footer h2.animate,
+footer p.animate {
+  animation-delay: 0.25s;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: fade-in-bottom;
+}
+
+.footer a.button:any-link, button {
+  width: 350px;
+  border: 2px solid #fff;
+  background-color: var(--secondary-color);
+}
+
+footer .sources {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  opacity: 0.9;
+  overflow: hidden;
+  padding: 2vw 4vw;
+  font-size: clamp(0.5rem, 0.704vw + 0.236rem, 0.75rem);;
+}
+
+footer .sources.open {
+  display: block;
+}
+
+footer .sources .header {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: var(--layout-size-xl);
+}
+
+footer .sources .header h2,
+footer .sources .header p,
+footer .sources .header button {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: fade-in;
+}
+
+footer .sources .header h2 {
+  margin: 0;
+  color: var(--text-color-highlight);
+}
+
+footer .sources .header .icon use {
+  fill: var(--text-color-highlight);
+}
+
+footer .sources .header button {
+  display: inline-flex;
+  flex-direction: column;
+  min-width: unset;
+  min-height: unset;
+  width: unset;
+  height: unset;
+  background-color: unset;
+  border: unset;
+  line-height: unset;
+}
+
+footer .sources .header .sources-nav {
+  flex: 1;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: var(--layout-size-s);
+  align-items: center;
+  color: var(--secondary-color);
+}
+
+footer .sources .header .sources-nav button {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  min-width: unset;
+  border-radius: 50%;
+  background-color: rgb(5 25 49 / 10%);
+  border: none;
+  appearance: none;
+}
+
+footer .sources .header .sources-nav button:hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+  animation: zoom-center .25s linear;
+  border-radius: 50%;
+  background-color: #000;
+}
+
+footer .sources .header .sources-nav button:focus:not(:focus-visible) {
+  outline: none
+}
+
+footer .sources .header .sources-nav button.sources-next {
+  transform: rotate(180deg);
+}
+
+footer .sources .header .sources-nav button > span.icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+footer .sources .header .sources-nav p {
+  color: var(--text-color-highlight);
+  width: max-content;
+}
+
+footer .sources .header .close .icon {
+  width: 3.5em;
+  height: 3.5em;
+}
+
+footer .sources > div > div {
+  display: flex;
+  flex-direction: column;
+}
+
+footer .sources ol {
+  counter-reset: orderedList;
+  animation-delay: 0s;
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+  animation-name: fade-in-right;
+}
+
+footer .sources ol > li {
+  list-style: none;
+  counter-increment: orderedList;
+  visibility: hidden;
+  height: 0;
+}
+
+footer .sources ol > li.active {
+  visibility: visible;
+  height: unset;
+}
+
+footer .sources ol > li::marker {
+  content: counter(orderedList) ")\a0";
 }
 
 .product .footer > div {
@@ -51,12 +207,6 @@ footer p {
   flex: 1;
 }
 
-.footer a.button:any-link {
-  width: 350px;
-  border: 2px solid #fff;
-  background-color: var(--secondary-color);
-}
-
 .footer .footer-content p.picture {
   display: flex;
   flex-flow: row nowrap;
@@ -90,7 +240,14 @@ footer p {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .product .footer p.picture {
+  .product footer p.picture {
+    opacity: 0;
+  }
+
+  footer .footer .header button,
+  footer .footer ol,
+  footer .footer h2,
+  footer .footer p {
     opacity: 0;
   }
 }
