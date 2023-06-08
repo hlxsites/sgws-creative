@@ -48,6 +48,58 @@ function prepareBarChartDataWithOverlay(chartData) {
 }
 
 /**
+ * Build shared parts of chart representation
+ * @param {*} chartData Chart data (will be used to determine which chart to draw)
+ * @param {*} chartConfig Chart configuration
+ * @param {*} chartHolder Element (div) holding the chart
+ * @param {*} theme Theming details, optional
+ */
+function buildChartRepresentation(chartData, chartConfig, chartHolder, theme) {
+  // TMN-TODO (refactor)
+  const chartDescription = {};
+  chartDescription.title = {
+    text: chartConfig.title,
+    textStyle: {
+      color: theme['font-color'],
+      fontWeight: theme['font-weight'],
+      fontFamily: theme['font-family'],
+      fontSize: theme['font-size'],
+    },
+  };
+
+  if (chartConfig.legend) {
+    chartDescription.legend = {
+      type: 'plain',
+      selectedMode: false,
+      top: '10%',
+      right: '11.5%',
+      itemStyle: {
+        color: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          colorStops: [{
+            offset: 0, color: theme['primary-gradient-end'],
+          }, {
+            offset: 1, color: theme['primary-gradient-start'],
+          }],
+        },
+      },
+    };
+  }
+
+  return chartDescription;
+}
+
+function initializeChartHolder(chartConfig, chartHolder){
+  chartHolder.style.width = chartConfig.chartWidth;
+  chartHolder.style.height = chartConfig.chartHeight;
+  return window.echarts.init(chartHolder);
+}
+
+/**
  * Draw a histogram chart with an overlayed trend line
  * @param {*} chartData Chart data (will be used to determine which chart to draw)
  * @param {*} chartConfig Chart configuration
@@ -469,6 +521,48 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
   barChart.setOption(chartDescription);
 }
 
+function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
+  const formattedData = prepareBarChartData(chartData);
+  const pieChart = initializeChartHolder(chartConfig, chartHolder);
+
+  const baseChartDescription = buildChartRepresentation(chartData, chartConfig, chartHolder, theme);
+  console.log("~~~~~~~~~ Base charts representation")
+  console.log(baseChartDescription);
+  console.log("~~~~~~~~~ ")
+  console.log("~~~~~~~~~ Data")
+  console.log(formattedData);
+  console.log("~~~~~~~~~ ")
+
+  const pieChartSpecificDescription = {
+    title: {
+      colorBy: 'data',
+    },
+    series: [
+      {
+        name: chartConfig.title,
+        type: 'pie',
+        cursor: 'auto',
+        data: formattedData.dataValues,
+        label: {
+          show: true,
+          position: 'top',
+          formatter: `${chartConfig.unit || ''}{@score}${chartConfig['value-suffix'] || ''}`,
+          ...dataLabelFontStyle,
+        },
+        emphasis: {
+          disabled: true,
+        },
+      },
+    ],
+  };
+  const chartDescription = Object.assign(baseChartDescription, pieChartSpecificDescription);
+  console.log("~~~~~~~~~ PIE charts representation")
+  console.log(chartDescription);
+  console.log("~~~~~~~~~ ")
+
+  pieChart.setOption(chartDescription);
+}
+
 /**
  * Draw charts based on block styling (type) and data to represent
  * @param {*} block Block to draw the chart in (will be used to determine which chart to draw)
@@ -494,6 +588,9 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
       // default, histogram (one series)
       drawHistogramChart(chartData, chartConfig, chartHolder, theme);
     }
+  } else if (blockClassList.contains('pie')) {
+    console.log("Draw PIE charts");
+    drawComparisonPieChart(chartData, chartConfig, chartHolder, theme);
   }
 }
 
