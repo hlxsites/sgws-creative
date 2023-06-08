@@ -63,7 +63,7 @@ function buildChartRepresentation(chartData, chartConfig, chartHolder, theme) {
       color: theme['font-color'],
       fontWeight: theme['font-weight'],
       fontFamily: theme['font-family'],
-      fontSize: `${parseInt(theme['font-size'], 10) * 2}px`,
+      fontSize: `${theme['computed-font-size-px'] * 2}px`,
     },
     left: 'center',
   };
@@ -588,7 +588,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
         label: {
           show: true,
           position: 'center',
-          fontSize: `${parseInt(theme['font-size'], 10) * 3}`,
+          fontSize: `${theme['computed-font-size-px'] * 3}`,
           fontWeight: theme['font-weight'],
           color: theme['font-color'],
           formatter: `{@value}${chartConfig['value-suffix']}`,
@@ -617,7 +617,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
         label: {
           show: true,
           position: 'center',
-          fontSize: `${parseInt(theme['font-size'], 10) * 2.33}`,
+          fontSize: `${theme['computed-font-size-px'] * 2.33}`,
           fontWeight: theme['font-weight'],
           color: theme['font-color'],
           formatter: `{@value}${chartConfig['value-suffix']}`,
@@ -743,9 +743,9 @@ export default function decorate(block) {
   });
   // add things shared by all charts in theming here for now
   let computedStyles = window.getComputedStyle(block);
-  let computedFontSize = parseInt(computedStyles.fontSize, 10);
-  theme['font-size'] = `${computedFontSize * 1.1}px`;
-  theme['axis-font-size'] = `${computedFontSize * 0.8}px`;
+  theme['computed-font-size-px'] = parseInt(computedStyles.fontSize, 10);
+  theme['font-size'] = `${theme['computed-font-size-px'] * 1.1}px`;
+  theme['axis-font-size'] = `${theme['computed-font-size-px'] * 0.8}px`;
   theme['axis-color'] = 'rgb(0, 0, 0)';
   theme['font-weight'] = computedStyles.fontWeight;
 
@@ -765,9 +765,9 @@ export default function decorate(block) {
       if (echartsLoaded) {
         // get updated theme styles, if any
         computedStyles = window.getComputedStyle(block);
-        theme['font-size'] = computedStyles.fontSize;
-        computedFontSize = parseInt(computedStyles.fontSize, 10);
-        theme['axis-font-size'] = `${computedFontSize * 0.8}px`;
+        theme['computed-font-size-px'] = parseInt(computedStyles.fontSize, 10);
+        theme['font-size'] = `${theme['computed-font-size-px'] * 1.1}px`;
+        theme['axis-font-size'] = `${theme['computed-font-size-px'] * 0.8}px`;
 
         // redraw scaled chart
         chartHolder.remove();
