@@ -1,6 +1,6 @@
 {
     "project": "Southern Glazers Wines and Spirits",
-    "host": "www.sgcreative.southernglazers.com",
+    "host": "sgcreative.southernglazers.com",
     "plugins": [
         {
             "id": "library",
