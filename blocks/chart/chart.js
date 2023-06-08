@@ -56,6 +56,12 @@ function prepareBarChartDataWithOverlay(chartData) {
  */
 function buildChartRepresentation(chartData, chartConfig, chartHolder, theme) {
   // TMN-TODO (refactor)
+  console.log('+++++++++++++++++++++++')
+  console.log('+++++++++++++++++++++++')
+  console.log(chartConfig)
+  console.log('+++++++++++++++++++++++')
+  console.log(theme)
+  console.log('+++++++++++++++++++++++')
   const chartDescription = {};
   chartDescription.title = {
     text: chartConfig.title,
@@ -63,8 +69,9 @@ function buildChartRepresentation(chartData, chartConfig, chartHolder, theme) {
       color: theme['font-color'],
       fontWeight: theme['font-weight'],
       fontFamily: theme['font-family'],
-      fontSize: theme['font-size'],
+      fontSize: `${parseInt(theme['font-size'], 10)*2}px`,
     },
+    left: 'center'
   };
 
   if (chartConfig.legend) {
@@ -525,12 +532,6 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
   const pieChart = window.echarts.init(chartHolder);
 
   const baseChartDescription = buildChartRepresentation(chartData, chartConfig, chartHolder, theme);
-  console.log("~~~~~~~~~ chartConfig")
-  console.log(chartConfig);
-  console.log("~~~~~~~~~ ")
-  console.log("~~~~~~~~~ Theme")
-  console.log(theme);
-  console.log("~~~~~~~~~ ")
 
   const firstSeries = [
     {
