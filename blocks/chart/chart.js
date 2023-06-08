@@ -7,7 +7,7 @@ const MIN_BAR_CHART_HEIGHT = '400px';
  * @param {Object} chartData Chart data as read from the block
  * @returns {Object} Object containing barNames and corresponding dataValues
  */
-function prepareBarChartData(chartData) {
+function prepareChartData(chartData) {
   const barNames = new Array(chartData.length);
   const dataValues = new Array(chartData.length);
   chartData.forEach((row, index) => {
@@ -27,7 +27,7 @@ function prepareBarChartData(chartData) {
  * @param {Object} chartData Chart data as read from the block
  * @returns {Object} Object containing barNames and corresponding dataValues
  */
-function prepareBarChartDataWithOverlay(chartData) {
+function prepareChartDataWithOverlay(chartData) {
   const barNames = new Array(chartData.length / 2);
   const dataValues = new Array(chartData.length);
   const overlayValues = new Array(chartData.length);
@@ -56,12 +56,6 @@ function prepareBarChartDataWithOverlay(chartData) {
  */
 function buildChartRepresentation(chartData, chartConfig, chartHolder, theme) {
   // TMN-TODO (refactor)
-  console.log('+++++++++++++++++++++++')
-  console.log('+++++++++++++++++++++++')
-  console.log(chartConfig)
-  console.log('+++++++++++++++++++++++')
-  console.log(theme)
-  console.log('+++++++++++++++++++++++')
   const chartDescription = {};
   chartDescription.title = {
     text: chartConfig.title,
@@ -69,9 +63,9 @@ function buildChartRepresentation(chartData, chartConfig, chartHolder, theme) {
       color: theme['font-color'],
       fontWeight: theme['font-weight'],
       fontFamily: theme['font-family'],
-      fontSize: `${parseInt(theme['font-size'], 10)*2}px`,
+      fontSize: `${parseInt(theme['font-size'], 10) * 2}px`,
     },
-    left: 'center'
+    left: 'center',
   };
 
   if (chartConfig.legend) {
@@ -108,7 +102,7 @@ function buildChartRepresentation(chartData, chartConfig, chartHolder, theme) {
  * @param {*} theme Theming details, optional
  */
 function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, theme) {
-  const formattedData = prepareBarChartDataWithOverlay(chartData);
+  const formattedData = prepareChartDataWithOverlay(chartData);
 
   chartHolder.style.width = chartConfig.chartWidth;
   chartHolder.style.height = chartConfig.chartHeight;
@@ -274,7 +268,6 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
     };
   }
 
-  // draw chart
   barChart.setOption(chartDescription);
 }
 
@@ -286,7 +279,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
  * @param {*} theme Theming details, optional
  */
 function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
-  const formattedData = prepareBarChartData(chartData);
+  const formattedData = prepareChartData(chartData);
 
   chartHolder.style.width = chartConfig.chartWidth;
   chartHolder.style.height = chartConfig.chartHeight;
@@ -396,7 +389,6 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
     };
   }
 
-  // draw chart
   barChart.setOption(chartDescription);
 }
 
@@ -408,7 +400,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
  * @param {*} theme Theming details, optional
  */
 function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
-  const formattedData = prepareBarChartData(chartData);
+  const formattedData = prepareChartData(chartData);
 
   chartHolder.style.width = chartConfig.chartWidth;
   chartHolder.style.height = chartConfig.chartHeight;
@@ -518,15 +510,12 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
     ],
   };
 
-  // draw chart
   barChart.setOption(chartDescription);
 }
 
 function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
-  console.log('## drawComparisonPieChart');
-  const formattedData = prepareBarChartData(chartData);
+  const formattedData = prepareChartData(chartData);
 
-  chartHolder = chartHolder || {};
   chartHolder.style.width = chartConfig.chartWidth;
   chartHolder.style.height = chartConfig.chartHeight || MIN_BAR_CHART_HEIGHT;
   const pieChart = window.echarts.init(chartHolder);
@@ -543,9 +532,9 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
           y: 0.5,
           r: 0.70,
           colorStops: [{
-            offset: 0, color: theme['primary-gradient-start']
+            offset: 0, color: theme['primary-gradient-start'],
           }, {
-            offset: 1, color: theme['primary-gradient-end']
+            offset: 1, color: theme['primary-gradient-end'],
           }],
         },
       },
@@ -555,10 +544,10 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
       value: 100 - parseInt(formattedData.dataValues[0].value, 10),
       itemStyle: {
         color: theme['primary-color'],
-        opacity: 0.8
+        opacity: 0.8,
       },
       name: formattedData.dataValues[0].value,
-    }
+    },
   ];
   const secondSeries = [
     {
@@ -571,21 +560,21 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
           y: 0.66,
           r: 0.75,
           colorStops: [{
-            offset: 0, color: theme['secondary-gradient-start'] // color at 0%
+            offset: 0, color: theme['secondary-gradient-start'], // color at 0%
           }, {
-            offset: 1, color: theme['secondary-gradient-end'] // color at 100%
+            offset: 1, color: theme['secondary-gradient-end'], // color at 100%
           }],
         },
-      }
+      },
     },
     {
       value: 100 - parseInt(formattedData.dataValues[1].value, 10),
       name: formattedData.dataValues[1].value,
       itemStyle: {
         color: theme['secondary-gradient-end'],
-        opacity: 0.8
-      }
-    }
+        opacity: 0.8,
+      },
+    },
   ];
   const pieChartSpecificDescription = {
     series: [
@@ -602,27 +591,27 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
           fontSize: `${parseInt(theme['font-size'], 10) * 3}`,
           fontWeight: theme['font-weight'],
           color: theme['font-color'],
-          formatter: `{@value}${chartConfig['value-suffix']}`
+          formatter: `{@value}${chartConfig['value-suffix']}`,
         },
         labelLine: {
-          show: false
+          show: false,
         },
         silent: true,
         legendHoverLink: false,
         selectedMode: false,
         emphasis: {
-          disabled: true
+          disabled: true,
         },
         percentPrecision: 1,
         showEmptyCircle: true,
         stillShowZeroSum: true,
-        data: firstSeries
+        data: firstSeries,
       },
       {
         name: chartConfig.title,
         type: 'pie',
         roseType: 'radius',
-        radius: ['35%', '50%'],
+        radius: ['35%', '47.5%'],
         center: ['74.5%', '55%'],
         colorBy: 'data',
         label: {
@@ -631,28 +620,25 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
           fontSize: `${parseInt(theme['font-size'], 10) * 2.33}`,
           fontWeight: theme['font-weight'],
           color: theme['font-color'],
-          formatter: `{@value}${chartConfig['value-suffix']}`
+          formatter: `{@value}${chartConfig['value-suffix']}`,
         },
         labelLine: {
-          show: false
+          show: false,
         },
         silent: true,
         legendHoverLink: false,
         selectedMode: false,
         emphasis: {
-          disabled: true
+          disabled: true,
         },
         percentPrecision: 1,
         showEmptyCircle: true,
         stillShowZeroSum: true,
-        data: secondSeries
+        data: secondSeries,
       },
-    ]
+    ],
   };
   const chartDescription = Object.assign(baseChartDescription, pieChartSpecificDescription);
-  console.log("~~~~~~~~~ PIE charts representation")
-  console.log(chartDescription);
-  console.log("~~~~~~~~~ ")
 
   pieChart.setOption(chartDescription);
 }
@@ -683,7 +669,6 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
       drawHistogramChart(chartData, chartConfig, chartHolder, theme);
     }
   } else if (blockClassList.contains('pie')) {
-    console.log("Draw PIE charts");
     drawComparisonPieChart(chartData, chartConfig, chartHolder, theme);
   }
 }
