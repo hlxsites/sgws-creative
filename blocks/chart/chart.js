@@ -538,36 +538,44 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
         name: chartConfig.title,
         type: 'pie',
         radius: [20, 140],
-        center: ['25%', '50%'],
-        roseType: 'radius',
-        itemStyle: {
-          borderRadius: 5
-        },
+        center: ['33%', '50%'],
+        colorBy: 'data',
         label: {
           show: false
         },
+        legendHoverLink: false,
+        selectedMode: false,
         emphasis: {
           label: {
-            show: true
+            show: false
           }
         },
         data: [
           formattedData.dataValues[0],
+          { value: 100 - parseInt(formattedData.dataValues[0].value, 10)}
         ]
       },
       {
         name: chartConfig.title,
         type: 'pie',
-        radius: [20, 70],
-        center: ['75%', '50%'],
-        roseType: 'area',
-        itemStyle: {
-          borderRadius: 5
+        radius: [20, 140],
+        center: ['66%', '50%'],
+        colorBy: 'data',
+        label: {
+          show: false
+        },
+        legendHoverLink: false,
+        selectedMode: false,
+        emphasis: {
+          label: {
+            show: false
+          }
         },
         data: [
-          formattedData.dataValues[1],
+          formattedData.dataValues[0],
+          { value: 100 - parseInt(formattedData.dataValues[1].value, 10)}
         ]
-      }
+      },
     ]
   };
   const chartDescription = Object.assign(baseChartDescription, pieChartSpecificDescription);
