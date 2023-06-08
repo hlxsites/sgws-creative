@@ -531,12 +531,48 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
   console.log("~~~~~~~~~ Data")
   console.log(formattedData);
   console.log("~~~~~~~~~ ")
+  console.log("~~~~~~~~~ Theme")
+  console.log(theme);
+  console.log("~~~~~~~~~ ")
 
+  const firstSeries = [
+    {
+      value: formattedData.dataValues[0].value,
+      itemStyle: {
+        color: theme['primary-color'],
+      }
+    },
+    {
+      value: 100 - parseInt(formattedData.dataValues[0].value, 10),
+      itemStyle: {
+        color: theme['primary-color'],
+        //borderColor: 'red',
+        //borderWidth: 6,
+        borderJoin: 'miter',
+      }
+    }
+  ];
+  const secondSeries = [
+    {
+      value: formattedData.dataValues[0].value,
+      itemStyle: {
+        color: theme['secondary-color'],
+      }
+    },
+    {
+      value: 100 - parseInt(formattedData.dataValues[1].value, 10),
+      itemStyle: {
+        color: theme['secondary-color'],
+        opacity: 0.5
+      }
+    }
+  ];
   const pieChartSpecificDescription = {
     series: [
       {
         name: chartConfig.title,
         type: 'pie',
+        roseType: 'radius',
         radius: [100, 140],
         center: ['33%', '50%'],
         colorBy: 'data',
@@ -552,14 +588,12 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
         percentPrecision: 1,
         showEmptyCircle: true,
         stillShowZeroSum: true,
-        data: [
-          formattedData.dataValues[0],
-          { value: 100 - parseInt(formattedData.dataValues[0].value, 10)}
-        ]
+        data: firstSeries
       },
       {
         name: chartConfig.title,
         type: 'pie',
+        roseType: 'radius',
         radius: [60, 100],
         center: ['66%', '66%%'],
         colorBy: 'data',
@@ -575,10 +609,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
         percentPrecision: 1,
         showEmptyCircle: true,
         stillShowZeroSum: true,
-        data: [
-          formattedData.dataValues[0],
-          { value: 100 - parseInt(formattedData.dataValues[1].value, 10)}
-        ]
+        data: secondSeries
       },
     ]
   };
