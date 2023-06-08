@@ -32,7 +32,7 @@
   --text-color-background: #fff;
   --body-font-size: 1rem;
   --heading-font-size: 2rem;
-  --min-vw: 414;
+  --min-vw: 600;
   --min-vw-px: calc(var(--min-vw) * 1px);
   --max-vw: 1168;
   --viewport-run: calc(var(--max-vw) - var(--min-vw));
@@ -42,7 +42,7 @@
   --body-font-family: 'Roboto', sans-serif;
 
   /* body sizes */
-  --body-font-size-min: 0.75rem;
+  --body-font-size-min: 0.625rem;
   --body-font-size-max: var(--body-font-size);
 
   /* heading sizes */
@@ -73,7 +73,7 @@ body {
   --link-color-hover: var(--primary-color);
 
   font-size: var(--body-font-size);
-  font-size: clamp(var(--body-font-size-min), 0.39vw + 0.649rem, var(--body-font-size-max));
+  font-size: clamp(var(--body-font-size-min), 1.056vw + 0.229rem, var(--body-font-size-max));
   margin: 0;
   font-family: var(--body-font-family);
   line-height: 1.75;
@@ -258,6 +258,8 @@ main .section.highlight:not(.background-image) {
   color: var(--text-color-background);
 }
 
+main .section.highlight.dark h2,
+main .section.highlight.dark h3,
 main .section.highlight:not(.background-image) h2,
 main .section.highlight:not(.background-image) h3 {
   /* background styles, unless a background image is used. */
@@ -348,4 +350,45 @@ svg#franklin-svg-sprite symbol {
 
 .icon svg use {
   fill: #fff;
+}
+
+/* border styling */
+
+/* TODO: remove brand specific styling for borders */
+main .section .default-content-wrapper .border-0 {
+  background-color: transparent;
+  margin: 0 auto;
+  max-height: 50px;
+  position: relative;
+  transform: rotate(180deg);
+}
+
+main .section .outback .default-content-wrapper .border-0 {
+  filter: drop-shadow(#00000080 0 -4px 1px);
+}
+
+main .section .tabview .carrabbas .default-content-wrapper .border-0 {
+  padding-top: 2.5%;
+} 
+
+main .section .default-content-wrapper .border-1 {
+  background-color: transparent;
+  height: 0;
+  margin: 0 auto;
+  position: relative;
+} 
+
+main .section .outback .default-content-wrapper .border-1 {
+  filter: drop-shadow(#00000080 0 4px 1px);
+}
+
+/* animations */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes fade-in-bottom {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to { opacity: 1 }
+  }
 }
