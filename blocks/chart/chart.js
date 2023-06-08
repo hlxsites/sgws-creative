@@ -616,7 +616,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
       }
     ]
   };
-  const chartDescription = pieChartSpecificDescription; // Object.assign(baseChartDescription, pieChartSpecificDescription);
+  const chartDescription = Object.assign(baseChartDescription, pieChartSpecificDescription);
   console.log("~~~~~~~~~ PIE charts representation")
   console.log(chartDescription);
   console.log("~~~~~~~~~ ")
