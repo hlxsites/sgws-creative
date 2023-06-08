@@ -536,17 +536,17 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
     {
       value: formattedData.dataValues[0].value,
       itemStyle: {
-          color: {
-            type: 'radial',
-            x: 0.5,
-  y: 0.5,
-  r: 0.70,
-            colorStops: [{
-              offset: 0, color: theme['primary-gradient-start']
-            }, {
-              offset: 1, color: theme['primary-gradient-end']
-            }],
-          },
+        color: {
+          type: 'radial',
+          x: 0.5,
+          y: 0.5,
+          r: 0.70,
+          colorStops: [{
+            offset: 0, color: theme['primary-gradient-start']
+          }, {
+            offset: 1, color: theme['primary-gradient-end']
+          }],
+        },
       },
       name: formattedData.dataValues[0].value,
     },
@@ -592,8 +592,8 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
         name: chartConfig.title,
         type: 'pie',
         roseType: 'radius',
-        radius: [100, 140],
-        center: ['33%', '50%'],
+        radius: ['40%', '55%'],
+        center: ['27.5%', '45%'],
         colorBy: 'data',
         label: {
           show: true,
@@ -621,13 +621,13 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
         name: chartConfig.title,
         type: 'pie',
         roseType: 'radius',
-        radius: [70, 100],
-        center: ['66%', '66%'],
+        radius: ['35%', '50%'],
+        center: ['74.5%', '55%'],
         colorBy: 'data',
         label: {
           show: true,
           position: 'center',
-          fontSize: `${parseInt(theme['font-size'], 10) * 2}`,
+          fontSize: `${parseInt(theme['font-size'], 10) * 2.33}`,
           fontWeight: theme['font-weight'],
           color: theme['font-color'],
           formatter: `{@value}${chartConfig['value-suffix']}`
