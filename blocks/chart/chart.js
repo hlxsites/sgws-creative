@@ -93,12 +93,6 @@ function buildChartRepresentation(chartData, chartConfig, chartHolder, theme) {
   return chartDescription;
 }
 
-function initializeChartHolder(chartConfig, chartHolder){
-  chartHolder.style.width = chartConfig.chartWidth;
-  chartHolder.style.height = chartConfig.chartHeight || MIN_BAR_CHART_HEIGHT;
-  return window.echarts.init(chartHolder);
-}
-
 /**
  * Draw a histogram chart with an overlayed trend line
  * @param {*} chartData Chart data (will be used to determine which chart to draw)
@@ -525,11 +519,10 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
   console.log('## drawComparisonPieChart');
   const formattedData = prepareBarChartData(chartData);
 
+  chartHolder = chartHolder || {};
   chartHolder.style.width = chartConfig.chartWidth;
   chartHolder.style.height = chartConfig.chartHeight || MIN_BAR_CHART_HEIGHT;
-  chartConfig['chart-scale-step'] = parseInt(chartConfig['chart-scale-step'], 10);
-
-  const pieChart = initializeChartHolder(chartHolder, theme);
+  const pieChart = window.echarts.init(chartHolder);
 
   const baseChartDescription = buildChartRepresentation(chartData, chartConfig, chartHolder, theme);
   console.log("~~~~~~~~~ Base charts representation")
