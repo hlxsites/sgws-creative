@@ -66,7 +66,6 @@ function buildChartRepresentation(chartConfig, theme) {
     },
     left: 'center',
   };
-
   if (chartConfig.legend) {
     chartDescription.legend = {
       type: 'plain',
@@ -74,11 +73,10 @@ function buildChartRepresentation(chartConfig, theme) {
       top: '10%',
       right: '11.5%',
       itemStyle: {
-        color: getLinearGradientPoints(theme['primary-gradient-end'], theme['primary-gradient-start']),
+        color: getLinearColorGradient(theme['primary-gradient-end'], theme['primary-gradient-start']),
       },
     };
   }
-
   return chartDescription;
 }
 
@@ -132,7 +130,7 @@ function getGradientStops(startColor, endColor) {
  * @param {*} endColor End gradient color
  * @returns A chart gradient color
  */
-function getLinearGradientPoints(startColor, endColor) {
+function getLinearColorGradient(startColor, endColor) {
   return Object.freeze({
     type: 'linear',
     x: 0,
@@ -161,7 +159,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
     datapoint.value = Number(datapoint.value);
     max = Math.max(max, datapoint.value);
     datapoint.itemStyle = {
-      color: getLinearGradientPoints(theme['primary-gradient-end'], theme['primary-gradient-start']),
+      color: getLinearColorGradient(theme['primary-gradient-end'], theme['primary-gradient-start']),
     };
   });
   formattedData.dataValuesOverlay.forEach((datapoint) => {
@@ -297,7 +295,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
     datapoint.value = Number(datapoint.value);
     max = Math.max(max, datapoint.value);
     datapoint.itemStyle = {
-      color: getLinearGradientPoints(theme['primary-gradient-end'], theme['primary-gradient-start']),
+      color: getLinearColorGradient(theme['primary-gradient-end'], theme['primary-gradient-start']),
     };
   });
   const axisFontStyle = getBarChartAxisFontStyle(theme);
@@ -380,10 +378,10 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
   // chart stylings
   // for comparison chart we have only two values, so...
   formattedData.dataValues[0].itemStyle = {
-    color: getLinearGradientPoints(theme['primary-gradient-end'], theme['primary-gradient-start']),
+    color: getLinearColorGradient(theme['primary-gradient-end'], theme['primary-gradient-start']),
   };
   formattedData.dataValues[1].itemStyle = {
-    color: getLinearGradientPoints(theme['secondary-gradient-end'], theme['secondary-gradient-start']),
+    color: getLinearColorGradient(theme['secondary-gradient-end'], theme['secondary-gradient-start']),
   };
   const axisFontStyle = getBarChartAxisFontStyle(theme);
   const dataLabelFontStyle = {
