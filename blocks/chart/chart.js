@@ -80,11 +80,7 @@ function buildChartRepresentation(chartConfig, theme) {
           y: 0,
           x2: 0,
           y2: 1,
-          colorStops: [{
-            offset: 0, color: theme['primary-gradient-end'],
-          }, {
-            offset: 1, color: theme['primary-gradient-start'],
-          }],
+          colorStops: getGradientStops(theme['primary-gradient-end'], theme['primary-gradient-start'])
         },
       },
     };
@@ -157,11 +153,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
         y: 0,
         x2: 0,
         y2: 1,
-        colorStops: [{
-          offset: 0, color: theme['primary-gradient-end'],
-        }, {
-          offset: 1, color: theme['primary-gradient-start'],
-        }],
+        colorStops: getGradientStops(theme['primary-gradient-end'], theme['primary-gradient-start'])
       },
     };
   });
@@ -173,6 +165,11 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
     };
   });
   const axisFontStyle = getBarChartAxisFontStyle(theme);
+  const interactivitySettings = {
+    emphasis: {
+      disabled: true,
+    },
+  };
 
   // build specific chart representation
   const barChartSpecificDescription = {
@@ -218,7 +215,9 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       axisLabel: {
         formatter: `{value}${chartConfig['scale-overlay-label-suffix']}`,
       },
-      splitLine: { show: false },
+      splitLine: {
+        show: false
+      },
     }],
     series: [
       {
@@ -228,9 +227,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
         yAxisIndex: 0,
         colorBy: 'data',
         data: formattedData.dataValuesHistogram,
-        emphasis: {
-          disabled: true,
-        },
+        ...interactivitySettings
       }, {
         name: chartConfig['overlay-unit'],
         type: 'line',
@@ -244,9 +241,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
         },
         colorBy: 'data',
         data: formattedData.dataValuesOverlay,
-        emphasis: {
-          disabled: true,
-        },
+        ...interactivitySettings
       },
     ],
   };
@@ -297,15 +292,16 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
         y: 0,
         x2: 0,
         y2: 1,
-        colorStops: [{
-          offset: 0, color: theme['primary-gradient-end'],
-        }, {
-          offset: 1, color: theme['primary-gradient-start'],
-        }],
+        colorStops: getGradientStops(theme['primary-gradient-end'], theme['primary-gradient-start'])
       },
     };
   });
   const axisFontStyle = getBarChartAxisFontStyle(theme);
+  const interactivitySettings = {
+    emphasis: {
+      disabled: true,
+    },
+  };
 
   // build chart representation
   const barChartSpecificDescription = {
@@ -346,9 +342,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
         cursor: 'auto',
         colorBy: 'data',
         data: formattedData.dataValues,
-        emphasis: {
-          disabled: true,
-        },
+        ...interactivitySettings
       },
     ],
   };
@@ -410,6 +404,11 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
     fontFamily: theme['font-family'],
     fontSize: theme['font-size'],
   };
+  const interactivitySettings = {
+    emphasis: {
+      disabled: true,
+    },
+  };
 
   // build comparison bar chart specific representation
   const barChartSpecificDescription = {
@@ -454,9 +453,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
           formatter: `${chartConfig.unit || ''}{@score}${chartConfig['value-suffix'] || ''}`,
           ...dataLabelFontStyle,
         },
-        emphasis: {
-          disabled: true,
-        },
+        ...interactivitySettings
       },
     ],
   };
