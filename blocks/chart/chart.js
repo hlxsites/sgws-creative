@@ -164,7 +164,6 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
   });
   formattedData.dataValuesOverlay.forEach((datapoint) => {
     datapoint.value = Number(datapoint.value);
-    max = Math.max(max, datapoint.value);
     datapoint.itemStyle = {
       color: theme['secondary-gradient-start'],
     };
