@@ -277,7 +277,6 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
   }
 
   const barChart = initializeChart(chartHolder, chartConfig);
-
   const chartDescription = Object.assign(
     barChartRepresentation,
     barChartSpecificDescription,
@@ -568,8 +567,8 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
 
   const pieChart = initializeChart(chartHolder, chartConfig);
   pieChart.setOption(Object.assign(
-      buildChartRepresentation(chartConfig, theme),
-      pieChartSpecificDescription,
+    buildChartRepresentation(chartConfig, theme),
+    pieChartSpecificDescription,
   ));
 }
 
