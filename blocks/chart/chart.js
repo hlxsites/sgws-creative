@@ -55,7 +55,6 @@ function prepareChartDataWithOverlay(chartData) {
  * @param {*} theme Theming details, optional
  */
 function buildChartRepresentation(chartData, chartConfig, chartHolder, theme) {
-  // TMN-TODO (refactor)
   const chartDescription = {};
   chartDescription.title = {
     text: chartConfig.title,
@@ -287,6 +286,8 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
 
   const barChart = window.echarts.init(chartHolder);
 
+  const baseChartDescription = buildChartRepresentation(chartData, chartConfig, chartHolder, theme);
+
   // stylings
   let max = Number.NEGATIVE_INFINITY;
   formattedData.dataValues.forEach((datapoint) => {
@@ -319,7 +320,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
   };
 
   // build chart representation
-  const chartDescription = {
+  const barChartSpecificDescription = {
     title: {
       text: chartConfig.title,
     },
@@ -365,30 +366,11 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
   };
 
   if (chartConfig.legend) {
-    chartDescription.legend = {
-      type: 'plain',
-      selectedMode: false,
-      formatter: chartConfig.unit,
-      top: '10%',
-      right: '11.5%',
-      itemStyle: {
-        color: {
-          type: 'linear',
-          x: 0,
-          y: 0,
-          x2: 0,
-          y2: 1,
-          colorStops: [{
-            offset: 0, color: theme['primary-gradient-end'],
-          }, {
-            offset: 1, color: theme['primary-gradient-start'],
-          }],
-        },
-      },
-      textStyle: axisFontStyle,
-    };
+    baseChartDescription.legend.formatter = chartConfig.unit;
+    baseChartDescription.legend.textStyle = axisFontStyle;
   }
 
+  const chartDescription = Object.assign(baseChartDescription, barChartSpecificDescription);
   barChart.setOption(chartDescription);
 }
 
