@@ -48,6 +48,20 @@ function prepareChartDataWithOverlay(chartData) {
 }
 
 /**
+ * Compute font styling based on theme
+ * and block computed styles
+ * @param {*} block Block holding the chart
+ * @param {*} theme Theme
+ */
+function computeFontSizes(block, theme){
+  let computedStyles = window.getComputedStyle(block);
+  theme['computed-font-size-px'] = parseInt(computedStyles.fontSize, 10);
+  theme['font-size'] = `${theme['computed-font-size-px'] * 1.1}px`;
+  theme['axis-font-size'] = `${theme['computed-font-size-px'] * 0.8}px`;
+  theme['font-weight'] = computedStyles.fontWeight;
+}
+
+/**
  * Create a gradient color
  * @param {*} startColor Start gradient color
  * @param {*} endColor End gradient color
@@ -670,13 +684,9 @@ export default function decorate(block) {
   windowTheme.forEach((themeElement) => {
     theme[themeElement.token] = themeElement.value;
   });
-  // add things shared by all charts in theming here for now
-  let computedStyles = window.getComputedStyle(block);
-  theme['computed-font-size-px'] = parseInt(computedStyles.fontSize, 10);
-  theme['font-size'] = `${theme['computed-font-size-px'] * 1.1}px`;
-  theme['axis-font-size'] = `${theme['computed-font-size-px'] * 0.8}px`;
+
+  computeFontSizes(block, theme);
   theme['axis-color'] = 'rgb(0, 0, 0)';
-  theme['font-weight'] = computedStyles.fontWeight;
 
   // listen for charting library to be loaded before starting to draw
   document.addEventListener(
@@ -692,11 +702,7 @@ export default function decorate(block) {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
       if (echartsLoaded) {
-        // get updated theme styles, if any
-        computedStyles = window.getComputedStyle(block);
-        theme['computed-font-size-px'] = parseInt(computedStyles.fontSize, 10);
-        theme['font-size'] = `${theme['computed-font-size-px'] * 1.1}px`;
-        theme['axis-font-size'] = `${theme['computed-font-size-px'] * 0.8}px`;
+        computeFontSizes(block, theme);
 
         // redraw scaled chart
         chartHolder.remove();
