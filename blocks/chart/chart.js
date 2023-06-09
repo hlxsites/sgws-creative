@@ -128,7 +128,7 @@ function getGradientStops(startColor, endColor) {
     offset: 0, color: startColor,
   }, {
     offset: 1, color: endColor,
-  }]
+  }];
 }
 
 /**
@@ -487,7 +487,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
           x: 0.5,
           y: 0.5,
           r: 0.70,
-          colorStops: getGradientStops(theme['primary-gradient-start'], theme['primary-gradient-end'])
+          colorStops: getGradientStops(theme['primary-gradient-start'], theme['primary-gradient-end']),
         },
       },
     },
@@ -597,7 +597,6 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
   chartConfig.chartWidth = block.clientWidth;
   chartConfig.chartHeight = block.clientHeight !== 0 ? block.clientHeight : MIN_CHART_HEIGHT;
   if (blockClassList.contains('bars')) {
-
     chartConfig.legend = blockClassList.contains('graph-legend');
 
     if (chartData.length === 2) {
