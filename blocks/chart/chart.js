@@ -403,8 +403,11 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
   const formattedData = prepareChartData(chartData);
 
   chartHolder.style.width = chartConfig.chartWidth;
-  chartHolder.style.height = chartConfig.chartHeight;
+  chartHolder.style.height = chartConfig.chartHeight || MIN_BAR_CHART_HEIGHT;
   const barChart = window.echarts.init(chartHolder);
+
+  const baseChartDescription = buildChartRepresentation(chartData, chartConfig, chartHolder, theme);
+
   // chart stylings
   // for comparison chart we have only two values, so...
   formattedData.dataValues[0].itemStyle = {
@@ -454,7 +457,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
   };
 
   // build chart representation
-  const chartDescription = {
+  const barChartSpecificDescription = {
     title: {
       text: chartConfig.title,
       colorBy: 'data',
@@ -510,6 +513,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
     ],
   };
 
+  const chartDescription = Object.assign(baseChartDescription, barChartSpecificDescription);
   barChart.setOption(chartDescription);
 }
 
@@ -522,6 +526,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
 
   const baseChartDescription = buildChartRepresentation(chartData, chartConfig, chartHolder, theme);
 
+  // format data for representation
   const firstSeries = [
     {
       value: formattedData.dataValues[0].value,
@@ -576,6 +581,14 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
       },
     },
   ];
+
+  const labelStylings = {
+    show: true,
+    position: 'center',
+    fontWeight: theme['font-weight'],
+    color: theme['font-color'],
+    formatter: `{@value}${chartConfig['value-suffix']}`,
+  };
   const pieChartSpecificDescription = {
     series: [
       {
@@ -586,12 +599,8 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
         center: ['27.5%', '45%'],
         colorBy: 'data',
         label: {
-          show: true,
-          position: 'center',
           fontSize: `${theme['computed-font-size-px'] * 3}`,
-          fontWeight: theme['font-weight'],
-          color: theme['font-color'],
-          formatter: `{@value}${chartConfig['value-suffix']}`,
+          ...labelStylings,
         },
         labelLine: {
           show: false,
@@ -615,12 +624,8 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
         center: ['74.5%', '55%'],
         colorBy: 'data',
         label: {
-          show: true,
-          position: 'center',
           fontSize: `${theme['computed-font-size-px'] * 2.33}`,
-          fontWeight: theme['font-weight'],
-          color: theme['font-color'],
-          formatter: `{@value}${chartConfig['value-suffix']}`,
+          ...labelStylings,
         },
         labelLine: {
           show: false,
@@ -639,7 +644,6 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
     ],
   };
   const chartDescription = Object.assign(baseChartDescription, pieChartSpecificDescription);
-
   pieChart.setOption(chartDescription);
 }
 
