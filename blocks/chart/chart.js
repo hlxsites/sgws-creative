@@ -95,7 +95,7 @@ function buildChartRepresentation(chartData, chartConfig, chartHolder, theme) {
 
 function initializeChart(chartHolder, chartConfig){
   chartHolder.style.width = chartConfig.chartWidth;
-  chartHolder.style.height = chartConfig.chartHeight;
+  chartHolder.style.height = chartConfig.chartHeight || MIN_BAR_CHART_HEIGHT;
   return window.echarts.init(chartHolder);
 }
 
@@ -470,11 +470,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
 
 function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
   const formattedData = prepareChartData(chartData);
-
-  chartHolder.style.width = chartConfig.chartWidth;
-  chartHolder.style.height = chartConfig.chartHeight || MIN_BAR_CHART_HEIGHT;
-  const pieChart = window.echarts.init(chartHolder);
-
+  const pieChart = initializeChart(chartHolder, chartConfig);
   const baseChartDescription = buildChartRepresentation(chartData, chartConfig, chartHolder, theme);
 
   // format data for representation
