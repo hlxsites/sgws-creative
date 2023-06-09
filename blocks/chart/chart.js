@@ -1,6 +1,6 @@
 import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
 
-const MIN_BAR_CHART_HEIGHT = '400px';
+const MIN_CHART_HEIGHT = '400px';
 
 /**
  * Prepare data to be displayed in a bar chart
@@ -101,7 +101,7 @@ function buildChartRepresentation(chartData, chartConfig, chartHolder, theme) {
  */
 function initializeChart(chartHolder, chartConfig) {
   chartHolder.style.width = chartConfig.chartWidth;
-  chartHolder.style.height = chartConfig.chartHeight || MIN_BAR_CHART_HEIGHT;
+  chartHolder.style.height = chartConfig.chartHeight || MIN_CHART_HEIGHT;
   return window.echarts.init(chartHolder);
 }
 
@@ -607,7 +607,7 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
   const blockClassList = block.classList;
   if (blockClassList.contains('bars')) {
     chartConfig.chartWidth = block.clientWidth;
-    chartConfig.chartHeight = block.clientHeight !== 0 ? block.clientHeight : MIN_BAR_CHART_HEIGHT;
+    chartConfig.chartHeight = block.clientHeight !== 0 ? block.clientHeight : MIN_CHART_HEIGHT;
     chartConfig.legend = blockClassList.contains('graph-legend');
 
     if (chartData.length === 2) {
