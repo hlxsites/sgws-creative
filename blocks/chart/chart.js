@@ -365,8 +365,6 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
  */
 function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
   const formattedData = prepareChartData(chartData);
-  const barChart = initializeChart(chartHolder, chartConfig);
-  const baseChartDescription = buildChartRepresentation(chartConfig, theme);
 
   // chart stylings
   // for comparison chart we have only two values, so...
@@ -457,7 +455,12 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       },
     ],
   };
-  const chartDescription = Object.assign(baseChartDescription, barChartSpecificDescription);
+
+  const barChart = initializeChart(chartHolder, chartConfig);
+  const chartDescription = Object.assign(
+    buildChartRepresentation(chartConfig, theme),
+    barChartSpecificDescription
+  );
   barChart.setOption(chartDescription);
 }
 
@@ -470,8 +473,6 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
  */
 function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
   const formattedData = prepareChartData(chartData);
-  const pieChart = initializeChart(chartHolder, chartConfig);
-  const baseChartDescription = buildChartRepresentation(chartConfig, theme);
 
   // format data for representation
   const firstSeries = [
@@ -577,7 +578,12 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
       },
     ],
   };
-  const chartDescription = Object.assign(baseChartDescription, pieChartSpecificDescription);
+
+  const pieChart = initializeChart(chartHolder, chartConfig);
+  const chartDescription = Object.assign(
+    buildChartRepresentation(chartConfig, theme),
+    pieChartSpecificDescription
+  );
   pieChart.setOption(chartDescription);
 }
 
