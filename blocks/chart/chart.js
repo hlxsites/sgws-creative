@@ -93,7 +93,13 @@ function buildChartRepresentation(chartData, chartConfig, chartHolder, theme) {
   return chartDescription;
 }
 
-function initializeChart(chartHolder, chartConfig){
+/**
+ * Initialize the chart library object
+ * @param {*} chartHolder Element holding the chart
+ * @param {*} chartConfig Chart configuration
+ * @returns An initialized chart object
+ */
+function initializeChart(chartHolder, chartConfig) {
   chartHolder.style.width = chartConfig.chartWidth;
   chartHolder.style.height = chartConfig.chartHeight || MIN_BAR_CHART_HEIGHT;
   return window.echarts.init(chartHolder);
