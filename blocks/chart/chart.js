@@ -456,10 +456,10 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
     cursor: 'auto',
   };
   const titleTextStyle = {
-      color: theme['font-color'],
-      fontWeight: theme['font-weight'],
-      fontFamily: theme['font-family'],
-      fontSize: theme['font-size'],
+    color: theme['font-color'],
+    fontWeight: theme['font-weight'],
+    fontFamily: theme['font-family'],
+    fontSize: theme['font-size'],
   };
 
   // build comparison bar chart specific representation
@@ -511,7 +511,6 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       },
     ],
   };
-
   const chartDescription = Object.assign(baseChartDescription, barChartSpecificDescription);
   barChart.setOption(chartDescription);
 }
@@ -529,6 +528,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
   const firstSeries = [
     {
       value: formattedData.dataValues[0].value,
+      name: formattedData.dataValues[0].value,
       itemStyle: {
         color: {
           type: 'radial',
@@ -542,15 +542,14 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
           }],
         },
       },
-      name: formattedData.dataValues[0].value,
     },
     {
       value: 100 - parseInt(formattedData.dataValues[0].value, 10),
+      name: formattedData.dataValues[0].value,
       itemStyle: {
         color: theme['primary-color'],
         opacity: 0.8,
       },
-      name: formattedData.dataValues[0].value,
     },
   ];
   const secondSeries = [
@@ -564,9 +563,9 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
           y: 0.66,
           r: 0.75,
           colorStops: [{
-            offset: 0, color: theme['secondary-gradient-start'], // color at 0%
+            offset: 0, color: theme['secondary-gradient-start'],
           }, {
-            offset: 1, color: theme['secondary-gradient-end'], // color at 100%
+            offset: 1, color: theme['secondary-gradient-end'],
           }],
         },
       },
@@ -581,6 +580,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
     },
   ];
 
+  // stylings
   const labelStylings = {
     show: true,
     position: 'center',
@@ -588,6 +588,22 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
     color: theme['font-color'],
     formatter: `{@value}${chartConfig['value-suffix']}`,
   };
+  const interactivitySettings = {
+    percentPrecision: 1,
+    showEmptyCircle: true,
+    stillShowZeroSum: true,
+    silent: true,
+    legendHoverLink: false,
+    selectedMode: false,
+    labelLine: {
+      show: false,
+    },
+    emphasis: {
+      disabled: true,
+    },
+  };
+
+  // build specific chart representation
   const pieChartSpecificDescription = {
     series: [
       {
@@ -601,19 +617,8 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
           fontSize: `${theme['computed-font-size-px'] * 3}`,
           ...labelStylings,
         },
-        labelLine: {
-          show: false,
-        },
-        silent: true,
-        legendHoverLink: false,
-        selectedMode: false,
-        emphasis: {
-          disabled: true,
-        },
-        percentPrecision: 1,
-        showEmptyCircle: true,
-        stillShowZeroSum: true,
         data: firstSeries,
+        ...interactivitySettings,
       },
       {
         name: chartConfig.title,
@@ -626,19 +631,8 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
           fontSize: `${theme['computed-font-size-px'] * 2.33}`,
           ...labelStylings,
         },
-        labelLine: {
-          show: false,
-        },
-        silent: true,
-        legendHoverLink: false,
-        selectedMode: false,
-        emphasis: {
-          disabled: true,
-        },
-        percentPrecision: 1,
-        showEmptyCircle: true,
-        stillShowZeroSum: true,
         data: secondSeries,
+        ...interactivitySettings,
       },
     ],
   };
