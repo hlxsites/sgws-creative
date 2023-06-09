@@ -455,18 +455,17 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
     fontSize: theme['font-size'],
     cursor: 'auto',
   };
+  const titleTextStyle = {
+      color: theme['font-color'],
+      fontWeight: theme['font-weight'],
+      fontFamily: theme['font-family'],
+      fontSize: theme['font-size'],
+  };
 
-  // build chart representation
+  // build comparison bar chart specific representation
   const barChartSpecificDescription = {
     title: {
-      text: chartConfig.title,
-      colorBy: 'data',
-      textStyle: {
-        color: theme['font-color'],
-        fontWeight: theme['font-weight'],
-        fontFamily: theme['font-family'],
-        fontSize: theme['font-size'],
-      },
+      textStyle: titleTextStyle,
     },
     xAxis: {
       data: formattedData.barNames,
