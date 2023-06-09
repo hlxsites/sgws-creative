@@ -78,6 +78,14 @@ function getLinearColorGradient(startColor, endColor) {
   });
 }
 
+function getInteractivitySettings() {
+  return {
+    emphasis: {
+      disabled: true,
+    },
+  };
+}
+
 /**
  * Build shared parts of chart representation
  * @param {*} chartData Chart data (will be used to determine which chart to draw)
@@ -169,11 +177,6 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
     };
   });
   const axisFontStyle = getBarChartAxisFontStyle(theme);
-  const interactivitySettings = {
-    emphasis: {
-      disabled: true,
-    },
-  };
 
   // build specific chart representation
   const barChartSpecificDescription = {
@@ -229,7 +232,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
         yAxisIndex: 0,
         colorBy: 'data',
         data: formattedData.dataValuesHistogram,
-        ...interactivitySettings,
+        ...getInteractivitySettings(),
       }, {
         name: chartConfig['overlay-unit'],
         type: 'line',
@@ -243,7 +246,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
         },
         colorBy: 'data',
         data: formattedData.dataValuesOverlay,
-        ...interactivitySettings,
+        ...getInteractivitySettings(),
       },
     ],
   };
@@ -268,11 +271,10 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
   }
 
   const barChart = initializeChart(chartHolder, chartConfig);
-  const chartDescription = Object.assign(
+  barChart.setOption(Object.assign(
     buildChartRepresentation(chartConfig, theme),
     barChartSpecificDescription,
-  );
-  barChart.setOption(chartDescription);
+  ));
 }
 
 /**
@@ -296,11 +298,6 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
     };
   });
   const axisFontStyle = getBarChartAxisFontStyle(theme);
-  const interactivitySettings = {
-    emphasis: {
-      disabled: true,
-    },
-  };
 
   // build chart representation
   const barChartSpecificDescription = {
@@ -341,7 +338,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
         cursor: 'auto',
         colorBy: 'data',
         data: formattedData.dataValues,
-        ...interactivitySettings,
+        ...getInteractivitySettings(),
       },
     ],
   };
@@ -353,11 +350,10 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
   }
 
   const barChart = initializeChart(chartHolder, chartConfig);
-  const chartDescription = Object.assign(
+  barChart.setOption(Object.assign(
     buildChartRepresentation(chartConfig, theme),
     barChartSpecificDescription,
-  );
-  barChart.setOption(chartDescription);
+  ));
 }
 
 /**
@@ -391,11 +387,6 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
     fontWeight: theme['font-weight'],
     fontFamily: theme['font-family'],
     fontSize: theme['font-size'],
-  };
-  const interactivitySettings = {
-    emphasis: {
-      disabled: true,
-    },
   };
 
   // build comparison bar chart specific representation
@@ -440,17 +431,16 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
         formatter: `${chartConfig.unit || ''}{@score}${chartConfig['value-suffix'] || ''}`,
         ...dataLabelFontStyle,
       },
-      ...interactivitySettings,
+      ...getInteractivitySettings(),
     },
     ],
   };
 
   const barChart = initializeChart(chartHolder, chartConfig);
-  const chartDescription = Object.assign(
+  barChart.setOption(Object.assign(
     buildChartRepresentation(chartConfig, theme),
     barChartSpecificDescription,
-  );
-  barChart.setOption(chartDescription);
+  ));
 }
 
 /**
@@ -519,7 +509,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
     color: theme['font-color'],
     formatter: `{@value}${chartConfig['value-suffix']}`,
   };
-  const interactivitySettings = {
+  const pieInteractivitySettings = {
     percentPrecision: 1,
     showEmptyCircle: true,
     stillShowZeroSum: true,
@@ -529,9 +519,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
     labelLine: {
       show: false,
     },
-    emphasis: {
-      disabled: true,
-    },
+    ...getInteractivitySettings(),
   };
 
   // build specific chart representation
@@ -549,7 +537,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
           ...labelStylings,
         },
         data: firstSeries,
-        ...interactivitySettings,
+        ...pieInteractivitySettings,
       },
       {
         name: chartConfig.title,
@@ -563,17 +551,16 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
           ...labelStylings,
         },
         data: secondSeries,
-        ...interactivitySettings,
+        ...pieInteractivitySettings,
       },
     ],
   };
 
   const pieChart = initializeChart(chartHolder, chartConfig);
-  const chartDescription = Object.assign(
-    buildChartRepresentation(chartConfig, theme),
-    pieChartSpecificDescription,
-  );
-  pieChart.setOption(chartDescription);
+  pieChart.setOption(Object.assign(
+      buildChartRepresentation(chartConfig, theme),
+      pieChartSpecificDescription,
+  ));
 }
 
 /**
