@@ -48,7 +48,7 @@ function prepareChartDataWithOverlay(chartData) {
 }
 
 /**
- * Return a gradient color
+ * Create a gradient color
  * @param {*} startColor Start gradient color
  * @param {*} endColor End gradient color
  * @returns An array containing two gradient steps
@@ -62,22 +62,26 @@ function getGradientStops(startColor, endColor) {
 }
 
 /**
- * Return a chart gradient color
+ * Create a chart gradient color
  * @param {*} startColor Start gradient color
  * @param {*} endColor End gradient color
  * @returns A chart gradient color
  */
 function getLinearColorGradient(startColor, endColor) {
-  return Object.freeze({
+  return {
     type: 'linear',
     x: 0,
     y: 0,
     x2: 0,
     y2: 1,
     colorStops: getGradientStops(startColor, endColor),
-  });
+  };
 }
 
+/**
+ * Set shared interactivity settings
+ * @returns An object of interactivity settings
+ */
 function getInteractivitySettings() {
   return {
     emphasis: {
@@ -137,7 +141,7 @@ function initializeChart(chartHolder, chartConfig) {
  * @returns An axis font style object
  */
 function getBarChartAxisFontStyle(theme) {
-  return Object.freeze({
+  return {
     align: 'center',
     color: theme['axis-color'],
     fontWeight: theme['font-weight'],
@@ -146,7 +150,7 @@ function getBarChartAxisFontStyle(theme) {
     width: '70',
     overflow: 'break',
     cursor: 'auto',
-  });
+  };
 }
 
 /**
