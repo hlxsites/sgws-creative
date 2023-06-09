@@ -9,6 +9,7 @@ import {
   getMetadata,
   waitForLCP,
   loadBlocks,
+  loadFooter,
   loadCSS,
 } from './lib-franklin.js';
 
@@ -74,6 +75,15 @@ export function createTag(tag, attributes) {
       element.setAttribute(key, val);
     });
   }
+  return element;
+}
+
+export function createIcon(iconName) {
+  if (!iconName) {
+    return undefined;
+  }
+  const element = document.createElement('span');
+  element.classList.add('icon', `icon-${iconName}`);
   return element;
 }
 
@@ -274,7 +284,7 @@ async function loadLazy(doc) {
   if (hash && element) element.scrollIntoView();
 
   // loadHeader(doc.querySelector('header'));
-  // loadFooter(doc.querySelector('footer'));
+  loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   // addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.png`);
