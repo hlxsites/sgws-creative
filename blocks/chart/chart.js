@@ -114,12 +114,13 @@ function buildChartRepresentation(chartConfig, theme) {
       type: 'plain',
       selectedMode: false,
       top: '10%',
-      right: '11.5%',
+      right: '17.5%',
       itemStyle: {
         color: getLinearColorGradient(theme['primary-gradient-end'], theme['primary-gradient-start']),
       },
     };
   }
+
   return chartDescription;
 }
 
@@ -255,8 +256,9 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
     ],
   };
 
+  const barChartRepresentation = buildChartRepresentation(chartConfig, theme);
   if (chartConfig.legend) {
-    barChartSpecificDescription.legend = {};
+    barChartSpecificDescription.legend = barChartRepresentation.legend;
     barChartSpecificDescription.legend.data = [
       {
         name: chartConfig.unit,
@@ -275,10 +277,12 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
   }
 
   const barChart = initializeChart(chartHolder, chartConfig);
-  barChart.setOption(Object.assign(
-    buildChartRepresentation(chartConfig, theme),
+
+  const chartDescription = Object.assign(
+    barChartRepresentation,
     barChartSpecificDescription,
-  ));
+  );
+  barChart.setOption(chartDescription);
 }
 
 /**
@@ -346,8 +350,10 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
       },
     ],
   };
+  const barChartRepresentation = buildChartRepresentation(chartConfig, theme);
   if (chartConfig.legend) {
     barChartSpecificDescription.legend = {
+      ...barChartRepresentation.legend,
       formatter: chartConfig.unit,
       textStyle: axisFontStyle,
     };
@@ -355,7 +361,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
 
   const barChart = initializeChart(chartHolder, chartConfig);
   barChart.setOption(Object.assign(
-    buildChartRepresentation(chartConfig, theme),
+    barChartRepresentation,
     barChartSpecificDescription,
   ));
 }
