@@ -657,7 +657,6 @@ export default function decorate(block) {
   const data = readBlockData(block);
 
   let chartHolder = document.createElement('div');
-  chartHolder.id = `${Date.now()}-${Math.floor(Math.random() * 10000)}-chart-holder`;
   block.append(chartHolder);
 
   const windowTheme = window.sgws?.config?.data;
@@ -696,7 +695,6 @@ export default function decorate(block) {
         // redraw scaled chart
         chartHolder.remove();
         chartHolder = document.createElement('div');
-        chartHolder.id = `${Date.now()}-${Math.floor(Math.random() * 10000)}-chart-holder`;
         block.append(chartHolder);
         drawChart(block, data, cfg, chartHolder, theme);
       }
