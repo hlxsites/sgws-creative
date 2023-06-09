@@ -223,8 +223,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
         emphasis: {
           disabled: true,
         },
-      },
-      {
+      }, {
         name: chartConfig['overlay-unit'],
         type: 'line',
         cursor: 'auto',
@@ -500,7 +499,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
       value: 100 - parseInt(formattedData.dataValues[0].value, 10),
       name: formattedData.dataValues[0].value,
       itemStyle: {
-        color: theme['primary-color'],
+        color: theme['primary-gradient-end'],
         opacity: 0.8,
       },
     },
