@@ -74,9 +74,7 @@ function buildChartRepresentation(chartConfig, theme) {
       top: '10%',
       right: '11.5%',
       itemStyle: {
-        color: {
-          ...getLinearGradientPoints(theme['primary-gradient-end'], theme['primary-gradient-start']),
-        },
+        color: getLinearGradientPoints(theme['primary-gradient-end'], theme['primary-gradient-start']),
       },
     };
   }
@@ -102,7 +100,7 @@ function initializeChart(chartHolder, chartConfig) {
  * @returns An axis font style object
  */
 function getBarChartAxisFontStyle(theme) {
-  return {
+  return Object.freeze({
     align: 'center',
     color: theme['axis-color'],
     fontWeight: theme['font-weight'],
@@ -111,7 +109,7 @@ function getBarChartAxisFontStyle(theme) {
     width: '70',
     overflow: 'break',
     cursor: 'auto',
-  };
+  });
 }
 
 /**
@@ -163,9 +161,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
     datapoint.value = Number(datapoint.value);
     max = Math.max(max, datapoint.value);
     datapoint.itemStyle = {
-      color: {
-        ...getLinearGradientPoints(theme['primary-gradient-end'], theme['primary-gradient-start']),
-      },
+      color: getLinearGradientPoints(theme['primary-gradient-end'], theme['primary-gradient-start']),
     };
   });
   formattedData.dataValuesOverlay.forEach((datapoint) => {
@@ -271,7 +267,8 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
           color: theme['secondary-gradient-start'],
           width: 1,
         },
-      }];
+      }
+    ];
     barChartSpecificDescription.legend.textStyle = axisFontStyle;
   }
 
@@ -300,9 +297,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
     datapoint.value = Number(datapoint.value);
     max = Math.max(max, datapoint.value);
     datapoint.itemStyle = {
-      color: {
-        ...getLinearGradientPoints(theme['primary-gradient-end'], theme['primary-gradient-start']),
-      },
+      color: getLinearGradientPoints(theme['primary-gradient-end'], theme['primary-gradient-start']),
     };
   });
   const axisFontStyle = getBarChartAxisFontStyle(theme);
@@ -385,14 +380,10 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
   // chart stylings
   // for comparison chart we have only two values, so...
   formattedData.dataValues[0].itemStyle = {
-    color: {
-      ...getLinearGradientPoints(theme['primary-gradient-end'], theme['primary-gradient-start']),
-    },
+    color: getLinearGradientPoints(theme['primary-gradient-end'], theme['primary-gradient-start']),
   };
   formattedData.dataValues[1].itemStyle = {
-    color: {
-      ...getLinearGradientPoints(theme['secondary-gradient-end'], theme['secondary-gradient-start']),
-    },
+    color: getLinearGradientPoints(theme['secondary-gradient-end'], theme['secondary-gradient-start']),
   };
   const axisFontStyle = getBarChartAxisFontStyle(theme);
   const dataLabelFontStyle = {
