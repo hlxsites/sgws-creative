@@ -110,6 +110,8 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
 
   const barChart = window.echarts.init(chartHolder);
 
+  const baseChartDescription = buildChartRepresentation(chartData, chartConfig, chartHolder, theme);
+
   // stylings
   let max = Number.NEGATIVE_INFINITY;
   formattedData.dataValuesHistogram.forEach((datapoint) => {
@@ -148,11 +150,8 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
     cursor: 'auto',
   };
 
-  // build chart representation
-  const chartDescription = {
-    title: {
-      text: chartConfig.title,
-    },
+  // build specific chart representation
+  const barChartSpecificDescription = {
     xAxis: {
       data: formattedData.barNames,
       axisTick: {
@@ -231,42 +230,23 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
   };
 
   if (chartConfig.legend) {
-    chartDescription.legend = {
-      type: 'plain',
-      selectedMode: false,
-      data: [
-        {
-          name: chartConfig.unit,
-        }, {
-          name: chartConfig['overlay-unit'],
-          itemStyle: {
-            color: theme['secondary-gradient-start'],
-          },
-          lineStyle: {
-            color: theme['secondary-gradient-start'],
-            width: 1,
-          },
-        }],
-      top: '10%',
-      right: '11.5%',
-      itemStyle: {
-        color: {
-          type: 'linear',
-          x: 0,
-          y: 0,
-          x2: 0,
-          y2: 1,
-          colorStops: [{
-            offset: 0, color: theme['primary-gradient-end'],
-          }, {
-            offset: 1, color: theme['primary-gradient-start'],
-          }],
+    baseChartDescription.legend.data = [
+      {
+        name: chartConfig.unit,
+      }, {
+        name: chartConfig['overlay-unit'],
+        itemStyle: {
+          color: theme['secondary-gradient-start'],
         },
-      },
-      textStyle: axisFontStyle,
-    };
+        lineStyle: {
+          color: theme['secondary-gradient-start'],
+          width: 1,
+        },
+      }];
+    baseChartDescription.legend.textStyle = axisFontStyle;
   }
 
+  const chartDescription = Object.assign(baseChartDescription, barChartSpecificDescription);
   barChart.setOption(chartDescription);
 }
 
