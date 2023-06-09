@@ -106,6 +106,24 @@ function initializeChart(chartHolder, chartConfig) {
 }
 
 /**
+ * Axis font styling for bar charts
+ * @param {*} theme Theme to use for styling
+ * @returns An axis font style object
+ */
+function getBarChartAxisFontStyle(theme) {
+  return {
+    align: 'center',
+    color: theme['axis-color'],
+    fontWeight: theme['font-weight'],
+    fontFamily: theme['font-family'],
+    fontSize: theme['axis-font-size'],
+    width: '70',
+    overflow: 'break',
+    cursor: 'auto',
+  };
+}
+
+/**
  * Draw a histogram chart with an overlayed trend line
  * @param {*} chartData Chart data (will be used to determine which chart to draw)
  * @param {*} chartConfig Chart configuration
@@ -146,16 +164,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       color: theme['secondary-gradient-start'],
     };
   });
-  const axisFontStyle = {
-    align: 'center',
-    color: theme['axis-color'],
-    fontWeight: theme['font-weight'],
-    fontFamily: theme['font-family'],
-    fontSize: theme['axis-font-size'],
-    width: '70',
-    overflow: 'break',
-    cursor: 'auto',
-  };
+  const axisFontStyle = getBarChartAxisFontStyle(theme);
 
   // build specific chart representation
   const barChartSpecificDescription = {
@@ -289,16 +298,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
       },
     };
   });
-  const axisFontStyle = {
-    align: 'center',
-    color: theme['axis-color'],
-    fontWeight: theme['font-weight'],
-    fontFamily: theme['font-family'],
-    fontSize: theme['axis-font-size'],
-    width: '70',
-    overflow: 'break',
-    cursor: 'auto',
-  };
+  const axisFontStyle = getBarChartAxisFontStyle(theme);
 
   // build chart representation
   const barChartSpecificDescription = {
@@ -397,16 +397,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       }],
     },
   };
-  const axisFontStyle = {
-    align: 'center',
-    color: theme['axis-color'],
-    fontWeight: theme['font-weight'],
-    fontFamily: theme['font-family'],
-    fontSize: theme['axis-font-size'],
-    width: '70',
-    overflow: 'break',
-    cursor: 'auto',
-  };
+  const axisFontStyle = getBarChartAxisFontStyle(theme);
   const dataLabelFontStyle = {
     color: theme['font-color'],
     fontWeight: theme['font-weight'],
