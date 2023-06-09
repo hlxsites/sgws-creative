@@ -54,7 +54,7 @@ function prepareChartDataWithOverlay(chartData) {
  * @param {*} chartHolder Element (div) holding the chart
  * @param {*} theme Theming details, optional
  */
-function buildChartRepresentation(chartData, chartConfig, chartHolder, theme) {
+function buildChartRepresentation(chartConfig, theme) {
   const chartDescription = {};
   chartDescription.title = {
     text: chartConfig.title,
@@ -101,7 +101,7 @@ function buildChartRepresentation(chartData, chartConfig, chartHolder, theme) {
  */
 function initializeChart(chartHolder, chartConfig) {
   chartHolder.style.width = chartConfig.chartWidth;
-  chartHolder.style.height = chartConfig.chartHeight || MIN_CHART_HEIGHT;
+  chartHolder.style.height = chartConfig.chartHeight;
   return window.echarts.init(chartHolder);
 }
 
@@ -117,7 +117,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
   chartConfig['chart-scale-step'] = parseInt(chartConfig['chart-scale-step'], 10);
   chartConfig['chart-scale-overlay-step'] = parseInt(chartConfig['chart-scale-overlay-step'], 10);
   const barChart = initializeChart(chartHolder, chartConfig);
-  const baseChartDescription = buildChartRepresentation(chartData, chartConfig, chartHolder, theme);
+  const baseChartDescription = buildChartRepresentation(chartConfig, theme);
 
   // stylings
   let max = Number.NEGATIVE_INFINITY;
@@ -267,7 +267,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
   const formattedData = prepareChartData(chartData);
   chartConfig['chart-scale-step'] = parseInt(chartConfig['chart-scale-step'], 10);
   const barChart = initializeChart(chartHolder, chartConfig);
-  const baseChartDescription = buildChartRepresentation(chartData, chartConfig, chartHolder, theme);
+  const baseChartDescription = buildChartRepresentation(chartConfig, theme);
 
   // stylings
   let max = Number.NEGATIVE_INFINITY;
@@ -365,7 +365,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
 function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
   const formattedData = prepareChartData(chartData);
   const barChart = initializeChart(chartHolder, chartConfig);
-  const baseChartDescription = buildChartRepresentation(chartData, chartConfig, chartHolder, theme);
+  const baseChartDescription = buildChartRepresentation(chartConfig, theme);
 
   // chart stylings
   // for comparison chart we have only two values, so...
@@ -474,10 +474,17 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
   barChart.setOption(chartDescription);
 }
 
+/**
+ * Draw two pie charts next to each other to compare values
+ * @param {*} chartData Chart data (will be used to determine which chart to draw)
+ * @param {*} chartConfig Chart configuration
+ * @param {*} chartHolder Element (div) holding the chart
+ * @param {*} theme Theming details, optional
+ */
 function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
   const formattedData = prepareChartData(chartData);
   const pieChart = initializeChart(chartHolder, chartConfig);
-  const baseChartDescription = buildChartRepresentation(chartData, chartConfig, chartHolder, theme);
+  const baseChartDescription = buildChartRepresentation(chartConfig, theme);
 
   // format data for representation
   const firstSeries = [
@@ -605,9 +612,10 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
  */
 function drawChart(block, chartData, chartConfig, chartHolder, theme) {
   const blockClassList = block.classList;
+  chartConfig.chartWidth = block.clientWidth;
+  chartConfig.chartHeight = block.clientHeight !== 0 ? block.clientHeight : MIN_CHART_HEIGHT;
   if (blockClassList.contains('bars')) {
-    chartConfig.chartWidth = block.clientWidth;
-    chartConfig.chartHeight = block.clientHeight !== 0 ? block.clientHeight : MIN_CHART_HEIGHT;
+
     chartConfig.legend = blockClassList.contains('graph-legend');
 
     if (chartData.length === 2) {
