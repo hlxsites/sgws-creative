@@ -178,8 +178,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       },
       max: (Math.floor(max / chartConfig['chart-scale-step']) + 1) * chartConfig['chart-scale-step'],
       splitLine: { show: false },
-    },
-    {
+    }, {
       type: 'value',
       silent: true,
       axisLine: {
