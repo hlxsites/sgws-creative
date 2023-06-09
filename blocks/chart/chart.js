@@ -219,9 +219,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       axisLabel: {
         formatter: `{value}${chartConfig['scale-overlay-label-suffix']}`,
       },
-      splitLine: {
-        show: false
-      },
+      splitLine: { show: false },
     }],
     series: [
       {
@@ -334,9 +332,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
         ...axisFontStyle,
       },
       max: (Math.floor(max / chartConfig['chart-scale-step']) + 1) * chartConfig['chart-scale-step'], // chart scale end
-      splitLine: {
-        show: false
-      },
+      splitLine: { show: false },
     },
     series: [
       {
@@ -431,8 +427,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
         ...axisFontStyle,
       },
     },
-    series: [
-      {
+    series: [{
         name: chartConfig.title,
         type: 'bar',
         cursor: 'auto',
