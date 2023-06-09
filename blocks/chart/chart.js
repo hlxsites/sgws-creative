@@ -123,6 +123,14 @@ function getBarChartAxisFontStyle(theme) {
   };
 }
 
+function getGradientStops(startColor, endColor) {
+  return [{
+    offset: 0, color: startColor,
+  }, {
+    offset: 1, color: endColor,
+  }]
+}
+
 /**
  * Draw a histogram chart with an overlayed trend line
  * @param {*} chartData Chart data (will be used to determine which chart to draw)
@@ -375,11 +383,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       y: 0,
       x2: 0,
       y2: 1,
-      colorStops: [{
-        offset: 0, color: theme['primary-gradient-end'],
-      }, {
-        offset: 1, color: theme['primary-gradient-start'],
-      }],
+      colorStops: getGradientStops(theme['primary-gradient-end'], theme['primary-gradient-start']),
     },
   };
   formattedData.dataValues[1].itemStyle = {
@@ -389,11 +393,7 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       y: 0,
       x2: 0,
       y2: 1,
-      colorStops: [{
-        offset: 0, color: theme['secondary-gradient-end'],
-      }, {
-        offset: 1, color: theme['secondary-gradient-start'],
-      }],
+      colorStops: getGradientStops(theme['secondary-gradient-end'], theme['secondary-gradient-start']),
     },
   };
   const axisFontStyle = getBarChartAxisFontStyle(theme);
@@ -487,11 +487,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
           x: 0.5,
           y: 0.5,
           r: 0.70,
-          colorStops: [{
-            offset: 0, color: theme['primary-gradient-start'],
-          }, {
-            offset: 1, color: theme['primary-gradient-end'],
-          }],
+          colorStops: getGradientStops(theme['primary-gradient-start'], theme['primary-gradient-end'])
         },
       },
     },
@@ -514,11 +510,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
           x: 0.66,
           y: 0.66,
           r: 0.75,
-          colorStops: [{
-            offset: 0, color: theme['secondary-gradient-start'],
-          }, {
-            offset: 1, color: theme['secondary-gradient-end'],
-          }],
+          colorStops: getGradientStops(theme['secondary-gradient-start'], theme['secondary-gradient-end']),
         },
       },
     },
