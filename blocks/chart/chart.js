@@ -53,8 +53,8 @@ function prepareChartDataWithOverlay(chartData) {
  * @param {*} block Block holding the chart
  * @param {*} theme Theme
  */
-function computeFontSizes(block, theme){
-  let computedStyles = window.getComputedStyle(block);
+function computeFontSizes(block, theme) {
+  const computedStyles = window.getComputedStyle(block);
   theme['computed-font-size-px'] = parseInt(computedStyles.fontSize, 10);
   theme['font-size'] = `${theme['computed-font-size-px'] * 1.1}px`;
   theme['axis-font-size'] = `${theme['computed-font-size-px'] * 0.8}px`;
