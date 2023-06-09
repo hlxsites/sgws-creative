@@ -196,6 +196,18 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       color: theme['secondary-gradient-start'],
     };
   });
+  const axisConfig = {
+    type: 'value',
+    silent: true,
+    axisLine: {
+      show: true,
+      symbol: 'none',
+      lineStyle: {
+        type: 'solid',
+      },
+    },
+    splitLine: { show: false },
+  };
   const axisFontStyle = getBarChartAxisFontStyle(theme);
 
   // build specific chart representation
@@ -208,15 +220,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       axisLabel: axisFontStyle,
     },
     yAxis: [{
-      type: 'value',
-      silent: true,
-      axisLine: {
-        show: true,
-        symbol: 'none',
-        lineStyle: {
-          type: 'solid',
-        },
-      },
+      ...axisConfig,
       interval: chartConfig['chart-scale-step'],
       axisLabel: {
         formatter: `{value}${chartConfig['value-suffix']}`,
@@ -225,24 +229,14 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
         ...axisFontStyle,
       },
       max: (Math.floor(max / chartConfig['chart-scale-step']) + 1) * chartConfig['chart-scale-step'],
-      splitLine: { show: false },
     }, {
-      type: 'value',
-      silent: true,
-      axisLine: {
-        show: true,
-        symbol: 'none',
-        lineStyle: {
-          type: 'solid',
-        },
-      },
+      ...axisConfig,
       min: chartConfig['chart-scale-overlay-min'],
       max: chartConfig['chart-scale-overlay-max'],
       interval: chartConfig['chart-scale-overlay-step'],
       axisLabel: {
         formatter: `{value}${chartConfig['scale-overlay-label-suffix']}`,
       },
-      splitLine: { show: false },
     }],
     series: [
       {
@@ -292,11 +286,10 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
   }
 
   const barChart = initializeChart(chartHolder, chartConfig);
-  const chartDescription = Object.assign(
+  barChart.setOption(Object.assign(
     barChartRepresentation,
     barChartSpecificDescription,
-  );
-  barChart.setOption(chartDescription);
+  ));
 }
 
 /**
