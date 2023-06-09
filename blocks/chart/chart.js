@@ -138,8 +138,6 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
   const formattedData = prepareChartDataWithOverlay(chartData);
   chartConfig['chart-scale-step'] = parseInt(chartConfig['chart-scale-step'], 10);
   chartConfig['chart-scale-overlay-step'] = parseInt(chartConfig['chart-scale-overlay-step'], 10);
-  const barChart = initializeChart(chartHolder, chartConfig);
-  const baseChartDescription = buildChartRepresentation(chartConfig, theme);
 
   // stylings
   let max = Number.NEGATIVE_INFINITY;
@@ -247,7 +245,8 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
   };
 
   if (chartConfig.legend) {
-    baseChartDescription.legend.data = [
+    barChartSpecificDescription.legend = {};
+    barChartSpecificDescription.legend.data = [
       {
         name: chartConfig.unit,
       }, {
@@ -260,10 +259,14 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
           width: 1,
         },
       }];
-    baseChartDescription.legend.textStyle = axisFontStyle;
+      barChartSpecificDescription.legend.textStyle = axisFontStyle;
   }
 
-  const chartDescription = Object.assign(baseChartDescription, barChartSpecificDescription);
+  const barChart = initializeChart(chartHolder, chartConfig);
+  const chartDescription = Object.assign(
+    buildChartRepresentation(chartConfig, theme),
+    barChartSpecificDescription
+  );
   barChart.setOption(chartDescription);
 }
 
@@ -277,8 +280,6 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
 function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
   const formattedData = prepareChartData(chartData);
   chartConfig['chart-scale-step'] = parseInt(chartConfig['chart-scale-step'], 10);
-  const barChart = initializeChart(chartHolder, chartConfig);
-  const baseChartDescription = buildChartRepresentation(chartConfig, theme);
 
   // stylings
   let max = Number.NEGATIVE_INFINITY;
@@ -333,7 +334,9 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
         ...axisFontStyle,
       },
       max: (Math.floor(max / chartConfig['chart-scale-step']) + 1) * chartConfig['chart-scale-step'], // chart scale end
-      splitLine: { show: false },
+      splitLine: {
+        show: false
+      },
     },
     series: [
       {
@@ -346,13 +349,18 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
       },
     ],
   };
-
   if (chartConfig.legend) {
-    baseChartDescription.legend.formatter = chartConfig.unit;
-    baseChartDescription.legend.textStyle = axisFontStyle;
+    barChartSpecificDescription.legend = {
+      formatter: chartConfig.unit,
+      textStyle: axisFontStyle,
+    };
   }
 
-  const chartDescription = Object.assign(baseChartDescription, barChartSpecificDescription);
+  const barChart = initializeChart(chartHolder, chartConfig);
+  const chartDescription = Object.assign(
+    buildChartRepresentation(chartConfig, theme),
+    barChartSpecificDescription
+  );
   barChart.setOption(chartDescription);
 }
 
