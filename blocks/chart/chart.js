@@ -93,6 +93,12 @@ function buildChartRepresentation(chartData, chartConfig, chartHolder, theme) {
   return chartDescription;
 }
 
+function initializeChart(chartHolder, chartConfig){
+  chartHolder.style.width = chartConfig.chartWidth;
+  chartHolder.style.height = chartConfig.chartHeight;
+  return window.echarts.init(chartHolder);
+}
+
 /**
  * Draw a histogram chart with an overlayed trend line
  * @param {*} chartData Chart data (will be used to determine which chart to draw)
@@ -102,14 +108,9 @@ function buildChartRepresentation(chartData, chartConfig, chartHolder, theme) {
  */
 function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, theme) {
   const formattedData = prepareChartDataWithOverlay(chartData);
-
-  chartHolder.style.width = chartConfig.chartWidth;
-  chartHolder.style.height = chartConfig.chartHeight;
   chartConfig['chart-scale-step'] = parseInt(chartConfig['chart-scale-step'], 10);
   chartConfig['chart-scale-overlay-step'] = parseInt(chartConfig['chart-scale-overlay-step'], 10);
-
-  const barChart = window.echarts.init(chartHolder);
-
+  const barChart = initializeChart(chartHolder, chartConfig);
   const baseChartDescription = buildChartRepresentation(chartData, chartConfig, chartHolder, theme);
 
   // stylings
@@ -258,13 +259,8 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
  */
 function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
   const formattedData = prepareChartData(chartData);
-
-  chartHolder.style.width = chartConfig.chartWidth;
-  chartHolder.style.height = chartConfig.chartHeight;
   chartConfig['chart-scale-step'] = parseInt(chartConfig['chart-scale-step'], 10);
-
-  const barChart = window.echarts.init(chartHolder);
-
+  const barChart = initializeChart(chartHolder, chartConfig);
   const baseChartDescription = buildChartRepresentation(chartData, chartConfig, chartHolder, theme);
 
   // stylings
@@ -362,11 +358,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
  */
 function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
   const formattedData = prepareChartData(chartData);
-
-  chartHolder.style.width = chartConfig.chartWidth;
-  chartHolder.style.height = chartConfig.chartHeight || MIN_BAR_CHART_HEIGHT;
-  const barChart = window.echarts.init(chartHolder);
-
+  const barChart = initializeChart(chartHolder, chartConfig);
   const baseChartDescription = buildChartRepresentation(chartData, chartConfig, chartHolder, theme);
 
   // chart stylings
