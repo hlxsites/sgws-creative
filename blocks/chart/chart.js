@@ -48,6 +48,37 @@ function prepareChartDataWithOverlay(chartData) {
 }
 
 /**
+ * Return a gradient color
+ * @param {*} startColor Start gradient color
+ * @param {*} endColor End gradient color
+ * @returns An array containing two gradient steps
+ */
+function getGradientStops(startColor, endColor) {
+  return [{
+    offset: 0, color: startColor,
+  }, {
+    offset: 1, color: endColor,
+  }];
+}
+
+/**
+ * Return a chart gradient color
+ * @param {*} startColor Start gradient color
+ * @param {*} endColor End gradient color
+ * @returns A chart gradient color
+ */
+function getLinearColorGradient(startColor, endColor) {
+  return Object.freeze({
+    type: 'linear',
+    x: 0,
+    y: 0,
+    x2: 0,
+    y2: 1,
+    colorStops: getGradientStops(startColor, endColor),
+  });
+}
+
+/**
  * Build shared parts of chart representation
  * @param {*} chartData Chart data (will be used to determine which chart to draw)
  * @param {*} chartConfig Chart configuration
@@ -107,37 +138,6 @@ function getBarChartAxisFontStyle(theme) {
     width: '70',
     overflow: 'break',
     cursor: 'auto',
-  });
-}
-
-/**
- * Return a gradient color
- * @param {*} startColor Start gradient color
- * @param {*} endColor End gradient color
- * @returns An array containing two gradient steps
- */
-function getGradientStops(startColor, endColor) {
-  return [{
-    offset: 0, color: startColor,
-  }, {
-    offset: 1, color: endColor,
-  }];
-}
-
-/**
- * Return a chart gradient color
- * @param {*} startColor Start gradient color
- * @param {*} endColor End gradient color
- * @returns A chart gradient color
- */
-function getLinearColorGradient(startColor, endColor) {
-  return Object.freeze({
-    type: 'linear',
-    x: 0,
-    y: 0,
-    x2: 0,
-    y2: 1,
-    colorStops: getGradientStops(startColor, endColor)
   });
 }
 
@@ -229,7 +229,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
         yAxisIndex: 0,
         colorBy: 'data',
         data: formattedData.dataValuesHistogram,
-        ...interactivitySettings
+        ...interactivitySettings,
       }, {
         name: chartConfig['overlay-unit'],
         type: 'line',
@@ -243,7 +243,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
         },
         colorBy: 'data',
         data: formattedData.dataValuesOverlay,
-        ...interactivitySettings
+        ...interactivitySettings,
       },
     ],
   };
@@ -262,7 +262,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
           color: theme['secondary-gradient-start'],
           width: 1,
         },
-      }
+      },
     ];
     barChartSpecificDescription.legend.textStyle = axisFontStyle;
   }
@@ -270,7 +270,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
   const barChart = initializeChart(chartHolder, chartConfig);
   const chartDescription = Object.assign(
     buildChartRepresentation(chartConfig, theme),
-    barChartSpecificDescription
+    barChartSpecificDescription,
   );
   barChart.setOption(chartDescription);
 }
@@ -341,7 +341,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
         cursor: 'auto',
         colorBy: 'data',
         data: formattedData.dataValues,
-        ...interactivitySettings
+        ...interactivitySettings,
       },
     ],
   };
@@ -355,7 +355,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
   const barChart = initializeChart(chartHolder, chartConfig);
   const chartDescription = Object.assign(
     buildChartRepresentation(chartConfig, theme),
-    barChartSpecificDescription
+    barChartSpecificDescription,
   );
   barChart.setOption(chartDescription);
 }
@@ -428,27 +428,27 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
       },
     },
     series: [{
-        name: chartConfig.title,
-        type: 'bar',
-        cursor: 'auto',
-        barWidth: '70%',
-        colorBy: 'data',
-        data: formattedData.dataValues,
-        label: {
-          show: true,
-          position: 'top',
-          formatter: `${chartConfig.unit || ''}{@score}${chartConfig['value-suffix'] || ''}`,
-          ...dataLabelFontStyle,
-        },
-        ...interactivitySettings
+      name: chartConfig.title,
+      type: 'bar',
+      cursor: 'auto',
+      barWidth: '70%',
+      colorBy: 'data',
+      data: formattedData.dataValues,
+      label: {
+        show: true,
+        position: 'top',
+        formatter: `${chartConfig.unit || ''}{@score}${chartConfig['value-suffix'] || ''}`,
+        ...dataLabelFontStyle,
       },
+      ...interactivitySettings,
+    },
     ],
   };
 
   const barChart = initializeChart(chartHolder, chartConfig);
   const chartDescription = Object.assign(
     buildChartRepresentation(chartConfig, theme),
-    barChartSpecificDescription
+    barChartSpecificDescription,
   );
   barChart.setOption(chartDescription);
 }
@@ -571,7 +571,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
   const pieChart = initializeChart(chartHolder, chartConfig);
   const chartDescription = Object.assign(
     buildChartRepresentation(chartConfig, theme),
-    pieChartSpecificDescription
+    pieChartSpecificDescription,
   );
   pieChart.setOption(chartDescription);
 }
