@@ -112,6 +112,7 @@ function buildChartRepresentation(chartConfig, theme) {
   if (chartConfig.legend) {
     chartDescription.legend = {
       type: 'plain',
+      orient: 'vertical',
       selectedMode: false,
       top: '10%',
       right: '17.5%',
