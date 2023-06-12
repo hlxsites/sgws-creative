@@ -61,6 +61,12 @@ export function getTheme(name) {
   const [, theme] = Object.entries(window.sgws.config).find(([key]) => key === name) || [];
   return theme;
 }
+export function getRawTheme() {
+  if (window.sgws.config.theme) {
+    return window.sgws.config.theme.data;
+  }
+  return window.sgws.config.data;
+}
 
 /**
  * Create an HTML tag in one line of code
