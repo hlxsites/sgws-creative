@@ -287,10 +287,10 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
   }
 
   const barChart = initializeChart(chartHolder, chartConfig);
-  barChart.setOption(Object.assign(
-    barChartRepresentation,
-    barChartSpecificDescription,
-  ));
+  barChart.setOption({
+    ...barChartRepresentation,
+    ...barChartSpecificDescription,
+  });
 }
 
 /**
@@ -368,10 +368,10 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
   }
 
   const barChart = initializeChart(chartHolder, chartConfig);
-  barChart.setOption(Object.assign(
-    barChartRepresentation,
-    barChartSpecificDescription,
-  ));
+  barChart.setOption({
+    ...barChartRepresentation,
+    ...barChartSpecificDescription,
+  });
 }
 
 /**
@@ -455,10 +455,10 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
   };
 
   const barChart = initializeChart(chartHolder, chartConfig);
-  barChart.setOption(Object.assign(
-    buildChartRepresentation(chartConfig, theme),
-    barChartSpecificDescription,
-  ));
+  barChart.setOption({
+    ...buildChartRepresentation(chartConfig, theme),
+    ...barChartSpecificDescription,
+  });
 }
 
 /**
@@ -575,10 +575,10 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
   };
 
   const pieChart = initializeChart(chartHolder, chartConfig);
-  pieChart.setOption(Object.assign(
-    buildChartRepresentation(chartConfig, theme),
-    pieChartSpecificDescription,
-  ));
+  pieChart.setOption({
+    ...buildChartRepresentation(chartConfig, theme),
+    ...pieChartSpecificDescription,
+  });
 }
 
 /**
