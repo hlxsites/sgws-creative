@@ -1,4 +1,5 @@
 import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
+import { getRawTheme } from '../../scripts/scripts.js';
 
 const MIN_CHART_HEIGHT = '400px';
 
@@ -672,7 +673,7 @@ export default function decorate(block) {
   let chartHolder = document.createElement('div');
   block.append(chartHolder);
 
-  const windowTheme = window.sgws?.config?.data;
+  const windowTheme = getRawTheme();
   const theme = {};
   windowTheme.forEach((themeElement) => {
     theme[themeElement.token] = themeElement.value;
