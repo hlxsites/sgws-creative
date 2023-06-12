@@ -1,13 +1,14 @@
 import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
+import { getRawTheme } from '../../scripts/scripts.js';
 
-const MIN_BAR_CHART_HEIGHT = '400px';
+const MIN_CHART_HEIGHT = '400px';
 
 /**
  * Prepare data to be displayed in a bar chart
  * @param {Object} chartData Chart data as read from the block
  * @returns {Object} Object containing barNames and corresponding dataValues
  */
-function prepareBarChartData(chartData) {
+function prepareChartData(chartData) {
   const barNames = new Array(chartData.length);
   const dataValues = new Array(chartData.length);
   chartData.forEach((row, index) => {
@@ -27,7 +28,7 @@ function prepareBarChartData(chartData) {
  * @param {Object} chartData Chart data as read from the block
  * @returns {Object} Object containing barNames and corresponding dataValues
  */
-function prepareBarChartDataWithOverlay(chartData) {
+function prepareChartDataWithOverlay(chartData) {
   const barNames = new Array(chartData.length / 2);
   const dataValues = new Array(chartData.length);
   const overlayValues = new Array(chartData.length);
@@ -48,50 +49,116 @@ function prepareBarChartDataWithOverlay(chartData) {
 }
 
 /**
- * Draw a histogram chart with an overlayed trend line
+ * Compute font styling based on theme
+ * and block computed styles
+ * @param {*} block Block holding the chart
+ * @param {*} theme Theme
+ */
+function computeFontSizes(block, theme) {
+  const computedStyles = window.getComputedStyle(block);
+  theme['computed-font-size-px'] = parseInt(computedStyles.fontSize, 10);
+  theme['font-size'] = `${theme['computed-font-size-px'] * 1.1}px`;
+  theme['axis-font-size'] = `${theme['computed-font-size-px'] * 0.8}px`;
+  theme['font-weight'] = computedStyles.fontWeight;
+}
+
+/**
+ * Create a gradient color
+ * @param {*} startColor Start gradient color
+ * @param {*} endColor End gradient color
+ * @returns An array containing two gradient steps
+ */
+function getGradientStops(startColor, endColor) {
+  return [{
+    offset: 0, color: startColor,
+  }, {
+    offset: 1, color: endColor,
+  }];
+}
+
+/**
+ * Create a chart gradient color
+ * @param {*} startColor Start gradient color
+ * @param {*} endColor End gradient color
+ * @returns A chart gradient color
+ */
+function getLinearColorGradient(startColor, endColor) {
+  return {
+    type: 'linear',
+    x: 0,
+    y: 0,
+    x2: 0,
+    y2: 1,
+    colorStops: getGradientStops(startColor, endColor),
+  };
+}
+
+/**
+ * Set shared interactivity settings
+ * @returns An object of interactivity settings
+ */
+function getInteractivitySettings() {
+  return {
+    emphasis: {
+      disabled: true,
+    },
+  };
+}
+
+/**
+ * Build shared parts of chart representation
  * @param {*} chartData Chart data (will be used to determine which chart to draw)
  * @param {*} chartConfig Chart configuration
  * @param {*} chartHolder Element (div) holding the chart
  * @param {*} theme Theming details, optional
  */
-function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, theme) {
-  const formattedData = prepareBarChartDataWithOverlay(chartData);
-
-  chartHolder.style.width = chartConfig.chartWidth;
-  chartHolder.style.height = chartConfig.chartHeight;
-  chartConfig['chart-scale-step'] = parseInt(chartConfig['chart-scale-step'], 10);
-  chartConfig['chart-scale-overlay-step'] = parseInt(chartConfig['chart-scale-overlay-step'], 10);
-
-  const barChart = window.echarts.init(chartHolder);
-
-  // stylings
-  let max = Number.NEGATIVE_INFINITY;
-  formattedData.dataValuesHistogram.forEach((datapoint) => {
-    datapoint.value = Number(datapoint.value);
-    max = Math.max(max, datapoint.value);
-    datapoint.itemStyle = {
-      color: {
-        type: 'linear',
-        x: 0,
-        y: 0,
-        x2: 0,
-        y2: 1,
-        colorStops: [{
-          offset: 0, color: theme['primary-gradient-end'],
-        }, {
-          offset: 1, color: theme['primary-gradient-start'],
-        }],
+function buildChartRepresentation(chartConfig, theme) {
+  const chartDescription = {};
+  chartDescription.title = {
+    text: chartConfig.title,
+    textStyle: {
+      color: theme['font-color'],
+      fontWeight: theme['font-weight'],
+      fontFamily: theme['font-family'],
+      fontSize: `${theme['computed-font-size-px'] * 2}px`,
+    },
+    left: 'center',
+  };
+  if (chartConfig.legend) {
+    chartDescription.legend = {
+      type: 'plain',
+      orient: 'vertical',
+      selectedMode: false,
+      top: '10%',
+      right: '17.5%',
+      itemStyle: {
+        color: getLinearColorGradient(theme['primary-gradient-end'], theme['primary-gradient-start']),
       },
     };
-  });
-  formattedData.dataValuesOverlay.forEach((datapoint) => {
-    datapoint.value = Number(datapoint.value);
-    max = Math.max(max, datapoint.value);
-    datapoint.itemStyle = {
-      color: theme['secondary-gradient-start'],
-    };
-  });
-  const axisFontStyle = {
+  }
+
+  return chartDescription;
+}
+
+/**
+ * Initialize the chart library object
+ * @param {*} chartHolder Element holding the chart
+ * @param {*} chartConfig Chart configuration
+ * @returns An initialized chart object
+ */
+function initializeChart(chartHolder, chartConfig) {
+  chartHolder.style.width = chartConfig.chartWidth;
+  chartHolder.style.height = chartConfig.chartHeight;
+  return window.echarts.init(chartHolder);
+}
+
+/**
+ * Axis font styling for bar charts
+ * @param {*} theme Theme to use for styling
+ * @returns An axis font style object
+ */
+function getBarChartAxisFontStyle(theme) {
+  return {
     align: 'center',
     color: theme['axis-color'],
     fontWeight: theme['font-weight'],
@@ -101,12 +168,51 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
     overflow: 'break',
     cursor: 'auto',
   };
+}
 
-  // build chart representation
-  const chartDescription = {
-    title: {
-      text: chartConfig.title,
+/**
+ * Draw a histogram chart with an overlayed trend line
+ * @param {*} chartData Chart data (will be used to determine which chart to draw)
+ * @param {*} chartConfig Chart configuration
+ * @param {*} chartHolder Element (div) holding the chart
+ * @param {*} theme Theming details, optional
+ */
+function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, theme) {
+  const formattedData = prepareChartDataWithOverlay(chartData);
+  chartConfig['chart-scale-step'] = parseInt(chartConfig['chart-scale-step'], 10);
+  chartConfig['chart-scale-overlay-step'] = parseInt(chartConfig['chart-scale-overlay-step'], 10);
+
+  // stylings
+  let max = Number.NEGATIVE_INFINITY;
+  formattedData.dataValuesHistogram.forEach((datapoint) => {
+    datapoint.value = Number(datapoint.value);
+    max = Math.max(max, datapoint.value);
+    datapoint.itemStyle = {
+      color: getLinearColorGradient(theme['primary-gradient-end'], theme['primary-gradient-start']),
+    };
+  });
+  formattedData.dataValuesOverlay.forEach((datapoint) => {
+    datapoint.value = Number(datapoint.value);
+    datapoint.itemStyle = {
+      color: theme['secondary-gradient-start'],
+    };
+  });
+  const axisConfig = {
+    type: 'value',
+    silent: true,
+    axisLine: {
+      show: true,
+      symbol: 'none',
+      lineStyle: {
+        type: 'solid',
+      },
     },
+    splitLine: { show: false },
+  };
+  const axisFontStyle = getBarChartAxisFontStyle(theme);
+
+  // build specific chart representation
+  const barChartSpecificDescription = {
     xAxis: {
       data: formattedData.barNames,
       axisTick: {
@@ -115,15 +221,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       axisLabel: axisFontStyle,
     },
     yAxis: [{
-      type: 'value',
-      silent: true,
-      axisLine: {
-        show: true,
-        symbol: 'none',
-        lineStyle: {
-          type: 'solid',
-        },
-      },
+      ...axisConfig,
       interval: chartConfig['chart-scale-step'],
       axisLabel: {
         formatter: `{value}${chartConfig['value-suffix']}`,
@@ -132,25 +230,14 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
         ...axisFontStyle,
       },
       max: (Math.floor(max / chartConfig['chart-scale-step']) + 1) * chartConfig['chart-scale-step'],
-      splitLine: { show: false },
-    },
-    {
-      type: 'value',
-      silent: true,
-      axisLine: {
-        show: true,
-        symbol: 'none',
-        lineStyle: {
-          type: 'solid',
-        },
-      },
+    }, {
+      ...axisConfig,
       min: chartConfig['chart-scale-overlay-min'],
       max: chartConfig['chart-scale-overlay-max'],
       interval: chartConfig['chart-scale-overlay-step'],
       axisLabel: {
         formatter: `{value}${chartConfig['scale-overlay-label-suffix']}`,
       },
-      splitLine: { show: false },
     }],
     series: [
       {
@@ -160,11 +247,8 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
         yAxisIndex: 0,
         colorBy: 'data',
         data: formattedData.dataValuesHistogram,
-        emphasis: {
-          disabled: true,
-        },
-      },
-      {
+        ...getInteractivitySettings(),
+      }, {
         name: chartConfig['overlay-unit'],
         type: 'line',
         cursor: 'auto',
@@ -177,52 +261,36 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
         },
         colorBy: 'data',
         data: formattedData.dataValuesOverlay,
-        emphasis: {
-          disabled: true,
-        },
+        ...getInteractivitySettings(),
       },
     ],
   };
 
+  const barChartRepresentation = buildChartRepresentation(chartConfig, theme);
   if (chartConfig.legend) {
-    chartDescription.legend = {
-      type: 'plain',
-      selectedMode: false,
-      data: [
-        {
-          name: chartConfig.unit,
-        }, {
-          name: chartConfig['overlay-unit'],
-          itemStyle: {
-            color: theme['secondary-gradient-start'],
-          },
-          lineStyle: {
-            color: theme['secondary-gradient-start'],
-            width: 1,
-          },
-        }],
-      top: '10%',
-      right: '11.5%',
-      itemStyle: {
-        color: {
-          type: 'linear',
-          x: 0,
-          y: 0,
-          x2: 0,
-          y2: 1,
-          colorStops: [{
-            offset: 0, color: theme['primary-gradient-end'],
-          }, {
-            offset: 1, color: theme['primary-gradient-start'],
-          }],
+    barChartSpecificDescription.legend = barChartRepresentation.legend;
+    barChartSpecificDescription.legend.data = [
+      {
+        name: chartConfig.unit,
+      }, {
+        name: chartConfig['overlay-unit'],
+        itemStyle: {
+          color: theme['secondary-gradient-start'],
+        },
+        lineStyle: {
+          color: theme['secondary-gradient-start'],
+          width: 1,
         },
       },
-      textStyle: axisFontStyle,
-    };
+    ];
+    barChartSpecificDescription.legend.textStyle = axisFontStyle;
   }
 
-  // draw chart
-  barChart.setOption(chartDescription);
+  const barChart = initializeChart(chartHolder, chartConfig);
+  barChart.setOption({
+    ...barChartRepresentation,
+    ...barChartSpecificDescription,
+  });
 }
 
 /**
@@ -233,13 +301,8 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
  * @param {*} theme Theming details, optional
  */
 function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
-  const formattedData = prepareBarChartData(chartData);
-
-  chartHolder.style.width = chartConfig.chartWidth;
-  chartHolder.style.height = chartConfig.chartHeight;
+  const formattedData = prepareChartData(chartData);
   chartConfig['chart-scale-step'] = parseInt(chartConfig['chart-scale-step'], 10);
-
-  const barChart = window.echarts.init(chartHolder);
 
   // stylings
   let max = Number.NEGATIVE_INFINITY;
@@ -247,33 +310,13 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
     datapoint.value = Number(datapoint.value);
     max = Math.max(max, datapoint.value);
     datapoint.itemStyle = {
-      color: {
-        type: 'linear',
-        x: 0,
-        y: 0,
-        x2: 0,
-        y2: 1,
-        colorStops: [{
-          offset: 0, color: theme['primary-gradient-end'],
-        }, {
-          offset: 1, color: theme['primary-gradient-start'],
-        }],
-      },
+      color: getLinearColorGradient(theme['primary-gradient-end'], theme['primary-gradient-start']),
     };
   });
-  const axisFontStyle = {
-    align: 'center',
-    color: theme['axis-color'],
-    fontWeight: theme['font-weight'],
-    fontFamily: theme['font-family'],
-    fontSize: theme['axis-font-size'],
-    width: '70',
-    overflow: 'break',
-    cursor: 'auto',
-  };
+  const axisFontStyle = getBarChartAxisFontStyle(theme);
 
   // build chart representation
-  const chartDescription = {
+  const barChartSpecificDescription = {
     title: {
       text: chartConfig.title,
     },
@@ -311,40 +354,24 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
         cursor: 'auto',
         colorBy: 'data',
         data: formattedData.dataValues,
-        emphasis: {
-          disabled: true,
-        },
+        ...getInteractivitySettings(),
       },
     ],
   };
-
+  const barChartRepresentation = buildChartRepresentation(chartConfig, theme);
   if (chartConfig.legend) {
-    chartDescription.legend = {
-      type: 'plain',
-      selectedMode: false,
+    barChartSpecificDescription.legend = {
+      ...barChartRepresentation.legend,
       formatter: chartConfig.unit,
-      top: '10%',
-      right: '11.5%',
-      itemStyle: {
-        color: {
-          type: 'linear',
-          x: 0,
-          y: 0,
-          x2: 0,
-          y2: 1,
-          colorStops: [{
-            offset: 0, color: theme['primary-gradient-end'],
-          }, {
-            offset: 1, color: theme['primary-gradient-start'],
-          }],
-        },
-      },
       textStyle: axisFontStyle,
     };
   }
 
-  // draw chart
-  barChart.setOption(chartDescription);
+  const barChart = initializeChart(chartHolder, chartConfig);
+  barChart.setOption({
+    ...barChartRepresentation,
+    ...barChartSpecificDescription,
+  });
 }
 
 /**
@@ -355,51 +382,17 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
  * @param {*} theme Theming details, optional
  */
 function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
-  const formattedData = prepareBarChartData(chartData);
+  const formattedData = prepareChartData(chartData);
 
-  chartHolder.style.width = chartConfig.chartWidth;
-  chartHolder.style.height = chartConfig.chartHeight;
-  const barChart = window.echarts.init(chartHolder);
   // chart stylings
   // for comparison chart we have only two values, so...
   formattedData.dataValues[0].itemStyle = {
-    color: {
-      type: 'linear',
-      x: 0,
-      y: 0,
-      x2: 0,
-      y2: 1,
-      colorStops: [{
-        offset: 0, color: theme['primary-gradient-end'],
-      }, {
-        offset: 1, color: theme['primary-gradient-start'],
-      }],
-    },
+    color: getLinearColorGradient(theme['primary-gradient-end'], theme['primary-gradient-start']),
   };
   formattedData.dataValues[1].itemStyle = {
-    color: {
-      type: 'linear',
-      x: 0,
-      y: 0,
-      x2: 0,
-      y2: 1,
-      colorStops: [{
-        offset: 0, color: theme['secondary-gradient-end'],
-      }, {
-        offset: 1, color: theme['secondary-gradient-start'],
-      }],
-    },
+    color: getLinearColorGradient(theme['secondary-gradient-end'], theme['secondary-gradient-start']),
   };
-  const axisFontStyle = {
-    align: 'center',
-    color: theme['axis-color'],
-    fontWeight: theme['font-weight'],
-    fontFamily: theme['font-family'],
-    fontSize: theme['axis-font-size'],
-    width: '70',
-    overflow: 'break',
-    cursor: 'auto',
-  };
+  const axisFontStyle = getBarChartAxisFontStyle(theme);
   const dataLabelFontStyle = {
     color: theme['font-color'],
     fontWeight: theme['font-weight'],
@@ -407,18 +400,17 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
     fontSize: theme['font-size'],
     cursor: 'auto',
   };
+  const titleTextStyle = {
+    color: theme['font-color'],
+    fontWeight: theme['font-weight'],
+    fontFamily: theme['font-family'],
+    fontSize: theme['font-size'],
+  };
 
-  // build chart representation
-  const chartDescription = {
+  // build comparison bar chart specific representation
+  const barChartSpecificDescription = {
     title: {
-      text: chartConfig.title,
-      colorBy: 'data',
-      textStyle: {
-        color: theme['font-color'],
-        fontWeight: theme['font-weight'],
-        fontFamily: theme['font-family'],
-        fontSize: theme['font-size'],
-      },
+      textStyle: titleTextStyle,
     },
     xAxis: {
       data: formattedData.barNames,
@@ -444,29 +436,149 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
         ...axisFontStyle,
       },
     },
+    series: [{
+      name: chartConfig.title,
+      type: 'bar',
+      cursor: 'auto',
+      barWidth: '70%',
+      colorBy: 'data',
+      data: formattedData.dataValues,
+      label: {
+        show: true,
+        position: 'top',
+        formatter: `${chartConfig.unit || ''}{@score}${chartConfig['value-suffix'] || ''}`,
+        ...dataLabelFontStyle,
+      },
+      ...getInteractivitySettings(),
+    },
+    ],
+  };
+
+  const barChart = initializeChart(chartHolder, chartConfig);
+  barChart.setOption({
+    ...buildChartRepresentation(chartConfig, theme),
+    ...barChartSpecificDescription,
+  });
+}
+
+/**
+ * Draw two pie charts next to each other to compare values
+ * @param {*} chartData Chart data (will be used to determine which chart to draw)
+ * @param {*} chartConfig Chart configuration
+ * @param {*} chartHolder Element (div) holding the chart
+ * @param {*} theme Theming details, optional
+ */
+function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
+  const formattedData = prepareChartData(chartData);
+
+  // format data for representation
+  const firstSeries = [
+    {
+      value: formattedData.dataValues[0].value,
+      name: formattedData.dataValues[0].value,
+      itemStyle: {
+        color: {
+          type: 'radial',
+          x: 0.5,
+          y: 0.5,
+          r: 0.70,
+          colorStops: getGradientStops(theme['primary-gradient-start'], theme['primary-gradient-end']),
+        },
+      },
+    },
+    {
+      value: 100 - parseInt(formattedData.dataValues[0].value, 10),
+      name: formattedData.dataValues[0].value,
+      itemStyle: {
+        color: theme['primary-gradient-end'],
+        opacity: 0.8,
+      },
+    },
+  ];
+  const secondSeries = [
+    {
+      value: formattedData.dataValues[1].value,
+      name: formattedData.dataValues[1].value,
+      itemStyle: {
+        color: {
+          type: 'radial',
+          x: 0.66,
+          y: 0.66,
+          r: 0.75,
+          colorStops: getGradientStops(theme['secondary-gradient-start'], theme['secondary-gradient-end']),
+        },
+      },
+    },
+    {
+      value: 100 - parseInt(formattedData.dataValues[1].value, 10),
+      name: formattedData.dataValues[1].value,
+      itemStyle: {
+        color: theme['secondary-gradient-end'],
+        opacity: 0.8,
+      },
+    },
+  ];
+
+  // stylings
+  const labelStylings = {
+    show: true,
+    position: 'center',
+    fontWeight: theme['font-weight'],
+    color: theme['font-color'],
+    formatter: `{@value}${chartConfig['value-suffix']}`,
+  };
+  const pieInteractivitySettings = {
+    percentPrecision: 1,
+    showEmptyCircle: true,
+    stillShowZeroSum: true,
+    silent: true,
+    legendHoverLink: false,
+    selectedMode: false,
+    labelLine: {
+      show: false,
+    },
+    ...getInteractivitySettings(),
+  };
+
+  // build specific chart representation
+  const pieChartSpecificDescription = {
     series: [
       {
         name: chartConfig.title,
-        type: 'bar',
-        cursor: 'auto',
-        barWidth: '70%',
+        type: 'pie',
+        roseType: 'radius',
+        radius: ['40%', '55%'],
+        center: ['27.5%', '45%'],
         colorBy: 'data',
-        data: formattedData.dataValues,
         label: {
-          show: true,
-          position: 'top',
-          formatter: `${chartConfig.unit || ''}{@score}${chartConfig['value-suffix'] || ''}`,
-          ...dataLabelFontStyle,
+          fontSize: `${theme['computed-font-size-px'] * 3}`,
+          ...labelStylings,
         },
-        emphasis: {
-          disabled: true,
+        data: firstSeries,
+        ...pieInteractivitySettings,
+      },
+      {
+        name: chartConfig.title,
+        type: 'pie',
+        roseType: 'radius',
+        radius: ['35%', '47.5%'],
+        center: ['74.5%', '55%'],
+        colorBy: 'data',
+        label: {
+          fontSize: `${theme['computed-font-size-px'] * 2.33}`,
+          ...labelStylings,
         },
+        data: secondSeries,
+        ...pieInteractivitySettings,
       },
     ],
   };
 
-  // draw chart
-  barChart.setOption(chartDescription);
+  const pieChart = initializeChart(chartHolder, chartConfig);
+  pieChart.setOption({
+    ...buildChartRepresentation(chartConfig, theme),
+    ...pieChartSpecificDescription,
+  });
 }
 
 /**
@@ -479,9 +591,9 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
  */
 function drawChart(block, chartData, chartConfig, chartHolder, theme) {
   const blockClassList = block.classList;
+  chartConfig.chartWidth = block.clientWidth;
+  chartConfig.chartHeight = block.clientHeight !== 0 ? block.clientHeight : MIN_CHART_HEIGHT;
   if (blockClassList.contains('bars')) {
-    chartConfig.chartWidth = block.clientWidth;
-    chartConfig.chartHeight = block.clientHeight !== 0 ? block.clientHeight : MIN_BAR_CHART_HEIGHT;
     chartConfig.legend = blockClassList.contains('graph-legend');
 
     if (chartData.length === 2) {
@@ -494,6 +606,8 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
       // default, histogram (one series)
       drawHistogramChart(chartData, chartConfig, chartHolder, theme);
     }
+  } else if (blockClassList.contains('pie')) {
+    drawComparisonPieChart(chartData, chartConfig, chartHolder, theme);
   }
 }
 
@@ -557,21 +671,16 @@ export default function decorate(block) {
   const data = readBlockData(block);
 
   let chartHolder = document.createElement('div');
-  chartHolder.id = `${Date.now()}-${Math.floor(Math.random() * 10000)}-chart-holder`;
   block.append(chartHolder);
 
-  const windowTheme = window.sgws?.config?.data;
+  const windowTheme = getRawTheme();
   const theme = {};
   windowTheme.forEach((themeElement) => {
     theme[themeElement.token] = themeElement.value;
   });
-  // add things shared by all charts in theming here for now
-  let computedStyles = window.getComputedStyle(block);
-  let computedFontSize = parseInt(computedStyles.fontSize, 10);
-  theme['font-size'] = `${computedFontSize * 1.1}px`;
-  theme['axis-font-size'] = `${computedFontSize * 0.8}px`;
+
+  computeFontSizes(block, theme);
   theme['axis-color'] = 'rgb(0, 0, 0)';
-  theme['font-weight'] = computedStyles.fontWeight;
 
   // listen for charting library to be loaded before starting to draw
   document.addEventListener(
@@ -587,16 +696,11 @@ export default function decorate(block) {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
       if (echartsLoaded) {
-        // get updated theme styles, if any
-        computedStyles = window.getComputedStyle(block);
-        theme['font-size'] = computedStyles.fontSize;
-        computedFontSize = parseInt(computedStyles.fontSize, 10);
-        theme['axis-font-size'] = `${computedFontSize * 0.8}px`;
+        computeFontSizes(block, theme);
 
         // redraw scaled chart
         chartHolder.remove();
         chartHolder = document.createElement('div');
-        chartHolder.id = `${Date.now()}-${Math.floor(Math.random() * 10000)}-chart-holder`;
         block.append(chartHolder);
         drawChart(block, data, cfg, chartHolder, theme);
       }
