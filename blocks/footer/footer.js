@@ -66,7 +66,7 @@ export default async function decorate(block) {
   } else {
     // fetch footer content
     const parentPath = getParentPath(1);
-    const footerPath = cfg.footer || `/${parentPath}/footer`;
+    const footerPath = cfg.footer || parentPath ? `/${parentPath}/footer` : '/footer';
     const footerFrag = await fetchFragment(footerPath, window.location.pathname.endsWith('/footer') ? { cache: 'reload' } : {});
 
     if (footerFrag) {

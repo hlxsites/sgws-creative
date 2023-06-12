@@ -15,9 +15,43 @@ import {
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
+export const THEME_TOKEN = Object.freeze({
+  PRIMARY_COLOR: 'primary-color',
+  SECONDARY_COLOR: 'secondary-color',
+  NEUTRAL_COLOR: 'neutral-color',
+  BACKGROUND_COLOR: 'background-color',
+  TEXT_COLOR: 'text-color',
+  TEXT_COLOR_BACKGROUND: 'text-color-background',
+  HEADING_FONT_SIZE: 'heading-font-size',
+  BODY_FONT_SIZE: 'body-font-size',
+  HEADING_FONT_FAMILY: 'heading-font-family',
+  SECONDARY_HEADING_FONT_FAMILY: 'secondary-heading-font-family',
+  BODY_FONT_FAMILY: 'body-font-family',
+  SECONDARY_BODY_FONT_FAMILY: 'secondary-body-font-family',
+  HEADING_FONT_WEIGHT: 'heading-font-weight',
+});
+
+/**
+ * Create an HTML tag in one line of code
+ * @param {string} tag Tag to create
+ * @param {object} attributes Key/value object of attributes
+ * @returns {HTMLElement} The created tag
+ */
+export function createTag(tag, attributes) {
+  const element = document.createElement(tag);
+  if (attributes) {
+    Object.entries(attributes).forEach(([key, val]) => {
+      element.setAttribute(key, val);
+    });
+  }
+  return element;
+}
 export function getParentPath(level = undefined) {
   const pathParts = window.location.pathname.split('/');
   pathParts.shift();
+  if (pathParts.length <= level) {
+    return '';
+  }
   if (!level) {
     pathParts.pop();
     return pathParts.join('/');
@@ -34,7 +68,12 @@ async function loadTheme() {
       configPath = `/themes/${themeMeta}.json`;
     } else {
       // use theme.json in first level folder
-      configPath = `/${getParentPath(1)}/theme.json`;
+      const parentPath = getParentPath(1);
+      if (parentPath) {
+        configPath = `/${parentPath}/theme.json`;
+      } else {
+        configPath = '/theme.json';
+      }
     }
   }
 
@@ -42,40 +81,80 @@ async function loadTheme() {
     const resp = await fetch(`${configPath}`);
     if (resp?.ok) {
       const json = await resp.json();
-      const tokens = json?.data || json?.theme?.data || {};
+      const tokens = json?.data || json?.page?.data || {};
       const root = document.querySelector(':root');
       tokens.forEach((e) => {
-        root.style.setProperty(`--${e.token}`, `${e.value}`);
+        if (e.token !== 'font') {
+          root.style.setProperty(`--${e.token}`, `${e.value}`);
+        }
       });
       theme = json || theme;
     }
   }
-  window.sgws = window.sgws || {};
-  window.sgws.config = theme;
+
+  // collect custom fonts
+  const customFontConfigs = [];
+  const sheets = theme[':names'] ? theme[':names'] : [''];
+  sheets.forEach((sheetName) => {
+    const sheetData = [...(sheetName ? theme[sheetName].data : theme.data)];
+    const fonts = sheetData.filter(({ token }) => token === 'font').map(({ value }) => value);
+    customFontConfigs.push(...fonts);
+  });
+
+  window.sgws = window.sgws || { config: {} };
+  window.sgws.config.theme = Object.freeze({ ...theme });
+  window.sgws.config.fonts = customFontConfigs;
 }
 
-export function hasTheme(name) {
-  return name in window.sgws.config;
-}
-export function getTheme(name) {
-  const [, theme] = Object.entries(window.sgws.config).find(([key]) => key === name) || [];
-  return theme;
+async function loadFonts() {
+  const allFonts = window.sgws.config.fonts;
+  await Promise.allSettled(allFonts.map((fontConfig) => {
+    const [fontFamily, fontUrl, ...fontDescriptors] = fontConfig.split(';');
+    if (fontFamily.startsWith('http')) {
+      const head = document.getElementsByTagName('head')[0];
+      if (head.querySelector(`link[href='${fontFamily}']`)) {
+        return Promise.resolve();
+      }
+      // add stylesheet
+      const link = createTag('link', { rel: 'stylesheet', type: 'text/css', media: 'all' });
+      link.href = fontFamily;
+      head.appendChild(link);
+      return Promise.resolve();
+    }
+    const fontAlreadyLoaded = document.fonts.check(`10px ${fontFamily}`);
+    if (fontAlreadyLoaded) {
+      return Promise.resolve();
+    }
+    const descriptors = fontDescriptors.reduce((obj, pair) => {
+      const [descriptorName, descriptorValue] = pair.split('=');
+      return { ...obj, [descriptorName]: descriptorValue };
+    }, {});
+    const fontFace = new FontFace(fontFamily, `url(${fontUrl.trim()})`, { display: 'swap', ...descriptors });
+    document.fonts.add(fontFace);
+    return fontFace.load();
+  }));
 }
 
-/**
- * Create an HTML tag in one line of code
- * @param {string} tag Tag to create
- * @param {object} attributes Key/value object of attributes
- * @returns {HTMLElement} The created tag
- */
-export function createTag(tag, attributes) {
-  const element = document.createElement(tag);
-  if (attributes) {
-    Object.entries(attributes).forEach(([key, val]) => {
-      element.setAttribute(key, val);
-    });
+export function hasTheme(name = 'page') {
+  if (name === 'page') {
+    return 'data' in window.sgws.config.theme || 'page' in window.sgws.config.theme;
   }
-  return element;
+  return name in window.sgws.config.theme;
+}
+export function getTheme(name = 'page') {
+  if (name === 'page' && 'data' in window.sgws.config.theme) {
+    return window.sgws.config.theme.data;
+  }
+  const [, theme] = Object.entries(window.sgws.config.theme).find(([key]) => key === name) || [];
+  return theme?.data;
+}
+
+export function getThemeValue(theme, name) {
+  if (!theme || !name) {
+    return undefined;
+  }
+  const [themeEntry] = theme.filter(({ token }) => token === name);
+  return themeEntry ? themeEntry.value : undefined;
 }
 
 export function createIcon(iconName) {
@@ -261,13 +340,12 @@ async function loadEager(doc) {
 export function addFavIcon(href) {
   const link = document.createElement('link');
   link.rel = 'icon';
-  link.type = 'image/png';
   link.href = href;
   const existingLink = document.querySelector('head link[rel="icon"]');
   if (existingLink) {
-    existingLink.replaceWith(link);
+    existingLink.parentElement.replaceChild(link, existingLink);
   } else {
-    document.head.append(link);
+    document.getElementsByTagName('head')[0].appendChild(link);
   }
 }
 
@@ -287,7 +365,8 @@ async function loadLazy(doc) {
   loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
-  // addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.png`);
+  addFavIcon(`${window.hlx.codeBasePath}/styles/favicon-empty.ico`);
+  await loadFonts();
   sampleRUM('lazy');
   sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
   sampleRUM.observe(main.querySelectorAll('picture > img'));

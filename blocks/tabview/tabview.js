@@ -21,7 +21,7 @@ async function loadTabPanel(panel) {
     const tabButton = [...buttonContainer.children].at(tabIndex);
     // apply theme to tab content
     const themeName = [...panel.classList].find((className) => hasTheme(className));
-    const theme = getTheme(themeName).data;
+    const theme = getTheme(themeName);
     theme.forEach(({ token, value }) => {
       panel.style.setProperty(`--${token}`, `${value}`);
       tabButton?.style.setProperty(`--${token}`, `${value}`);

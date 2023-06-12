@@ -2,13 +2,16 @@
 
 footer {
   position: relative;
+  background-color: var(--secondary-color);
+  padding: var(--layout-size-xl);
+}
+
+.presentation footer {
   background-image: var(--background-color-highlight);
   padding: 122px 80px;
 }
 
 .product footer {
-  position: relative;
-  background-image: unset;
   background-color: var(--primary-color);
   padding : 0;
 }
