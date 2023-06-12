@@ -98,9 +98,11 @@
 }
 
 .clickable-program-overlay {
-  border: 1px solid red;
-}
-
-.clickable-program-overlay-hidden {
-  visibility: hidden;
+  width: 200px;
+  height: 200px;
+  background-image:
+    linear-gradient(to bottom right, transparent 50%, red 0);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: left, right;
 }
