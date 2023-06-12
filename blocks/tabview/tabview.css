@@ -97,5 +97,7 @@
   text-transform: uppercase;
 }
 
-
+.clickable-program-overlay{
+  border: 1px solid red;
+}
 

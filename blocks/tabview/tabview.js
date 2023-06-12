@@ -22,7 +22,6 @@ async function loadTabPanel(panel) {
     // apply theme to tab content
     const themeName = [...panel.classList].find((className) => hasTheme(className));
     const theme = getTheme(themeName);
-    console.log("Theme: ", theme)
     if(theme){
       theme.forEach(({ token, value }) => {
         panel.style.setProperty(`--${token}`, `${value}`);
@@ -39,6 +38,7 @@ export default async function decorate(block) {
   const section = block.closest('.tabview-container');
   const heading = section?.querySelector('h2');
   const tabList = createTag('div', { class: 'tabs', role: 'tablist', 'aria-label': heading ? heading.textContent : 'Tab View' });
+  let clickableProgramOverlay = null;
 
   [...block.children].forEach((group, groupId) => {
     const [tabPicture, tabContent] = [...group.children];
@@ -74,6 +74,11 @@ export default async function decorate(block) {
     if(anchors.length > 1){
       const programAnchor = anchors[1];
       console.log("Program fragment link: ", programAnchor);
+
+      // add clickable triangular overlay
+      clickableProgramOverlay = document.createElement('div');
+      clickableProgramOverlay.classList.add('clickable-program-overlay');
+      clickableProgramOverlay.textContent = 'Click here for suggested programs';
     }
 
     const contentPath = anchor?.getAttribute('href');
@@ -90,6 +95,11 @@ export default async function decorate(block) {
   });
 
   block.prepend(tabList);
+
+  if(clickableProgramOverlay){
+    console.log("Adding clickable overlay");
+    block.append(clickableProgramOverlay);
+  }
 
   // load content of first tab (lazy load the rest)
   const firstTab = block.querySelector(':scope > [role="tabpanel"]');
