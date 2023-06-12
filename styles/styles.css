@@ -46,7 +46,7 @@
   --viewport-run: calc(var(--max-vw) - var(--min-vw));
 
   /* body sizes */
-  --body-font-size-min: 0.625rem;
+  --body-font-size-min: 0.75rem;
   --body-font-size-max: var(--body-font-size);
 
   /* heading sizes */
@@ -76,7 +76,7 @@ body {
   --link-color-hover: var(--primary-color);
 
   font-size: var(--body-font-size);
-  font-size: clamp(var(--body-font-size-min), 1.056vw + 0.229rem, var(--body-font-size-max));
+  font-size: clamp(var(--body-font-size-min), 0.704vw + 0.486rem, var(--body-font-size-max));
   margin: 0;
   font-family: var(--body-font-family);
   line-height: 1.75;
