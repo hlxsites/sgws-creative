@@ -1,5 +1,5 @@
 import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
-import { getRawTheme } from '../../scripts/scripts.js';
+import { getTheme } from '../../scripts/scripts.js';
 
 const MIN_CHART_HEIGHT = '400px';
 
@@ -673,11 +673,8 @@ export default function decorate(block) {
   let chartHolder = document.createElement('div');
   block.append(chartHolder);
 
-  const windowTheme = getRawTheme();
-  const theme = {};
-  windowTheme.forEach((themeElement) => {
-    theme[themeElement.token] = themeElement.value;
-  });
+  const pageTheme = getTheme() || [];
+  const theme = pageTheme.reduce((obj, { token, value }) => ({ ...obj, [token]: value }), {});
 
   computeFontSizes(block, theme);
   theme['axis-color'] = 'rgb(0, 0, 0)';

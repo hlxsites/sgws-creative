@@ -134,13 +134,6 @@ async function loadFonts() {
     return fontFace.load();
   }));
 }
-export function getRawTheme() {
-  if (window.sgws.config.theme) {
-    return window.sgws.config.theme.data;
-  }
-  return window.sgws.config.data;
-}
-
 export function hasTheme(name = 'page') {
   if (name === 'page') {
     return 'data' in window.sgws.config.theme || 'page' in window.sgws.config.theme;
