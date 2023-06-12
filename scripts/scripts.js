@@ -96,7 +96,7 @@ async function loadTheme() {
   const customFontConfigs = [];
   const sheets = theme[':names'] ? theme[':names'] : [''];
   sheets.forEach((sheetName) => {
-    const sheetData = [...(sheetName ? theme[sheetName].data : theme.data)];
+    const sheetData = [...(sheetName ? theme[sheetName].data : (theme.data || []))];
     const fonts = sheetData.filter(({ token }) => token === 'font').map(({ value }) => value);
     customFontConfigs.push(...fonts);
   });
@@ -146,14 +146,6 @@ export function getTheme(name = 'page') {
   }
   const [, theme] = Object.entries(window.sgws.config.theme).find(([key]) => key === name) || [];
   return theme?.data;
-}
-
-export function getThemeValue(theme, name) {
-  if (!theme || !name) {
-    return undefined;
-  }
-  const [themeEntry] = theme.filter(({ token }) => token === name);
-  return themeEntry ? themeEntry.value : undefined;
 }
 
 export function createIcon(iconName) {
