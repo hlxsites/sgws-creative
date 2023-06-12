@@ -33,6 +33,10 @@ async function loadTabPanel(panel) {
   const programPath = panel.getAttribute('program-path');
   if(programPath){
     console.log("Fetching program fragment")
+    const programButton = document.createElement('div');
+    programButton.classList.add('clickable-program-overlay');
+    programButton.textContent = 'Click here for suggested programs';
+    panel.append(programButton);
   }
 }
 
