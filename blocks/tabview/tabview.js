@@ -22,11 +22,17 @@ async function loadTabPanel(panel) {
     // apply theme to tab content
     const themeName = [...panel.classList].find((className) => hasTheme(className));
     const theme = getTheme(themeName);
-    theme.forEach(({ token, value }) => {
-      panel.style.setProperty(`--${token}`, `${value}`);
-      tabButton?.style.setProperty(`--${token}`, `${value}`);
-    });
+    console.log("Theme: ", theme)
+    if(theme){
+      theme.forEach(({ token, value }) => {
+        panel.style.setProperty(`--${token}`, `${value}`);
+        tabButton?.style.setProperty(`--${token}`, `${value}`);
+      });
+    }
   }
+}
+
+async function loadTabOverlay(block) {
 }
 
 export default async function decorate(block) {
@@ -63,7 +69,13 @@ export default async function decorate(block) {
       });
     });
 
-    const anchor = tabContent.querySelector('a');
+    const anchors = tabContent.querySelectorAll('a');
+    const anchor = anchors[0];
+    if(anchors.length > 1){
+      const programAnchor = anchors[1];
+      console.log("Program fragment link: ", programAnchor);
+    }
+
     const contentPath = anchor?.getAttribute('href');
     tabContent.textContent = '';
     tabContent.removeAttribute('class');
