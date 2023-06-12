@@ -17,10 +17,13 @@
   color: var(--text-color-background);
 }
 
-.slides h3 {
+.slides-wrapper > .slides h3 {
+  font-family: var(--secondary-heading-font-family);
+  font-weight: var(--secondary-heading-font-weight);
   position: relative;
   padding-bottom: var(--layout-size-m);
   margin: 2.5em 0 1em;
+  text-transform: uppercase;
 }
 
 .slides h3::after {
@@ -30,6 +33,10 @@
   left: 0;
   width: 84px;
   border-bottom: 2px solid var(--text-color-background);
+}
+
+.slides-wrapper > .slides p {
+  font-family: var(--secondary-body-font-family);
 }
 
 .slides .slide {

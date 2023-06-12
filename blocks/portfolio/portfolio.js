@@ -4,12 +4,12 @@ import { createTag } from '../../scripts/scripts.js';
 
 export default async function decorate(block) {
   const portfolioConfig = readBlockConfig(block);
-  const template = getMetadata('template');
-  if (!template) {
+  const portfolioName = getMetadata('portfolio');
+  if (!portfolioName) {
     return;
   }
 
-  const portfolioPath = `/portfolio/${template}.json`;
+  const portfolioPath = `/portfolio/${portfolioName}.json`;
   const resp = await fetch(`${portfolioPath}`);
   if (!resp?.ok) {
     return;

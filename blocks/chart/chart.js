@@ -1,5 +1,5 @@
 import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
-import { getRawTheme } from '../../scripts/scripts.js';
+import { getTheme, THEME_TOKEN } from '../../scripts/scripts.js';
 
 const MIN_CHART_HEIGHT = '400px';
 
@@ -117,9 +117,9 @@ function buildChartRepresentation(chartConfig, theme) {
   chartDescription.title = {
     text: chartConfig.title,
     textStyle: {
-      color: theme['font-color'],
+      color: theme[THEME_TOKEN.PRIMARY_COLOR],
       fontWeight: theme['font-weight'],
-      fontFamily: theme['font-family'],
+      fontFamily: theme[THEME_TOKEN.BODY_FONT_FAMILY],
       fontSize: `${theme['computed-font-size-px'] * 2}px`,
     },
     left: 'center',
@@ -132,7 +132,7 @@ function buildChartRepresentation(chartConfig, theme) {
       top: '10%',
       right: '17.5%',
       itemStyle: {
-        color: getLinearColorGradient(theme['primary-gradient-end'], theme['primary-gradient-start']),
+        color: getLinearColorGradient(theme[THEME_TOKEN.PRIMARY_COLOR], theme['primary-gradient-color']),
       },
     };
   }
@@ -162,7 +162,7 @@ function getBarChartAxisFontStyle(theme) {
     align: 'center',
     color: theme['axis-color'],
     fontWeight: theme['font-weight'],
-    fontFamily: theme['font-family'],
+    fontFamily: theme[THEME_TOKEN.BODY_FONT_FAMILY],
     fontSize: theme['axis-font-size'],
     width: '70',
     overflow: 'break',
@@ -188,13 +188,13 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
     datapoint.value = Number(datapoint.value);
     max = Math.max(max, datapoint.value);
     datapoint.itemStyle = {
-      color: getLinearColorGradient(theme['primary-gradient-end'], theme['primary-gradient-start']),
+      color: getLinearColorGradient(theme[THEME_TOKEN.PRIMARY_COLOR], theme['primary-gradient-color']),
     };
   });
   formattedData.dataValuesOverlay.forEach((datapoint) => {
     datapoint.value = Number(datapoint.value);
     datapoint.itemStyle = {
-      color: theme['secondary-gradient-start'],
+      color: theme['neutral-gradient-color'],
     };
   });
   const axisConfig = {
@@ -256,7 +256,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
         symbol: 'circle',
         symbolSize: 8,
         lineStyle: {
-          color: theme['secondary-gradient-start'],
+          color: theme['neutral-gradient-color'],
           width: 1,
         },
         colorBy: 'data',
@@ -275,10 +275,10 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
       }, {
         name: chartConfig['overlay-unit'],
         itemStyle: {
-          color: theme['secondary-gradient-start'],
+          color: theme['neutral-gradient-color'],
         },
         lineStyle: {
-          color: theme['secondary-gradient-start'],
+          color: theme['neutral-gradient-color'],
           width: 1,
         },
       },
@@ -310,7 +310,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
     datapoint.value = Number(datapoint.value);
     max = Math.max(max, datapoint.value);
     datapoint.itemStyle = {
-      color: getLinearColorGradient(theme['primary-gradient-end'], theme['primary-gradient-start']),
+      color: getLinearColorGradient(theme[THEME_TOKEN.PRIMARY_COLOR], theme['primary-gradient-color']),
     };
   });
   const axisFontStyle = getBarChartAxisFontStyle(theme);
@@ -387,23 +387,23 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
   // chart stylings
   // for comparison chart we have only two values, so...
   formattedData.dataValues[0].itemStyle = {
-    color: getLinearColorGradient(theme['primary-gradient-end'], theme['primary-gradient-start']),
+    color: getLinearColorGradient(theme[THEME_TOKEN.PRIMARY_COLOR], theme['primary-gradient-color']),
   };
   formattedData.dataValues[1].itemStyle = {
-    color: getLinearColorGradient(theme['secondary-gradient-end'], theme['secondary-gradient-start']),
+    color: getLinearColorGradient(theme[THEME_TOKEN.NEUTRAL_COLOR], theme['neutral-gradient-color']),
   };
   const axisFontStyle = getBarChartAxisFontStyle(theme);
   const dataLabelFontStyle = {
-    color: theme['font-color'],
+    color: theme[THEME_TOKEN.PRIMARY_COLOR],
     fontWeight: theme['font-weight'],
-    fontFamily: theme['font-family'],
+    fontFamily: theme[THEME_TOKEN.BODY_FONT_FAMILY],
     fontSize: theme['font-size'],
     cursor: 'auto',
   };
   const titleTextStyle = {
-    color: theme['font-color'],
+    color: theme[THEME_TOKEN.PRIMARY_COLOR],
     fontWeight: theme['font-weight'],
-    fontFamily: theme['font-family'],
+    fontFamily: theme[THEME_TOKEN.BODY_FONT_FAMILY],
     fontSize: theme['font-size'],
   };
 
@@ -482,7 +482,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
           x: 0.5,
           y: 0.5,
           r: 0.70,
-          colorStops: getGradientStops(theme['primary-gradient-start'], theme['primary-gradient-end']),
+          colorStops: getGradientStops(theme['primary-gradient-color'], theme[THEME_TOKEN.PRIMARY_COLOR]),
         },
       },
     },
@@ -490,7 +490,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
       value: 100 - parseInt(formattedData.dataValues[0].value, 10),
       name: formattedData.dataValues[0].value,
       itemStyle: {
-        color: theme['primary-gradient-end'],
+        color: theme[THEME_TOKEN.PRIMARY_COLOR],
         opacity: 0.8,
       },
     },
@@ -505,7 +505,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
           x: 0.66,
           y: 0.66,
           r: 0.75,
-          colorStops: getGradientStops(theme['secondary-gradient-start'], theme['secondary-gradient-end']),
+          colorStops: getGradientStops(theme['neutral-gradient-color'], theme[THEME_TOKEN.NEUTRAL_COLOR]),
         },
       },
     },
@@ -513,7 +513,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
       value: 100 - parseInt(formattedData.dataValues[1].value, 10),
       name: formattedData.dataValues[1].value,
       itemStyle: {
-        color: theme['secondary-gradient-end'],
+        color: theme[THEME_TOKEN.NEUTRAL_COLOR],
         opacity: 0.8,
       },
     },
@@ -673,11 +673,8 @@ export default function decorate(block) {
   let chartHolder = document.createElement('div');
   block.append(chartHolder);
 
-  const windowTheme = getRawTheme();
-  const theme = {};
-  windowTheme.forEach((themeElement) => {
-    theme[themeElement.token] = themeElement.value;
-  });
+  const pageTheme = getTheme() || [];
+  const theme = pageTheme.reduce((obj, { token, value }) => ({ ...obj, [token]: value }), {});
 
   computeFontSizes(block, theme);
   theme['axis-color'] = 'rgb(0, 0, 0)';
