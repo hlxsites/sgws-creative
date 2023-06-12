@@ -62,7 +62,7 @@ export function getTheme(name) {
   return theme;
 }
 export function getRawTheme() {
-  if(window.sgws.config.theme){
+  if (window.sgws.config.theme) {
     return window.sgws.config.theme.data;
   }
   return window.sgws.config.data;
