@@ -35,7 +35,12 @@ async function loadTabPanel(panel) {
     console.log("Fetching program fragment")
     const programButton = document.createElement('div');
     programButton.classList.add('clickable-program-overlay');
-    programButton.textContent = 'Click here for suggested programs';
+
+    const programButtonText = document.createElement('div');
+    programButtonText.textContent = 'Click here for suggested programs';
+
+    programButton.append(programButtonText);
+
     panel.append(programButton);
   }
 }

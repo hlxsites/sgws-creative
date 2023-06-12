@@ -98,11 +98,17 @@
 }
 
 .clickable-program-overlay {
-  width: 200px;
-  height: 200px;
-  background-image:
-    linear-gradient(to bottom right, transparent 50%, red 0);
+  width: 20vw;
+  height: 20vw;
+  background-image: linear-gradient(to bottom right, transparent 50%, red 0);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: left, right;
+}
+
+.clickable-program-overlay > div {
+  transform: translateY(10vw) translateX(5vw) rotate(-45deg);
+  max-width: 15vw;
+  text-align: center;
+  border: 1px solid green;
 }
