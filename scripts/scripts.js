@@ -58,11 +58,11 @@ export function hasTheme(name) {
   return name in window.sgws.config;
 }
 export function getTheme(name) {
-  if (!name) {
-    return window.sgws?.config?.data;
-  }
   const [, theme] = Object.entries(window.sgws.config).find(([key]) => key === name) || [];
   return theme;
+}
+export function getRawTheme() {
+  return window.sgws?.config?.data;
 }
 
 /**
