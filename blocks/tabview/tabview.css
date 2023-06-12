@@ -97,7 +97,10 @@
   text-transform: uppercase;
 }
 
-.clickable-program-overlay{
+.clickable-program-overlay {
   border: 1px solid red;
 }
 
+.clickable-program-overlay-hidden {
+  visibility: hidden;
+}
