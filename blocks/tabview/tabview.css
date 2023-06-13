@@ -116,8 +116,8 @@
   text-align: center;
   text-transform: uppercase;
   font-weight: 400;
-  font-size: 1em;
+  font-size: 1.3vw;
   color: var(--secondary-color);
   font-family: var(--heading-font-family);
-  line-height: 1.5em;
+  line-height: 1.9vw;
 }
