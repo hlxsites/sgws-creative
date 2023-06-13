@@ -1,3 +1,5 @@
+/* Slides*/
+
 .slides-wrapper {
   background-color: var(--primary-color);
 }
@@ -121,3 +123,5 @@
 .slides-container .slide-nav p {
   width: max-content;
 }
+
+/* Programs */

@@ -12,11 +12,9 @@ async function loadTabPanel(block, panel) {
   fragment = await decorateFragment(fragment);
   if (fragment) {
     const fragmentSection = fragment.querySelector(':scope .section');
-
     const panelDiv = document.createElement('div');
     panelDiv.classList.add('tab-panel-holder');
     panelDiv.append(...fragmentSection.children);
-    
     panel.append(panelDiv);
     panel.classList.add(...fragmentSection.classList);
     panel.classList.remove('section');
