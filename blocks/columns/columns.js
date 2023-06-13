@@ -27,9 +27,9 @@ export default function decorate(block) {
           video.play();
           playButton.remove();
         });
-        videoP.append(video);
-        videoP.append(playButton);
-        videoP.append(background);
+        const videoGroup = createTag('p', { class: 'video-group' });
+        videoGroup.append(video, playButton);
+        videoP.append(videoGroup, background);
         videoLink.remove();
         posterP.remove();
 
@@ -45,7 +45,7 @@ export default function decorate(block) {
             }
           }, { threshold: 0.1 });
         });
-        observer.observe(video);
+        observer.observe(videoGroup);
         observer.observe(background);
       }
       const pic = col.querySelector('picture');

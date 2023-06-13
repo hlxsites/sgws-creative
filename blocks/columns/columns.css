@@ -47,47 +47,39 @@
   background-image: var(--stats-background-image);
 }
 
-.columns.stats > div > div > h2 {
-  color: var(--stats-heading-text-color);
-}
-
-.columns.stats > div > div > p {
-  color: var(--stats-body-text-color);
-}
-
-.columns.button-full > div > div p:has(video) button {
+.columns > div > div .video-group button {
   position: absolute;
-  top: 45%;
-  left: 45%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border: none;
   background-color: #000000b3;
-  border-radius: 40px;
+  border-radius: 5vw;
   cursor: pointer;
-  width: 80px;
-  height: 80px;
+  width: 5vw;
+  height: 5vw;
 }
 
-.columns.button-full > div > div p:has(video) button::before {
+.columns > div > div .video-group button::before {
   content: "";
   display: block;
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 10px 0 10px 20px;
+  border-width: 0.8vw 0 0.8vw 1.6vw;
   border-color: transparent transparent transparent #fffc;
   position: absolute;
-  top: 0;
-  left: 0;
-  right: -7px;
-  bottom: 0;
+  top: 50%;
+  left: 54%;
+  transform: translate(-50%, -50%);
   margin: auto;
 }
 
-.columns.button-full > div > div p:has(video) button:hover::before {
+.columns > div > div .video-group button:hover::before {
   border-color: transparent transparent transparent #fff;
 }
 
-.columns.button-full > div > div p video {
+.columns > div > div p video {
   position: absolute;
   width: 100%;
   right: 0;
@@ -95,16 +87,27 @@
   z-index: -1;
 }
 
-.columns.button-full > div > div p:has(video) {
+.columns > div > div p:has(video) {
   position: relative;
   z-index: 1;
   width: 100%;
   height: 30vw;
-  margin-bottom: 10%;
 }
 
 .columns.button-full > div {
   margin-top: 5%;
+}
+
+.columns.button-full > div > div p {
+  margin-bottom: 10%;
+}
+
+.columns.stats > div > div > h2 {
+  color: var(--stats-heading-text-color);
+}
+
+.columns.stats > div > div > p {
+  color: var(--stats-body-text-color);
 }
 
 /* ICONS: Text area */
@@ -210,19 +213,15 @@
   z-index: 1;
 }
 
-.columns.button-full > div:nth-of-type(odd) > div:nth-of-type(even) {
+.columns > div:nth-of-type(odd) > div:nth-of-type(even) {
   flex-grow: 1.5;
 }
 
-.columns.button-full > div:nth-of-type(even) > div:nth-of-type(odd) {
+.columns > div:nth-of-type(even) > div:nth-of-type(odd) {
   flex-grow: 1.5;
 }
 
-.columns.button-full
-  > div:nth-of-type(odd)
-  > div
-  p:has(video)
-  > .video-background {
+.columns > div:nth-of-type(odd) > div p:has(.video-group) > .video-background {
   background-image: var(--background-color-highlight);
   position: absolute;
   top: -16%;
@@ -232,10 +231,10 @@
   height: 130%;
 }
 
-.columns.button-full
+.columns
   > div:nth-of-type(odd)
   > div
-  p:has(video)
+  p:has(.video-group)
   > .video-background.animate {
   animation-delay: 0.25s;
   animation-duration: 1s;
@@ -243,17 +242,24 @@
   animation-name: fade-in-right;
 }
 
-.columns.button-full > div:nth-of-type(odd) > div p:has(video) video.animate {
+.columns > div:nth-of-type(even) .video-group.animate {
+  animation-delay: 0.5s;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: fade-in-left;
+}
+
+.columns > div:nth-of-type(odd) > div .video-group.animate {
   animation-delay: 0.5s;
   animation-duration: 1s;
   animation-fill-mode: both;
   animation-name: fade-in-right;
 }
 
-.columns.button-full
+.columns
   > div:nth-of-type(even)
   > div
-  p:has(video)
+  p:has(.video-group)
   > .video-background.animate {
   animation-delay: 0.25s;
   animation-duration: 1s;
@@ -261,18 +267,7 @@
   animation-name: fade-in-left;
 }
 
-.columns.button-full > div:nth-of-type(even) > div p:has(video) video.animate {
-  animation-delay: 0.5s;
-  animation-duration: 1s;
-  animation-fill-mode: both;
-  animation-name: fade-in-left;
-}
-
-.columns.button-full
-  > div:nth-of-type(even)
-  > div
-  p:has(video)
-  > .video-background {
+.columns > div:nth-of-type(even) > div p:has(.video-group) > .video-background {
   background-image: linear-gradient(
     90deg,
     var(--secondary-color),
