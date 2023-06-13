@@ -1,3 +1,5 @@
+import { createVideoTag, createTag } from '../../scripts/scripts.js';
+
 export default function decorate(block) {
   const cols = [...block.firstElementChild.children];
   block.classList.add(`columns-${cols.length}-cols`);
@@ -10,6 +12,42 @@ export default function decorate(block) {
   // setup image columns
   [...block.children].forEach((row) => {
     [...row.children].forEach((col) => {
+      const videoLink = col.querySelector(':scope a');
+      if (videoLink?.href?.endsWith('.mp4')) {
+        const videoP = videoLink?.closest('p');
+        const posterP = videoP.previousElementSibling;
+        const attributes = {
+          preload: 'auto',
+        };
+        const video = createVideoTag(videoLink.href, posterP?.querySelector('img')?.src, attributes);
+        const playButton = createTag('button', { class: 'play-button', type: 'button', 'aria-label': 'Play Video' });
+        const background = createTag('div', { class: 'video-background' });
+        playButton.addEventListener('click', () => {
+          video.controls = true;
+          video.play();
+          playButton.remove();
+        });
+        videoP.append(video);
+        videoP.append(playButton);
+        videoP.append(background);
+        videoLink.remove();
+        posterP.remove();
+
+        const observer = new IntersectionObserver((entries) => {
+          // Loop over the entries
+          entries.forEach((entry) => {
+            // If the element is visible
+            if (entry.isIntersecting) {
+              // Add the animation class
+              entry.target.classList.add('animate');
+            } else {
+              entry.target.classList.remove('animate');
+            }
+          }, { threshold: 0.1 });
+        });
+        observer.observe(video);
+        observer.observe(background);
+      }
       const pic = col.querySelector('picture');
       if (pic) {
         const picWrapper = pic.closest('div');
