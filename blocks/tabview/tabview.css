@@ -111,8 +111,13 @@
 }
 
 .clickable-program-overlay > div {
-  transform: translateY(10vw) translateX(5vw) rotate(-45deg);
-  max-width: 15vw;
+  transform: translateY(7vw) translateX(5vw) rotate(-45deg);
+  max-width: 10vw;
   text-align: center;
-  border: 1px solid green;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 1em;
+  color: var(--secondary-color);
+  font-family: var(--heading-font-family);
+  line-height: 1.5em;
 }
