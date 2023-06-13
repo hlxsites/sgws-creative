@@ -98,12 +98,14 @@
 }
 
 .clickable-program-overlay {
-  width: 20vw;
-  height: 20vw;
+  position: absolute;
+  width: 15vw;
+  height: 15vw;
   background-image: linear-gradient(to bottom right, transparent 50%, red 0);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: left, right;
+  z-index: 1;
 }
 
 .clickable-program-overlay > div {

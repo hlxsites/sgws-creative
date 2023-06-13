@@ -35,13 +35,15 @@ async function loadTabPanel(panel) {
     console.log("Fetching program fragment")
     const programButton = document.createElement('div');
     programButton.classList.add('clickable-program-overlay');
-
     const programButtonText = document.createElement('div');
     programButtonText.textContent = 'Click here for suggested programs';
 
-    programButton.append(programButtonText);
+    const slidesElement = panel.querySelector('.slides-wrapper');
+    const slidesElementParent = slidesElement.parentNode;
+    console.log(slidesElementParent)
 
-    panel.append(programButton);
+    programButton.append(programButtonText);
+    slidesElementParent.insertBefore(programButton, slidesElement);
   }
 }
 
