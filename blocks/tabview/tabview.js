@@ -12,7 +12,12 @@ async function loadTabPanel(block, panel) {
   fragment = await decorateFragment(fragment);
   if (fragment) {
     const fragmentSection = fragment.querySelector(':scope .section');
-    panel.append(...fragmentSection.children);
+
+    const panelDiv = document.createElement('div');
+    panelDiv.classList.add('tab-panel-holder');
+    panelDiv.append(...fragmentSection.children);
+    
+    panel.append(panelDiv);
     panel.classList.add(...fragmentSection.classList);
     panel.classList.remove('section');
     const block = panel.closest('.tabview');
@@ -32,7 +37,6 @@ async function loadTabPanel(block, panel) {
 
   const programPath = panel.getAttribute('program-path');
   if(programPath){
-    console.log("Fetching program fragment")
     const programButton = document.createElement('div');
     programButton.classList.add('clickable-program-overlay');
     const programButtonText = document.createElement('div');
@@ -41,15 +45,26 @@ async function loadTabPanel(block, panel) {
     const slidesElementParent = slidesElement.parentNode;
     programButton.append(programButtonText);
     slidesElementParent.insertBefore(programButton, slidesElement);
-
     programButton.addEventListener('click', async () => {
-      await loadTabOverlay(block);
+      // TODO: Deferred loading, and click only hides/shows the overlay
+      await loadTabOverlay(block, panel); 
     });
   }
 }
 
-async function loadTabOverlay(block) {
+async function loadTabOverlay(block, panel) {
   console.log("Load program overlay fragment");
+
+  const contentPath = panel.getAttribute('program-path');
+  console.log("Program path: ", contentPath)
+  let fragment = await fetchFragment(contentPath);
+  fragment = await decorateFragment(fragment);
+
+  console.log(panel)
+  const programOverlay = document.createElement('div');
+  programOverlay.classList.add('program-overlay');
+  programOverlay.append(...fragment.children);
+  panel.append(programOverlay);
 }
 
 function placeProgramOverlay(block) {
