@@ -3,7 +3,7 @@ import {
   createTag, fetchFragment, decorateFragment, hasTheme, getTheme,
 } from '../../scripts/scripts.js';
 
-async function loadTabPanel(panel) {
+async function loadTabPanel(block, panel) {
   if (!panel) {
     return;
   }
@@ -41,10 +41,15 @@ async function loadTabPanel(panel) {
     const slidesElementParent = slidesElement.parentNode;
     programButton.append(programButtonText);
     slidesElementParent.insertBefore(programButton, slidesElement);
+
+    programButton.addEventListener('click', async () => {
+      await loadTabOverlay(block);
+    });
   }
 }
 
 async function loadTabOverlay(block) {
+  console.log("Load program overlay fragment");
 }
 
 function placeProgramOverlay(block) {
@@ -54,7 +59,6 @@ function placeProgramOverlay(block) {
   const programTriangle = block.querySelector('.clickable-program-overlay');
   const programTriangleStyles = window.getComputedStyle(programTriangle);
 
-  console.log(slidesElement.nextSibling)
   const marginTopTriangle =
   parseFloat(slidesWrapper.height)
   + parseFloat(borderWrapper.height) / 2.0
@@ -118,12 +122,12 @@ export default async function decorate(block) {
 
   // load content of first tab (lazy load the rest)
   const firstTab = block.querySelector(':scope > [role="tabpanel"]');
-  await loadTabPanel(firstTab);
+  await loadTabPanel(block, firstTab);
   firstTab.classList.add('active');
   // load the rest lazily
   block.querySelectorAll(':scope > [role="tabpanel"]').forEach((tabPanel, index) => {
     if (index > 0) {
-      loadTabPanel(tabPanel);
+      loadTabPanel(block, tabPanel);
     }
   });
 
