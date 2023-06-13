@@ -47,7 +47,7 @@ async function loadTabPanel(panel) {
 async function loadTabOverlay(block) {
 }
 
-function placeProgramOverlay(block) {
+function placeProgramOverlay(block, layoutCorrection = 0) {
   const slidesElement = block.querySelector('.slides-wrapper');
   const slidesWrapper = window.getComputedStyle(slidesElement);
   const borderWrapper = window.getComputedStyle(slidesElement.nextSibling);
@@ -57,7 +57,7 @@ function placeProgramOverlay(block) {
   const marginTopTriangle =
   parseInt(slidesWrapper.height, 10)
   + parseInt(borderWrapper.height, 10) / 2
-  - parseInt(programTriangleStyles.height, 10) + 3;
+  - parseInt(programTriangleStyles.height, 10) + 3 + layoutCorrection;
 
   programTriangle.style.marginTop = `${marginTopTriangle}px`;
 }
@@ -132,9 +132,9 @@ export default async function decorate(block) {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
       placeProgramOverlay(block);
-    }, 200);
+    }, 150);
   });
   setTimeout(() => {
-    placeProgramOverlay(block);
+    placeProgramOverlay(block, 3);
   }, 0);
 }
