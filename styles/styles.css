@@ -363,11 +363,16 @@ svg#franklin-svg-sprite symbol {
 /* border styling */
 
 /* TODO: remove brand specific styling for borders */
+main .section .default-content-wrapper .border-0,
+main .section .default-content-wrapper .border-1 {
+  margin-top: -1vw;
+  margin-bottom: -3.2vw;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 4vw;
+}
+
 main .section .default-content-wrapper .border-0 {
-  background-color: transparent;
-  margin: 0 auto;
-  max-height: 50px;
-  position: relative;
   transform: rotate(180deg);
 }
 
@@ -376,14 +381,7 @@ main .section .outback .default-content-wrapper .border-0 {
 }
 
 main .section .tabview .carrabbas .default-content-wrapper .border-0 {
-  padding-top: 2.5%;
-}
-
-main .section .default-content-wrapper .border-1 {
-  background-color: transparent;
-  height: 0;
-  margin: 0 auto;
-  position: relative;
+  margin-bottom: 2.3vw;
 }
 
 main .section .outback .default-content-wrapper .border-1 {
