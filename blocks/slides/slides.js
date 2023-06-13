@@ -30,6 +30,20 @@ function moveSlide(block, direction, count) {
 
 function buildProgramSlide(slide, index){
   console.log("Program tab slide: ", index);
+
+  const images = slide.querySelectorAll('picture');
+  console.log(slide);
+  // first image is background
+  // second image is restaurant logo
+  // last 4 images are products going to bottom
+
+
+
+  const backgroundImage = images[0];
+  backgroundImage.classList.add('slide-background-image');
+
+  const logoImage = images[1];
+  logoImage.classList.add('slide-logo-image');
 }
 
 export default function decorate(block) {

@@ -125,3 +125,17 @@
 }
 
 /* Programs */
+.program.slides {
+}
+
+.program .slide.active {
+}
+
+.program .slide-background-image {
+}
+
+.program .slide-background-image > img {
+}
+
+.program .slide-logo-image {
+}
