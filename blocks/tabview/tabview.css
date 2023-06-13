@@ -97,6 +97,14 @@
   text-transform: uppercase;
 }
 
+.clickable-program-overlay:hover {
+  background-image: linear-gradient(to bottom right, transparent 50%, var(--secondary-color) 0);
+}
+
+.clickable-program-overlay:hover > div {
+  color: var(--background-color);
+}
+
 .clickable-program-overlay {
   position: absolute;
   width: 15vw;
@@ -121,3 +129,4 @@
   font-family: var(--heading-font-family);
   line-height: 1.9vw;
 }
+
