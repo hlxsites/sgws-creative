@@ -37,17 +37,29 @@ async function loadTabPanel(panel) {
     programButton.classList.add('clickable-program-overlay');
     const programButtonText = document.createElement('div');
     programButtonText.textContent = 'Click here for suggested programs';
-
     const slidesElement = panel.querySelector('.slides-wrapper');
     const slidesElementParent = slidesElement.parentNode;
-    console.log(slidesElementParent)
-
     programButton.append(programButtonText);
     slidesElementParent.insertBefore(programButton, slidesElement);
   }
 }
 
 async function loadTabOverlay(block) {
+}
+
+function placeProgramOverlay(block) {
+  const slidesElement = block.querySelector('.slides-wrapper');
+  const slidesWrapper = window.getComputedStyle(slidesElement);
+  const borderWrapper = window.getComputedStyle(slidesElement.nextSibling);
+  const programTriangle = block.querySelector('.clickable-program-overlay');
+  const programTriangleStyles = window.getComputedStyle(programTriangle);
+
+  const marginTopTriangle =
+  parseInt(slidesWrapper.height, 10)
+  + parseInt(borderWrapper.height, 10) / 2
+  - parseInt(programTriangleStyles.height, 10) + 3;
+
+  programTriangle.style.marginTop = `${marginTopTriangle}px`;
 }
 
 export default async function decorate(block) {
@@ -114,4 +126,15 @@ export default async function decorate(block) {
       loadTabPanel(tabPanel);
     }
   });
+
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      placeProgramOverlay(block);
+    }, 200);
+  });
+  setTimeout(() => {
+    placeProgramOverlay(block);
+  }, 0);
 }
