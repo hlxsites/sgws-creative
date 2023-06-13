@@ -105,6 +105,8 @@
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: left, right;
+  right: 64px;
+  left: auto;
   z-index: 1;
 }
 
