@@ -61,9 +61,10 @@ function placeProgramOverlay(block) {
 
   const marginTopTriangle =
   parseFloat(slidesWrapper.height)
-  + parseFloat(borderWrapper.height) / 2.0
+  + parseFloat(borderWrapper.height) / 2
   - parseFloat(programTriangleStyles.height);
-  programTriangle.style.marginTop = `${Math.ceil(marginTopTriangle)}px`;
+
+  programTriangle.style.marginTop = `${marginTopTriangle}px`;
 }
 
 export default async function decorate(block) {
