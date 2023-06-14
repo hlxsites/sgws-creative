@@ -13,7 +13,11 @@
 }
 
 .showcase > div.even-hotspots {
-    grid-template-rows: repeat(3, 30%);
+    grid-template-rows: repeat(3, 27%);
+}
+
+.showcase > div > div {
+  border: 1px solid blue;
 }
 
 .showcase button {
