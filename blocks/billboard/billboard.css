@@ -21,7 +21,13 @@
   display: flex;
   flex-direction: row;
   background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: contain;
   border: 3px solid purple;
+}
+
+.billboard.block .products-row-layout > div {
+  opacity: 1;
 }
 
 .billboard.block .products-row-layout img{
