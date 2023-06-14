@@ -2,6 +2,10 @@
   padding-bottom: var(--layout-size-xxl);
 }
 
+.tabview {
+  --tabview-tab-background-color: #f2f2f2;
+}
+
 .tabview .tabs {
   display: flex;
   flex-flow: row nowrap;
@@ -12,7 +16,7 @@
   flex: 1;
   min-width: unset;
   height: 111px;
-  background-color: #f2f2f2;
+  background-color: var(--tabview-tab-background-color);
   padding: var(--layout-size-l);
   border: none;
   appearance: none;
@@ -39,6 +43,7 @@
 }
 
 .tabview [role="tabpanel"] {
+  --secondary-text-color-background: var(--text-color-background);
   --heading-font-size-px: calc(var(--heading-font-size) * 1px);
   --heading-font-size-min: calc(var(--heading-font-size) * 0.5);
   --heading-font-size-min-px: calc(var(--heading-font-size-min) * 1px);

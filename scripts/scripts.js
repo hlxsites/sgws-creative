@@ -22,6 +22,7 @@ export const THEME_TOKEN = Object.freeze({
   BACKGROUND_COLOR: 'background-color',
   TEXT_COLOR: 'text-color',
   TEXT_COLOR_BACKGROUND: 'text-color-background',
+  SECONDARY_TEXT_COLOR_BACKGROUND: 'secondary-text-color-background',
   HEADING_FONT_SIZE: 'heading-font-size',
   BODY_FONT_SIZE: 'body-font-size',
   HEADING_FONT_FAMILY: 'heading-font-family',

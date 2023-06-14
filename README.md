@@ -29,3 +29,9 @@ npm run lint
 
 * We are using [fallback fonts](https://github.com/pixel-point/fontpie) that avoid CLS.
 * The fallback fonts are specific to the font family and style (bold, italic etc)
+
+### Fluid Typography
+
+* All font sizes MUST be fluid relative to viewport width. 
+* Minimum font size can never go below 12px (0.75rem).
+* Use https://fluidtypography.com/ to calculate fluid font sizes.

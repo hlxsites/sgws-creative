@@ -20,4 +20,14 @@ export default function decorate(block) {
       }
     });
   });
+
+  // stats background image
+  const backgroundPicture = block.querySelector(':scope > div > .columns-img-col');
+  if (backgroundPicture) {
+    const pictureParent = backgroundPicture.parentElement;
+    const img = backgroundPicture.querySelector('img');
+    pictureParent.remove();
+    block.firstElementChild.style.backgroundImage = `url(${img.src})`;
+    block.classList.add('background-image');
+  }
 }
