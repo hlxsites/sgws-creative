@@ -1,15 +1,40 @@
 /* billboard css */
+.billboard.block .content-holder{
+  display: flex;
+  flex-direction: column;
+  border: 3px solid red;
+}
+
+.billboard.block .logo-row-layout{
+  display: flex;
+  flex-direction: row;
+  border: 3px solid green;
+}
+
+.billboard.block .main-row-layout{
+  display: flex;
+  flex-direction: row;
+  border: 3px solid blue;
+}
+
+.billboard.block .products-row-layout{
+  display: flex;
+  flex-direction: row;
+  background-repeat: no-repeat;
+  border: 3px solid purple;
+}
 
 /* bottom layer */
-.backdrop-image {
+.billboard.block .backdrop-image {
   z-index: 1;
   position: relative;
   text-align: center;
   opacity: 0.70;
 }
 
-.backdrop-image img{
+.billboard.block .backdrop-image img{
   width: 100%;
   height: auto;
   object-fit: cover;
 }
+

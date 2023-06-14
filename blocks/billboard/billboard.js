@@ -37,11 +37,12 @@ export default function decorate(block) {
   block.style.backgroundImage = `url(${backgroundStyleImage.src})`;
 
   const contentHolder = document.createElement('div');
+  contentHolder.classList.add('content-holder');
 
   contentHolder.append(logo, mainContent, productContent);
   if(topBackgroundImage)  {
-    topBackgroundImage.classList.add('backdrop-image');
-    contentHolder.append(topBackgroundImage);
+    const productBackgroundImage = topBackgroundImage.querySelector('img');
+    productContent.style.backgroundImage = `url(${productBackgroundImage.src})`;
   }
 
   block.append(contentHolder);
