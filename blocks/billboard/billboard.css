@@ -24,6 +24,10 @@
   border: 3px solid purple;
 }
 
+.billboard.block .products-row-layout img{
+  max-height: 20vh;
+}
+
 /* bottom layer */
 .billboard.block .backdrop-image {
   z-index: 1;
