@@ -1,0 +1,8 @@
+/* billboard css */
+.backdrop-image {
+  z-index: 1;
+  position: relative;
+  border: 1px solid red;
+  text-align: center;
+  opacity: 0.70;
+}
