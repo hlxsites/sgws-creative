@@ -16,10 +16,6 @@
     grid-template-rows: repeat(3, 27%);
 }
 
-.showcase > div > div {
-  border: 1px solid blue;
-}
-
 .showcase button {
     display: contents;
     max-width: 100px;
