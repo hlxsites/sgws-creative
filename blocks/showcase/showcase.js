@@ -1,7 +1,7 @@
 import { decorateIcons } from '../../scripts/lib-franklin.js';
 
 export default function decorate(showcaseBlock) {
-  const imageColumn = showcaseBlock.removeChild(showcaseBlock.children[0])
+  const imageColumn = showcaseBlock.removeChild(showcaseBlock.children[0]);
   const evenNumberOfHotspots = showcaseBlock.children.length % 2 === 0;
   const columns = document.createElement('div');
   columns.classList.add(evenNumberOfHotspots ? 'even-hotspots' : 'odd-hotspots');
@@ -15,8 +15,7 @@ export default function decorate(showcaseBlock) {
       // Add the 'bottle' image.
       imageColumn.classList.add('showcase-image-cell');
       columns.append(imageColumn);
-    }
-    else if (index % 2 === 1) {
+    } else if (index % 2 === 1) {
       // Empty cell in middle column
       const emptyImageCell = document.createElement('div');
       emptyImageCell.classList.add('showcase-image-cell');
@@ -25,13 +24,13 @@ export default function decorate(showcaseBlock) {
 
     // Created the 'hotspot' div.
     const hotSpot = document.createElement('div');
-    hotSpot.classList.add('showcase-hotspot-' + (index % 2 === 0 ? 'left' : 'right'));
+    const side = index % 2 === 0 ? 'left' : 'right';
+    hotSpot.classList.add(`showcase-hotspot-${side}`);
     hotSpot.innerHTML = `<button type="button" aria-controls="nav" aria-label="Showcase hotspot">
         <span class="icon icon-plus"></span>
       </button>`;
 
     const popupDialog = document.createElement('div');
-    popupDialog.classList.add('showcase-' + index);
 
     const headerText = row.querySelector('div');
     const popupHeader = document.createElement('h2');
@@ -40,7 +39,6 @@ export default function decorate(showcaseBlock) {
     row.removeChild(headerText);
 
     const bodyText = row.querySelector('div');
-    bodyText.classList.add('showcase-bodyText');
     const popupText = document.createElement('span');
     popupText.innerText = bodyText.innerText;
     popupDialog.append(popupText);
@@ -65,7 +63,7 @@ export default function decorate(showcaseBlock) {
       columns.append(emptyImageCell);
     }
     columns.append(hotSpot);
-  })
+  });
 
   // Just for completeness, finish the bottom row in the 'odd' case.
   if (!evenNumberOfHotspots) {
@@ -75,5 +73,4 @@ export default function decorate(showcaseBlock) {
 
   showcaseBlock.append(columns);
   decorateIcons(columns);
-};
-
+}
