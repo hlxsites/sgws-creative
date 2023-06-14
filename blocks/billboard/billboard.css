@@ -51,8 +51,8 @@
   background-repeat: no-repeat;
   background-position: bottom;
   background-size: contain;
-  border: 3px solid purple;
   overflow: hidden;
+  min-height: 24rem;
 }
 
 .billboard.block .products-row-layout>div {
@@ -61,6 +61,43 @@
   flex-basis: 0;
   text-align: center;
   align-items: center;
+}
+
+.billboard.block .products-row-layout > div:first-child {
+  position: relative;
+  overflow: hidden;
+  border: 3px solid green;
+}
+
+.billboard.block .products-row-layout > div:first-child > picture:first-child{
+  border: 3px solid yellow;
+  margin-top: 2rem;
+  position: absolute;
+  right: 12rem;
+}
+
+.billboard.block .products-row-layout > div:first-child > picture:last-child{
+  border: 3px solid red;
+  margin-top: 2rem;
+  position: absolute;
+  right: 4rem;
+}
+
+.billboard.block .products-row-layout > div:last-child {
+  position: relative;
+    overflow: hidden;
+}
+
+.billboard.block .products-row-layout > div:last-child > picture:first-child{
+  position: absolute;
+  margin-top: 2rem;
+  left: 4rem;
+}
+
+.billboard.block .products-row-layout > div:last-child > picture:last-child{
+  position: absolute;
+  margin-top: 2rem;
+  left: 12rem;
 }
 
 .billboard.block .products-row-layout img {
