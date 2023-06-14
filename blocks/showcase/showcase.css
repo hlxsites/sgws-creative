@@ -1,0 +1,108 @@
+
+.showcase-container {
+    padding-top: 50px;
+}
+
+.showcase > div {
+    margin: auto;
+    width: 67%;
+    display: grid;
+    grid-template-columns: 1fr fit-content(100%) 1fr;
+    grid-template-rows: repeat(5, 15%);
+    column-gap: 16px;
+}
+
+.showcase > div.even-hotspots {
+    grid-template-rows: repeat(3, 30%);
+}
+
+.showcase button {
+    display: contents;
+    max-width: 100px;
+    min-width: 24px;
+    border: none;
+    background-color: rgb(255 255 255 / 0%);
+    z-index: -1;
+    fill: var(--secondary-color);
+    padding: 0;
+    line-height: inherit;
+}
+
+.showcase button span.icon {
+    width: 55%;
+    height: auto;
+    max-width: 50px;
+    max-height: 50px;
+    min-height: 24px;
+    min-width: 24px;
+}
+
+.showcase button span.icon svg {
+    min-height: 24px;
+    min-width: 24px;
+}
+
+/* Popover */
+.showcase button div {
+    position: absolute;
+    border-width: 0;
+    max-width: 200px;
+    background-color: rgb(255 255 255);
+    background-image: none;
+    box-shadow: rgba(95 95 95 / 50%) 0 0 5px 0;
+    opacity: 0;
+    transition: visibility 0s, opacity 1s, display 2s linear;
+    z-index: 1;
+    padding: 1px 15px 15px;
+    text-align: left;
+}
+
+/* Popover Text */
+.showcase button > div span {
+    color: var(--text-color);
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+/* Popover Header */
+.showcase button h2 {
+    margin-top: 8px;
+    text-transform: uppercase;
+}
+
+/* Popover when 'hover' is activated. */
+.showcase button:hover div {
+    visibility: visible;
+    display: inline;
+    opacity: 1;
+    min-width: 200px;
+    transition: visibility 2s, opacity 2s, display 2s linear;
+}
+
+/* Button when 'hover' is activated. */
+.showcase button:hover > span {
+    visibility: hidden;
+}
+
+/* Hotspot cells */
+.showcase > div div[class^='showcase-hotspot-'] {
+    display: flex;
+    align-items: end;
+}
+
+.showcase > div div.showcase-hotspot-left {
+    justify-content: right;
+}
+
+.showcase > div div.showcase-hotspot-left button > div {
+    margin-right: 2px;
+    text-align: right;
+}
+
+.showcase > div div.showcase-hotspot-right {
+    justify-content: left;
+}
+
+.showcase > div > .showcase-image-cell picture img {
+    height: 100%;
+}
