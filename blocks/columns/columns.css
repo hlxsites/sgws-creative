@@ -222,11 +222,11 @@
   z-index: 1;
 }
 
-.columns > div:nth-of-type(odd) > div:nth-of-type(even) {
+.columns.button-full > div:nth-of-type(odd) > div:nth-of-type(even) {
   flex-grow: 1.5;
 }
 
-.columns > div:nth-of-type(even) > div:nth-of-type(odd) {
+.columns.button-full > div:nth-of-type(even) > div:nth-of-type(odd) {
   flex-grow: 1.5;
 }
 
