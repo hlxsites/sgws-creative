@@ -1,10 +1,10 @@
 import { decorateIcons } from '../../scripts/lib-franklin.js';
+import { createTag } from '../../scripts/scripts.js';
 
 export default function decorate(showcaseBlock) {
   const imageColumn = showcaseBlock.removeChild(showcaseBlock.children[0]);
   const evenNumberOfHotspots = showcaseBlock.children.length % 2 === 0;
-  const columns = document.createElement('div');
-  columns.classList.add(evenNumberOfHotspots ? 'even-hotspots' : 'odd-hotspots');
+  const columns = createTag('div', { class: evenNumberOfHotspots ? 'even-hotspots' : 'odd-hotspots' });
 
   // Setup 5 rows and 3 columns.  Hotspot buttons are in the left and right columns and the
   // 'bottle' image in the middle.
@@ -17,16 +17,13 @@ export default function decorate(showcaseBlock) {
       columns.append(imageColumn);
     } else if (index % 2 === 1) {
       // Empty cell in middle column
-      const emptyImageCell = document.createElement('div');
-      emptyImageCell.classList.add('showcase-image-cell');
-      columns.append(emptyImageCell);
+      columns.append(createTag('div', { class: 'showcase-image-cell' }));
     }
 
     // Created the 'hotspot' div.
-    const hotSpot = document.createElement('div');
     const side = index % 2 === 0 ? 'left' : 'right';
-    hotSpot.classList.add(`showcase-hotspot-${side}`);
-    hotSpot.innerHTML = `<button type="button" aria-controls="nav" aria-label="Showcase hotspot">
+    const hotSpot = createTag('div', { class: `showcase-hotspot-${side}` });
+    hotSpot.innerHTML = `<button type="button" aria-controls="tooltip">
         <span class="icon icon-plus"></span>
       </button>`;
 
@@ -58,9 +55,7 @@ export default function decorate(showcaseBlock) {
       // Empty cell in last column, next row's 1st column and next row's 2nd column
       columns.append(document.createElement('div'));
       columns.append(document.createElement('div'));
-      const emptyImageCell = document.createElement('div');
-      emptyImageCell.classList.add('showcase-image-cell');
-      columns.append(emptyImageCell);
+      columns.append(createTag('div', { class: 'showcase-image-cell' }));
     }
     columns.append(hotSpot);
   });
