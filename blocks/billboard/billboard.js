@@ -22,8 +22,11 @@ export default function decorate(block) {
     topBackgroundImage = blockChildren[blockChildren.length-1];
   }
   const logo = blockChildren[1];
+  logo.classList.add('logo-row-layout');
   const mainContent = blockChildren[2];
+  mainContent.classList.add('main-row-layout');
   const productContent = blockChildren[3];
+  productContent.classList.add('products-row-layout');
 
   console.log("~~~~~~~~~~~~~")
   // tmp - makes it easier to style and debug
@@ -35,6 +38,7 @@ export default function decorate(block) {
 
   const contentHolder = document.createElement('div');
 
+  contentHolder.append(logo, mainContent, productContent);
   if(topBackgroundImage)  {
     topBackgroundImage.classList.add('backdrop-image');
     contentHolder.append(topBackgroundImage);
