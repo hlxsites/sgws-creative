@@ -23,13 +23,20 @@
 }
 
 :root {
+  /* static vars */
+  --static-color-white: #fff;
+  --static-color-black: #000;
+  --static-heading-font-family: var(--heading-font-family);
+  --static-body-font-family: var(--body-font-family);
+
   /* theme vars */
   --primary-color: #035fe6;
   --secondary-color: #136ff6;
   --neutral-color: #eee;
-  --background-color: #fff;
-  --text-color: #000;
-  --text-color-background: #fff;
+  --background-color: var(--static-color-white);
+  --text-color: var(--static-color-black);
+  --text-color-background: var(--static-color-white);
+  --secondary-text-color-background: var(--text-color-background);
   --heading-font-size: 2rem;
   --body-font-size: 1rem;
   --heading-font-family: 'Futura PT Bold-Normal', 'Futura PT Bold-Normal Fallback', sans-serif;
@@ -38,6 +45,7 @@
   --secondary-body-font-family: var(--body-font-family);
   --heading-font-weight: normal;
   --secondary-heading-font-weight: var(--heading-font-weight);
+
 
   /* fluid font sizing */
   --min-vw: 600;
