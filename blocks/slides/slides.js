@@ -28,8 +28,9 @@ function moveSlide(block, direction, count) {
   count.textContent = `${getSlidePosition(selectedSlide)} of ${block.children.length}`;
 }
 
-function buildProgramSlide(slide, index){
+function buildProgramSlide(slide, index) {
   console.log("Program tab slide: ", index);
+  // load fragment
 }
 
 export default function decorate(block) {
@@ -44,18 +45,13 @@ export default function decorate(block) {
       slide.classList.add('active');
     }
 
-    // create avatar container
-    if(block.classList.contains('program')){
-      buildProgramSlide(slide, index);
-    } else {
-      const avatar = createTag('div', { class: 'avatar' });
-      avatar.append(...slide.querySelectorAll('picture'));
-      avatar.querySelectorAll('img').forEach((image) => {
-        image.closest('picture').replaceWith(createOptimizedPicture(image.src, image.alt, false, [{ width: '275' }]));
-      });
-      slide.querySelectorAll('p.picture').forEach((p) => p.remove());
-      slide.prepend(avatar);
-    }
+    const avatar = createTag('div', { class: 'avatar' });
+    avatar.append(...slide.querySelectorAll('picture'));
+    avatar.querySelectorAll('img').forEach((image) => {
+      image.closest('picture').replaceWith(createOptimizedPicture(image.src, image.alt, false, [{ width: '275' }]));
+    });
+    slide.querySelectorAll('p.picture').forEach((p) => p.remove());
+    slide.prepend(avatar);
   });
 
   if (block.children.length > 1) {

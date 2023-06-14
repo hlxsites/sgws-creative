@@ -44,7 +44,7 @@ async function loadTabPanel(block, panel) {
     programButton.append(programButtonText);
     slidesElementParent.insertBefore(programButton, slidesElement);
     programButton.addEventListener('click', async () => {
-      // TODO: Deferred loading, and click only hides/shows the overlay
+      // TODO-TMN: Deferred loading, and click only hides/shows the overlay
       await loadTabOverlay(block, panel); 
     });
   }
@@ -58,7 +58,6 @@ async function loadTabOverlay(block, panel) {
   let fragment = await fetchFragment(contentPath);
   fragment = await decorateFragment(fragment);
 
-  console.log(panel)
   const programOverlay = document.createElement('div');
   programOverlay.classList.add('program-overlay');
   programOverlay.append(...fragment.children);
