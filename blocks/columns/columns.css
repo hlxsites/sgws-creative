@@ -30,16 +30,16 @@
   margin-bottom: 0;
 }
 
+.columns > div:has(video) {
+  margin-top: 5%;
+}
+
 .columns.heading > div {
   gap: 15vw;
 }
 
 .columns > div > .columns-img-col img {
   display: block;
-}
-
-.columns > div:has(video) {
-  margin-top: 5%;
 }
 
 .columns.icon-list > div {
