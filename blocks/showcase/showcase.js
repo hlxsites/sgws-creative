@@ -23,7 +23,7 @@ export default function decorate(showcaseBlock) {
     // Created the 'hotspot' div.
     const side = index % 2 === 0 ? 'left' : 'right';
     const hotSpot = createTag('div', { class: `showcase-hotspot-${side}` });
-    hotSpot.innerHTML = `<button type="button" aria-controls="nav" aria-label="Showcase hover">
+    hotSpot.innerHTML = `<button type="button" aria-label="Showcase hover">
         <span class="icon icon-plus"></span>
       </button>`;
 
@@ -55,7 +55,7 @@ export default function decorate(showcaseBlock) {
       // Empty cell in last column, next row's 1st column and next row's 2nd column
       columns.append(document.createElement('div'));
       columns.append(document.createElement('div'));
-      columns.append(createTag('div', { class: 'showcase-image-cell' } ));
+      columns.append(createTag('div', { class: 'showcase-image-cell' }));
     }
     columns.append(hotSpot);
   });
