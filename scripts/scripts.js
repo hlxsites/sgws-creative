@@ -224,6 +224,9 @@ function decorateBorders(main) {
     const post = selection.parentElement.nextElementSibling;
     if (pre && !pre.classList.contains('default-content-wrapper') && post && !post.classList.contains('default-content-wrapper')) {
       selection.classList.add(`border-${selectionId}`);
+      const img = selection.querySelector('img')?.src;
+      selection.style.backgroundImage = `url(${img})`;
+      selection.querySelector('picture')?.remove();
     }
   });
 }
@@ -236,6 +239,16 @@ export function decoratePictureParagraph(main) {
       pic.parentElement.classList.add('picture');
     }
   });
+}
+
+export function createVideoTag(src, poster, attributes) {
+  const video = createTag('video', { src, poster });
+  if (attributes) {
+    Object.entries(attributes).forEach(([key, val]) => {
+      video.setAttribute(key, val);
+    });
+  }
+  return video;
 }
 
 /**
