@@ -223,6 +223,9 @@ function decorateBorders(main) {
     const post = selection.parentElement.nextElementSibling;
     if (pre && !pre.classList.contains('default-content-wrapper') && post && !post.classList.contains('default-content-wrapper')) {
       selection.classList.add(`border-${selectionId}`);
+      const img = selection.querySelector('img')?.src;
+      selection.style.backgroundImage = `url(${img})`;
+      selection.querySelector('picture')?.remove();
     }
   });
 }
