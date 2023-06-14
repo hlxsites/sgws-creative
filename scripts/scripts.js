@@ -237,6 +237,16 @@ export function decoratePictureParagraph(main) {
   });
 }
 
+export function createVideoTag(src, poster, attributes) {
+  const video = createTag('video', { src, poster });
+  if (attributes) {
+    Object.entries(attributes).forEach(([key, val]) => {
+      video.setAttribute(key, val);
+    });
+  }
+  return video;
+}
+
 /**
  * Decorates the background of all highlighted sections.
  * @param {Element} main The container element
