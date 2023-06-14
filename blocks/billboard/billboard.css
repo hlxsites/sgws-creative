@@ -27,12 +27,18 @@
   flex-grow: 1;
   flex-shrink: 1;
   flex-basis: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .billboard.block .main-row-layout > div:last-child{
+  display: unset;
   text-align: right;
 }
 .billboard.block .main-row-layout > div:first-child{
+  display: unset;
   text-align: left;
 }
 
