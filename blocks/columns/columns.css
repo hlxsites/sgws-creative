@@ -38,6 +38,10 @@
   display: block;
 }
 
+.columns > div:has(video) {
+  margin-top: 5%;
+}
+
 .columns.icon-list > div {
   text-align: center;
   gap: 0;
@@ -87,10 +91,21 @@
   margin-bottom: 0;
 }
 
+.columns > div > div p:has(video) {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 30vw;
+}
+
 .columns.stats > div p {
   font-family: var(--static-body-font-family);
   color: var(--stats-body-text-color);
   margin-top: 0.5em;
+}
+
+.columns > div > div p:has(video):last-child {
+  margin-bottom: 10%;
 }
 
 .columns > div > div .video-group button {
@@ -131,21 +146,6 @@
   right: 0;
   bottom: 0;
   z-index: -1;
-}
-
-.columns > div > div p:has(video) {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 30vw;
-}
-
-.columns.button-full > div {
-  margin-top: 5%;
-}
-
-.columns.button-full > div > div p {
-  margin-bottom: 10%;
 }
 
 /* ICONS: Text area */
