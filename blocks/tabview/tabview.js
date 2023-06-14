@@ -3,7 +3,21 @@ import {
   createTag, fetchFragment, decorateFragment, hasTheme, getTheme,
 } from '../../scripts/scripts.js';
 
-async function loadTabPanel(block, panel) {
+async function loadTabOverlay(panel) {
+  console.log("Load program overlay fragment");
+
+  const contentPath = panel.getAttribute('program-path');
+  console.log("Program path: ", contentPath)
+  let fragment = await fetchFragment(contentPath);
+  fragment = await decorateFragment(fragment);
+
+  const programOverlay = document.createElement('div');
+  programOverlay.classList.add('program-overlay');
+  programOverlay.append(...fragment.children);
+  panel.append(programOverlay);
+}
+
+async function loadTabPanel(panel) {
   if (!panel) {
     return;
   }
@@ -25,7 +39,7 @@ async function loadTabPanel(block, panel) {
     // apply theme to tab content
     const themeName = [...panel.classList].find((className) => hasTheme(className));
     const theme = getTheme(themeName);
-    if(theme){
+    if (theme) {
       theme.forEach(({ token, value }) => {
         panel.style.setProperty(`--${token}`, `${value}`);
         tabButton?.style.setProperty(`--${token}`, `${value}`);
@@ -34,7 +48,7 @@ async function loadTabPanel(block, panel) {
   }
 
   const programPath = panel.getAttribute('program-path');
-  if(programPath){
+  if (programPath) {
     const programButton = document.createElement('div');
     programButton.classList.add('clickable-program-overlay');
     const programButtonText = document.createElement('div');
@@ -45,23 +59,9 @@ async function loadTabPanel(block, panel) {
     slidesElementParent.insertBefore(programButton, slidesElement);
     programButton.addEventListener('click', async () => {
       // TODO-TMN: Deferred loading, and click only hides/shows the overlay
-      await loadTabOverlay(block, panel); 
+      await loadTabOverlay(panel);
     });
   }
-}
-
-async function loadTabOverlay(block, panel) {
-  console.log("Load program overlay fragment");
-
-  const contentPath = panel.getAttribute('program-path');
-  console.log("Program path: ", contentPath)
-  let fragment = await fetchFragment(contentPath);
-  fragment = await decorateFragment(fragment);
-
-  const programOverlay = document.createElement('div');
-  programOverlay.classList.add('program-overlay');
-  programOverlay.append(...fragment.children);
-  panel.append(programOverlay);
 }
 
 function placeProgramOverlay(block) {
@@ -71,10 +71,9 @@ function placeProgramOverlay(block) {
   const programTriangle = block.querySelector('.clickable-program-overlay');
   const programTriangleStyles = window.getComputedStyle(programTriangle);
 
-  const marginTopTriangle =
-  parseFloat(slidesWrapper.height)
-  + parseFloat(borderWrapper.height) / 2
-  - parseFloat(programTriangleStyles.height);
+  const marginTopTriangle = parseFloat(slidesWrapper.height)
+    + parseFloat(borderWrapper.height) / 2
+    - parseFloat(programTriangleStyles.height);
 
   programTriangle.style.marginTop = `${marginTopTriangle}px`;
 }
@@ -122,7 +121,7 @@ export default async function decorate(block) {
     tabContent.setAttribute('role', 'tabpanel');
     tabContent.setAttribute('aria-labelledby', `tab=${groupId}`);
     tabContent.setAttribute('data-path', contentPath || '');
-    if(anchors.length > 1){
+    if (anchors.length > 1) {
       tabContent.setAttribute('program-path', anchors[1].getAttribute('href') || '');
     }
 
@@ -135,12 +134,12 @@ export default async function decorate(block) {
 
   // load content of first tab (lazy load the rest)
   const firstTab = block.querySelector(':scope > [role="tabpanel"]');
-  await loadTabPanel(block, firstTab);
+  await loadTabPanel(firstTab);
   firstTab.classList.add('active');
   // load the rest lazily
   block.querySelectorAll(':scope > [role="tabpanel"]').forEach((tabPanel, index) => {
     if (index > 0) {
-      loadTabPanel(block, tabPanel);
+      loadTabPanel(tabPanel);
     }
   });
 

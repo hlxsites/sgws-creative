@@ -28,11 +28,6 @@ function moveSlide(block, direction, count) {
   count.textContent = `${getSlidePosition(selectedSlide)} of ${block.children.length}`;
 }
 
-function buildProgramSlide(slide, index) {
-  console.log("Program tab slide: ", index);
-  // load fragment
-}
-
 export default function decorate(block) {
   block.setAttribute('role', 'region');
   block.setAttribute('aria-label', 'Slides');
