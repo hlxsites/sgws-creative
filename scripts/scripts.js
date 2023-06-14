@@ -32,6 +32,22 @@ export const THEME_TOKEN = Object.freeze({
   HEADING_FONT_WEIGHT: 'heading-font-weight',
 });
 
+export const animationObserver = new IntersectionObserver((entries) => {
+  // Loop over the entries
+  entries.forEach((entry) => {
+    const { target, isIntersecting } = entry;
+    if (!target.closest('.no-animate')) {
+      // If the element is visible
+      if (isIntersecting) {
+        // Add the animation class
+        target.classList.add('animate');
+      } else {
+        target.classList.remove('animate');
+      }
+    }
+  }, { threshold: 0.1 });
+});
+
 /**
  * Create an HTML tag in one line of code
  * @param {string} tag Tag to create
@@ -47,6 +63,52 @@ export function createTag(tag, attributes) {
   }
   return element;
 }
+
+/**
+ * Create a video tag with a src, poster and additional attributes.
+ * @param src The video source
+ * @param poster The video poster
+ * @param attributes Additional video tag attributes.
+ * @return {HTMLElement}
+ */
+export function createVideoTag(src, poster, attributes = {}) {
+  return createTag('video', { src, poster, ...attributes });
+}
+
+/**
+ * Create an icon span that is compatible with decorate icons.
+ * @param iconName The name of the icon
+ * @return {HTMLElement|undefined}
+ */
+export function createIcon(iconName) {
+  if (!iconName) {
+    return undefined;
+  }
+  return createTag('span', { class: `icon icon-${iconName}` });
+}
+
+/**
+ * Fetch fragment HTML.
+ * @param path fragment path
+ * @param init request init
+ * @return {Promise<HTMLDivElement|null>}
+ */
+export async function fetchFragment(path, init = {}) {
+  const resp = await fetch(`${path}.plain.html`, init);
+  if (resp?.ok) {
+    const parent = document.createElement('div');
+    parent.innerHTML = await resp.text();
+    return parent;
+  }
+  return null;
+}
+
+/**
+ * Get the parent paths for the current location.
+ * eg. '/level1/level2'
+ * @param level How many path levels to return.
+ * @return {string} The path
+ */
 export function getParentPath(level = undefined) {
   const pathParts = window.location.pathname.split('/');
   pathParts.shift();
@@ -135,27 +197,30 @@ async function loadFonts() {
     return fontFace.load();
   }));
 }
+
+/**
+ * Does the current page include the named theme.
+ * @param name Name of the theme
+ * @return {boolean}
+ */
 export function hasTheme(name = 'page') {
   if (name === 'page') {
     return 'data' in window.sgws.config.theme || 'page' in window.sgws.config.theme;
   }
   return name in window.sgws.config.theme;
 }
+
+/**
+ * Get a named them for the current page.
+ * @param name Name of the theme.
+ * @return {*} A theme array.
+ */
 export function getTheme(name = 'page') {
   if (name === 'page' && 'data' in window.sgws.config.theme) {
     return window.sgws.config.theme.data;
   }
   const [, theme] = Object.entries(window.sgws.config.theme).find(([key]) => key === name) || [];
   return theme?.data;
-}
-
-export function createIcon(iconName) {
-  if (!iconName) {
-    return undefined;
-  }
-  const element = document.createElement('span');
-  element.classList.add('icon', `icon-${iconName}`);
-  return element;
 }
 
 /**
@@ -223,7 +288,7 @@ function decorateBorders(main) {
     const pre = selection.parentElement.previousElementSibling;
     const post = selection.parentElement.nextElementSibling;
     if (pre && !pre.classList.contains('default-content-wrapper') && post && !post.classList.contains('default-content-wrapper')) {
-      selection.classList.add(`border-${selectionId}`);
+      selection.classList.add('border', `border-${selectionId}`);
       const img = selection.querySelector('img')?.src;
       selection.style.backgroundImage = `url(${img})`;
       selection.querySelector('picture')?.remove();
@@ -239,16 +304,6 @@ export function decoratePictureParagraph(main) {
       pic.parentElement.classList.add('picture');
     }
   });
-}
-
-export function createVideoTag(src, poster, attributes) {
-  const video = createTag('video', { src, poster });
-  if (attributes) {
-    Object.entries(attributes).forEach(([key, val]) => {
-      video.setAttribute(key, val);
-    });
-  }
-  return video;
 }
 
 /**
@@ -270,12 +325,17 @@ export function decorateSectionBackgrounds(main) {
   });
 }
 
+function addAnimation(main) {
+  main.querySelectorAll('h1, h2, h3, p:not(.border)').forEach((element) => {
+    animationObserver.observe(element);
+  });
+}
+
 /**
  * Decorates the main element.
  * @param {Element} main The main element
  */
-// eslint-disable-next-line import/prefer-default-export
-export function decorateMain(main) {
+function decorateMain(main) {
   // hopefully forward compatible button decoration
   decorateButtons(main);
   decorateExternalLinks(main);
@@ -286,22 +346,7 @@ export function decorateMain(main) {
   decorateBlocks(main);
   decorateSectionBackgrounds(main);
   decorateBorders(main);
-}
-
-/**
- * Fetch fragment HTML.
- * @param path fragment path
- * @param init request init
- * @return {Promise<HTMLDivElement|null>}
- */
-export async function fetchFragment(path, init = {}) {
-  const resp = await fetch(`${path}.plain.html`, init);
-  if (resp?.ok) {
-    const parent = document.createElement('div');
-    parent.innerHTML = await resp.text();
-    return parent;
-  }
-  return null;
+  addAnimation(main);
 }
 
 /**
@@ -371,7 +416,10 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   addFavIcon(`${window.hlx.codeBasePath}/styles/favicon-empty.ico`);
+
+  // load additional fonts from theme
   await loadFonts();
+
   sampleRUM('lazy');
   sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
   sampleRUM.observe(main.querySelectorAll('picture > img'));
