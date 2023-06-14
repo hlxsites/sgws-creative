@@ -32,7 +32,6 @@ export default function decorate(block) {
 
   const backgroundStyleImage = bottomBackgroundImage.querySelector('img');
   block.style.backgroundImage = `url(${backgroundStyleImage.src})`;
-  block.classList.add('background-image');
 
   const contentHolder = document.createElement('div');
 

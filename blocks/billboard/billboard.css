@@ -1,8 +1,16 @@
 /* billboard css */
+
+/* bottom layer */
 .backdrop-image {
   z-index: 1;
   position: relative;
-  border: 1px solid red;
   text-align: center;
   opacity: 0.70;
+}
+
+.backdrop-image img{
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border: 1px solid green;
 }
