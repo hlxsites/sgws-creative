@@ -12,6 +12,12 @@ import { getTheme, hasTheme, createTag } from '../../scripts/scripts.js';
  * - Fourth row (3) is products left, products right and middle poster text (optional)
  */
 export default function decorate(block) {
+  const themeName = [...block.closest('.section').classList].find((className) => hasTheme(className));
+  const theme = getTheme(themeName);
+  theme.forEach(({ token, value }) => {
+    block.style.setProperty(`--${token}`, `${value}`);
+  });
+
   const blockChildren = [...block.children];
   const logo = blockChildren[1];
   const mainContent = blockChildren[2];
@@ -33,12 +39,6 @@ export default function decorate(block) {
   } else {
     contentHolder.append(logo, mainContent, productContent);
   }
-
-  const themeName = [...block.closest('.section').classList].find((className) => hasTheme(className));
-  const theme = getTheme(themeName);
-  theme.forEach(({ token, value }) => {
-    block.style.setProperty(`--${token}`, `${value}`);
-  });
 
   block.append(contentHolder);
 }
