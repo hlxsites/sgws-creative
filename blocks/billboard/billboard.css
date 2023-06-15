@@ -36,8 +36,8 @@
 .billboard.block .main-row-layout h4 {
   color: rgb(0, 0, 0);
   font-family: 'Neutraface Text Book'; /* TODO: make this a variable for theming */
-  line-height: 2.5rem;
-  font-size: 1.75rem;
+  line-height: 2.5vw;
+  font-size: 1.5vw;
 }
 
 .billboard.block .main-row-layout > div {
@@ -78,8 +78,8 @@
   color: rgb(255, 255, 255);
   font-family: 'Neutraface Text Demi'; /* TODO: make this a variable for theming */
   padding: 2em;
-  line-height: 2.5rem;
-  font-size: 1.75rem;
+  line-height: 2.5vw;
+  font-size: 1.5vw;
   letter-spacing: 0.1em;
 }
 
