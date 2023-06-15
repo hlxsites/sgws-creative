@@ -86,13 +86,12 @@
 }
 
 .billboard.block .products-row-layout h5 {
-  background-color: rgb(132, 26, 27);
-  color: rgb(255, 255, 255);
   font-family: 'Neutraface Text Demi'; /* TODO: make this a variable for theming */
   padding: 2em;
   line-height: 2.5vw;
   font-size: 1.5vw;
   letter-spacing: 0.1em;
+  color: rgb(255, 255, 255);
 }
 
 .billboard.block .products-row-layout > div {
@@ -110,6 +109,12 @@
   max-height: 20vw;
   min-height: 20vw;
   margin-bottom: -1.5em;
+}
+
+.billboard.block .products-row-layout > div:nth-child(2) {
+  outline: 10px solid lightblue;
+  outline-offset: -20px;
+  background-color: rgb(132, 26, 27);
 }
 
 .billboard.block .products-row-layout > div:last-child img {
