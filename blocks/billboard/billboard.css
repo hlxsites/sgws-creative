@@ -82,7 +82,7 @@
   overflow: hidden;
   z-index: 2;
   align-items: center;
-  margin-top: -2em;
+  margin-top: -4vw;
 }
 
 .billboard.block .products-row-layout h5 {
