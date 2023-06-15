@@ -22,7 +22,6 @@
 }
 
 .billboard.block .main-row-layout > div:nth-child(2){
-  border: 3px solid red;
   flex-grow: 2;
 }
 
@@ -36,7 +35,7 @@
 
 .billboard.block .main-row-layout h4 {
   color: rgb(0, 0, 0);
-  font-family: 'Neutraface Text Book';
+  font-family: 'Neutraface Text Book'; /* TODO: make this a variable for theming */
   line-height: 2.5rem;
   font-size: 1.75rem;
 }
@@ -68,18 +67,16 @@
 .billboard.block .products-row-layout {
   display: flex;
   flex-direction: row;
-  background-repeat: no-repeat;
-  background-position: bottom;
-  background-size: contain;
   overflow: hidden;
   z-index: 2;
   align-items: center;
+  margin-top: -2em;
 }
 
 .billboard.block .products-row-layout h5 {
   background-color: rgb(132, 26, 27);
   color: rgb(255, 255, 255);
-  font-family: 'Neutraface Text Demi';
+  font-family: 'Neutraface Text Demi'; /* TODO: make this a variable for theming */
   padding: 2em;
   line-height: 2.5rem;
   font-size: 1.75rem;
@@ -93,23 +90,10 @@
   text-align: center;
 }
 
-.billboard.block .products-row-layout>div:first-child {
-}
-
-.billboard.block .products-row-layout>div:first-child picture{
-}
-
 .billboard.block .products-row-layout>div:first-child img{
   max-height: 20vw;
   min-height: 20vw;
   margin-bottom: -1.5em;
-}
-
-
-.billboard.block .products-row-layout>div:last-child {
-}
-
-.billboard.block .products-row-layout>div:last-child picture{
 }
 
 .billboard.block .products-row-layout>div:last-child img{
