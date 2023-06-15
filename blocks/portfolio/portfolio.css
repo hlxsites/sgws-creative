@@ -33,7 +33,7 @@
 }
 
 .portfolio ul.portfolio-grid li {
-  aspect-ratio: 1;
+  aspect-ratio: 15 / 16;
   background-color: var(--background-color);
 }
 
@@ -76,7 +76,7 @@
   flex: 1;
   margin: 0.25em 0 0.5em;
   overflow: hidden;
-  transform: translateY(0.5em) scaleY(0.95);
+  transform: scaleY(0.95);
 }
 
 .portfolio ul.portfolio-grid li p {
@@ -88,7 +88,7 @@
 }
 
 .portfolio ul.portfolio-grid li p:last-child {
-  margin-bottom: var(--layout-size-xs);
+  margin-bottom: 1em;
 }
 
 .portfolio ul.portfolio-grid li p.variant {
