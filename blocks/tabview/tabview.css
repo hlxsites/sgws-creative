@@ -109,6 +109,10 @@
   text-transform: uppercase;
 }
 
+.tabview [role="tabpanel"]  .default-content-wrapper:first-child p {
+  flex: 1;
+}
+
 /* animations */
 @media (prefers-reduced-motion: no-preference) {
   .tabview [role="tabpanel"] h2,
