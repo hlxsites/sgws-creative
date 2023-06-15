@@ -34,8 +34,7 @@ export default function decorate(block) {
     contentHolder.append(logo, mainContent, productContent);
   }
 
-  const themeName = [...block.closest('.section').classList]
-    .find((className) => hasTheme(className));
+  const themeName = [...block.closest('.section').classList].find((className) => hasTheme(className));
   const theme = getTheme(themeName);
   theme.forEach(({ token, value }) => {
     block.style.setProperty(`--${token}`, `${value}`);
