@@ -1,4 +1,4 @@
-import { getTheme, THEME_TOKEN } from '../../scripts/scripts.js';
+import { createTag } from '../../scripts/scripts.js';
 
 /**
  * Structure:
@@ -9,28 +9,25 @@ import { getTheme, THEME_TOKEN } from '../../scripts/scripts.js';
  * Content:
  * - Second row (1) is logo + logo decorations left and right
  * - Third row (2) is the main text + optional decorations left and right
- * - Fourth row (3) is product left, product right and optional middle poster text
+ * - Fourth row (3) is products left, products right and middle poster text (optional)
  */
 export default function decorate(block) {
-  const pageTheme = getTheme() || [];
-  const theme = pageTheme.reduce((obj, { token, value }) => ({ ...obj, [token]: value }), {});
-
   const blockChildren = [...block.children];
-  const bottomBackgroundImage = blockChildren[0].firstElementChild.firstElementChild;
   const logo = blockChildren[1];
-  logo.classList.add('logo-row-layout');
   const mainContent = blockChildren[2];
-  mainContent.classList.add('main-row-layout');
   const productContent = blockChildren[3];
-  productContent.classList.add('products-row-layout');
 
   block.innerHTML = '';
+  const bottomBackgroundImage = blockChildren[0].firstElementChild.firstElementChild;
   const backgroundStyleImage = bottomBackgroundImage.querySelector('img');
   block.style.backgroundImage = `url(${backgroundStyleImage.src})`;
-  const contentHolder = document.createElement('div');
-  contentHolder.classList.add('content-holder');
-  if(blockChildren.length === 5)  {
-    const topBackgroundImage = blockChildren[blockChildren.length-1];
+
+  const contentHolder = createTag('div', { class: 'content-holder' });
+  logo.classList.add('logo-row-layout');
+  mainContent.classList.add('main-row-layout');
+  productContent.classList.add('products-row-layout');
+  if (blockChildren.length === 5) {
+    const topBackgroundImage = blockChildren[4];
     topBackgroundImage.classList.add('backdrop-image');
     contentHolder.append(logo, mainContent, productContent, topBackgroundImage);
   } else {
