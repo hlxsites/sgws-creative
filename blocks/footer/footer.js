@@ -159,5 +159,7 @@ export default async function decorate(block) {
     });
   });
 
-  observer.observe(block.firstElementChild);
+  if (block.firstElementChild) {
+    observer.observe(block.firstElementChild);
+  }
 }
