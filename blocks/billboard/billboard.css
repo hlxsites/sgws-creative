@@ -51,7 +51,6 @@
   background-repeat: no-repeat;
   background-position: bottom;
   background-size: contain;
-  border: 3px solid purple;
   overflow: hidden;
   z-index: 2;
   align-items: center;
@@ -65,32 +64,28 @@
 }
 
 .billboard.block .products-row-layout>div:first-child {
-  border: 3px solid red;
 }
 
 .billboard.block .products-row-layout>div:first-child picture{
-  border: 3px solid green;
 }
 
 .billboard.block .products-row-layout>div:first-child img{
-  border: 3px solid yellow;
   max-height: 20vw;
   min-height: 20vw;
+  margin-bottom: -1.5em;
 }
 
 
 .billboard.block .products-row-layout>div:last-child {
-  border: 3px solid purple;
 }
 
 .billboard.block .products-row-layout>div:last-child picture{
-  border: 3px solid blue;
 }
 
 .billboard.block .products-row-layout>div:last-child img{
-  border: 3px solid pink;
   max-height: 20vw;
   min-height: 20vw;
+  margin-bottom: -1.5em;
 }
 
 .billboard.block .products-row-layout img {
