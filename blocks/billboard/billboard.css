@@ -113,6 +113,11 @@
   flex-grow: 2;
 }
 
+.billboard.block .main-row-layout > div:nth-child(2) picture{
+  display: flex;
+  height: 0.25vw;
+}
+
 .billboard.block .main-row-layout > div:first-child,
 .billboard.block .main-row-layout > div:last-child {
   overflow: hidden;
