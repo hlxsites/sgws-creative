@@ -2,6 +2,10 @@
   padding-bottom: var(--layout-size-xxl);
 }
 
+.tabview {
+  --tabview-tab-background-color: #f2f2f2;
+}
+
 .tabview .tabs {
   display: flex;
   flex-flow: row nowrap;
@@ -12,7 +16,7 @@
   flex: 1;
   min-width: unset;
   height: 111px;
-  background-color: #f2f2f2;
+  background-color: var(--tabview-tab-background-color);
   padding: var(--layout-size-l);
   border: none;
   appearance: none;
@@ -39,6 +43,7 @@
 }
 
 .tabview [role="tabpanel"] {
+  --secondary-text-color-background: var(--text-color-background);
   --heading-font-size-px: calc(var(--heading-font-size) * 1px);
   --heading-font-size-min: calc(var(--heading-font-size) * 0.5);
   --heading-font-size-min-px: calc(var(--heading-font-size-min) * 1px);
@@ -67,6 +72,10 @@
   font-weight: var(--heading-font-weight);
 }
 
+.tabview [role="tabpanel"].active {
+  display: block;
+}
+
 .tabview [role="tabpanel"]  h2 {
   color: var(--secondary-color);
 }
@@ -77,8 +86,11 @@
   font-size: clamp(var(--body-font-size-min-px), var(--fluid-body-font-size-px), var(--body-font-size-px));
 }
 
-.tabview [role="tabpanel"].active {
-  display: block;
+.tabview [role="tabpanel"] h2.animate,
+.tabview [role="tabpanel"] h3.animate,
+.tabview [role="tabpanel"] p:not(.border).animate {
+  animation-delay: 0s;
+  animation-name: fade-in-right;
 }
 
 .tabview [role="tabpanel"]  .default-content-wrapper:first-child {
@@ -97,5 +109,17 @@
   text-transform: uppercase;
 }
 
+.tabview [role="tabpanel"]  .default-content-wrapper:first-child p {
+  flex: 1;
+}
+
+/* animations */
+@media (prefers-reduced-motion: no-preference) {
+  .tabview [role="tabpanel"] h2,
+  .tabview [role="tabpanel"] h3,
+  .tabview [role="tabpanel"] p:not(.border) {
+    opacity: 0;
+  }
+}
 
 

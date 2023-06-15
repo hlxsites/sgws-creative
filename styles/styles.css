@@ -23,13 +23,20 @@
 }
 
 :root {
+  /* static vars */
+  --static-color-white: #fff;
+  --static-color-black: #000;
+  --static-heading-font-family: var(--heading-font-family);
+  --static-body-font-family: var(--body-font-family);
+
   /* theme vars */
   --primary-color: #035fe6;
   --secondary-color: #136ff6;
   --neutral-color: #eee;
-  --background-color: #fff;
-  --text-color: #000;
-  --text-color-background: #fff;
+  --background-color: var(--static-color-white);
+  --text-color: var(--static-color-black);
+  --text-color-background: var(--static-color-white);
+  --secondary-text-color-background: var(--text-color-background);
   --heading-font-size: 2rem;
   --body-font-size: 1rem;
   --heading-font-family: 'Futura PT Bold-Normal', 'Futura PT Bold-Normal Fallback', sans-serif;
@@ -38,6 +45,7 @@
   --secondary-body-font-family: var(--body-font-family);
   --heading-font-weight: normal;
   --secondary-heading-font-weight: var(--heading-font-weight);
+
 
   /* fluid font sizing */
   --min-vw: 600;
@@ -224,6 +232,20 @@ a:any-link span.icon-arrow-small {
   text-align: right;
 }
 
+/* Default animations for presentation template */
+.presentation main .animate {
+  animation-delay: 0.5s;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+.presentation main h1.animate,
+.presentation main h2.animate,
+.presentation main h3.animate,
+.presentation main p:not(.border).animate {
+  animation-name: fade-in-bottom;
+}
+
 main img {
   max-width: 100%;
   width: auto;
@@ -390,6 +412,13 @@ main .section .outback .default-content-wrapper .border-1 {
 
 /* animations */
 @media (prefers-reduced-motion: no-preference) {
+  .presentation main .default-content-wrapper > h1,
+  .presentation main .default-content-wrapper > h2,
+  .presentation main .default-content-wrapper > h3,
+  .presentation main .default-content-wrapper > p:not(.border) {
+    opacity: 0;
+  }
+
   @keyframes fade-in {
     from {
       opacity: 0;

@@ -62,7 +62,7 @@ export default async function decorate(block) {
     // move footer content
     const mainFooter = mainFooterSection.querySelector('.block.footer');
     block.append(...mainFooter.childNodes);
-    mainFooter.remove();
+    mainFooterSection.remove();
   } else {
     // fetch footer content
     const parentPath = getParentPath(1);
@@ -146,17 +146,20 @@ export default async function decorate(block) {
   const observer = new IntersectionObserver((entries) => {
     // Loop over the entries
     entries.forEach((entry) => {
-      // If the element is visible
-      if (entry.isIntersecting) {
-        // Add the animation class
-        entry.target.classList.add('animate');
-      } else {
-        entry.target.classList.remove('animate');
-      }
-    }, { threshold: 0.1 });
+      const elements = entry.target.querySelectorAll('h2, p');
+      elements.forEach((el) => {
+        // If the element is visible
+        if (entry.isIntersecting) {
+          // Add the animation class
+          el.classList.add('animate');
+        } else {
+          el.classList.remove('animate');
+        }
+      });
+    });
   });
 
-  block.querySelectorAll('h2, p').forEach((element) => {
-    observer.observe(element);
-  });
+  if (block.firstElementChild) {
+    observer.observe(block.firstElementChild);
+  }
 }

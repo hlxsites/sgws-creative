@@ -18,7 +18,7 @@ footer {
 
 footer h2,
 footer p {
-  color: var(--text-color-background);
+  color: var(--static-color-white);
 }
 
 footer h2.animate,

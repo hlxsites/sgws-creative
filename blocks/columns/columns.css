@@ -1,6 +1,23 @@
-.columns-container.highlight .columns {
+.columns {
+  --stats-heading-text-color: var(--secondary-text-color-background);
+  --stats-body-text-color: var(--text-color-background);
+}
+
+.section.columns-container.highlight .columns {
   background-color: var(--background-color);
   color: var(--text-color);
+}
+
+.section.columns-container.highlight .columns h2 {
+  color: var(--text-color-highlight);
+}
+
+.section.columns-container .columns.stats h2 {
+  font-family: var(--static-body-font-family);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 2.465vw + 0.576rem, 2.375rem);
+  color: var(--stats-heading-text-color);
+  margin-bottom: 0;
 }
 
 .columns > div {
@@ -25,29 +42,84 @@
   margin-bottom: 0;
 }
 
+.columns > div > .columns-img-col img {
+  display: block;
+}
+
+.columns.inline-video > div {
+  position: relative;
+  height: 100%;
+  margin-top: 5%;
+}
+
 .columns.heading > div {
   gap: 15vw;
 }
 
-.columns > div > .columns-img-col img {
-  display: block;
+.columns.icon-list > div {
+  text-align: center;
+  gap: 0;
+  background-color: var(--background-color);
+  opacity: 0.95;
 }
 
 .columns.stats > div {
   display: flex;
   flex-direction: row;
-  height: 9rem;
+  background-color: var(--secondary-color);
   text-align: center;
-  justify-items: center;
-  align-items: center;
-  margin-top: -2.8%;
-  background-color: var(--stats-text-background-color);
-  background-size: cover;
-  background-position: center;
-  background-image: var(--stats-background-image);
+  padding: var(--layout-size-l);
 }
 
-.columns > div > div .video-group button {
+.columns.inline-video > div > div {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 30vw;
+}
+
+.columns.stats.border > div {
+  margin-top: -2.8%;
+  padding-top: 2.8%;
+}
+
+.columns.stats.background-image > div {
+  background-color: transparent;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.columns.stats.primary > div {
+  background-color: var(--primary-color);
+}
+
+.columns.stats.neutral > div {
+  background-color: var(--neutral-color);
+}
+
+.columns.stats.wide > div {
+  column-gap: 5px;
+  text-align: unset;
+  padding: unset;
+}
+
+.columns.stats > div p {
+  font-family: var(--static-body-font-family);
+  color: var(--stats-body-text-color);
+  margin-top: 0.5em;
+}
+
+.columns.inline-video > div > div:last-child {
+  margin-bottom: 10%;
+}
+
+.columns.inline-video > div > div .video-group {
+  position: relative;
+  height: 100%;
+}
+
+.columns.inline-video > div > div .video-group button {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -60,7 +132,7 @@
   height: 5vw;
 }
 
-.columns > div > div .video-group button::before {
+.columns.inline-video > div > div .video-group button::before {
   content: "";
   display: block;
   width: 0;
@@ -75,39 +147,17 @@
   margin: auto;
 }
 
-.columns > div > div .video-group button:hover::before {
+.columns.inline-video > div > div .video-group button:hover::before {
   border-color: transparent transparent transparent #fff;
 }
 
-.columns > div > div p video {
+.columns.inline-video > div > div p.video-group video {
   position: absolute;
   width: 100%;
+  top: 0;
   right: 0;
   bottom: 0;
   z-index: -1;
-}
-
-.columns > div > div p:has(video) {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 30vw;
-}
-
-.columns.button-full > div {
-  margin-top: 5%;
-}
-
-.columns.button-full > div > div p {
-  margin-bottom: 10%;
-}
-
-.columns.stats > div > div > h2 {
-  color: var(--stats-heading-text-color);
-}
-
-.columns.stats > div > div > p {
-  color: var(--stats-body-text-color);
 }
 
 /* ICONS: Text area */
@@ -117,22 +167,6 @@
   color: var(--secondary-color);
   font-size: 2vw;
   word-wrap: break-word;
-}
-
-.columns.icon-list > div {
-  text-align: center;
-  gap: 0;
-  background-color: var(--background-color);
-  opacity: 0.95;
-}
-
-.columns.stats.wide > div {
-  height: unset;
-  margin-top: unset;
-  display: flex;
-  flex-direction: row;
-  column-gap: 5px;
-  text-align: start;
 }
 
 .columns.icon-list > div > div:not(:last-child) {
@@ -152,29 +186,14 @@
   margin: 0 auto;
 }
 
-.columns-container.highlight .stats.wide {
-  background-color: transparent;
-}
-
 .columns.stats.wide > div > div {
-  height: 12rem;
   background-color: transparent;
-  background-image: linear-gradient(0deg, #0076C0 0%, #001E5B 100%);
-  padding: 3rem 3rem 0;
-  color: #fff;
-}
-
-.columns.stats.wide > div > div > p {
-  color: #fff;
+  background-image: linear-gradient(0deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  padding: 3rem 3rem 1rem;
 }
 
 .columns.heading > div > div:first-child {
   flex: unset;
-}
-
-.columns-container.highlight .columns h2,
-.columns-container.highlight .columns h3 {
-  color: var(--text-color-highlight);
 }
 
 .columns > div > .columns-img-col {
@@ -186,8 +205,11 @@
 }
 
 .columns.image-overlay > div > div:last-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   flex-grow: 1.5;
-  padding: 150px;
+  padding: var(--layout-size-xl) var(--layout-size-xxl);
 }
 
 .columns.image-overlay > div > div:first-child {
@@ -207,21 +229,20 @@
 .columns.image-overlay > div > div > p:first-child img {
   position: relative;
   max-width: 90%;
-  max-height: auto;
   left: 130px;
   top: -80px;
   z-index: 1;
 }
 
-.columns > div:nth-of-type(odd) > div:nth-of-type(even) {
+.columns.button-full > div:nth-of-type(odd) > div:nth-of-type(even) {
   flex-grow: 1.5;
 }
 
-.columns > div:nth-of-type(even) > div:nth-of-type(odd) {
+.columns.button-full > div:nth-of-type(even) > div:nth-of-type(odd) {
   flex-grow: 1.5;
 }
 
-.columns > div:nth-of-type(odd) > div p:has(.video-group) > .video-background {
+.columns.inline-video > div:nth-of-type(odd) .video-background {
   background-image: var(--background-color-highlight);
   position: absolute;
   top: -16%;
@@ -231,43 +252,7 @@
   height: 130%;
 }
 
-.columns
-  > div:nth-of-type(odd)
-  > div
-  p:has(.video-group)
-  > .video-background.animate {
-  animation-delay: 0.25s;
-  animation-duration: 1s;
-  animation-fill-mode: both;
-  animation-name: fade-in-right;
-}
-
-.columns > div:nth-of-type(even) .video-group.animate {
-  animation-delay: 0.5s;
-  animation-duration: 1s;
-  animation-fill-mode: both;
-  animation-name: fade-in-left;
-}
-
-.columns > div:nth-of-type(odd) > div .video-group.animate {
-  animation-delay: 0.5s;
-  animation-duration: 1s;
-  animation-fill-mode: both;
-  animation-name: fade-in-right;
-}
-
-.columns
-  > div:nth-of-type(even)
-  > div
-  p:has(.video-group)
-  > .video-background.animate {
-  animation-delay: 0.25s;
-  animation-duration: 1s;
-  animation-fill-mode: both;
-  animation-name: fade-in-left;
-}
-
-.columns > div:nth-of-type(even) > div p:has(.video-group) > .video-background {
+.columns.inline-video > div:nth-of-type(even) .video-background {
   background-image: linear-gradient(
     90deg,
     var(--secondary-color),
@@ -279,4 +264,27 @@
   z-index: -2;
   width: 100%;
   height: 130%;
+}
+
+.columns.inline-video > div .video-background.animate {
+  animation-delay: 0.25s;
+}
+
+.columns.inline-video > div:nth-of-type(odd) .video-group.animate,
+.columns.inline-video > div:nth-of-type(odd) .video-background.animate {
+  animation-name: fade-in-right;
+}
+
+.columns.inline-video > div:nth-of-type(even) .video-group.animate,
+.columns.inline-video > div:nth-of-type(even) .video-background.animate {
+  animation-name: fade-in-left;
+}
+
+/* animations */
+@media (prefers-reduced-motion: no-preference) {
+  .columns h2,
+  .columns h3,
+  .columns p {
+    opacity: 0;
+  }
 }
