@@ -42,7 +42,7 @@
   font-family: 'Allison'; /* TODO: make this a variable for theming */
   color: rgb(132, 26, 27);
   margin-bottom: -2rem;
-  margin-top: -1rem;
+  margin-top: 2rem;
 }
 
 .billboard.block .main-row-layout h4 {

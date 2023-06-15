@@ -17,11 +17,6 @@ export default function decorate(block) {
 
   const blockChildren = [...block.children];
   const bottomBackgroundImage = blockChildren[0].firstElementChild.firstElementChild;
-  let topBackgroundImage;
-  if(blockChildren.length === 5) {
-    topBackgroundImage = blockChildren[blockChildren.length-1];
-    topBackgroundImage.classList.add('backdrop-image');
-  }
   const logo = blockChildren[1];
   logo.classList.add('logo-row-layout');
   const mainContent = blockChildren[2];
@@ -29,20 +24,17 @@ export default function decorate(block) {
   const productContent = blockChildren[3];
   productContent.classList.add('products-row-layout');
 
-  console.log("~~~~~~~~~~~~~")
-  // tmp - makes it easier to style and debug
   block.innerHTML = '';
-  console.log("~~~~~~~~~~~~~")
-
   const backgroundStyleImage = bottomBackgroundImage.querySelector('img');
   block.style.backgroundImage = `url(${backgroundStyleImage.src})`;
-
   const contentHolder = document.createElement('div');
   contentHolder.classList.add('content-holder');
-
-  contentHolder.append(logo, mainContent, productContent);
-  if(topBackgroundImage)  {
-    contentHolder.append(topBackgroundImage);
+  if(blockChildren.length === 5)  {
+    const topBackgroundImage = blockChildren[blockChildren.length-1];
+    topBackgroundImage.classList.add('backdrop-image');
+    contentHolder.append(logo, mainContent, productContent, topBackgroundImage);
+  } else {
+    contentHolder.append(logo, mainContent, productContent);
   }
 
   block.append(contentHolder);
