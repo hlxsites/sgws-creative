@@ -74,9 +74,23 @@
 
 .billboard.block .products-row-layout>div:first-child img{
   border: 3px solid yellow;
+  max-height: 20vw;
+  min-height: 20vw;
 }
 
+
 .billboard.block .products-row-layout>div:last-child {
+  border: 3px solid purple;
+}
+
+.billboard.block .products-row-layout>div:last-child picture{
+  border: 3px solid blue;
+}
+
+.billboard.block .products-row-layout>div:last-child img{
+  border: 3px solid pink;
+  max-height: 20vw;
+  min-height: 20vw;
 }
 
 .billboard.block .products-row-layout img {
