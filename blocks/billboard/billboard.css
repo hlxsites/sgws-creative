@@ -112,8 +112,8 @@
 }
 
 .billboard.block .products-row-layout > div:nth-child(2) {
-  outline: 10px solid lightblue;
-  outline-offset: -20px;
+  outline: 0.25vw solid white;
+  outline-offset: -1vw;
   background-color: rgb(132, 26, 27);
 }
 
