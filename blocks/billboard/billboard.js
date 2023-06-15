@@ -20,6 +20,7 @@ export default function decorate(block) {
   let topBackgroundImage;
   if(blockChildren.length === 5) {
     topBackgroundImage = blockChildren[blockChildren.length-1];
+    topBackgroundImage.classList.add('backdrop-image');
   }
   const logo = blockChildren[1];
   logo.classList.add('logo-row-layout');
@@ -41,8 +42,7 @@ export default function decorate(block) {
 
   contentHolder.append(logo, mainContent, productContent);
   if(topBackgroundImage)  {
-    const productBackgroundImage = topBackgroundImage.querySelector('img');
-    productContent.style.backgroundImage = `url(${productBackgroundImage.src})`;
+    contentHolder.append(topBackgroundImage);
   }
 
   block.append(contentHolder);
