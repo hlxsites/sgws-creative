@@ -87,7 +87,10 @@
 
 .billboard.block .products-row-layout h5 {
   font-family: 'Neutraface Text Demi'; /* TODO: make this a variable for theming */
-  padding: 2em;
+  padding-top: 1vw;
+  padding-bottom: 1vw;
+  padding-left: 2vw;
+  padding-right: 2vw;
   line-height: 2.5vw;
   font-size: 1.5vw;
   letter-spacing: 0.1em;
