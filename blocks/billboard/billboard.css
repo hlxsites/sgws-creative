@@ -51,13 +51,12 @@
 }
 
 .billboard.block .main-row-layout > div:last-child {
-  display: unset;
-  text-align: right;
+  overflow: hidden;
+  position: relative;
 }
 
-.billboard.block .main-row-layout > div:first-child {
-  display: unset;
-  text-align: left;
+.billboard.block .main-row-layout > div:last-child img {
+  margin-left: 7vw;
 }
 
 .billboard.block .main-row-layout img {
@@ -83,20 +82,20 @@
   letter-spacing: 0.1em;
 }
 
-.billboard.block .products-row-layout>div {
+.billboard.block .products-row-layout > div {
   flex-grow: 1;
   flex-shrink: 1;
   flex-basis: 0;
   text-align: center;
 }
 
-.billboard.block .products-row-layout>div:first-child img{
+.billboard.block .products-row-layout > div:first-child img {
   max-height: 20vw;
   min-height: 20vw;
   margin-bottom: -1.5em;
 }
 
-.billboard.block .products-row-layout>div:last-child img{
+.billboard.block .products-row-layout > div:last-child img {
   max-height: 20vw;
   min-height: 20vw;
   margin-bottom: -1.5em;
@@ -107,7 +106,6 @@
   margin-top: 2rem;
 }
 
-/* bottom layer */
 .billboard.block .backdrop-image {
   z-index: 1;
   position: relative;
