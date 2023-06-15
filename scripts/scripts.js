@@ -49,13 +49,28 @@ export const animationObserver = new IntersectionObserver((entries) => {
 });
 
 /**
+ * Determine if we are serving content for the block-library, if so don't load the header or footer
+ * @returns {boolean} True if we are loading block library content
+ */
+export function isBlockLibrary() {
+  return window.location.pathname.includes('block-library');
+}
+
+/**
  * Create an HTML tag in one line of code
  * @param {string} tag Tag to create
  * @param {object} attributes Key/value object of attributes
  * @returns {HTMLElement} The created tag
  */
-export function createTag(tag, attributes) {
+export function createTag(tag, attributes, html = undefined) {
   const element = document.createElement(tag);
+  if (html) {
+    if (html instanceof HTMLElement || html instanceof SVGElement) {
+      element.append(html);
+    } else {
+      element.insertAdjacentHTML('beforeend', html);
+    }
+  }
   if (attributes) {
     Object.entries(attributes).forEach(([key, val]) => {
       element.setAttribute(key, val);
@@ -411,8 +426,10 @@ async function loadLazy(doc) {
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  // loadHeader(doc.querySelector('header'));
-  loadFooter(doc.querySelector('footer'));
+  if (!isBlockLibrary()) {
+    // loadHeader(doc.querySelector('header'));
+    loadFooter(doc.querySelector('footer'));
+  }
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   addFavIcon(`${window.hlx.codeBasePath}/styles/favicon-empty.ico`);
