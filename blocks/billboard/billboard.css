@@ -21,6 +21,26 @@
   flex-direction: row;
 }
 
+.billboard.block .main-row-layout > div:nth-child(2){
+  border: 3px solid red;
+  flex-grow: 2;
+}
+
+.billboard.block .main-row-layout h3 {
+  font-size: 8vw;
+  font-family: 'Allison'; /* TODO: make this a variable for theming */
+  color: rgb(132, 26, 27);
+  margin-bottom: -2rem;
+  margin-top: -1rem;
+}
+
+.billboard.block .main-row-layout h4 {
+  color: rgb(0, 0, 0);
+  font-family: 'Neutraface Text Book';
+  line-height: 2.5rem;
+  font-size: 1.75rem;
+}
+
 .billboard.block .main-row-layout > div {
   flex-grow: 1;
   flex-shrink: 1;
@@ -54,6 +74,16 @@
   overflow: hidden;
   z-index: 2;
   align-items: center;
+}
+
+.billboard.block .products-row-layout h5 {
+  background-color: rgb(132, 26, 27);
+  color: rgb(255, 255, 255);
+  font-family: 'Neutraface Text Demi';
+  padding: 2em;
+  line-height: 2.5rem;
+  font-size: 1.75rem;
+  letter-spacing: 0.1em;
 }
 
 .billboard.block .products-row-layout>div {
