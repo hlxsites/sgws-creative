@@ -1,5 +1,5 @@
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
-import { createTag } from '../../scripts/scripts.js';
+import { createTag, animationObserver } from '../../scripts/scripts.js';
 
 function getSelectedSlide(block) {
   return block.querySelector('.slide.active');
@@ -78,6 +78,9 @@ export default function decorate(block) {
     const slideContent = section?.querySelector('.default-content-wrapper');
     if (slideContent) {
       slideContent.append(navGroup);
+      animationObserver.observe(previousButton);
+      animationObserver.observe(nextButton);
+      animationObserver.observe(slideCount);
     }
   }
 }

@@ -1,6 +1,6 @@
 /* portfolio block */
 import { getMetadata, readBlockConfig, createOptimizedPicture } from '../../scripts/lib-franklin.js';
-import { createTag } from '../../scripts/scripts.js';
+import { createTag, animationObserver } from '../../scripts/scripts.js';
 
 export default async function decorate(block) {
   const portfolioConfig = readBlockConfig(block);
@@ -55,20 +55,7 @@ export default async function decorate(block) {
     block.append(grid);
   });
 
-  const observer = new IntersectionObserver((entries) => {
-    // Loop over the entries
-    entries.forEach((entry) => {
-      // If the element is visible
-      if (entry.isIntersecting) {
-        // Add the animation class
-        entry.target.classList.add('animate');
-      } else {
-        entry.target.classList.remove('animate');
-      }
-    }, { threshold: 0.1 });
-  });
-
-  block.closest('.portfolio-container').querySelectorAll('h2, h3').forEach((element) => {
-    observer.observe(element);
+  block.querySelectorAll('h3').forEach((element) => {
+    animationObserver.observe(element);
   });
 }

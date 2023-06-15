@@ -1,4 +1,4 @@
-import { createVideoTag, createTag } from '../../scripts/scripts.js';
+import { createVideoTag, createTag, animationObserver } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
   const cols = [...block.firstElementChild.children];
@@ -29,24 +29,13 @@ export default function decorate(block) {
         });
         const videoGroup = createTag('p', { class: 'video-group' });
         videoGroup.append(video, playButton);
-        videoP.append(videoGroup, background);
-        videoLink.remove();
+        col.append(videoGroup, background);
+        videoP.remove();
         posterP.remove();
+        block.classList.add('inline-video');
 
-        const observer = new IntersectionObserver((entries) => {
-          // Loop over the entries
-          entries.forEach((entry) => {
-            // If the element is visible
-            if (entry.isIntersecting) {
-              // Add the animation class
-              entry.target.classList.add('animate');
-            } else {
-              entry.target.classList.remove('animate');
-            }
-          }, { threshold: 0.1 });
-        });
-        observer.observe(videoGroup);
-        observer.observe(background);
+        animationObserver.observe(videoGroup);
+        animationObserver.observe(background);
       }
       const pic = col.querySelector('picture');
       if (pic) {

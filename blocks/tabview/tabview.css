@@ -72,6 +72,10 @@
   font-weight: var(--heading-font-weight);
 }
 
+.tabview [role="tabpanel"].active {
+  display: block;
+}
+
 .tabview [role="tabpanel"]  h2 {
   color: var(--secondary-color);
 }
@@ -82,8 +86,11 @@
   font-size: clamp(var(--body-font-size-min-px), var(--fluid-body-font-size-px), var(--body-font-size-px));
 }
 
-.tabview [role="tabpanel"].active {
-  display: block;
+.tabview [role="tabpanel"] h2.animate,
+.tabview [role="tabpanel"] h3.animate,
+.tabview [role="tabpanel"] p:not(.border).animate {
+  animation-delay: 0s;
+  animation-name: fade-in-right;
 }
 
 .tabview [role="tabpanel"]  .default-content-wrapper:first-child {
@@ -102,5 +109,13 @@
   text-transform: uppercase;
 }
 
+/* animations */
+@media (prefers-reduced-motion: no-preference) {
+  .tabview [role="tabpanel"] h2,
+  .tabview [role="tabpanel"] h3,
+  .tabview [role="tabpanel"] p:not(.border) {
+    opacity: 0;
+  }
+}
 
 

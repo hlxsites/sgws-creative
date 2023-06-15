@@ -8,6 +8,18 @@
   color: var(--text-color);
 }
 
+.section.columns-container.highlight .columns h2 {
+  color: var(--text-color-highlight);
+}
+
+.section.columns-container .columns.stats h2 {
+  font-family: var(--static-body-font-family);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 2.465vw + 0.576rem, 2.375rem);
+  color: var(--stats-heading-text-color);
+  margin-bottom: 0;
+}
+
 .columns > div {
   display: flex;
   flex-flow: row nowrap;
@@ -30,16 +42,18 @@
   margin-bottom: 0;
 }
 
-.columns > div:has(video) {
+.columns > div > .columns-img-col img {
+  display: block;
+}
+
+.columns.inline-video > div {
+  position: relative;
+  height: 100%;
   margin-top: 5%;
 }
 
 .columns.heading > div {
   gap: 15vw;
-}
-
-.columns > div > .columns-img-col img {
-  display: block;
 }
 
 .columns.icon-list > div {
@@ -55,6 +69,13 @@
   background-color: var(--secondary-color);
   text-align: center;
   padding: var(--layout-size-l);
+}
+
+.columns.inline-video > div > div {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 30vw;
 }
 
 .columns.stats.border > div {
@@ -83,32 +104,22 @@
   padding: unset;
 }
 
-.columns.stats > div h2 {
-  font-family: var(--static-body-font-family);
-  font-weight: 700;
-  font-size: clamp(1.5rem, 2.465vw + 0.576rem, 2.375rem);
-  color: var(--stats-heading-text-color);
-  margin-bottom: 0;
-}
-
-.columns > div > div p:has(video) {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 30vw;
-}
-
 .columns.stats > div p {
   font-family: var(--static-body-font-family);
   color: var(--stats-body-text-color);
   margin-top: 0.5em;
 }
 
-.columns > div > div p:has(video):last-child {
+.columns.inline-video > div > div:last-child {
   margin-bottom: 10%;
 }
 
-.columns > div > div .video-group button {
+.columns.inline-video > div > div .video-group {
+  position: relative;
+  height: 100%;
+}
+
+.columns.inline-video > div > div .video-group button {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -121,7 +132,7 @@
   height: 5vw;
 }
 
-.columns > div > div .video-group button::before {
+.columns.inline-video > div > div .video-group button::before {
   content: "";
   display: block;
   width: 0;
@@ -136,13 +147,14 @@
   margin: auto;
 }
 
-.columns > div > div .video-group button:hover::before {
+.columns.inline-video > div > div .video-group button:hover::before {
   border-color: transparent transparent transparent #fff;
 }
 
-.columns > div > div p video {
+.columns.inline-video > div > div p.video-group video {
   position: absolute;
   width: 100%;
+  top: 0;
   right: 0;
   bottom: 0;
   z-index: -1;
@@ -230,7 +242,7 @@
   flex-grow: 1.5;
 }
 
-.columns > div:nth-of-type(odd) > div p:has(.video-group) > .video-background {
+.columns.inline-video > div:nth-of-type(odd) .video-background {
   background-image: var(--background-color-highlight);
   position: absolute;
   top: -16%;
@@ -240,43 +252,7 @@
   height: 130%;
 }
 
-.columns
-  > div:nth-of-type(odd)
-  > div
-  p:has(.video-group)
-  > .video-background.animate {
-  animation-delay: 0.25s;
-  animation-duration: 1s;
-  animation-fill-mode: both;
-  animation-name: fade-in-right;
-}
-
-.columns > div:nth-of-type(even) .video-group.animate {
-  animation-delay: 0.5s;
-  animation-duration: 1s;
-  animation-fill-mode: both;
-  animation-name: fade-in-left;
-}
-
-.columns > div:nth-of-type(odd) > div .video-group.animate {
-  animation-delay: 0.5s;
-  animation-duration: 1s;
-  animation-fill-mode: both;
-  animation-name: fade-in-right;
-}
-
-.columns
-  > div:nth-of-type(even)
-  > div
-  p:has(.video-group)
-  > .video-background.animate {
-  animation-delay: 0.25s;
-  animation-duration: 1s;
-  animation-fill-mode: both;
-  animation-name: fade-in-left;
-}
-
-.columns > div:nth-of-type(even) > div p:has(.video-group) > .video-background {
+.columns.inline-video > div:nth-of-type(even) .video-background {
   background-image: linear-gradient(
     90deg,
     var(--secondary-color),
@@ -288,4 +264,27 @@
   z-index: -2;
   width: 100%;
   height: 130%;
+}
+
+.columns.inline-video > div .video-background.animate {
+  animation-delay: 0.25s;
+}
+
+.columns.inline-video > div:nth-of-type(odd) .video-group.animate,
+.columns.inline-video > div:nth-of-type(odd) .video-background.animate {
+  animation-name: fade-in-right;
+}
+
+.columns.inline-video > div:nth-of-type(even) .video-group.animate,
+.columns.inline-video > div:nth-of-type(even) .video-background.animate {
+  animation-name: fade-in-left;
+}
+
+/* animations */
+@media (prefers-reduced-motion: no-preference) {
+  .columns h2,
+  .columns h3,
+  .columns p {
+    opacity: 0;
+  }
 }
