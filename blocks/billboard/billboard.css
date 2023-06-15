@@ -39,15 +39,15 @@
 
 .billboard.block .main-row-layout h3 {
   font-size: 8vw;
-  font-family: 'Allison'; /* TODO: make this a variable for theming */
+  font-family: 'Allison'; /* TODO: Define how to add more fonts to theming */
   color: var(--secondary-color);
   margin-bottom: -2rem;
   margin-top: 2rem;
 }
 
 .billboard.block .main-row-layout h4 {
-  color: rgb(0, 0, 0);
-  font-family: 'Neutraface Text Book'; /* TODO: make this a variable for theming */
+  color: var(--primary-color);
+  font-family: 'Neutraface Text Book'; /* TODO: Define how to add more fonts to theming */
   line-height: 2.5vw;
   font-size: 1.5vw;
 }
@@ -86,7 +86,7 @@
 }
 
 .billboard.block .products-row-layout h5 {
-  font-family: 'Neutraface Text Demi'; /* TODO: make this a variable for theming */
+  font-family: 'Neutraface Text Demi'; /* TODO: Define how to add more fonts to theming */
   padding-top: 1vw;
   padding-bottom: 1vw;
   padding-left: 2vw;
@@ -94,7 +94,7 @@
   line-height: 2.5vw;
   font-size: 1.5vw;
   letter-spacing: 0.1em;
-  color: rgb(255, 255, 255);
+  color: var(--background-color);
 }
 
 .billboard.block .products-row-layout > div {
@@ -115,7 +115,7 @@
 }
 
 .billboard.block .products-row-layout > div:nth-child(2) {
-  outline: 0.25vw solid white;
+  outline: 0.25vw solid var(--background-color);
   outline-offset: -1vw;
   background-color: var(--secondary-color);
 }
