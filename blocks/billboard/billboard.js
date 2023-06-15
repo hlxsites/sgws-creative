@@ -1,4 +1,4 @@
-import { createTag } from '../../scripts/scripts.js';
+import { getTheme, hasTheme, createTag } from '../../scripts/scripts.js';
 
 /**
  * Structure:
@@ -33,6 +33,13 @@ export default function decorate(block) {
   } else {
     contentHolder.append(logo, mainContent, productContent);
   }
+
+  const themeName = [...document.querySelector('body').classList]
+    .find((className) => hasTheme(className));
+  const theme = getTheme(themeName);
+  theme.forEach(({ token, value }) => {
+    block.style.setProperty(`--${token}`, `${value}`);
+  });
 
   block.append(contentHolder);
 }

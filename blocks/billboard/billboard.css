@@ -40,7 +40,7 @@
 .billboard.block .main-row-layout h3 {
   font-size: 8vw;
   font-family: 'Allison'; /* TODO: make this a variable for theming */
-  color: rgb(132, 26, 27);
+  color: var(--secondary-color);
   margin-bottom: -2rem;
   margin-top: 2rem;
 }
@@ -117,7 +117,7 @@
 .billboard.block .products-row-layout > div:nth-child(2) {
   outline: 0.25vw solid white;
   outline-offset: -1vw;
-  background-color: rgb(132, 26, 27);
+  background-color: var(--secondary-color);
 }
 
 .billboard.block .products-row-layout > div:last-child img {
