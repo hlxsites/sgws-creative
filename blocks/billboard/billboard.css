@@ -106,7 +106,7 @@
 .billboard.block .logo-row-layout > div:first-child img,
 .billboard.block .logo-row-layout > div:last-child img {
   width: 100%;
-  height: 2vw;
+  aspect-ratio: 14;
 }
 
 .billboard.block .main-row-layout > div:nth-child(2){
