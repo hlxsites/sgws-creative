@@ -40,7 +40,7 @@
 .billboard.block .main-row-layout h4 {
   color: var(--primary-color);
   font-family: 'Neutraface Text Book', sans-serif; /* TODO: Define how to add more fonts to theming */
-  line-height: 2.5vw;
+  line-height: max(12px, 2.5vw);
   font-size: 1.5vw;
 }
 
@@ -60,7 +60,7 @@
   font-family: 'Neutraface Text Demi', sans-serif; /* TODO: Define how to add more fonts to theming */
   padding: 1vw 2vw;
   line-height: 2.5vw;
-  font-size: 1.5vw;
+  font-size: max(12px, 1.5vw);
   letter-spacing: 0.1em;
   color: var(--background-color);
 }
@@ -109,11 +109,11 @@
   width: 100%;
 }
 
-.billboard.block .main-row-layout > div:nth-child(2){
+.billboard.block .main-row-layout > div:nth-child(2) {
   flex-grow: 2;
 }
 
-.billboard.block .main-row-layout > div:nth-child(2) picture{
+.billboard.block .main-row-layout > div:nth-child(2) picture {
   display: flex;
   height: 0.25vw;
   margin-top: 0.5vw;
