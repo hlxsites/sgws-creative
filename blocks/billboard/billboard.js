@@ -27,6 +27,7 @@ export default function decorate(block) {
   /* background image for whole block */
   const bottomBackgroundImage = blockChildren[0].firstElementChild.firstElementChild;
   const backgroundStyleImage = bottomBackgroundImage.querySelector('img');
+  backgroundStyleImage.loading = 'eager';
   block.style.backgroundImage = `url(${backgroundStyleImage.src})`;
 
   const contentHolder = createTag('div', { class: 'content-holder' });
