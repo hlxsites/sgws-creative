@@ -23,13 +23,11 @@ export default function decorate(block) {
   const mainContent = blockChildren[2];
   const productContent = blockChildren[3];
 
-  block.innerHTML = '';
   /* background image for whole block */
   const bottomBackgroundImage = blockChildren[0].firstElementChild.firstElementChild;
   const backgroundStyleImage = bottomBackgroundImage.querySelector('img');
   block.style.backgroundImage = `url(${backgroundStyleImage.src})`;
-
-  const contentHolder = createTag('div', { class: 'content-holder' });
+  bottomBackgroundImage.remove();
 
   /* bottom background image */
   const topBackgroundImage = blockChildren[4];
@@ -40,6 +38,7 @@ export default function decorate(block) {
   mainContent.classList.add('main-row-layout');
   productContent.classList.add('products-row-layout');
 
+  const contentHolder = createTag('div', { class: 'content-holder' });
   contentHolder.append(logo, mainContent, productContent, topBackgroundImage);
   block.append(contentHolder);
 }
