@@ -57,7 +57,6 @@ export default async function decorate(block) {
   block.textContent = '';
 
   const mainFooterSection = document.querySelector('main .section.footer-container');
-
   if (mainFooterSection && !cfg.footer) {
     // move footer content
     const mainFooter = mainFooterSection.querySelector('.block.footer');
@@ -68,7 +67,6 @@ export default async function decorate(block) {
     const parentPath = getParentPath(1);
     const footerPath = cfg.footer || parentPath ? `/${parentPath}/footer` : '/footer';
     const footerFrag = await fetchFragment(footerPath, window.location.pathname.endsWith('/footer') ? { cache: 'reload' } : {});
-
     if (footerFrag) {
       decorateButtons(footerFrag);
       decorateIcons(footerFrag);
