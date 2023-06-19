@@ -54,7 +54,6 @@
 
 .billboard.block .main-row-layout img {
   max-width: 30vw;
-  max-height: auto;
 }
 
 .billboard.block .products-row-layout h5 {
@@ -137,6 +136,7 @@
   max-height: 20vw;
   min-height: 20vw;
   margin-bottom: -1.5em;
+  aspect-ratio: 0.348;
 }
 
 .billboard.block .products-row-layout > div:nth-child(2) {
