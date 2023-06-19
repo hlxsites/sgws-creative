@@ -1,17 +1,17 @@
 /* billboard css */
-.billboard.block[data-block-status="loaded"] .content-holder {
+.billboard.block .content-holder {
   display: flex;
   flex-direction: column;
 }
 
-.billboard.block[data-block-status="loaded"] .logo-row-layout {
+.billboard.block .logo-row-layout {
   padding-top: 3rem;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.billboard.block[data-block-status="loaded"] .main-row-layout {
+.billboard.block .main-row-layout {
   display: flex;
   flex-direction: row;
 }
