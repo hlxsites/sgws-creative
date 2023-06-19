@@ -1,22 +1,22 @@
 /* billboard css */
-.billboard.block .content-holder {
+.billboard.block[data-block-status="loaded"] .content-holder {
   display: flex;
   flex-direction: column;
 }
 
-.billboard.block .logo-row-layout {
+.billboard.block[data-block-status="loaded"] .logo-row-layout {
   padding-top: 3rem;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.billboard.block .main-row-layout {
+.billboard.block[data-block-status="loaded"] .main-row-layout {
   display: flex;
   flex-direction: row;
 }
 
-.billboard.block .products-row-layout {
+.billboard.block[data-block-status="loaded"] .products-row-layout {
   display: flex;
   flex-direction: row;
   overflow: hidden;
