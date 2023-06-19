@@ -14,12 +14,7 @@ import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
  */
 export default function decorate(block) {
   const blockChildren = [...block.children];
-  const logo = blockChildren[1];
-  logo.querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '650' }])));
-  const mainContent = blockChildren[2];
-  mainContent.querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '800' }])));
-  const productContent = blockChildren[3];
-  productContent.querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '190' }])));
+  blockChildren[3].querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '190' }])));
   const backgroundStyleImage = blockChildren[0].firstElementChild.querySelector('img');
 
   block.innerHTML = '';
@@ -30,12 +25,12 @@ export default function decorate(block) {
   topBackgroundImage.querySelector('img').loading = 'eager';
 
   topBackgroundImage.classList.add('backdrop-image');
-  logo.classList.add('logo-row-layout');
-  mainContent.classList.add('main-row-layout');
-  productContent.classList.add('products-row-layout');
+  blockChildren[1].classList.add('logo-row-layout');
+  blockChildren[2].classList.add('main-row-layout');
+  blockChildren[3].classList.add('products-row-layout');
 
   const contentHolder = createTag('div', { class: 'content-holder' });
-  contentHolder.append(logo, mainContent, productContent, topBackgroundImage);
+  contentHolder.append(blockChildren[1], blockChildren[2], blockChildren[3], topBackgroundImage);
   block.append(contentHolder);
 
   const themeName = [...block.closest('.section').classList].find((className) => hasTheme(className));
