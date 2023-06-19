@@ -22,5 +22,6 @@
   font-family: 'Neutraface Text Demi';
   font-style: normal;
   font-weight: 400;
+  font-display: swap;
   src: url('./fonts/neutraface-text-demi.woff') format('woff');
 }
