@@ -14,7 +14,6 @@ import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
  */
 export default function decorate(block) {
   const blockChildren = [...block.children];
-  blockChildren[3].querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '190' }])));
   const backgroundStyleImage = blockChildren[0].firstElementChild.querySelector('img');
 
   block.innerHTML = '';
@@ -30,6 +29,7 @@ export default function decorate(block) {
   blockChildren[3].classList.add('products-row-layout');
 
   const contentHolder = createTag('div', { class: 'content-holder' });
+  blockChildren[3].querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '190' }])));
   contentHolder.append(blockChildren[1], blockChildren[2], blockChildren[3], topBackgroundImage);
   block.append(contentHolder);
 
