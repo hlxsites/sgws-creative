@@ -19,7 +19,7 @@ export default function decorate(block) {
   const mainContent = blockChildren[2];
   // mainContent.querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '800' }])));
   const productContent = blockChildren[3];
-  // productContent.querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '190' }])));
+  productContent.querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '190' }])));
   const backgroundStyleImage = blockChildren[0].firstElementChild.querySelector('img');
 
   block.innerHTML = '';
