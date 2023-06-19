@@ -13,8 +13,7 @@ import { getTheme, hasTheme, createTag } from '../../scripts/scripts.js';
  */
 export default function decorate(block) {
   const themeName = [...block.closest('.section').classList].find((className) => hasTheme(className));
-  const theme = getTheme(themeName);
-  theme.forEach(({ token, value }) => {
+  getTheme(themeName).forEach(({ token, value }) => {
     block.style.setProperty(`--${token}`, `${value}`);
   });
 
