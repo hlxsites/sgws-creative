@@ -15,7 +15,7 @@ import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 export default function decorate(block) {
   const blockChildren = [...block.children];
   const logo = blockChildren[1];
-  logo.querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '650' }])));
+  logo.querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, true, [{ width: '650' }])));
   const mainContent = blockChildren[2];
   mainContent.querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '800' }])));
   const productContent = blockChildren[3];
