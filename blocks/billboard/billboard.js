@@ -24,6 +24,7 @@ export default function decorate(block) {
   const productContent = blockChildren[3];
 
   block.innerHTML = '';
+  /* background image for whole block */
   const bottomBackgroundImage = blockChildren[0].firstElementChild.firstElementChild;
   const backgroundStyleImage = bottomBackgroundImage.querySelector('img');
   block.style.backgroundImage = `url(${backgroundStyleImage.src})`;
@@ -33,8 +34,11 @@ export default function decorate(block) {
   mainContent.classList.add('main-row-layout');
   productContent.classList.add('products-row-layout');
   if (blockChildren.length === 5) {
+    /* bottom background image */
     const topBackgroundImage = blockChildren[4];
     topBackgroundImage.classList.add('backdrop-image');
+    const topBackgroundImageElement = topBackgroundImage.querySelector('img');
+    topBackgroundImageElement.loading='eager';
     contentHolder.append(logo, mainContent, productContent, topBackgroundImage);
   } else {
     contentHolder.append(logo, mainContent, productContent);
