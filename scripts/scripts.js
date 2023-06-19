@@ -155,7 +155,6 @@ async function loadTheme() {
       }
     }
   }
-
   if (configPath) {
     const resp = await fetch(`${configPath}`);
     if (resp?.ok) {
@@ -170,7 +169,6 @@ async function loadTheme() {
       theme = json || theme;
     }
   }
-
   // collect custom fonts
   const customFontConfigs = [];
   const sheets = theme[':names'] ? theme[':names'] : [''];
@@ -179,12 +177,10 @@ async function loadTheme() {
     const fonts = sheetData.filter(({ token }) => token === 'font').map(({ value }) => value);
     customFontConfigs.push(...fonts);
   });
-
   window.sgws = window.sgws || { config: {} };
   window.sgws.config.theme = Object.freeze({ ...theme });
   window.sgws.config.fonts = customFontConfigs;
 }
-
 async function loadFonts() {
   const allFonts = window.sgws.config.fonts;
   await Promise.allSettled(allFonts.map((fontConfig) => {
@@ -283,21 +279,17 @@ function buildVideoSection(main) {
   main.querySelectorAll(':scope > div').forEach((section) => {
     const sectionLink = section.querySelector(':scope > p > a');
     if (!sectionLink?.href?.endsWith('.mp4')) return;
-
     const sectionImages = section.querySelectorAll('picture');
-
     if (sectionImages.length === 2) {
       // background image and foreground video
       section.classList.add('highlight', 'background-image');
       section.textContent = '';
       const videoBlock = buildBlock('video', [[sectionImages[1], sectionLink]]);
-
       section.append(sectionImages[0].parentElement, videoBlock);
     } else {
       // background video, with images in foreground
       section.classList.add('background-video');
       const videoBlock = buildBlock('video', [[sectionImages[0], sectionLink]]);
-
       section.prepend(videoBlock);
       section.querySelectorAll(':scope > p').forEach((p) => !p.children.length && p.remove());
     }
@@ -420,9 +412,7 @@ export async function decorateFragment(fragment) {
 async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
-
   await loadTheme();
-
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
@@ -454,22 +444,16 @@ export function addFavIcon(href) {
 async function loadLazy(doc) {
   const main = doc.querySelector('main');
   await loadBlocks(main);
-
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
-
   if (!isBlockLibrary()) {
-    // loadHeader(doc.querySelector('header'));
     loadFooter(doc.querySelector('footer'));
   }
-
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   addFavIcon(`${window.hlx.codeBasePath}/styles/favicon-empty.ico`);
-
   // load additional fonts from theme
   await loadFonts();
-
   sampleRUM('lazy');
   sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
   sampleRUM.observe(main.querySelectorAll('picture > img'));
