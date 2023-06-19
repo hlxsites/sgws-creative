@@ -13,11 +13,9 @@ export default function decorate(block) {
   block.style.backgroundImage = `url(${backgroundStyleImage.src})`;
 
   /* bottom background image */
-  const topBackgroundImage = blockChildren[4];
-  topBackgroundImage.querySelector('img').loading = 'eager';
-  topBackgroundImage.classList.add('backdrop-image');
+  blockChildren[4].querySelector('img').loading = 'eager';
 
   const contentHolder = createTag('div', { class: 'content-holder' });
-  contentHolder.append(blockChildren[1], blockChildren[2], blockChildren[3], topBackgroundImage);
+  contentHolder.append(blockChildren[1], blockChildren[2], blockChildren[3], blockChildren[4]);
   block.append(contentHolder);
 }
