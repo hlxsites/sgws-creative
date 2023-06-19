@@ -54,6 +54,7 @@
 
 .billboard.block .main-row-layout img {
   max-width: 30vw;
+  max-height: auto;
 }
 
 .billboard.block .products-row-layout h5 {
