@@ -14,6 +14,7 @@ import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
  */
 export default function decorate(block) {
   const blockChildren = [...block.children];
+  /* block background image */
   const backgroundStyleImage = blockChildren[0].firstElementChild.querySelector('img');
 
   block.innerHTML = '';
