@@ -30,7 +30,13 @@ export default function decorate(block) {
   blockChildren[3].classList.add('products-row-layout');
 
   const contentHolder = createTag('div', { class: 'content-holder' });
-  blockChildren[3].querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '190' }])));
+  blockChildren[3].querySelectorAll('img').forEach((img) => 
+  {
+    img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '190' }]));
+    img.setAttribute('width', img.width);
+    img.setAttribute('height', img.height);
+    console.log(img)
+  });
   contentHolder.append(blockChildren[1], blockChildren[2], blockChildren[3], topBackgroundImage);
   block.append(contentHolder);
 

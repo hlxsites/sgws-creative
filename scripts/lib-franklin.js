@@ -532,7 +532,6 @@ export function createOptimizedPicture(src, alt = '', eager = false, breakpoints
       const img = document.createElement('img');
       img.setAttribute('loading', eager ? 'eager' : 'lazy');
       img.setAttribute('alt', alt);
-      img.setAttribute('width', `${br.width}`);
       picture.appendChild(img);
       img.setAttribute('src', `${pathname}?width=${br.width}&format=${ext}&optimize=medium`);
     }
