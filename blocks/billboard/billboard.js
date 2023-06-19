@@ -19,10 +19,13 @@ export default function decorate(block) {
   });
 
   const blockChildren = [...block.children];
+  const logo = blockChildren[1];
+  const mainContent = blockChildren[2];
+  const productContent = blockChildren[3];
+
   block.innerHTML = '';
 
-  const bottomBackgroundImage = blockChildren[0].firstElementChild.firstElementChild;
-  const backgroundStyleImage = bottomBackgroundImage.querySelector('img');
+  const backgroundStyleImage = blockChildren[0].firstElementChild.querySelector('img');
   block.style.backgroundImage = `url(${backgroundStyleImage.src})`;
 
   /* bottom background image */
@@ -30,11 +33,11 @@ export default function decorate(block) {
   topBackgroundImage.querySelector('img').loading = 'eager';
 
   topBackgroundImage.classList.add('backdrop-image');
-  blockChildren[1].classList.add('logo-row-layout');
-  blockChildren[2].classList.add('main-row-layout');
-  blockChildren[3].classList.add('products-row-layout');
+  logo.classList.add('logo-row-layout');
+  mainContent.classList.add('main-row-layout');
+  productContent.classList.add('products-row-layout');
 
   const contentHolder = createTag('div', { class: 'content-holder' });
-  contentHolder.append(blockChildren[1], blockChildren[2], blockChildren[3], topBackgroundImage);
+  contentHolder.append(logo, mainContent, productContent, topBackgroundImage);
   block.append(contentHolder);
 }
