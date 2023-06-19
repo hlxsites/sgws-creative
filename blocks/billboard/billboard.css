@@ -54,6 +54,7 @@
 
 .billboard.block .main-row-layout img {
   max-width: 30vw;
+  height: auto;
 }
 
 .billboard.block .products-row-layout h5 {
@@ -80,6 +81,7 @@
   position: relative;
   opacity: 0.50;
   width: 100%;
+  height: auto;
   bottom: 0;
 }
 
@@ -87,11 +89,13 @@
   position: absolute;
   object-fit: fill;
   width: 100%;
+  height: auto;
   margin-top: -18.5%;
 }
 
 .billboard.block .backdrop-image img {
   width: 100%;
+  height: auto;
 }
 
 .billboard.block .products-row-layout > div > picture+picture {
@@ -107,6 +111,7 @@
 .billboard.block .logo-row-layout > div:first-child img,
 .billboard.block .logo-row-layout > div:last-child img {
   width: 100%;
+  height: auto;
 }
 
 .billboard.block .main-row-layout > div:nth-child(2) {
