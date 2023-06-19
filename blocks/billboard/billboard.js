@@ -23,11 +23,10 @@ export default function decorate(block) {
   const mainContent = blockChildren[2];
   const productContent = blockChildren[3];
 
-  /* background image for whole block */
   const bottomBackgroundImage = blockChildren[0].firstElementChild.firstElementChild;
+  blockChildren[0].remove();
   const backgroundStyleImage = bottomBackgroundImage.querySelector('img');
   block.style.backgroundImage = `url(${backgroundStyleImage.src})`;
-  bottomBackgroundImage.remove();
 
   /* bottom background image */
   const topBackgroundImage = blockChildren[4];
