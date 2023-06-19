@@ -129,6 +129,7 @@
 
 .billboard.block .main-row-layout > div:last-child img {
   margin-left: 7vw;
+  aspect-ratio: 1.86;
 }
 
 .billboard.block .products-row-layout > div:last-child img,
