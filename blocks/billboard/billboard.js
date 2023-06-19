@@ -30,18 +30,17 @@ export default function decorate(block) {
   block.style.backgroundImage = `url(${backgroundStyleImage.src})`;
 
   const contentHolder = createTag('div', { class: 'content-holder' });
+
+  /* bottom background image */
+  const topBackgroundImage = blockChildren[4];
+  topBackgroundImage.classList.add('backdrop-image');
+  topBackgroundImage.querySelector('img').loading = 'eager';
+
   logo.classList.add('logo-row-layout');
   mainContent.classList.add('main-row-layout');
   productContent.classList.add('products-row-layout');
-  if (blockChildren.length === 5) {
-    /* bottom background image */
-    const topBackgroundImage = blockChildren[4];
-    topBackgroundImage.classList.add('backdrop-image');
-    topBackgroundImage.querySelector('img').loading='eager';
-    contentHolder.append(logo, mainContent, productContent, topBackgroundImage);
-  } else {
-    contentHolder.append(logo, mainContent, productContent);
-  }
+
+  contentHolder.append(logo, mainContent, productContent, topBackgroundImage);
 
   block.append(contentHolder);
 }
