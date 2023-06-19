@@ -15,8 +15,17 @@ import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 export default function decorate(block) {
   const blockChildren = [...block.children];
   const logo = blockChildren[1];
+  logo.querySelectorAll('img').forEach((img) =>
+    img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '650' }]))
+  );
   const mainContent = blockChildren[2];
+  mainContent.querySelectorAll('img').forEach((img) =>
+    img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '800' }]))
+  );
   const productContent = blockChildren[3];
+  productContent.querySelectorAll('img').forEach((img) =>
+    img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '190' }]))
+  );
 
   block.innerHTML = '';
 
@@ -33,12 +42,11 @@ export default function decorate(block) {
   productContent.classList.add('products-row-layout');
 
   const contentHolder = createTag('div', { class: 'content-holder' });
+  contentHolder.append(logo, mainContent, productContent, topBackgroundImage);
+  block.append(contentHolder);
 
   const themeName = [...block.closest('.section').classList].find((className) => hasTheme(className));
   getTheme(themeName).forEach(({ token, value }) => {
     block.style.setProperty(`--${token}`, `${value}`);
   });
-
-  contentHolder.append(logo, mainContent, productContent, topBackgroundImage);
-  block.append(contentHolder);
 }
