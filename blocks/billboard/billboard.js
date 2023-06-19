@@ -37,8 +37,7 @@ export default function decorate(block) {
     /* bottom background image */
     const topBackgroundImage = blockChildren[4];
     topBackgroundImage.classList.add('backdrop-image');
-    const topBackgroundImageElement = topBackgroundImage.querySelector('img');
-    topBackgroundImageElement.loading='eager';
+    topBackgroundImage.querySelector('img').loading='eager';
     contentHolder.append(logo, mainContent, productContent, topBackgroundImage);
   } else {
     contentHolder.append(logo, mainContent, productContent);

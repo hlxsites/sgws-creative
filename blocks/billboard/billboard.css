@@ -31,7 +31,7 @@
 
 .billboard.block .main-row-layout h3 {
   font-size: 8vw;
-  font-family: Allison, sans-serif; /* TODO: Define how to add more fonts to theming */
+  font-family: var(--primary-program-font-family);
   color: var(--secondary-color);
   margin-bottom: -2rem;
   margin-top: 2rem;
@@ -39,7 +39,7 @@
 
 .billboard.block .main-row-layout h4 {
   color: var(--primary-color);
-  font-family: 'Neutraface Text Book', sans-serif; /* TODO: Define how to add more fonts to theming */
+  font-family: var(--secondary-program-font-family);
   line-height: max(12px, 2.5vw);
   font-size: 1.5vw;
 }
@@ -57,7 +57,7 @@
 }
 
 .billboard.block .products-row-layout h5 {
-  font-family: 'Neutraface Text Demi', sans-serif; /* TODO: Define how to add more fonts to theming */
+  font-family: var(--tertiary-program-font-family);
   padding: 1vw 2vw;
   line-height: 2.5vw;
   font-size: max(12px, 1.5vw);
