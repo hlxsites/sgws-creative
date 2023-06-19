@@ -40,7 +40,7 @@
 .billboard.block .main-row-layout h4 {
   color: var(--primary-color);
   font-family: var(--secondary-program-font-family);
-  line-height: max(12px, 2.5vw);
+  line-height: 2.5vw;
   font-size: max(12px, 1.5vw);
 }
 
@@ -59,7 +59,7 @@
 .billboard.block .products-row-layout h5 {
   font-family: var(--tertiary-program-font-family);
   padding: 1vw 2vw;
-  line-height: max(12px, 2.5vw);
+  line-height: 2.5vw;
   font-size: max(12px, 1.5vw);
   letter-spacing: 0.1em;
   color: var(--background-color);
