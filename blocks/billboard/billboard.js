@@ -33,14 +33,13 @@ export default function decorate(block) {
 
   /* bottom background image */
   const topBackgroundImage = blockChildren[4];
-  topBackgroundImage.classList.add('backdrop-image');
   topBackgroundImage.querySelector('img').loading = 'eager';
 
+  topBackgroundImage.classList.add('backdrop-image');
   logo.classList.add('logo-row-layout');
   mainContent.classList.add('main-row-layout');
   productContent.classList.add('products-row-layout');
 
   contentHolder.append(logo, mainContent, productContent, topBackgroundImage);
-
   block.append(contentHolder);
 }
