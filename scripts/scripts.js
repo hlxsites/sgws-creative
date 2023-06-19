@@ -13,7 +13,7 @@ import {
   loadCSS,
 } from './lib-franklin.js';
 
-const LCP_BLOCKS = []; // add your LCP blocks to the list
+const LCP_BLOCKS = ['billboard']; // add your LCP blocks to the list
 
 export const THEME_TOKEN = Object.freeze({
   PRIMARY_COLOR: 'primary-color',
