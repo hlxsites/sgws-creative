@@ -60,6 +60,7 @@ export function isBlockLibrary() {
  * Create an HTML tag in one line of code
  * @param {string} tag Tag to create
  * @param {object} attributes Key/value object of attributes
+ * @param {Element} html html to append to tag
  * @returns {HTMLElement} The created tag
  */
 export function createTag(tag, attributes, html = undefined) {
@@ -239,6 +240,37 @@ export function getTheme(name = 'page') {
 }
 
 /**
+ * If appropriate (product page), add a "Back to home" arrow, centered vertically, against the
+ * left of the frame.
+ * @param main
+ */
+function buildBackToHome(main) {
+  const backToHome = document.body.querySelector('div.back-to-home');
+  const template = getMetadata('template');
+  if (template === 'product' && !backToHome) {
+    const homeElement = createTag('div', { class: 'back-to-home' });
+
+    let homeUrl = '/p/1';
+    const pIndex = document.location.href.indexOf('/p/');
+    if (pIndex >= 0) {
+      homeUrl = `${document.location.href.substr(0, pIndex + 3)}1`;
+    }
+
+    // add 'back to home' button
+    const homeButton = createTag('a', {
+      href: homeUrl,
+      'aria-label': 'Go home',
+      role: 'button',
+    });
+    homeButton.append(createIcon('arrow-left'));
+    homeElement.append(homeButton);
+
+    decorateIcons(homeElement);
+    main.append(homeElement);
+  }
+}
+
+/**
  * Builds hero block and prepends to main in a new section.
  * Rules for identifying hero block:
  * - first link is used in the hero, and is a video link
@@ -279,6 +311,7 @@ function buildVideoSection(main) {
 function buildAutoBlocks(main) {
   try {
     buildVideoSection(main);
+    buildBackToHome(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
