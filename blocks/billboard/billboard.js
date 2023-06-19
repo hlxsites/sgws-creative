@@ -1,4 +1,5 @@
 import { getTheme, hasTheme, createTag } from '../../scripts/scripts.js';
+import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 /**
  * Structure:
@@ -19,8 +20,17 @@ export default function decorate(block) {
 
   const blockChildren = [...block.children];
   const logo = blockChildren[1];
+  logo.querySelectorAll('img').forEach((img) =>
+    img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '700' }]))
+  );
   const mainContent = blockChildren[2];
+  mainContent.querySelectorAll('img').forEach((img) =>
+    img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '850' }]))
+  );
   const productContent = blockChildren[3];
+  productContent.querySelectorAll('img').forEach((img) =>
+    img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '250' }]))
+  );
 
   block.innerHTML = '';
 
