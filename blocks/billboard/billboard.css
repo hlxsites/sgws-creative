@@ -45,9 +45,9 @@
 }
 
 .billboard.block .main-row-layout > div {
+  display: flex;
   flex: 1 1 0;
   text-align: center;
-  display: flex;
   flex-direction: column;
   align-items: center;
 }
@@ -129,7 +129,6 @@
 
 .billboard.block .main-row-layout > div:last-child img {
   margin-left: 7vw;
-  aspect-ratio: 1.86;
 }
 
 .billboard.block .products-row-layout > div:last-child img,
@@ -137,7 +136,6 @@
   max-height: 20vw;
   min-height: 20vw;
   margin-bottom: -1.5em;
-  aspect-ratio: 0.348;
 }
 
 .billboard.block .products-row-layout > div:nth-child(2) {
