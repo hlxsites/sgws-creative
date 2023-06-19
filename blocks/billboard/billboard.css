@@ -102,6 +102,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 1vw;
+  margin-right: 1vw;
 }
 
 .billboard.block .content-holder > div:nth-child(1) > div:first-child img,
