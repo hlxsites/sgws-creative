@@ -1,5 +1,5 @@
 /* billboard css */
-.billboard.block[data-block-status="loaded"] .content-holder {
+.billboard.block .content-holder {
   display: flex;
   flex-direction: column;
 }
@@ -99,8 +99,9 @@
 }
 
 .billboard.block .logo-row-layout > div:nth-child(2) {
-  margin-left: 2vw;
-  margin-right: 2vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .billboard.block .logo-row-layout > div:first-child img,
