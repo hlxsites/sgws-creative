@@ -23,7 +23,10 @@ export default function decorate(block) {
         const videoP = videoLink?.closest('p');
         const posterP = videoP.previousElementSibling;
         const posterImage = posterP?.querySelector('img');
-        const video = createVideoTag(videoLink.href, posterImage?.src, {});
+        const attributes = {
+          preload: 'none',
+        };
+        const video = createVideoTag(videoLink.href, posterImage?.src, attributes);
         const playButton = createTag('button', { class: 'play-button', type: 'button', 'aria-label': 'Play Video' });
         const background = createTag('div', { class: 'video-background' });
         playButton.addEventListener('click', () => {
