@@ -1,4 +1,5 @@
 import { createTag } from '../../scripts/scripts.js';
+import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 export default function decorate(block) {
   // only one poster image (before or after the video link)
@@ -16,7 +17,11 @@ export default function decorate(block) {
   videoElement.autoplay = true;
   videoElement.loop = true;
   videoElement.playsinline = true;
-  videoElement.poster = image.src || '';
+  if(image.src){
+    videoElement.poster =createOptimizedPicture(image.src, image.alt, true, [{ width: window.innerWidth || '1400' }]);
+  }
+
+  console.log(image.src)
 
   videoDiv.appendChild(videoElement);
   block.append(videoDiv);
