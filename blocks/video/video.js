@@ -4,6 +4,8 @@ import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 export default function decorate(block) {
   // only one poster image (before or after the video link)
   const image = block.querySelector('img');
+  image.closest('picture').replaceWith(createOptimizedPicture(image.src, image.alt, true, [{ width: window.innerWidth || '1400' }]));
+  block.append(image.closest('picture'));
 
   // only one video link per block
   const videoLink = block.querySelector('a');
@@ -17,11 +19,14 @@ export default function decorate(block) {
   videoElement.autoplay = true;
   videoElement.loop = true;
   videoElement.playsinline = true;
-  if(image && image.src) {
-    videoElement.poster =createOptimizedPicture(image.src, image.alt, true, [{ width: window.innerWidth || '1400' }]);
+  if (image && image.src) {
+    videoElement.poster = image.src;
   }
 
   videoDiv.appendChild(videoElement);
+  videoElement.onloadeddata = () => {
+    image.remove();
+  };
   block.append(videoDiv);
 
   videoElement.play();
