@@ -1,17 +1,6 @@
 import { getTheme, hasTheme, createTag } from '../../scripts/scripts.js';
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
-/**
- * Structure:
- * Background images:
- * - First row (0) is the "deepest" background image
- * - Last row (4) is second deepest background image (optional)
- * *
- * Content:
- * - Second row (1) is logo + logo decorations left and right
- * - Third row (2) is the main text + optional decorations left and right
- * - Fourth row (3) is products left, products right and middle poster text (optional)
- */
 export default function decorate(block) {
   const blockChildren = [...block.children];
   /* block background image */
@@ -30,6 +19,7 @@ export default function decorate(block) {
   blockChildren[3].classList.add('products-row-layout');
 
   const contentHolder = createTag('div', { class: 'content-holder' });
+  blockChildren[2].querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ height: '150' }])));
   blockChildren[3].querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '190' }])));
   contentHolder.append(blockChildren[1], blockChildren[2], blockChildren[3], topBackgroundImage);
   block.append(contentHolder);

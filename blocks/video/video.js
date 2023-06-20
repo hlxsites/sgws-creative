@@ -17,11 +17,9 @@ export default function decorate(block) {
   videoElement.autoplay = true;
   videoElement.loop = true;
   videoElement.playsinline = true;
-  if(image.src){
+  if(image && image.src) {
     videoElement.poster =createOptimizedPicture(image.src, image.alt, true, [{ width: window.innerWidth || '1400' }]);
   }
-
-  console.log(image.src)
 
   videoDiv.appendChild(videoElement);
   block.append(videoDiv);
