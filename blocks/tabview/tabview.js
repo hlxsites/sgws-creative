@@ -7,7 +7,11 @@ async function loadTabPanel(panel) {
   if (!panel) {
     return;
   }
-  const contentPath = panel.getAttribute('data-path');
+
+  const dataPathContent = panel.getAttribute('data-path');
+  const dataPaths = dataPathContent.split(',');
+
+  let contentPath = dataPaths[0];
   let fragment = await fetchFragment(contentPath);
   fragment = await decorateFragment(fragment);
   if (fragment) {
@@ -26,6 +30,10 @@ async function loadTabPanel(panel) {
       panel.style.setProperty(`--${token}`, `${value}`);
       tabButton?.style.setProperty(`--${token}`, `${value}`);
     });
+  }
+
+  if(dataPaths.length > 1) {
+    console.log("There is a program fragment to load...")
   }
 }
 
@@ -63,14 +71,21 @@ export default async function decorate(block) {
       });
     });
 
-    const anchor = tabContent.querySelector('a');
+    const anchors = tabContent.querySelectorAll('a');
+    const anchor = anchors[0];
+
     const contentPath = anchor?.getAttribute('href');
     tabContent.textContent = '';
     tabContent.removeAttribute('class');
     tabContent.setAttribute('id', `tabpanel-${groupId}`);
     tabContent.setAttribute('role', 'tabpanel');
     tabContent.setAttribute('aria-labelledby', `tab=${groupId}`);
-    tabContent.setAttribute('data-path', contentPath || '');
+    if (anchors.length > 1) {
+      const dataPath = `${contentPath || ''},${anchors[1].getAttribute('href') || ''}`;
+      tabContent.setAttribute('data-path', dataPath);
+    } else {
+      tabContent.setAttribute('data-path', contentPath || '');
+    }
 
     tabList.append(tabButton);
     block.append(tabContent);
