@@ -4,8 +4,9 @@ import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 export default function decorate(block) {
   // only one poster image (before or after the video link)
   const image = block.querySelector('img');
-  image.closest('picture').replaceWith(createOptimizedPicture(image.src, image.alt, true, [{ width: window.innerWidth || '1400' }]));
-  block.append(image.closest('picture'));
+  const imagePicture = image.closest('picture');
+  imagePicture.replaceWith(createOptimizedPicture(image.src, image.alt, true, [{ width: window.innerWidth || '1400' }]));
+  block.append(imagePicture);
 
   // only one video link per block
   const videoLink = block.querySelector('a');
