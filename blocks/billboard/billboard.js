@@ -31,7 +31,7 @@ export default function decorate(block) {
 
   const contentHolder = createTag('div', { class: 'content-holder' });
   blockChildren[3].querySelectorAll('img').forEach((img) => {
-    img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, true, [{ width: '190' }]));
+    img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '190' }]));
   });
   contentHolder.append(blockChildren[1], blockChildren[2], blockChildren[3], topBackgroundImage);
   block.append(contentHolder);
