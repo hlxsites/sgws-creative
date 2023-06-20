@@ -51,6 +51,7 @@ export default function decorate(block) {
     /* Set up 'pairs with' view, if there are two headers provided. */
     const headers = slide.querySelectorAll('h3');
     if (headers.length === 2) {
+      slide.classList.add('hide-pairing');
       const middleDiv = slide.querySelectorAll('div')[1];
       const mainHeader = middleDiv.querySelector('h3');
       if (mainHeader) {
@@ -64,7 +65,8 @@ export default function decorate(block) {
 
         const pairedButton = toggle.querySelector('button');
         pairedButton.addEventListener('click', () => {
-          slide.classList.toggle('pairs');
+          slide.classList.toggle('hide-pairing');
+          slide.classList.toggle('show-pairing');
         });
       }
 
@@ -81,7 +83,7 @@ export default function decorate(block) {
       pairsWith.append(pairsImages);
 
       const pairsText = createTag('div', { class: 'pairs-with-text animate' });
-      const header1 = createTag('h3', { class: 'animate' });
+      const header1 = createTag('h3', {});
       header1.innerText = 'A PERFECT PAIRING:';
       headers[1].innerText = `${headers[0].innerText} + ${headers[1].innerText}`;
       pairsText.append(header1);
@@ -97,7 +99,8 @@ export default function decorate(block) {
               </button>`;
       const closeButton = closePairsView.querySelector('button');
       closeButton.addEventListener('click', () => {
-        slide.classList.toggle('pairs');
+        slide.classList.toggle('hide-pairing');
+        slide.classList.toggle('show-pairing');
       });
       pairsWith.append(closePairsView);
 
