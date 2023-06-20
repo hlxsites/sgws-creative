@@ -121,10 +121,18 @@
   margin-top: 0.5vw;
 }
 
-.billboard.block .main-row-layout > div:first-child,
+.billboard.block .main-row-layout > div:first-child {
+  overflow: hidden;
+  position: relative;
+  animation-name: fade-in-left;
+  animation-duration: 2s;
+}
+
 .billboard.block .main-row-layout > div:last-child {
   overflow: hidden;
   position: relative;
+  animation-name: fade-in-right;
+  animation-duration: 2s;
 }
 
 .billboard.block .main-row-layout > div:last-child img {
@@ -136,6 +144,29 @@
   max-height: 20vw;
   min-height: 20vw;
   margin-bottom: -1.5em;
+}
+
+.billboard.block .products-row-layout > div:first-child > picture:first-child img {
+  animation-name: fade-in-bottom;
+  animation-duration: 2.5s;
+}
+
+.billboard.block .products-row-layout > div:first-child > picture:last-child img {
+  animation-name: fade-in-bottom;
+  animation-duration: 2s;
+  animation-delay: 300ms;
+}
+
+.billboard.block .products-row-layout > div:last-child > picture:first-child img {
+  animation-name: fade-in-bottom;
+  animation-duration: 2s;
+  animation-delay: 600ms;
+}
+
+.billboard.block .products-row-layout > div:last-child > picture:last-child img {
+  animation-name: fade-in-bottom;
+  animation-duration: 2s;
+  animation-delay: 900ms;
 }
 
 .billboard.block .products-row-layout > div:nth-child(2) {
