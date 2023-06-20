@@ -232,8 +232,8 @@ footer .sources ol > li::marker {
 }
 
 .footer .footer-content > div > div:first-child p.picture img {
-  width: 75px;
-  height: 75px;
+  height: 65px;
+  width: auto;
 }
 
 .footer .footer-content > div > div:last-child p.picture {

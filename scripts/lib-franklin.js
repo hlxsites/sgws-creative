@@ -536,7 +536,6 @@ export function createOptimizedPicture(src, alt = '', eager = false, breakpoints
       img.setAttribute('src', `${pathname}?width=${br.width}&format=${ext}&optimize=medium`);
     }
   });
-
   return picture;
 }
 
@@ -722,11 +721,9 @@ function init() {
   sampleRUM('top');
 
   window.addEventListener('load', () => sampleRUM('load'));
-
   window.addEventListener('unhandledrejection', (event) => {
     sampleRUM('error', { source: event.reason.sourceURL, target: event.reason.line });
   });
-
   window.addEventListener('error', (event) => {
     sampleRUM('error', { source: event.filename, target: event.lineno });
   });

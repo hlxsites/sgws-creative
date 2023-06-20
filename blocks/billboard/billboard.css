@@ -1,0 +1,176 @@
+/* billboard css */
+.billboard.block[data-block-status="loaded"] .content-holder {
+  display: flex;
+  flex-direction: column;
+}
+
+.billboard.block[data-block-status="loaded"] .logo-row-layout {
+  padding-top: 3rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.billboard.block[data-block-status="loaded"] .main-row-layout {
+  display: flex;
+  flex-direction: row;
+}
+
+.billboard.block[data-block-status="loaded"] .products-row-layout {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  z-index: 2;
+  align-items: center;
+  margin-top: -4vw;
+}
+
+.billboard.block .logo-row-layout > div {
+  flex: 1 1 0;
+}
+
+.billboard.block .main-row-layout h3 {
+  font-size: 8vw;
+  font-family: var(--primary-program-font-family);
+  color: var(--secondary-color);
+  margin-bottom: -2rem;
+  margin-top: 2rem;
+}
+
+.billboard.block .main-row-layout h4 {
+  color: var(--primary-color);
+  font-family: var(--secondary-program-font-family);
+  line-height: 2.5vw;
+  font-size: max(12px, 1.5vw);
+}
+
+.billboard.block .main-row-layout > div {
+  display: flex;
+  flex: 1 1 0;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.billboard.block .main-row-layout img {
+  max-width: 30vw;
+}
+
+.billboard.block .products-row-layout h5 {
+  font-family: var(--tertiary-program-font-family);
+  padding: 1vw 2vw;
+  line-height: 2.5vw;
+  font-size: max(12px, 1.5vw);
+  letter-spacing: 0.1em;
+  color: var(--background-color);
+}
+
+.billboard.block .products-row-layout > div {
+  flex: 1 1 0;
+  text-align: center;
+}
+
+.billboard.block .products-row-layout img {
+  max-height: 20vh;
+  margin-top: 2rem;
+}
+
+.billboard.block .backdrop-image {
+  z-index: 1;
+  position: relative;
+  opacity: 0.50;
+  width: 100%;
+  bottom: 0;
+}
+
+.billboard.block .backdrop-image picture {
+  position: absolute;
+  object-fit: fill;
+  width: 100%;
+  margin-top: -18.5%;
+}
+
+.billboard.block .backdrop-image img {
+  width: 100%;
+}
+
+.billboard.block .products-row-layout > div > picture+picture {
+  margin-left: 2vw;
+}
+
+.billboard.block .logo-row-layout > div:nth-child(2) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1vw;
+  margin-right: 1vw;
+}
+
+.billboard.block .logo-row-layout > div:first-child img,
+.billboard.block .logo-row-layout > div:last-child img {
+  width: 100%;
+}
+
+.billboard.block .main-row-layout > div:nth-child(2) {
+  flex-grow: 2;
+}
+
+.billboard.block .main-row-layout > div:nth-child(2) picture {
+  display: flex;
+  height: 0.25vw;
+  margin-top: 0.5vw;
+}
+
+.billboard.block .main-row-layout > div:first-child {
+  overflow: hidden;
+  position: relative;
+  animation-name: fade-in-left;
+  animation-duration: 2s;
+}
+
+.billboard.block .main-row-layout > div:last-child {
+  overflow: hidden;
+  position: relative;
+  animation-name: fade-in-right;
+  animation-duration: 2s;
+}
+
+.billboard.block .main-row-layout > div:last-child img {
+  margin-left: 9vw;
+}
+
+.billboard.block .products-row-layout > div:last-child img,
+.billboard.block .products-row-layout > div:first-child img {
+  max-height: 20vw;
+  min-height: 20vw;
+  margin-bottom: -1.5em;
+}
+
+.billboard.block .products-row-layout > div:first-child > picture:first-child img {
+  animation-name: fade-in-bottom;
+  animation-duration: 2.5s;
+}
+
+.billboard.block .products-row-layout > div:first-child > picture:last-child img {
+  animation-name: fade-in-bottom;
+  animation-duration: 2s;
+  animation-delay: 300ms;
+}
+
+.billboard.block .products-row-layout > div:last-child > picture:first-child img {
+  animation-name: fade-in-bottom;
+  animation-duration: 2s;
+  animation-delay: 600ms;
+}
+
+.billboard.block .products-row-layout > div:last-child > picture:last-child img {
+  animation-name: fade-in-bottom;
+  animation-duration: 2s;
+  animation-delay: 900ms;
+}
+
+.billboard.block .products-row-layout > div:nth-child(2) {
+  outline: 0.25vw solid var(--background-color);
+  outline-offset: -1vw;
+  background-color: var(--secondary-color);
+}
