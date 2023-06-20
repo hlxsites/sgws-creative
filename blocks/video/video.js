@@ -24,7 +24,7 @@ export default function decorate(block) {
   }
 
   videoDiv.appendChild(videoElement);
-  videoElement.addEventListener("loadeddata", () => {
+  videoElement.addEventListener('loadeddata', () => {
     image.remove();
   });
   videoElement.play();
