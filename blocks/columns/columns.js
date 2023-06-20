@@ -1,6 +1,12 @@
 import { createVideoTag, createTag, animationObserver } from '../../scripts/scripts.js';
+import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 export default function decorate(block) {
+  const images = block.querySelectorAll('img');
+  [...images].forEach((image) => {
+    image.closest('picture').replaceWith(createOptimizedPicture(image.src, image.alt, false, [{ width: Math.ceil(window.innerWidth / 1.80) }]));
+  });
+
   const cols = [...block.firstElementChild.children];
   block.classList.add(`columns-${cols.length}-cols`);
 
@@ -16,10 +22,8 @@ export default function decorate(block) {
       if (videoLink?.href?.endsWith('.mp4')) {
         const videoP = videoLink?.closest('p');
         const posterP = videoP.previousElementSibling;
-        const attributes = {
-          preload: 'auto',
-        };
-        const video = createVideoTag(videoLink.href, posterP?.querySelector('img')?.src, attributes);
+        const posterImage = posterP?.querySelector('img');
+        const video = createVideoTag(videoLink.href, posterImage?.src, {});
         const playButton = createTag('button', { class: 'play-button', type: 'button', 'aria-label': 'Play Video' });
         const background = createTag('div', { class: 'video-background' });
         playButton.addEventListener('click', () => {
