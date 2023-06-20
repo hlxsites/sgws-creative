@@ -5,7 +5,6 @@ export default function decorate(block) {
   const blockChildren = [...block.children];
   /* block background image */
   const backgroundStyleImage = blockChildren[0].firstElementChild.querySelector('img');
-  backgroundStyleImage.loading = 'eager';
 
   block.innerHTML = '';
   block.style.backgroundImage = `url(${backgroundStyleImage.src})`;
