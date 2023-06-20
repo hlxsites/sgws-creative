@@ -8,9 +8,7 @@ async function loadTabPanel(panel) {
     return;
   }
 
-  const dataPathContent = panel.getAttribute('data-path');
-  const dataPaths = dataPathContent.split(',');
-
+  const dataPaths = panel.getAttribute('data-path').split(',');
   let contentPath = dataPaths[0];
   let fragment = await fetchFragment(contentPath);
   fragment = await decorateFragment(fragment);
@@ -34,7 +32,30 @@ async function loadTabPanel(panel) {
 
   if(dataPaths.length > 1) {
     console.log("There is a program fragment to load...")
+    
+    const programButton = document.createElement('div');
+    programButton.classList.add('clickable-program-overlay');
+    const programButtonText = document.createElement('div');
+    programButtonText.textContent = 'Click here for suggested programs';
+    const slidesElement = panel.querySelector('.slides-wrapper');
+    const slidesElementParent = slidesElement.parentNode;
+    programButton.append(programButtonText);
+    slidesElementParent.insertBefore(programButton, slidesElement);
   }
+}
+
+function placeProgramOverlay(block) {
+  const slidesElement = block.querySelector('.slides-wrapper');
+  const slidesWrapper = window.getComputedStyle(slidesElement);
+  const borderWrapper = window.getComputedStyle(slidesElement.nextSibling);
+  const programTriangle = block.querySelector('.clickable-program-overlay');
+  const programTriangleStyles = window.getComputedStyle(programTriangle);
+
+  const marginTopTriangle = parseFloat(slidesWrapper.height)
+    + parseFloat(borderWrapper.height) / 2
+    - parseFloat(programTriangleStyles.height);
+
+  programTriangle.style.marginTop = `${marginTopTriangle}px`;
 }
 
 export default async function decorate(block) {
@@ -104,4 +125,15 @@ export default async function decorate(block) {
       loadTabPanel(tabPanel);
     }
   });
+
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      placeProgramOverlay(block);
+    }, 150);
+  });
+  setTimeout(() => {
+    placeProgramOverlay(block);
+  }, 0);
 }
