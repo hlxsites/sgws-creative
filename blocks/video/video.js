@@ -1,6 +1,23 @@
 import { createTag } from '../../scripts/scripts.js';
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
+function observeVideo(block, videoElement, rootMargin){
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        videoElement.play();
+      } else {
+        videoElement.pause();
+      }
+    });
+  }, {
+    root: null,
+    rootMargin: rootMargin,
+    threshold: 0.1,
+  });
+  observer.observe(block);
+}
+
 export default function decorate(block) {
   // only one poster image (before or after the video link)
   const image = block.querySelector('img');
@@ -29,6 +46,13 @@ export default function decorate(block) {
   videoElement.addEventListener('loadeddata', () => {
     imagePicture.remove();
   });
-  videoElement.play();
+
   block.append(videoDiv);
+  if (!block.closest('.section').classList.contains('background-video')) {
+    observeVideo(block, videoElement, '0px');
+  } else {
+    videoElement.addEventListener("loadedmetadata", function (e) {
+      observeVideo(block, videoElement, `${videoElement.videoHeight}px`);
+    }, true);
+  }
 }
