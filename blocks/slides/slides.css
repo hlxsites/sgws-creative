@@ -82,7 +82,6 @@
 
 /* Pairs With View */
 .slides .slide .toggle-pairs-with {
-  background-color: var(--primary-color);
   display: inline-block;
   height: 43px;
   position: relative;
@@ -91,6 +90,7 @@
 }
 
 .slides .slide .toggle-pairs-with > * {
+  background-color: var(--primary-color);
   padding: 0;
   height: 43px;
   width: 43px;
