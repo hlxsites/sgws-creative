@@ -83,7 +83,7 @@ export default function decorate(block) {
       pairsWith.append(pairsImages);
 
       const pairsText = createTag('div', { class: 'pairs-with-text animate' });
-      const header1 = createTag('h3', {});
+      const header1 = createTag('h3', { class: 'animate' });
       header1.innerText = 'A PERFECT PAIRING:';
       headers[1].innerText = `${headers[0].innerText} + ${headers[1].innerText}`;
       pairsText.append(header1);
