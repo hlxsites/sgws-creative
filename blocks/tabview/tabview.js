@@ -41,7 +41,7 @@ async function loadTabPanel(panel) {
     slidesElementParent.insertBefore(programButton, slidesElement.nextSibling);
 
     programButton.addEventListener('click', async () => {
-      // console.log('Show program ', dataPaths);
+      console.log('Show program ', dataPaths);
     });
   }
 }
