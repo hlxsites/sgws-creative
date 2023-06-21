@@ -42,6 +42,10 @@ async function loadTabPanel(panel) {
 
     programButton.addEventListener('click', async () => {
       console.log('Show program ', dataPaths);
+      console.log(slidesElement.previousSibling)
+      slidesElement.classList.add('hidden');
+      programButton.classList.add('hidden');
+      slidesElement.previousSibling.classList.add('hidden');
     });
   }
 }

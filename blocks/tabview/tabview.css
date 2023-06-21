@@ -149,6 +149,11 @@
   flex: 1;
 }
 
+/* show/hide parts of the UI */
+.tabview .hidden {
+  display: none !important;
+}
+
 /* animations */
 @media (prefers-reduced-motion: no-preference) {
   .tabview [role="tabpanel"] h2,
