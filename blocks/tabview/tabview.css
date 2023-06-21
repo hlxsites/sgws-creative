@@ -129,23 +129,25 @@
   animation-name: fade-in-right;
 }
 
-.tabview [role="tabpanel"]  .default-content-wrapper:first-child {
+.tabview [role="tabpanel"] .default-content-wrapper.program-content,
+.tabview [role="tabpanel"] .default-content-wrapper:first-child
+{
   display: flex;
   flex-flow: row nowrap;
   gap: var(--layout-size-l);
   padding: var(--layout-size-l) 50px;
 }
 
-.tabview [role="tabpanel"]  .default-content-wrapper:first-child h2,
-.tabview [role="tabpanel"]  .default-content-wrapper:first-child p {
+.tabview [role="tabpanel"] .default-content-wrapper:first-child h2,
+.tabview [role="tabpanel"] .default-content-wrapper:first-child p {
   margin: 0;
 }
 
-.tabview [role="tabpanel"]  .default-content-wrapper:first-child h2 {
+.tabview [role="tabpanel"] .default-content-wrapper:first-child h2 {
   text-transform: uppercase;
 }
 
-.tabview [role="tabpanel"]  .default-content-wrapper:first-child p {
+.tabview [role="tabpanel"] .default-content-wrapper:first-child p {
   flex: 1;
 }
 

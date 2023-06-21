@@ -54,7 +54,11 @@ async function loadTabPanel(panel) {
       fragment = await decorateFragment(fragment);
       if (fragment) {
         const fragmentSection = fragment.querySelector(':scope .section');
-        panel.append(...fragmentSection.children, programButton.nextSibling);
+        const programFragmentElements = [...fragmentSection.children];
+        programFragmentElements.forEach((child) => {
+          child.classList.add('program-content');
+        });
+        panel.append(...programFragmentElements, programButton.nextSibling);
       }
     });
   }
