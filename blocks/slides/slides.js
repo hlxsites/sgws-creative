@@ -46,7 +46,7 @@ export default function decorate(block) {
       const slideContent = slide.querySelector('a');
       const slideContentPath = slideContent.getAttribute('href');
       console.log("Fragment path:", slideContentPath);
-      slideContent.remove();
+      slideContent.closest('div').remove();
     } else {
       // "Standard slide": create avatar container
       const avatar = createTag('div', { class: 'avatar' });
