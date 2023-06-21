@@ -31,8 +31,6 @@ async function loadTabPanel(panel) {
   }
 
   if(dataPaths.length > 1) {
-    console.log("There is a program fragment to load...")
-    
     const programButton = document.createElement('div');
     programButton.classList.add('clickable-program-overlay');
     const programButtonText = document.createElement('div');
@@ -41,6 +39,10 @@ async function loadTabPanel(panel) {
     const slidesElementParent = slidesElement.parentNode;
     programButton.append(programButtonText);
     slidesElementParent.insertBefore(programButton, slidesElement.nextSibling);
+
+    programButton.addEventListener('click', async () => {
+      console.log("There is a program fragment to load...");
+    });
   }
 }
 
