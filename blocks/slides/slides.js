@@ -1,5 +1,7 @@
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
-import { createTag, fetchFragment, decorateFragment, animationObserver } from '../../scripts/scripts.js';
+import {
+  createTag, fetchFragment, decorateFragment, animationObserver,
+} from '../../scripts/scripts.js';
 
 function getSelectedSlide(block) {
   return block.querySelector('.slide.active');
@@ -28,7 +30,7 @@ function moveSlide(block, direction, count) {
   count.textContent = `${getSlidePosition(selectedSlide)} of ${block.children.length}`;
 }
 
-async function buildProgramFragmentSlide(slide, slideContentPath){
+async function buildProgramFragmentSlide(slide, slideContentPath) {
   let fragment = await fetchFragment(slideContentPath);
   fragment = await decorateFragment(fragment);
   if (fragment) {
@@ -50,7 +52,7 @@ export default async function decorate(block) {
       slide.classList.add('active');
     }
 
-    if(isProgram) {
+    if (isProgram) {
       // Program slides (fragments)
       const slideContent = slide.querySelector('a');
       const slideContentPath = slideContent.getAttribute('href');
