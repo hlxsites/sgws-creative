@@ -152,7 +152,8 @@
   display: grid;
   grid-template-columns: 370px auto 45px;
   column-gap: 16px;
-  padding: var(--layout-size-xl);
+  padding: var(--layout-size-l);
+  padding-bottom: var(--layout-size-s);
 }
 
 .slides .slide.hide-pairing .pairs-with {
@@ -195,7 +196,7 @@
 }
 
 .slides .slide .pairs-with-text {
-  padding: var(--layout-size-xl) 0;
+  padding: var(--layout-size-xl) 0 0;
 }
 
 .slides .slide .pairs-with-text h3:first-child {
@@ -211,16 +212,16 @@
   margin-top: 0;
 }
 
-.slides .slide .close-pairs {
+.slides .slide .pairs-close {
   flex-grow: 1;
   flex-basis: 0;
 }
 
-.slides .slide .close-pairs > * {
+.slides .slide .pairs-close > * {
   padding: 2px;
 }
 
-.slides .slide .close-pairs span.icon {
+.slides .slide .pairs-close span.icon {
   width: 41px;
   height: 41px;
 }

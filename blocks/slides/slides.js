@@ -93,7 +93,7 @@ export default function decorate(block) {
       pairsText.append(description);
       pairsWith.append(pairsText);
 
-      const closePairsView = createTag('div', { class: 'close-pairs' });
+      const closePairsView = createTag('div', { class: 'pairs-close' });
       closePairsView.innerHTML = `<button type="button" aria-label="Close view">
               <span class="icon icon-close"></span>
               </button>`;
