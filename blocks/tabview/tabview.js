@@ -50,7 +50,7 @@ async function loadTabPanel(panel) {
       const programPath = dataPaths[1];
 
       // TODO: load fragment in background when slide becomes active
-      let fragment = await fetchFragment(programPath);
+      fragment = await fetchFragment(programPath);
       fragment = await decorateFragment(fragment);
       if (fragment) {
         const fragmentSection = fragment.querySelector(':scope .section');
