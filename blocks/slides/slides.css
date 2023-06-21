@@ -70,6 +70,22 @@
   clip-path: circle(50% at 50% 50%);
 }
 
+.slides .slide .pairs-with-meal picture:first-child img {
+  margin-bottom: 16px;
+  border: 6px solid white;
+  box-sizing: border-box;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
+.slides .slide .pairs-with-meal picture:last-child img {
+  height: var(--avatar-size);
+  box-sizing: border-box;
+  aspect-ratio: auto;
+  object-fit: contain;
+  margin-left: -24px;
+}
+
 .slides.block .slide .avatar picture:first-child img {
   object-fit: cover;
 }
@@ -183,22 +199,6 @@
 
 .slides .slide.show-pairing .pairs-with-meal.animate picture:last-child {
   animation: fade-in-from-none 0.5s ease-out;
-}
-
-.slides .slide .pairs-with-meal picture:first-child img {
-  margin-bottom: 16px;
-  border: 6px solid white;
-  box-sizing: border-box;
-  aspect-ratio: auto;
-  object-fit: contain;
-}
-
-.slides .slide .pairs-with-meal picture:last-child img {
-  height: var(--avatar-size);
-  box-sizing: border-box;
-  aspect-ratio: auto;
-  object-fit: contain;
-  margin-left: -24px;
 }
 
 .slides .slide .pairs-with-text {
