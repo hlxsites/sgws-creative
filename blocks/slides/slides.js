@@ -1,5 +1,5 @@
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
-import { createTag, animationObserver } from '../../scripts/scripts.js';
+import { createTag, fetchFragment, decorateFragment, animationObserver } from '../../scripts/scripts.js';
 
 function getSelectedSlide(block) {
   return block.querySelector('.slide.active');
@@ -28,12 +28,21 @@ function moveSlide(block, direction, count) {
   count.textContent = `${getSlidePosition(selectedSlide)} of ${block.children.length}`;
 }
 
-export default function decorate(block) {
+async function buildProgramFragmentSlide(slide, slideContentPath){
+  let fragment = await fetchFragment(slideContentPath);
+  fragment = await decorateFragment(fragment);
+  if (fragment) {
+    const fragmentSection = fragment.querySelector(':scope .section');
+    slide.append(...fragmentSection.children);
+  }
+}
+
+export default async function decorate(block) {
   block.setAttribute('role', 'region');
   block.setAttribute('aria-label', 'Slides');
 
   const isProgram = block.classList.contains('program');
-  [...block.children].forEach((slide, index) => {
+  [...block.children].forEach(async (slide, index) => {
     slide.className = 'slide';
     block.setAttribute('role', 'group');
     block.setAttribute('aria-roledescription', 'Slide');
@@ -45,8 +54,8 @@ export default function decorate(block) {
       // Program slides (fragments)
       const slideContent = slide.querySelector('a');
       const slideContentPath = slideContent.getAttribute('href');
-      console.log("Fragment path:", slideContentPath);
       slideContent.closest('div').remove();
+      await buildProgramFragmentSlide(slide, slideContentPath);
     } else {
       // "Standard slide": create avatar container
       const avatar = createTag('div', { class: 'avatar' });
