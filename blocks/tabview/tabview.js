@@ -3,6 +3,20 @@ import {
   createTag, fetchFragment, decorateFragment, hasTheme, getTheme,
 } from '../../scripts/scripts.js';
 
+async function loadProgramPanel(panel, programPath, restOfPanel) {
+  let fragment = await fetchFragment(programPath);
+  fragment = await decorateFragment(fragment);
+  if (fragment) {
+    const fragmentSection = fragment.querySelector(':scope .section');
+    const programFragmentElements = [...fragmentSection.children];
+    programFragmentElements.forEach((child) => {
+      // program content is hidden by default
+      child.classList.add('program-content', 'hidden');
+    });
+    panel.append(...programFragmentElements, restOfPanel);
+  }
+}
+
 async function loadTabPanel(panel) {
   if (!panel) {
     return;
@@ -36,30 +50,26 @@ async function loadTabPanel(panel) {
     const programButtonText = document.createElement('div');
     programButtonText.textContent = 'Click here for suggested programs';
     const slidesElement = panel.querySelector('.slides-wrapper');
-    const slidesElementParent = slidesElement.parentNode;
     programButton.append(programButtonText);
-    slidesElementParent.insertBefore(programButton, slidesElement.nextSibling);
+    slidesElement.parentNode.insertBefore(programButton, slidesElement.nextSibling);
+
+    const programElements = panel.querySelectorAll('.program-content');
+    if (programElements.length === 0) {
+      await loadProgramPanel(panel, dataPaths[1], programButton.nextSibling);
+    }
 
     programButton.addEventListener('click', async () => {
-      // hide elements to be replaced
-      slidesElement.classList.add('hidden');
-      programButton.classList.add('hidden');
-      slidesElement.previousSibling.classList.add('hidden');
+      // show program slide elements
+      const programContent = panel.querySelectorAll('.program-content');
+      console.log(programContent);
+      [...programContent].forEach((child) => {
+        child.classList.remove('hidden');
+      });
 
-      // show programs instead
-      const programPath = dataPaths[1];
-
-      // TODO: load fragment in background when slide becomes active
-      fragment = await fetchFragment(programPath);
-      fragment = await decorateFragment(fragment);
-      if (fragment) {
-        const fragmentSection = fragment.querySelector(':scope .section');
-        const programFragmentElements = [...fragmentSection.children];
-        programFragmentElements.forEach((child) => {
-          child.classList.add('program-content');
-        });
-        panel.append(...programFragmentElements, programButton.nextSibling);
-      }
+      // hide elements from "default" slide and mark them as slide content
+      slidesElement.classList.add('hidden', 'slide-content');
+      programButton.classList.add('hidden', 'slide-content');
+      slidesElement.previousSibling.classList.add('hidden', 'slide-content');
     });
   }
 }
