@@ -9,7 +9,7 @@ async function loadTabPanel(panel) {
   }
 
   const dataPaths = panel.getAttribute('data-path').split(',');
-  let contentPath = dataPaths[0];
+  const contentPath = dataPaths[0];
   let fragment = await fetchFragment(contentPath);
   fragment = await decorateFragment(fragment);
   if (fragment) {
@@ -30,7 +30,7 @@ async function loadTabPanel(panel) {
     });
   }
 
-  if(dataPaths.length > 1) {
+  if (dataPaths.length > 1) {
     const programButton = document.createElement('div');
     programButton.classList.add('clickable-program-overlay');
     const programButtonText = document.createElement('div');
@@ -41,7 +41,7 @@ async function loadTabPanel(panel) {
     slidesElementParent.insertBefore(programButton, slidesElement.nextSibling);
 
     programButton.addEventListener('click', async () => {
-      console.log("There is a program fragment to load...");
+      // TMN - TODO
     });
   }
 }

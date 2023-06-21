@@ -1,12 +1,6 @@
 import { createVideoTag, createTag, animationObserver } from '../../scripts/scripts.js';
-import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 export default function decorate(block) {
-  // const images = block.querySelectorAll('img');
-  // [...images].forEach((image) => {
-  //   image.closest('picture').replaceWith(createOptimizedPicture(image.src, image.alt, false, [{ width: Math.ceil(window.innerWidth / 1.80) }]));
-  // });
-
   const cols = [...block.firstElementChild.children];
   block.classList.add(`columns-${cols.length}-cols`);
 
