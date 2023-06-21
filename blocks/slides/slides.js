@@ -31,6 +31,8 @@ function moveSlide(block, direction, count) {
 export default function decorate(block) {
   block.setAttribute('role', 'region');
   block.setAttribute('aria-label', 'Slides');
+
+  const isProgram = block.classList.contains('program');
   [...block.children].forEach((slide, index) => {
     slide.className = 'slide';
     block.setAttribute('role', 'group');
@@ -39,14 +41,22 @@ export default function decorate(block) {
       slide.classList.add('active');
     }
 
-    // create avatar container
-    const avatar = createTag('div', { class: 'avatar' });
-    avatar.append(...slide.querySelectorAll('picture'));
-    avatar.querySelectorAll('img').forEach((image) => {
-      image.closest('picture').replaceWith(createOptimizedPicture(image.src, image.alt, false, [{ width: '275' }]));
-    });
-    slide.querySelectorAll('p.picture').forEach((p) => p.remove());
-    slide.prepend(avatar);
+    if(isProgram) {
+      // Program slides (fragments)
+      const slideContent = slide.querySelector('a');
+      const slideContentPath = slideContent.getAttribute('href');
+      console.log("Fragment path:", slideContentPath);
+      slideContent.remove();
+    } else {
+      // "Standard slide": create avatar container
+      const avatar = createTag('div', { class: 'avatar' });
+      avatar.append(...slide.querySelectorAll('picture'));
+      avatar.querySelectorAll('img').forEach((image) => {
+        image.closest('picture').replaceWith(createOptimizedPicture(image.src, image.alt, false, [{ width: '275' }]));
+      });
+      slide.querySelectorAll('p.picture').forEach((p) => p.remove());
+      slide.prepend(avatar);
+    }
   });
 
   if (block.children.length > 1) {
