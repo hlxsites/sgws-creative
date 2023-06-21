@@ -41,11 +41,19 @@ async function loadTabPanel(panel) {
     slidesElementParent.insertBefore(programButton, slidesElement.nextSibling);
 
     programButton.addEventListener('click', async () => {
-      console.log('Show program ', dataPaths);
-      console.log(slidesElement.previousSibling)
+      // hide elements to be replaced
       slidesElement.classList.add('hidden');
       programButton.classList.add('hidden');
       slidesElement.previousSibling.classList.add('hidden');
+
+      // show programs instead
+      const programPath = dataPaths[1];
+      let fragment = await fetchFragment(programPath);
+      fragment = await decorateFragment(fragment);
+      if (fragment) {
+        const fragmentSection = fragment.querySelector(':scope .section');
+        panel.append(...fragmentSection.children, programButton.nextSibling);
+      }
     });
   }
 }
