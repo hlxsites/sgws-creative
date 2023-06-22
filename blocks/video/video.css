@@ -12,18 +12,6 @@
   display: none;
 }
 
-.video.block picture {
-  position: relative;
-  display: flex;
-  width: 100%;
-  height: auto;
-}
-
-.video.block picture img {
-  position: absolute;
-  z-index: -1;
-}
-
 /* video styling for background video in section */
 main .section.background-video .video.block {
   position: relative;
