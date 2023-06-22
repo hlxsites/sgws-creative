@@ -61,7 +61,6 @@ async function loadTabPanel(panel) {
     programButton.addEventListener('click', async () => {
       // show program slide elements
       const programContent = panel.querySelectorAll('.program-content');
-      console.log(programContent);
       [...programContent].forEach((child) => {
         child.classList.remove('hidden');
       });
@@ -71,6 +70,16 @@ async function loadTabPanel(panel) {
       programButton.classList.add('hidden', 'slide-content');
       slidesElement.previousSibling.classList.add('hidden', 'slide-content');
     });
+
+    // const closeProgramView = createTag('div', { class: 'button-program-close' });
+    // closeProgramView.innerHTML = `<button type="button" aria-label="Close program view">
+    //           <span class="icon icon-close"></span>
+    //           </button>`;
+    // const closeProgramButton = closeProgramView.querySelector('button');
+    // closeProgramButton.addEventListener('click', () => {
+    //   console.log("Close program view")
+    // });
+    // panel.append(closeProgramView);
   }
 }
 
