@@ -83,7 +83,6 @@ async function loadTabPanel(panel) {
     });
 
     closeProgramButton.addEventListener('click', () => {
-      console.log('## close request')
       const programContent = panel.querySelectorAll('.program-content');
       [...programContent].forEach((child) => {
         child.classList.add('hidden');

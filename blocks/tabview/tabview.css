@@ -25,10 +25,6 @@
   line-height: 1.9vw;
 }
 
-.tabview .clickable-program-overlay:hover > div {
-  color: var(--background-color);
-}
-
 .tabview .clickable-program-overlay:hover {
   background-image: linear-gradient(to bottom right, transparent 50%, var(--secondary-color) 0);
 }
@@ -36,6 +32,10 @@
 /* tab view */
 .tabview-container > div:not(:last-child) {
   padding-bottom: var(--layout-size-xxl);
+}
+
+.tabview .clickable-program-overlay:hover > div {
+  color: var(--background-color);
 }
 
 .tabview {
@@ -56,6 +56,19 @@
   padding: var(--layout-size-l);
   border: none;
   appearance: none;
+}
+
+.tabview .button-program-close {
+  right: 64px;
+  left: auto;
+  position: absolute;
+  text-align: right;
+  z-index: 2;
+}
+
+.tabview .button-program-close > button {
+  background-color: transparent !important;
+  margin-top: 20px;
 }
 
 .tabview [role="tablist"] button:focus:not(:focus-visible) {
@@ -149,19 +162,6 @@
 
 .tabview [role="tabpanel"] .default-content-wrapper:first-child p {
   flex: 1;
-}
-
-.tabview .button-program-close {
-  right: 64px;
-  left: auto;
-  position: absolute;
-  text-align: right;
-  z-index: 2;
-}
-
-.tabview .button-program-close > button {
-  background-color: transparent !important;
-  margin-top: 20px;
 }
 
 .tabview .button-program-close > button > .icon {
