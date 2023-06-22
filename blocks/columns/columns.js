@@ -20,6 +20,13 @@ export default function decorate(block) {
         const attributes = {
           preload: 'none',
         };
+
+        if (posterImage && posterImage.src) {
+          // force use of webp for posters
+          let newUrl = posterImage.src.replace('\.png', '\.webp');
+          newUrl = newUrl.replace('format=png', 'format=webp');
+          posterImage.src = newUrl;
+        }
         const video = createVideoTag(videoLink.href, posterImage?.src, attributes);
         const playButton = createTag('button', { class: 'play-button', type: 'button', 'aria-label': 'Play Video' });
         const background = createTag('div', { class: 'video-background' });
