@@ -54,7 +54,7 @@ export default async function decorate(block) {
       cardsToAppend[index] = card;
     });
 
-    grid.append(...cardsToAppend)
+    grid.append(...cardsToAppend);
     block.append(grid);
   });
 

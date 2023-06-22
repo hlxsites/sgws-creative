@@ -8,6 +8,10 @@
   height: auto;
 }
 
+.video.block .hidden {
+  display: none;
+}
+
 /* video styling for background video in section */
 main .section.background-video .video.block {
   position: relative;
