@@ -152,7 +152,7 @@
 }
 
 /* On top of slides wrapper */
-.button-program-close {
+.tabview .button-program-close {
   right: 64px;
   left: auto;
   position: absolute;
@@ -160,18 +160,18 @@
   z-index: 2;
 }
 
-.button-program-close > button {
+.tabview .button-program-close > button {
   background-color: transparent !important;
   margin-top: 20px;
 }
 
-.button-program-close > button > .icon {
+.tabview .button-program-close > button > .icon {
   display: inline-block;
   height: 44px;
   width: 44px;
 }
 
-.button-program-close > button > .icon > svg > use {
+.tabview .button-program-close > button > .icon > svg > use {
   fill: var(--primary-color);
 }
 
