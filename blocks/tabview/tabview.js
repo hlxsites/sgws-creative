@@ -63,17 +63,6 @@ async function loadTabPanel(panel) {
               <span class="icon icon-close"></span>
               </button>`;
     const closeProgramButton = closeProgramView.querySelector('button');
-    closeProgramButton.addEventListener('click', () => {
-      const programContent = panel.querySelectorAll('.program-content');
-      [...programContent].forEach((child) => {
-        child.classList.add('hidden');
-      });
-
-      const defaultSlideContent = panel.querySelectorAll('.slide-content');
-      [...defaultSlideContent].forEach((child) => {
-        child.classList.remove('hidden');
-      });
-    });
     closeProgramView.classList.add('hidden');
     const programSlidesWrapper = panel.querySelector('.slides-wrapper.program-content');
     programSlidesWrapper.parentNode.insertBefore(closeProgramView, programSlidesWrapper);
@@ -90,6 +79,18 @@ async function loadTabPanel(panel) {
       programButton.classList.add('hidden', 'slide-content');
       slidesElement.previousSibling.classList.add('hidden', 'slide-content');
       closeProgramView.classList.remove('hidden');
+    });
+    closeProgramButton.addEventListener('click', () => {
+      const programContent = panel.querySelectorAll('.program-content');
+      [...programContent].forEach((child) => {
+        child.classList.add('hidden');
+      });
+      closeProgramButton.classList.add('hidden');
+
+      const defaultSlideContent = panel.querySelectorAll('.slide-content');
+      [...defaultSlideContent].forEach((child) => {
+        child.classList.remove('hidden');
+      });
     });
   }
 }
