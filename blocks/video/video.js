@@ -5,6 +5,10 @@ function observeVideo(block, rootMargin) {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       const videoElement = entry.target.querySelector('video');
+      videoElement.muted = true;
+      videoElement.autoplay = true;
+      videoElement.loop = true;
+      videoElement.playsinline = true;
       if (entry.isIntersecting) {
         videoElement.play();
       } else {
@@ -35,9 +39,10 @@ export default function decorate(block) {
   videoElement.innerHTML = `<source src="${videoLink.href}" type="video/mp4">`;
 
   videoElement.muted = true;
-  videoElement.autoplay = true;
-  videoElement.loop = true;
-  videoElement.playsinline = true;
+  videoElement.autoplay = false;
+  videoElement.loop = false;
+  videoElement.playsinline = false;
+  videoElement.preload = 'metadata';
   if (image && image.src) {
     videoElement.poster = image.src;
   }
