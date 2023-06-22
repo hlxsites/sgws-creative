@@ -192,7 +192,7 @@ async function loadFonts() {
       }
       // add stylesheet
       const link = createTag('link', {
-        rel: 'stylesheet', type: 'text/css', media: 'all', fetchpriority: 'high',
+        rel: 'stylesheet', type: 'text/css', media: 'all',
       });
       link.href = fontFamily;
       head.appendChild(link);
