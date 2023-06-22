@@ -36,6 +36,25 @@
   opacity: 0.5;
 }
 
+/* Handle the Navigation help overlay. */
+.tabview.help-open div.tabs,
+.tabview.help-open div.active > div:not(.video-wrapper) {
+  display: none !important;
+}
+
+.columns-wrapper .tabview .nav-help > img {
+  display: none;
+}
+
+.columns-wrapper.help-open .nav-help > img {
+  display: block;
+  height: auto;
+  width: 100%;
+  padding-top: var(--layout-size-xxl);
+}
+
+/* END: Handle the Navigation help overlay. */
+
 .tabview [role="tablist"] button:hover img,
 .tabview [role="tablist"] button:active img,
 .tabview [role="tablist"] button[aria-selected='true'] img {
@@ -67,7 +86,6 @@
 .tabview [role="tabpanel"]  h2,
 .tabview [role="tabpanel"]  h3 {
   font-family: var(--heading-font-family);
-  font-size: var(--heading-font-size);
   font-size: clamp(var(--heading-font-size-min-px), var(--fluid-heading-font-size-px), var(--heading-font-size-px));
   font-weight: var(--heading-font-weight);
 }
@@ -82,7 +100,6 @@
 
 .tabview [role="tabpanel"]  p {
   font-family: var(--body-font-family);
-  font-size: var(--body-font-size);
   font-size: clamp(var(--body-font-size-min-px), var(--fluid-body-font-size-px), var(--body-font-size-px));
 }
 

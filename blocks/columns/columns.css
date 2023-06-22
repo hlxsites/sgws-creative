@@ -289,19 +289,23 @@
 }
 
 .columns.heading div.has-help p:last-child {
-  margin-left: 4%;
+  margin: auto 4%;
 }
 
 .columns.heading span.icon {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   margin-top: var(--layout-size-m);
   animation-name: small-rotation;
   animation-duration: 10000ms;
   animation-iteration-count: infinite,infinite;
 }
 
-.columns.heading span.icon.open {
+.columns-wrapper.help-open {
+  padding-bottom: 0 !important;
+}
+
+.columns-wrapper.help-open span.icon-help {
   opacity: 0.1;
 }
 

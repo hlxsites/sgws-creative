@@ -47,20 +47,37 @@ export default function decorate(block) {
       }
 
       const helpIcon = col.querySelector(':scope span.icon-help');
-      if (helpIcon) {
+      const tabView = document.querySelector('div.tabview');
+      if (helpIcon && tabView) {
         const parent = helpIcon.closest('p');
         if (parent) {
-          const helpBtnDiv = createTag('div', {class: 'has-help'});
-          const helpBtnP = createTag('p', {class: 'animate'});
+          const helpDiv = createTag('div', { class: 'has-help' });
+          const helpP = createTag('p', { class: 'animate' });
 
           helpIcon.addEventListener('click', () => {
-            helpIcon.classList.toggle('open');
+            helpIcon.closest('div.columns-wrapper').classList.toggle('help-open');
+            tabView.classList.toggle('help-open');
           });
-          helpBtnP.append(helpIcon);
+          helpP.append(helpIcon);
 
-          helpBtnDiv.append(parent);
-          helpBtnDiv.append(helpBtnP);
-          col.append(helpBtnDiv);
+          helpDiv.append(parent);
+          helpDiv.append(helpP);
+          col.append(helpDiv);
+
+          let imagesRoot = '/p/1';
+          const pIndex = document.location.pathname.indexOf('/p/');
+          if (pIndex >= 0) {
+            imagesRoot = `${document.location.pathname.substr(0, pIndex)}/images`;
+          }
+
+          const navDiv = createTag('div', { class: 'nav-help' });
+          const img = createTag('img', {
+            src: `${imagesRoot}/media_1b2d0c5c923af03695467204154a13945c5e1da53.jpeg`,
+            alt: 'Navigation help',
+            'aria-label': 'Navigation help',
+          });
+          navDiv.append(img);
+          block.parentNode.append(navDiv);
         }
       }
     });
