@@ -66,7 +66,10 @@ async function loadTabPanel(panel) {
     const closeProgramButton = closeProgramView.querySelector('button');
     const programSlidesWrapper = panel.querySelector('.slides-wrapper.program-content');
     programSlidesWrapper.parentNode.insertBefore(closeProgramView, programSlidesWrapper);
-
+    const nestedSlides = programButton.previousElementSibling;
+    nestedSlides.querySelectorAll('.pairs-with-text').forEach((slideText) => {
+      slideText.classList.add('pairs-with-text-badge');
+    });
     programButton.addEventListener('click', async () => {
       // show program slide elements
       const programContent = panel.querySelectorAll('.program-content');
