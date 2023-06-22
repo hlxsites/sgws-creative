@@ -4,9 +4,9 @@ function observeVideo(block, rootMargin) {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       const videoElement = entry.target.querySelector('video');
-      videoElement.autoplay = true;
-      videoElement.loop = true;
-      videoElement.playsinline = true;
+      if (!videoElement.autoplay) videoElement.autoplay = true;
+      if (!videoElement.loop) videoElement.loop = true;
+      if (!videoElement.playsinline) videoElement.playsinline = true;
       if (entry.isIntersecting) {
         videoElement.play();
       } else {
