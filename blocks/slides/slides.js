@@ -1,5 +1,7 @@
 import { createOptimizedPicture, decorateIcons } from '../../scripts/lib-franklin.js';
-import { createTag, animationObserver } from '../../scripts/scripts.js';
+import {
+  createTag, fetchFragment, decorateFragment, animationObserver,
+} from '../../scripts/scripts.js';
 
 function getSelectedSlide(block) {
   return block.querySelector('.slide.active');
@@ -28,10 +30,21 @@ function moveSlide(block, direction, count) {
   count.textContent = `${getSlidePosition(selectedSlide)} of ${block.children.length}`;
 }
 
-export default function decorate(block) {
+async function buildProgramFragmentSlide(slide, slideContentPath) {
+  let fragment = await fetchFragment(slideContentPath);
+  fragment = await decorateFragment(fragment);
+  if (fragment) {
+    const fragmentSection = fragment.querySelector(':scope .section');
+    slide.append(...fragmentSection.children);
+  }
+}
+
+export default async function decorate(block) {
   block.setAttribute('role', 'region');
   block.setAttribute('aria-label', 'Slides');
-  [...block.children].forEach((slide, index) => {
+
+  const isProgram = block.classList.contains('program');
+  [...block.children].forEach(async (slide, index) => {
     slide.className = 'slide';
     block.setAttribute('role', 'group');
     block.setAttribute('aria-roledescription', 'Slide');
@@ -39,72 +52,80 @@ export default function decorate(block) {
       slide.classList.add('active');
     }
 
-    // create avatar container
-    const avatar = createTag('div', { class: 'avatar' });
-    avatar.append(...slide.querySelectorAll('picture'));
-    avatar.querySelectorAll('img').forEach((image) => {
-      image.closest('picture').replaceWith(createOptimizedPicture(image.src, image.alt, false, [{ width: '275' }]));
-    });
-    slide.querySelectorAll('p.picture').forEach((p) => p.remove());
-    slide.prepend(avatar);
+    if (isProgram) {
+      // Program slides (fragments)
+      const slideContent = slide.querySelector('a');
+      const slideContentPath = slideContent.getAttribute('href');
+      slideContent.closest('div').remove();
+      await buildProgramFragmentSlide(slide, slideContentPath);
+    } else {
+      // "Standard slide": create avatar container and set up 'pairs with' view if available
+      const avatar = createTag('div', { class: 'avatar' });
+      avatar.append(...slide.querySelectorAll('picture'));
+      avatar.querySelectorAll('img').forEach((image) => {
+        image.closest('picture').replaceWith(createOptimizedPicture(image.src, image.alt, false, [{ width: '275' }]));
+      });
+      slide.querySelectorAll('p.picture').forEach((p) => p.remove());
+      slide.prepend(avatar);
 
-    /* Set up 'pairs with' view, if there are two headers provided. */
-    const headers = slide.querySelectorAll('h3');
-    if (headers.length === 2) {
-      slide.classList.add('hide-pairing');
-      const middleDiv = slide.querySelectorAll('div')[1];
-      const mainHeader = middleDiv.querySelector('h3');
-      if (mainHeader) {
-        const toggle = createTag('div', { class: 'toggle-pairs-with animate' });
-        toggle.innerHTML = `<button type="button" aria-label="Showcase hover">
+      /* Set up 'pairs with' view, if there are two headers provided. */
+      const headers = slide.querySelectorAll('h3');
+      if (headers.length === 2) {
+        slide.classList.add('hide-pairing');
+        const middleDiv = slide.querySelectorAll('div')[1];
+        const mainHeader = middleDiv.querySelector('h3');
+        if (mainHeader) {
+          const toggle = createTag('div', { class: 'toggle-pairs-with animate' });
+          toggle.innerHTML = `<button type="button" aria-label="Showcase hover">
               <span class="icon icon-pairs-circle"></span>
               <span class="icon icon-pairs-covered"></span>
               <span class="icon icon-pairs-glass"></span>
           </button>`;
-        mainHeader.parentNode.insertBefore(toggle, mainHeader.nextElementSibling);
+          mainHeader.parentNode.insertBefore(toggle, mainHeader.nextElementSibling);
 
-        const pairedButton = toggle.querySelector('button');
-        pairedButton.addEventListener('click', () => {
-          slide.classList.toggle('hide-pairing');
-          slide.classList.toggle('show-pairing');
+          const pairedButton = toggle.querySelector('button');
+          pairedButton.addEventListener('click', () => {
+            slide.classList.toggle('hide-pairing');
+            slide.classList.toggle('show-pairing');
+          }, { passive: true });
+        }
+
+        const pairsWith = createTag('div', {
+          class: 'pairs-with animate',
+          role: 'group',
         });
-      }
+        const pairsImages = createTag('div', { class: 'pairs-with-meal animate' });
 
-      const pairsWith = createTag('div', {
-        class: 'pairs-with animate',
-        role: 'group',
-      });
-      const pairsImages = createTag('div', { class: 'pairs-with-meal animate' });
+        const meal = slide.querySelector('picture:last-child');
+        pairsImages.append(meal);
+        const bottle = avatar.querySelector('picture:last-child').cloneNode(true);
+        pairsImages.append(bottle);
+        pairsWith.append(pairsImages);
 
-      const meal = slide.querySelector('picture:last-child');
-      pairsImages.append(meal);
-      const bottle = avatar.querySelector('picture:last-child').cloneNode(true);
-      pairsImages.append(bottle);
-      pairsWith.append(pairsImages);
+        const pairsText = createTag('div', { class: 'pairs-with-text animate' });
+        const header1 = createTag('h3', { class: 'animate' });
+        header1.innerText = 'A PERFECT PAIRING:';
+        headers[1].innerText = `${headers[0].innerText} + ${headers[1].innerText}`;
+        pairsText.append(header1);
+        pairsText.append(headers[1]);
 
-      const pairsText = createTag('div', { class: 'pairs-with-text animate' });
-      const header1 = createTag('h3', { class: 'animate' });
-      header1.innerText = 'A PERFECT PAIRING:';
-      headers[1].innerText = `${headers[0].innerText} + ${headers[1].innerText}`;
-      pairsText.append(header1);
-      pairsText.append(headers[1]);
+        const description = slide.querySelector('p:last-child');
+        pairsText.append(description);
+        pairsWith.append(pairsText);
 
-      const description = slide.querySelector('p:last-child');
-      pairsText.append(description);
-      pairsWith.append(pairsText);
-
-      const closePairsView = createTag('div', { class: 'pairs-close' });
-      closePairsView.innerHTML = `<button type="button" aria-label="Close view">
+        const closePairsView = createTag('div', { class: 'pairs-close' });
+        closePairsView.innerHTML = `<button type="button" aria-label="Close view">
               <span class="icon icon-close"></span>
               </button>`;
-      const closeButton = closePairsView.querySelector('button');
-      closeButton.addEventListener('click', () => {
-        slide.classList.toggle('hide-pairing');
-        slide.classList.toggle('show-pairing');
-      });
-      pairsWith.append(closePairsView);
+        const closeButton = closePairsView.querySelector('button');
+        closeButton.addEventListener('click', () => {
+          slide.classList.toggle('hide-pairing');
+          slide.classList.toggle('show-pairing');
+        }, { passive: true });
+        pairsWith.append(closePairsView);
 
-      slide.append(pairsWith);
+        slide.append(pairsWith);
+      }
     }
   });
 
@@ -129,11 +150,11 @@ export default function decorate(block) {
 
     previousButton.addEventListener('click', () => {
       moveSlide(block, -1, slideCount);
-    });
+    }, { passive: true });
 
     nextButton.addEventListener('click', () => {
       moveSlide(block, 1, slideCount);
-    });
+    }, { passive: true });
 
     const section = block.closest('.slides-container');
     const slideContent = section?.querySelector('.default-content-wrapper');

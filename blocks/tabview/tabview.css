@@ -1,5 +1,41 @@
+/* tabview program badge */
+.tabview .clickable-program-overlay {
+  position: absolute;
+  width: 15vw;
+  height: 15vw;
+  margin-top: -15vw;
+  background-image: linear-gradient(to bottom right, transparent 50%, var(--background-color) 0);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: left, right;
+  right: 64px;
+  left: auto;
+  z-index: 1;
+}
+
+.tabview .clickable-program-overlay > div {
+  transform: translateY(7vw) translateX(5vw) rotate(-45deg);
+  max-width: 10vw;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 1.3vw;
+  color: var(--secondary-color);
+  font-family: var(--heading-font-family);
+  line-height: 1.9vw;
+}
+
+.tabview .clickable-program-overlay:hover {
+  background-image: linear-gradient(to bottom right, transparent 50%, var(--secondary-color) 0);
+}
+
+/* tab view */
 .tabview-container > div:not(:last-child) {
   padding-bottom: var(--layout-size-xxl);
+}
+
+.tabview .clickable-program-overlay:hover > div {
+  color: var(--background-color);
 }
 
 .tabview {
@@ -20,6 +56,19 @@
   padding: var(--layout-size-l);
   border: none;
   appearance: none;
+}
+
+.tabview .button-program-close {
+  right: 64px;
+  left: auto;
+  position: absolute;
+  text-align: right;
+  z-index: 2;
+}
+
+.tabview .button-program-close > button {
+  background-color: transparent !important;
+  margin-top: 20px;
 }
 
 .tabview [role="tablist"] button:focus:not(:focus-visible) {
@@ -93,24 +142,41 @@
   animation-name: fade-in-right;
 }
 
-.tabview [role="tabpanel"]  .default-content-wrapper:first-child {
+.tabview [role="tabpanel"] .default-content-wrapper.program-content,
+.tabview [role="tabpanel"] .default-content-wrapper:first-child
+{
   display: flex;
   flex-flow: row nowrap;
   gap: var(--layout-size-l);
   padding: var(--layout-size-l) 50px;
 }
 
-.tabview [role="tabpanel"]  .default-content-wrapper:first-child h2,
-.tabview [role="tabpanel"]  .default-content-wrapper:first-child p {
+.tabview [role="tabpanel"] .default-content-wrapper:first-child h2,
+.tabview [role="tabpanel"] .default-content-wrapper:first-child p {
   margin: 0;
 }
 
-.tabview [role="tabpanel"]  .default-content-wrapper:first-child h2 {
+.tabview [role="tabpanel"] .default-content-wrapper:first-child h2 {
   text-transform: uppercase;
 }
 
-.tabview [role="tabpanel"]  .default-content-wrapper:first-child p {
+.tabview [role="tabpanel"] .default-content-wrapper:first-child p {
   flex: 1;
+}
+
+.tabview .button-program-close > button > .icon {
+  display: inline-block;
+  height: 2.5vw;
+  width: 2.5vw;
+}
+
+.tabview .button-program-close > button > .icon > svg > use {
+  fill: var(--primary-color);
+}
+
+/* hide parts of the UI */
+.tabview .hidden {
+  display: none !important;
 }
 
 /* animations */
@@ -121,5 +187,3 @@
     opacity: 0;
   }
 }
-
-
