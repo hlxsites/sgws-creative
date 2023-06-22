@@ -496,6 +496,23 @@ main .back-to-home span.icon {
     }
   }
 
+  @keyframes fade-in-from-none {
+    0% {
+      display: none;
+      opacity: 0;
+    }
+
+    1% {
+      display: block;
+      opacity: 0;
+    }
+
+    100% {
+      display: block;
+      opacity: 1;
+    }
+  }
+
   /* Make a small left/right rotation/wiggle 6 times, then wait half the animation time and do it again. */
   @keyframes small-rotation {
     0% {

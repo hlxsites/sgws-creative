@@ -18,6 +18,7 @@
 }
 
 .slides-wrapper > .slides h3 {
+  display: inline-block;
   font-family: var(--secondary-heading-font-family);
   font-weight: var(--secondary-heading-font-weight);
   position: relative;
@@ -53,6 +54,10 @@
   padding: var(--layout-size-xl);
 }
 
+.slides .slide.show-pairing .avatar {
+  display: none;
+}
+
 .slides .slide .avatar picture:first-child {
   display: inline-flex;
   width: var(--avatar-background-size);
@@ -75,9 +80,163 @@
   height: var(--avatar-size);
 }
 
-.slides .slide > div:not(.avatar) {
+/* Pairs With View */
+.slides .slide .toggle-pairs-with {
+  display: inline-block;
+  height: 43px;
+  position: relative;
+  top: 10px;
+  left: 10px;
+}
+
+.slides .slide .toggle-pairs-with > * {
+  background-color: var(--primary-color);
+  padding: 0;
+  height: 43px;
+  width: 43px;
+  min-width: 43px;
+  text-align: left;
+}
+
+.slides .slide .toggle-pairs-with span.icon svg {
+  height: 40px;
+  text-align: left;
+}
+
+.slides .slide .toggle-pairs-with span.icon-pairs-circle svg,
+.slides .slide .toggle-pairs-with span.icon-pairs-circle svg use {
+  color: var(--background-color);
+  fill: var(--background-color);
+}
+
+.slides .slide .toggle-pairs-with span.icon-pairs-covered svg use,
+.slides .slide .toggle-pairs-with span.icon-pairs-glass svg use,
+.slides .slide .toggle-pairs-with span.icon-pairs-covered svg,
+.slides .slide .toggle-pairs-with span.icon-pairs-glass svg {
+  color: var(--secondary-color);
+  fill: var(--secondary-color);
+  width: 44px;
+  position: absolute;
+}
+
+.slides .slide .toggle-pairs-with span.icon-pairs-covered svg {
+  height: 21px;
+  top: 27%;
+}
+
+.slides .slide .toggle-pairs-with span.icon-pairs-glass svg {
+  height: 17px;
+  top: 23%;
+  margin-left: -9px;
+}
+
+.slides .slide .toggle-pairs-with:hover span.icon-pairs-circle svg {
+  height: 45px;
+  color: var(--secondary-color);
+  fill: var(--secondary-color);
+}
+
+.slides .slide .toggle-pairs-with:hover span.icon-pairs-covered svg,
+.slides .slide .toggle-pairs-with:hover span.icon-pairs-covered svg use,
+.slides .slide .toggle-pairs-with:hover span.icon-pairs-glass svg,
+.slides .slide .toggle-pairs-with:hover span.icon-pairs-glass svg use {
+  color: var(--static-color-white);
+  fill: var(--static-color-white);
+}
+
+/* Covered platter */
+.slides .slide .toggle-pairs-with span.icon-pairs-covered {
+  margin-left: -42px;
+}
+
+.slides .slide .pairs-with {
+  display: grid;
+  grid-template-columns: 370px auto 45px;
+  column-gap: 16px;
+  padding: var(--layout-size-l);
+  padding-bottom: var(--layout-size-s);
+}
+
+.slides .slide.hide-pairing .pairs-with {
+  opacity: 0;
+  visibility: hidden;
+  height: 0;
+  width: 0;
+}
+
+.slides .slide.show-pairing .pairs-with p.animate,
+.slides .slide.show-pairing .pairs-with h3.animate {
+  opacity: 1;
+  visibility: visible;
+  display: grid;
+  animation: fade-in-right 0.5s ease-out;
+}
+
+.slides .slide.show-pairing .pairs-with-meal.animate picture:first-child {
+  animation: fade-in-from-none 0.25s ease-out;
+}
+
+.slides .slide.show-pairing .pairs-with-meal.animate picture:last-child {
+  animation: fade-in-from-none 0.5s ease-out;
+}
+
+.slides .slide .pairs-with-meal picture:first-child img {
+  margin-bottom: 16px;
+  border: 6px solid white;
+  box-sizing: border-box;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
+.slides .slide .pairs-with-meal picture:last-child img {
+  height: var(--avatar-size);
+  box-sizing: border-box;
+  aspect-ratio: auto;
+  object-fit: contain;
+  margin-left: -24px;
+}
+
+.slides .slide .pairs-with-text {
+  padding: var(--layout-size-xl) 0 0;
+}
+
+.slides .slide .pairs-with-text h3:first-child {
+  margin: 0;
+  display: block;
+}
+
+.slides .slide .pairs-with-text h3:first-child::after {
+  border: none;
+}
+
+.slides .slide .pairs-with-text h3:not(:first-child) {
+  margin-top: 0;
+}
+
+.slides .slide .pairs-close {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.slides .slide .pairs-close > * {
+  background-color: var(--primary-color);
+  padding: 2px;
+}
+
+.slides .slide .pairs-close span.icon {
+  width: 41px;
+  height: 41px;
+}
+
+/* End of Pairs With View */
+
+.slides .slide > div:nth-child(2) {
   flex: 1;
   padding-right: 96px;
+}
+
+.slides .slide.show-pairing > div:nth-child(2) {
+  display: none;
 }
 
 .slides-container .slide-nav {
@@ -148,7 +307,7 @@
 }
 
 /* animations */
-@media (prefers-reduced-motion: no-preference) {
+@media (prefers-reduced-motion: reduce) {
   .slides-container .slide-nav button {
     opacity: 0;
   }
