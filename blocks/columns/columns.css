@@ -42,6 +42,10 @@
   margin-bottom: 0;
 }
 
+.columns-wrapper .nav-help > img {
+  display: none;
+}
+
 .columns > div > .columns-img-col img {
   display: block;
 }
@@ -218,6 +222,13 @@
   flex-direction: row;
 }
 
+.columns-wrapper.help-open .nav-help > img {
+  display: block;
+  height: auto;
+  width: 100%;
+  padding-top: var(--layout-size-xxl);
+}
+
 .columns.image-overlay > div > div > p:last-child img {
   position: relative;
   max-width: 85%;
@@ -292,7 +303,7 @@
   margin: auto 4%;
 }
 
-.columns.heading span.icon {
+.columns.heading span.icon-help {
   width: 40px;
   height: 40px;
   margin-top: var(--layout-size-m);
