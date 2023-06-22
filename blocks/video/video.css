@@ -12,6 +12,16 @@
   display: none;
 }
 
+.video.block picture {
+  overflow: hidden;
+  position: relative;
+}
+
+.video.block picture img {
+  position: absolute;
+  z-index: -1;
+}
+
 /* video styling for background video in section */
 main .section.background-video .video.block {
   position: relative;
