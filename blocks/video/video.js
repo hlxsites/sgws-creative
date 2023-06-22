@@ -1,5 +1,4 @@
 import { createTag } from '../../scripts/scripts.js';
-import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 function observeVideo(block, rootMargin) {
   const observer = new IntersectionObserver((entries) => {
