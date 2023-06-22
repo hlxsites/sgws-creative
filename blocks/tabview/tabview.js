@@ -54,9 +54,8 @@ async function loadTabPanel(panel) {
     slidesElement.parentNode.insertBefore(programButton, slidesElement.nextSibling);
 
     const programElements = panel.querySelectorAll('.program-content');
-    let programPanelLoadingTask;
     if (programElements.length === 0) {
-      programPanelLoadingTask = loadProgramPanel(panel, dataPaths[1], programButton.nextSibling);
+      await loadProgramPanel(panel, dataPaths[1], programButton.nextSibling);
     }
 
     const closeProgramView = createTag('div', { class: 'button-program-close' });
@@ -67,9 +66,6 @@ async function loadTabPanel(panel) {
       </button>`;
     const closeProgramButton = closeProgramView.querySelector('button');
     closeProgramView.classList.add('hidden');
-    if (programPanelLoadingTask) {
-      await programPanelLoadingTask;
-    }
     const programSlidesWrapper = panel.querySelector('.slides-wrapper.program-content');
     programSlidesWrapper.parentNode.insertBefore(closeProgramView, programSlidesWrapper);
 
