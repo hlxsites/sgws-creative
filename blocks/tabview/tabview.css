@@ -166,8 +166,8 @@
 
 .tabview .button-program-close > button > .icon {
   display: inline-block;
-  height: 44px;
-  width: 44px;
+  height: 2.5vw;
+  width: 2.5vw;
 }
 
 .tabview .button-program-close > button > .icon > svg > use {
