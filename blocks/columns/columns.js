@@ -23,7 +23,7 @@ export default function decorate(block) {
 
         if (posterImage && posterImage.src) {
           // force use of webp for posters
-          let newUrl = posterImage.src.replace('\.png', '\.webp');
+          let newUrl = posterImage.src.replace('.png', '.webp');
           newUrl = newUrl.replace('format=png', 'format=webp');
           posterImage.src = newUrl;
         }

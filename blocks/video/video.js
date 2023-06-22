@@ -44,7 +44,7 @@ export default function decorate(block) {
   videoElement.preload = 'metadata';
   if (image && image.src) {
     // force use of webp for posters
-    let newUrl = image.src.replace('\.png', '\.webp');
+    let newUrl = image.src.replace('.png', '.webp');
     newUrl = newUrl.replace('format=png', 'format=webp');
     videoElement.poster = newUrl;
   }
