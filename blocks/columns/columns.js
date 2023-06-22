@@ -9,7 +9,7 @@ export default function decorate(block) {
     block.classList.add('icon-list');
   }
 
-  // setup image columns
+  // setup image columns and help button
   [...block.children].forEach((row) => {
     [...row.children].forEach((col) => {
       const videoLink = col.querySelector(':scope a');
@@ -43,6 +43,24 @@ export default function decorate(block) {
         if (picWrapper && picWrapper.children.length === 1) {
           // picture is only content in column
           picWrapper.classList.add('columns-img-col');
+        }
+      }
+
+      const helpIcon = col.querySelector(':scope span.icon-help');
+      if (helpIcon) {
+        const parent = helpIcon.closest('p');
+        if (parent) {
+          const helpBtnDiv = createTag('div', {class: 'has-help'});
+          const helpBtnP = createTag('p', {class: 'animate'});
+
+          helpIcon.addEventListener('click', () => {
+            helpIcon.classList.toggle('open');
+          });
+          helpBtnP.append(helpIcon);
+
+          helpBtnDiv.append(parent);
+          helpBtnDiv.append(helpBtnP);
+          col.append(helpBtnDiv);
         }
       }
     });

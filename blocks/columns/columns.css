@@ -280,6 +280,41 @@
   animation-name: fade-in-left;
 }
 
+.columns.heading div.has-help {
+  display: flex;
+}
+
+.columns.heading div.has-help p:first-child {
+  width: calc(100% - 100px)
+}
+
+.columns.heading div.has-help p:last-child {
+  margin-left: 4%;
+}
+
+.columns.heading span.icon {
+  width: 50px;
+  height: 50px;
+  margin-top: var(--layout-size-m);
+  animation-name: small-rotation;
+  animation-duration: 10000ms;
+  animation-iteration-count: infinite,infinite;
+}
+
+.columns.heading span.icon.open {
+  opacity: 0.1;
+}
+
+.columns.heading span.icon svg > * {
+  fill: var(--secondary-color);
+  color: var(--secondary-color);
+}
+
+.columns.heading span.icon svg:hover > * {
+  fill: var(--nav-home-color);
+  color: var(--nav-home-color);
+}
+
 /* animations */
 @media (prefers-reduced-motion: no-preference) {
   .columns h2,

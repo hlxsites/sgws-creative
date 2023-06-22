@@ -495,4 +495,67 @@ main .back-to-home span.icon {
       transform: scale(1);
     }
   }
+
+  /* Make a small left/right rotation/wiggle 6 times, then wait half the animation time and do it again. */
+  @keyframes small-rotation {
+    0% {
+      transform: rotate3d(0, 0, 1, 0deg);
+    }
+
+    2% {
+      transform: rotate3d(0, 0, 1, -8deg);
+    }
+
+    6% {
+      transform: rotate3d(0, 0, 1, 8deg);
+    }
+
+    10% {
+      transform: rotate3d(0, 0, 1, -8deg);
+    }
+
+    14% {
+      transform: rotate3d(0, 0, 1, 8deg);
+    }
+
+    18% {
+      transform: rotate3d(0, 0, 1, -8deg);
+    }
+
+    22% {
+      transform: rotate3d(0, 0, 1, 8deg);
+    }
+
+    26% {
+      transform: rotate3d(0, 0, 1, -8deg);
+    }
+
+    30% {
+      transform: rotate3d(0, 0, 1, 8deg);
+    }
+
+    34% {
+      transform: rotate3d(0, 0, 1, -8deg);
+    }
+
+    38% {
+      transform: rotate3d(0, 0, 1, 8deg);
+    }
+
+    42% {
+      transform: rotate3d(0, 0, 1, -8deg);
+    }
+
+    46% {
+      transform: rotate3d(0, 0, 1, 8deg);
+    }
+
+    50% {
+      transform: rotate3d(0, 0, 1, 0deg);
+    }
+
+    100% {
+      transform: rotate3d(0, 0, 1, 0deg);
+    }
+  }
 }
