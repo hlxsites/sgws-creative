@@ -191,7 +191,9 @@ async function loadFonts() {
         return Promise.resolve();
       }
       // add stylesheet
-      const link = createTag('link', { rel: 'stylesheet', type: 'text/css', media: 'all' });
+      const link = createTag('link', {
+        rel: 'stylesheet', type: 'text/css', media: 'all', fetchpriority: 'high',
+      });
       link.href = fontFamily;
       head.appendChild(link);
       return Promise.resolve();
