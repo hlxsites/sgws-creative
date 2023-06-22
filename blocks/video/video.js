@@ -55,7 +55,6 @@ export default function decorate(block) {
   videoElement.addEventListener('loadeddata', () => {
     imagePicture.remove();
   }, { passive: true });
-
   if (!block.closest('.section').classList.contains('background-video')) {
     observeVideo(block, '0px');
   } else {
