@@ -1,9 +1,10 @@
 import { createTag } from '../../scripts/scripts.js';
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
-function observeVideo(block, videoElement, rootMargin) {
+function observeVideo(block, rootMargin) {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
+      const videoElement = entry.target.querySelector('video');
       if (entry.isIntersecting) {
         videoElement.play();
       } else {
@@ -49,10 +50,10 @@ export default function decorate(block) {
 
   block.append(videoDiv);
   if (!block.closest('.section').classList.contains('background-video')) {
-    observeVideo(block, videoElement, '0px');
+    observeVideo(block, '0px');
   } else {
     videoElement.addEventListener('loadedmetadata', () => {
-      observeVideo(block, videoElement, `${videoElement.videoHeight}px`);
+      observeVideo(block, `${videoElement.videoHeight}px`);
     }, true);
   }
 }
