@@ -87,7 +87,7 @@ export default async function decorate(block) {
           pairedButton.addEventListener('click', () => {
             slide.classList.toggle('hide-pairing');
             slide.classList.toggle('show-pairing');
-          });
+          }, { passive: true });
         }
 
         const pairsWith = createTag('div', {
@@ -121,7 +121,7 @@ export default async function decorate(block) {
         closeButton.addEventListener('click', () => {
           slide.classList.toggle('hide-pairing');
           slide.classList.toggle('show-pairing');
-        });
+        }, { passive: true });
         pairsWith.append(closePairsView);
 
         slide.append(pairsWith);
@@ -150,11 +150,11 @@ export default async function decorate(block) {
 
     previousButton.addEventListener('click', () => {
       moveSlide(block, -1, slideCount);
-    });
+    }, { passive: true });
 
     nextButton.addEventListener('click', () => {
       moveSlide(block, 1, slideCount);
-    });
+    }, { passive: true });
 
     const section = block.closest('.slides-container');
     const slideContent = section?.querySelector('.default-content-wrapper');

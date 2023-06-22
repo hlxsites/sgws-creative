@@ -80,7 +80,7 @@ async function loadTabPanel(panel) {
       slidesElement.classList.add('hidden', 'slide-content');
       programButton.classList.add('hidden', 'slide-content');
       slidesElement.previousSibling.classList.add('hidden', 'slide-content');
-    });
+    }, { passive: true });
 
     closeProgramButton.addEventListener('click', () => {
       const programContent = panel.querySelectorAll('.program-content');
@@ -92,7 +92,7 @@ async function loadTabPanel(panel) {
       [...defaultSlideContent].forEach((child) => {
         child.classList.remove('hidden');
       });
-    });
+    }, { passive: true });
   }
 }
 
@@ -128,7 +128,7 @@ export default async function decorate(block) {
           panel.classList.remove('active');
         }
       });
-    });
+    }, { passive: true });
 
     const anchors = tabContent.querySelectorAll('a');
     const anchor = anchors[0];

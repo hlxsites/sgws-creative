@@ -34,7 +34,7 @@ export default function decorate(block) {
           video.controls = true;
           video.play();
           playButton.remove();
-        });
+        }, { passive: true });
         const videoGroup = createTag('p', { class: 'video-group' });
         videoGroup.append(video, playButton);
         col.append(videoGroup, background);

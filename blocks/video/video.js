@@ -50,17 +50,17 @@ export default function decorate(block) {
   }
 
   videoDiv.appendChild(videoElement);
-  block.append(imagePicture);
+  block.append(imagePicture, videoDiv);
+
   videoElement.addEventListener('loadeddata', () => {
     imagePicture.remove();
-  });
+  }, { passive: true });
 
-  block.append(videoDiv);
   if (!block.closest('.section').classList.contains('background-video')) {
     observeVideo(block, '0px');
   } else {
     videoElement.addEventListener('loadedmetadata', () => {
       observeVideo(block, `${videoElement.videoHeight}px`);
-    }, true);
+    }, { passive: true });
   }
 }
