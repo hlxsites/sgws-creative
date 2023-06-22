@@ -284,15 +284,14 @@ function buildVideoSection(main) {
     const sectionImages = section.querySelectorAll('picture');
     if (sectionImages.length === 2) {
       // background image and foreground video
-      section.classList.add('highlight', 'background-image');
       section.textContent = '';
+      section.classList.add('highlight', 'background-image');
       const videoBlock = buildBlock('video', [[sectionImages[1], sectionLink]]);
       section.append(sectionImages[0].parentElement, videoBlock);
     } else {
       // background video, with images in foreground
       section.classList.add('background-video');
-      const videoBlock = buildBlock('video', [[sectionImages[0], sectionLink]]);
-      section.prepend(videoBlock);
+      section.prepend(buildBlock('video', [[sectionImages[0], sectionLink]]));
       section.querySelectorAll(':scope > p').forEach((p) => !p.children.length && p.remove());
     }
   });
