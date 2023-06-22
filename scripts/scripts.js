@@ -311,7 +311,6 @@ function buildAutoBlocks(main) {
 }
 
 const INTERNAL_EXPR = [/^\/.+$/i, /^(.*?(\bsgcreative.southernglazers.com\b)[^$]*)$/i];
-
 function decorateExternalLinks(main) {
   main.querySelectorAll('a').forEach((a) => {
     const href = a.getAttribute('href');
@@ -365,18 +364,11 @@ export function decorateSectionBackgrounds(main) {
   });
 }
 
-function addAnimation(main) {
-  main.querySelectorAll('h1, h2, h3, p:not(.border)').forEach((element) => {
-    animationObserver.observe(element);
-  });
-}
-
 /**
  * Decorates the main element.
  * @param {Element} main The main element
  */
 function decorateMain(main) {
-  // hopefully forward compatible button decoration
   decorateButtons(main);
   decorateExternalLinks(main);
   decorateIcons(main);
@@ -386,7 +378,11 @@ function decorateMain(main) {
   decorateBlocks(main);
   decorateSectionBackgrounds(main);
   decorateBorders(main);
-  addAnimation(main);
+
+  // observe animations
+  main.querySelectorAll('h1, h2, h3, p:not(.border)').forEach((element) => {
+    animationObserver.observe(element);
+  });
 }
 
 /**
