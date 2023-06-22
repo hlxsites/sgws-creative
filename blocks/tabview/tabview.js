@@ -58,6 +58,26 @@ async function loadTabPanel(panel) {
       await loadProgramPanel(panel, dataPaths[1], programButton.nextSibling);
     }
 
+    const closeProgramView = createTag('div', { class: 'button-program-close' });
+    closeProgramView.innerHTML = `<button type="button" aria-label="Close program view">
+              <span class="icon icon-close"></span>
+              </button>`;
+    const closeProgramButton = closeProgramView.querySelector('button');
+    closeProgramButton.addEventListener('click', () => {
+      const programContent = panel.querySelectorAll('.program-content');
+      [...programContent].forEach((child) => {
+        child.classList.add('hidden');
+      });
+
+      const defaultSlideContent = panel.querySelectorAll('.slide-content');
+      [...defaultSlideContent].forEach((child) => {
+        child.classList.remove('hidden');
+      });
+    });
+    closeProgramView.classList.add('hidden');
+    const programSlidesWrapper = panel.querySelector('.slides-wrapper.program-content');
+    programSlidesWrapper.parentNode.insertBefore(closeProgramView, programSlidesWrapper);
+
     programButton.addEventListener('click', async () => {
       // show program slide elements
       const programContent = panel.querySelectorAll('.program-content');
@@ -69,17 +89,8 @@ async function loadTabPanel(panel) {
       slidesElement.classList.add('hidden', 'slide-content');
       programButton.classList.add('hidden', 'slide-content');
       slidesElement.previousSibling.classList.add('hidden', 'slide-content');
+      closeProgramView.classList.remove('hidden');
     });
-
-    // const closeProgramView = createTag('div', { class: 'button-program-close' });
-    // closeProgramView.innerHTML = `<button type="button" aria-label="Close program view">
-    //           <span class="icon icon-close"></span>
-    //           </button>`;
-    // const closeProgramButton = closeProgramView.querySelector('button');
-    // closeProgramButton.addEventListener('click', () => {
-    //   console.log("Close program view")
-    // });
-    // panel.append(closeProgramView);
   }
 }
 

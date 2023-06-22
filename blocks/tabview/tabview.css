@@ -152,7 +152,6 @@
 }
 
 /* On top of slides wrapper */
-/*
 .button-program-close {
   border: 3px solid purple;
   right: 64px;
@@ -161,9 +160,8 @@
   text-align: right;
   z-index: 2;
 }
-*/
 
-/* show/hide parts of the UI */
+/* hide parts of the UI */
 .tabview .hidden {
   display: none !important;
 }
