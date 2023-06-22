@@ -52,20 +52,18 @@ async function loadTabPanel(panel) {
     programButtonText.textContent = 'Click here for suggested programs';
     programButton.append(programButtonText);
     slidesElement.parentNode.insertBefore(programButton, slidesElement.nextSibling);
-
     const programElements = panel.querySelectorAll('.program-content');
     if (programElements.length === 0) {
       await loadProgramPanel(panel, dataPaths[1], programButton.nextSibling);
     }
-
     const closeProgramView = createTag('div', { class: 'button-program-close' });
+    closeProgramView.classList.add('hidden');
     closeProgramView.innerHTML = `<button type="button" aria-label="Close program view">
         <span class="icon icon-close">
           <svg xmlns="http://www.w3.org/2000/svg"><use href="#icons-sprite-close"></use></svg>
         </span>
       </button>`;
     const closeProgramButton = closeProgramView.querySelector('button');
-    closeProgramView.classList.add('hidden');
     const programSlidesWrapper = panel.querySelector('.slides-wrapper.program-content');
     programSlidesWrapper.parentNode.insertBefore(closeProgramView, programSlidesWrapper);
 
@@ -81,7 +79,6 @@ async function loadTabPanel(panel) {
       programButton.classList.add('hidden', 'slide-content');
       slidesElement.previousSibling.classList.add('hidden', 'slide-content');
     }, { passive: true });
-
     closeProgramButton.addEventListener('click', () => {
       const programContent = panel.querySelectorAll('.program-content');
       [...programContent].forEach((child) => {
@@ -132,7 +129,6 @@ export default async function decorate(block) {
 
     const anchors = tabContent.querySelectorAll('a');
     const anchor = anchors[0];
-
     const contentPath = anchor?.getAttribute('href');
     tabContent.textContent = '';
     tabContent.removeAttribute('class');

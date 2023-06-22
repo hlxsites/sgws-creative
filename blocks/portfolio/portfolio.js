@@ -29,7 +29,9 @@ export default async function decorate(block) {
     // build grid
     const { data = [] } = json[sheet];
     const grid = createTag('ul', { class: 'portfolio-grid' });
-    data.forEach((product) => {
+
+    const cardsToAppend = new Array(data.length);
+    data.forEach((product, index) => {
       const card = createTag('li', {});
       card.innerHTML = `<a href="${product.url}" target="_blank">
         <div>
@@ -49,9 +51,10 @@ export default async function decorate(block) {
           pictureContainer.append(para);
         });
       pictureContainer.classList.add(`picture-container-${pictureContainer.children.length}`);
-      grid.append(card);
+      cardsToAppend[index] = card;
     });
 
+    grid.append(...cardsToAppend)
     block.append(grid);
   });
 
