@@ -43,7 +43,9 @@ export default function decorate(block) {
   videoElement.playsinline = false;
   videoElement.preload = 'metadata';
   if (image && image.src) {
-    videoElement.poster = image.src;
+    let newUrl = image.src.replace('\.png', '\.webp');
+    newUrl = newUrl.replace('format=png', 'format=webp');
+    videoElement.poster = newUrl;
   }
 
   videoDiv.appendChild(videoElement);
