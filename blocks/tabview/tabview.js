@@ -60,7 +60,9 @@ async function loadTabPanel(panel) {
 
     const closeProgramView = createTag('div', { class: 'button-program-close' });
     closeProgramView.innerHTML = `<button type="button" aria-label="Close program view">
-        <span class="icon icon-close"></span>
+        <span class="icon icon-close">
+          <svg xmlns="http://www.w3.org/2000/svg"><use href="#icons-sprite-close"></use></svg>
+        </span>
       </button>`;
     const closeProgramButton = closeProgramView.querySelector('button');
     closeProgramView.classList.add('hidden');
@@ -73,16 +75,11 @@ async function loadTabPanel(panel) {
       [...programContent].forEach((child) => {
         child.classList.remove('hidden');
       });
-
+      closeProgramView.classList.remove('hidden');
       // hide elements from "default" slide and mark them as slide content
       slidesElement.classList.add('hidden', 'slide-content');
       programButton.classList.add('hidden', 'slide-content');
       slidesElement.previousSibling.classList.add('hidden', 'slide-content');
-      closeProgramView.classList.remove('hidden');
-
-      console.log('~~~~~~~~~~~~~~')
-      console.log(closeProgramView.classList);
-      console.log('~~~~~~~~~~~~~~')
     });
 
     closeProgramButton.addEventListener('click', () => {
@@ -92,7 +89,6 @@ async function loadTabPanel(panel) {
         child.classList.add('hidden');
       });
       closeProgramView.classList.add('hidden');
-
       const defaultSlideContent = panel.querySelectorAll('.slide-content');
       [...defaultSlideContent].forEach((child) => {
         child.classList.remove('hidden');

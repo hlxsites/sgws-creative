@@ -157,9 +157,6 @@
   left: auto;
   position: absolute;
   text-align: right;
-  width: 64px;
-  height: 64px;
-  border: 3px solid purple;
   z-index: 2;
 }
 
@@ -174,11 +171,9 @@
   width: 44px;
 }
 
-.button-program-close > button > .icon svg {
-  color: red;
-  fill: purple;
+.button-program-close > button > .icon > svg > use {
+  fill: var(--primary-color);
 }
-
 
 /* hide parts of the UI */
 .tabview .hidden {
