@@ -5,7 +5,6 @@ function observeVideo(block, rootMargin) {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       const videoElement = entry.target.querySelector('video');
-      videoElement.muted = true;
       videoElement.autoplay = true;
       videoElement.loop = true;
       videoElement.playsinline = true;
