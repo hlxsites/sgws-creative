@@ -1,4 +1,5 @@
-import { createVideoTag, createTag, animationObserver } from '../../scripts/scripts.js';
+import { createVideoTag, createTag, animationObserver, createIcon } from '../../scripts/scripts.js';
+import { decorateIcons } from '../../scripts/lib-franklin.js';
 
 export default function decorate(block) {
   const cols = [...block.firstElementChild.children];
@@ -70,13 +71,23 @@ export default function decorate(block) {
             imagesRoot = `${document.location.pathname.substr(0, pIndex)}/images`;
           }
 
-          const navDiv = createTag('div', { class: 'nav-help' });
+          const navDiv = createTag('div', { class: 'nav-help animate' });
           const img = createTag('img', {
             src: `${imagesRoot}/media_1b2d0c5c923af03695467204154a13945c5e1da53.jpeg`,
             alt: 'Navigation help',
             'aria-label': 'Navigation help',
           });
           navDiv.append(img);
+
+          const closeIcon = createIcon('close');
+          closeIcon.classList.add('nav-help-close', 'animate');
+          closeIcon.addEventListener('click', () => {
+            helpIcon.closest('div.columns-wrapper').classList.remove('help-open');
+            tabView.classList.remove('help-open');
+          });
+          block.parentNode.append(closeIcon);
+          decorateIcons(block.parentNode);
+
           block.parentNode.append(navDiv);
         }
       }

@@ -46,6 +46,10 @@
   display: none;
 }
 
+.columns-wrapper .nav-help-close {
+  display: none;
+}
+
 .columns > div > .columns-img-col img {
   display: block;
 }
@@ -229,6 +233,15 @@
   padding-top: var(--layout-size-xxl);
 }
 
+.columns-wrapper.help-open span.icon-close {
+  display: block;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  margin: 80px var(--layout-size-m) var(--layout-size-m);
+  right: var(--layout-size-xxl);
+}
+
 .columns.image-overlay > div > div > p:last-child img {
   position: relative;
   max-width: 85%;
@@ -320,14 +333,14 @@
   opacity: 0.1;
 }
 
-.columns.heading span.icon svg > * {
-  fill: var(--secondary-color);
-  color: var(--secondary-color);
+.columns.heading span.icon-help svg > * {
+  fill: var(--primary-color);
+  color: var(--primary-color);
 }
 
-.columns.heading span.icon svg:hover > * {
-  fill: var(--nav-home-color);
-  color: var(--nav-home-color);
+.columns.heading span.icon-help svg:hover > * {
+  fill: var(--secondary-color);
+  color: var(--secondary-color);
 }
 
 /* animations */
