@@ -1,2 +1,26 @@
 .poster.block {
+  display: flex;
+  flex-direction: row;
+}
+
+.poster.block .content-holder {
+  display: flex;
+  flex-direction: column;
+  border: 3px solid red;
+}
+
+.poster.block .poster-image-holder {
+  display: flex;
+  flex-direction: column;
+  border: 3px solid purple;
+}
+
+.poster.block .logo-row-layout {
+  display: flex;
+  flex-direction: row;
+}
+
+.poster.block .product-row-layout {
+  display: flex;
+  flex-direction: row;
 }
