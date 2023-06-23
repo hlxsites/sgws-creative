@@ -1,4 +1,10 @@
-import { createVideoTag, createTag, animationObserver } from '../../scripts/scripts.js';
+import {
+  createVideoTag,
+  createTag,
+  animationObserver,
+  createIcon,
+} from '../../scripts/scripts.js';
+import { createOptimizedPicture, decorateIcons } from '../../scripts/lib-franklin.js';
 
 export default function decorate(block) {
   const cols = [...block.firstElementChild.children];
@@ -9,7 +15,7 @@ export default function decorate(block) {
     block.classList.add('icon-list');
   }
 
-  // setup image columns
+  // setup image columns and help button
   [...block.children].forEach((row) => {
     [...row.children].forEach((col) => {
       const videoLink = col.querySelector(':scope a');
@@ -45,6 +51,47 @@ export default function decorate(block) {
         if (picWrapper && picWrapper.children.length === 1) {
           // picture is only content in column
           picWrapper.classList.add('columns-img-col');
+        }
+      }
+
+      const helpIcon = col.querySelector(':scope span.icon-help');
+      const tabView = document.querySelector('div.tabview');
+      if (helpIcon && tabView) {
+        const parent = helpIcon.closest('p');
+        if (parent) {
+          const helpDiv = createTag('div', { class: 'has-help' });
+          const helpP = createTag('p', { class: 'animate' });
+
+          helpIcon.addEventListener('click', () => {
+            helpIcon.closest('div.columns-wrapper').classList.toggle('help-open');
+            tabView.classList.toggle('help-open');
+          });
+          helpP.append(helpIcon);
+
+          helpDiv.append(parent);
+          helpDiv.append(helpP);
+          col.append(helpDiv);
+
+          // Image to overlay
+          const navDiv = createTag('div', { class: 'nav-help animate' });
+          const img = createOptimizedPicture(
+            'https://main--sgws-creative--hlxsites.hlx.page/bloominbrands/images/help-nav.jpg',
+            'Navigation help',
+            false,
+          );
+          navDiv.append(img);
+
+          // Button to close overlay
+          const closeIcon = createIcon('close');
+          closeIcon.classList.add('nav-help-close', 'animate');
+          closeIcon.addEventListener('click', () => {
+            helpIcon.closest('div.columns-wrapper').classList.remove('help-open');
+            tabView.classList.remove('help-open');
+          });
+          block.parentNode.append(closeIcon);
+          decorateIcons(block.parentNode);
+
+          block.parentNode.append(navDiv);
         }
       }
     });

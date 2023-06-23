@@ -373,7 +373,7 @@
 }
 
 /* animations */
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: no-preference) {
   .slides-container .slide-nav button {
     opacity: 0;
   }
