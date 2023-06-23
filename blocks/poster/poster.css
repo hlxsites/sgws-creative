@@ -20,7 +20,7 @@
 
 .poster.block .poster-image-holder > .picture > picture > img {
   height: 100%;
-  object-fit: fill;
+  object-fit: cover;
 }
 
 .poster.block .logo-row-layout {
@@ -28,11 +28,17 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  padding-top: 1.5rem;
 }
 
-.poster.block .teaser-row-layout,
+.poster.block .teaser-row-layout{
+  text-align: center;
+}
+
+
 .poster.block .title-row-layout {
   text-align: center;
+  margin-top: -1.75rem;
 }
 
 .poster.block .product-row-layout {
@@ -41,10 +47,57 @@
   justify-content: center;
 }
 
+.poster.block .title-row-layout h3 {
+  font-family: var(--heading-font-family);
+  color: var(--secondary-color);
+  font-size: 4vw;
+}
+
+.poster.block .teaser-row-layout {
+  padding-left: 5vw;
+  padding-right: 5vw;
+}
+
+.poster.block .teaser-row-layout h4,
+.poster.block .product-row-layout h4 {
+  font-family: var(--heading-font-family);
+  color: var(--static-color-black);
+  text-transform: uppercase;
+}
+
+.poster.block .product-row-layout p {
+  font-family: var(--heading-font-family);
+  color: var(--static-color-white);
+  text-transform: uppercase;
+  background-color:var(--secondary-color);
+  margin-top: unset;
+  margin-bottom: unset;
+  padding-left: 1rem;
+  padding-right: 1rem
+}
+
+.poster.block .product-row-layout > div:nth-child(1) {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.poster.block .product-row-layout > div:nth-child(3) {
+  margin-left: 1.5rem;
+}
+
 .poster.block .product-row-layout > div:nth-child(2) {
   text-align: center;
 }
 
 .poster.block .product-row-layout img {
-  max-height: 20vw;
+  max-height: 15vw;
+}
+
+.logo-row-layout > div:nth-child(2) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1vw;
+  margin-right: 1vw;
+  width: 200%;
 }
