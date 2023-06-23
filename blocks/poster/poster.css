@@ -28,13 +28,11 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding-top: 1.5rem;
 }
 
 .poster.block .teaser-row-layout{
   text-align: center;
 }
-
 
 .poster.block .title-row-layout {
   text-align: center;
@@ -63,6 +61,7 @@
   font-family: var(--heading-font-family);
   color: var(--static-color-black);
   text-transform: uppercase;
+  font-size: 1.5vw;
 }
 
 .poster.block .product-row-layout .products-list-holder {
@@ -79,7 +78,9 @@
   margin-top: unset;
   margin-bottom: unset;
   padding-left: 1rem;
-  padding-right: 1rem
+  padding-right: 1rem;
+  font-size: 1.2vw;
+  line-height: 1.5
 }
 
 .poster.block .product-row-layout > div:nth-child(1) {
