@@ -1,13 +1,12 @@
 import { createTag } from '../../scripts/scripts.js';
-import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 function observeVideo(block, rootMargin) {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       const videoElement = entry.target.querySelector('video');
-      videoElement.autoplay = true;
-      videoElement.loop = true;
-      videoElement.playsinline = true;
+      if (!videoElement.autoplay) videoElement.autoplay = true;
+      if (!videoElement.loop) videoElement.loop = true;
+      if (!videoElement.playsinline) videoElement.playsinline = true;
       if (entry.isIntersecting) {
         videoElement.play();
       } else {
@@ -26,7 +25,6 @@ export default function decorate(block) {
   // only one poster image (before or after the video link)
   const image = block.querySelector('img');
   const imagePicture = image.closest('picture');
-  imagePicture.replaceWith(createOptimizedPicture(image.src, image.alt, true, [{ width: window.innerWidth || '1400' }]));
   block.append(imagePicture);
 
   // only one video link per block
