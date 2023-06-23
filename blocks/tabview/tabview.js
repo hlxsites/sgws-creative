@@ -28,9 +28,9 @@ async function loadTabPanel(panel) {
   fragment = await decorateFragment(fragment);
   if (fragment) {
     const fragmentSection = fragment.querySelector(':scope .section');
-    panel.append(...fragmentSection.children);
     panel.classList.add(...fragmentSection.classList);
     panel.classList.remove('section');
+    panel.append(...fragmentSection.children);
     const block = panel.closest('.tabview');
     const tabIndex = [...block.querySelectorAll('[role="tabpanel"]')].indexOf(panel);
     const buttonContainer = block.querySelector('[role="tablist"]');
@@ -66,7 +66,10 @@ async function loadTabPanel(panel) {
     const closeProgramButton = closeProgramView.querySelector('button');
     const programSlidesWrapper = panel.querySelector('.slides-wrapper.program-content');
     programSlidesWrapper.parentNode.insertBefore(closeProgramView, programSlidesWrapper);
-
+    const nestedSlides = programButton.previousElementSibling;
+    nestedSlides.querySelectorAll('.pairs-with-text').forEach((slideText) => {
+      slideText.classList.add('pairs-with-text-badge');
+    });
     programButton.addEventListener('click', async () => {
       // show program slide elements
       const programContent = panel.querySelectorAll('.program-content');
@@ -143,8 +146,8 @@ export default async function decorate(block) {
     }
 
     tabList.append(tabButton);
-    block.append(tabContent);
     block.removeChild(group);
+    block.append(tabContent);
   });
 
   block.prepend(tabList);
