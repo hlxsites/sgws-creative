@@ -207,6 +207,10 @@
   padding: var(--layout-size-xl) 0 0;
 }
 
+.slides .slide .pairs-with-text-badge {
+  padding-right: 5vw;
+}
+
 .slides .slide .pairs-with-text h3:first-child {
   margin: 0;
   display: block;
