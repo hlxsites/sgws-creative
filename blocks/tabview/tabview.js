@@ -17,6 +17,12 @@ async function loadProgramPanel(panel, programPath, restOfPanel) {
   }
 }
 
+function computeBadgePlacement(programButton, panel) {
+  const badgeHolderElement = panel.querySelector('.slides > .slide.active > .stats-group > .columns-wrapper > .stats > div');
+  if (!badgeHolderElement) return;
+  programButton.style.marginTop = `calc(-${programButton.offsetHeight}px - ${badgeHolderElement.offsetHeight}px)`;
+}
+
 async function loadTabPanel(panel) {
   if (!panel) {
     return;
@@ -70,6 +76,10 @@ async function loadTabPanel(panel) {
     nestedSlides.querySelectorAll('.pairs-with-text').forEach((slideText) => {
       slideText.classList.add('pairs-with-text-badge');
     });
+
+    setTimeout(() => {
+      computeBadgePlacement(programButton, panel);
+    }, 250);
     programButton.addEventListener('click', async () => {
       // show program slide elements
       const programContent = panel.querySelectorAll('.program-content');
@@ -93,6 +103,14 @@ async function loadTabPanel(panel) {
         child.classList.remove('hidden');
       });
     }, { passive: true });
+
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        computeBadgePlacement(programButton, panel);
+      }, 250);
+    });
   }
 }
 
