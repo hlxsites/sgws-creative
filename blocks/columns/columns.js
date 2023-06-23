@@ -1,4 +1,9 @@
-import { createVideoTag, createTag, animationObserver, createIcon } from '../../scripts/scripts.js';
+import {
+  createVideoTag,
+  createTag,
+  animationObserver,
+  createIcon,
+} from '../../scripts/scripts.js';
 import { decorateIcons } from '../../scripts/lib-franklin.js';
 
 export default function decorate(block) {
