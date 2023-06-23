@@ -46,7 +46,7 @@
   display: block;
 }
 
-.columns-wrapper:not(.help-open) .nav-help > img,
+.columns-wrapper:not(.help-open) .nav-help img,
 .columns-wrapper:not(.help-open) .nav-help-close {
   height: 0;
 }
@@ -223,7 +223,7 @@
   flex-direction: row;
 }
 
-.columns-wrapper.help-open .nav-help > img {
+.columns-wrapper.help-open .nav-help img {
   height: auto;
   width: 100%;
   padding-top: var(--layout-size-xxl);

@@ -4,7 +4,7 @@ import {
   animationObserver,
   createIcon,
 } from '../../scripts/scripts.js';
-import { decorateIcons } from '../../scripts/lib-franklin.js';
+import { createOptimizedPicture, decorateIcons } from '../../scripts/lib-franklin.js';
 
 export default function decorate(block) {
   const cols = [...block.firstElementChild.children];
@@ -74,11 +74,11 @@ export default function decorate(block) {
 
           // Image to overlay
           const navDiv = createTag('div', { class: 'nav-help animate' });
-          const img = createTag('img', {
-            src: 'https://main--sgws-creative--hlxsites.hlx.page/bloominbrands/images/help-nav.jpg',
-            alt: 'Navigation help',
-            'aria-label': 'Navigation help',
-          });
+          const img = createOptimizedPicture(
+            'https://main--sgws-creative--hlxsites.hlx.page/bloominbrands/images/help-nav.jpg',
+            'Navigation help',
+            false,
+          );
           navDiv.append(img);
 
           // Button to close overlay
