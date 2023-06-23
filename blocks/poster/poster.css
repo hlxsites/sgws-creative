@@ -1,6 +1,7 @@
 .poster.block {
   display: flex;
   flex-direction: row;
+  aspect-ratio: 2.25;
 }
 
 .poster.block .content-holder {
