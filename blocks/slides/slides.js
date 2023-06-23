@@ -150,6 +150,7 @@ export default async function decorate(block) {
 
     // load stats fragment
     const links = slide.querySelectorAll('a');
+    if (links.length === 0) return;
     const link = links[links.length - 1];
     const path = link ? link.getAttribute('href') : slide.textContent.trim();
     await buildStatsFragmentSlide(slide, path, link);
