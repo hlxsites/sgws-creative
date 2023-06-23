@@ -35,6 +35,7 @@
   color: var(--secondary-color);
   margin-bottom: -2rem;
   margin-top: 2rem;
+  text-transform: unset;
 }
 
 .billboard.block .main-row-layout h4 {

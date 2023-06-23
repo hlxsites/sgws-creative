@@ -17,17 +17,19 @@ export default function decorate(block) {
       if (videoLink?.href?.endsWith('.mp4')) {
         const videoP = videoLink?.closest('p');
         const posterP = videoP.previousElementSibling;
+        const posterImage = posterP?.querySelector('img');
         const attributes = {
-          preload: 'auto',
+          preload: 'none',
         };
-        const video = createVideoTag(videoLink.href, posterP?.querySelector('img')?.src, attributes);
+
+        const video = createVideoTag(videoLink.href, posterImage?.src, attributes);
         const playButton = createTag('button', { class: 'play-button', type: 'button', 'aria-label': 'Play Video' });
         const background = createTag('div', { class: 'video-background' });
         playButton.addEventListener('click', () => {
           video.controls = true;
           video.play();
           playButton.remove();
-        });
+        }, { passive: true });
         const videoGroup = createTag('p', { class: 'video-group' });
         videoGroup.append(video, playButton);
         col.append(videoGroup, background);

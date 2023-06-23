@@ -3,11 +3,27 @@ import {
   createTag, fetchFragment, decorateFragment, hasTheme, getTheme,
 } from '../../scripts/scripts.js';
 
+async function loadProgramPanel(panel, programPath, restOfPanel) {
+  let fragment = await fetchFragment(programPath);
+  fragment = await decorateFragment(fragment);
+  if (fragment) {
+    const fragmentSection = fragment.querySelector(':scope .section');
+    const programFragmentElements = [...fragmentSection.children];
+    programFragmentElements.forEach((child) => {
+      // program content is hidden by default
+      child.classList.add('program-content', 'hidden');
+    });
+    panel.append(...programFragmentElements, restOfPanel);
+  }
+}
+
 async function loadTabPanel(panel) {
   if (!panel) {
     return;
   }
-  const contentPath = panel.getAttribute('data-path');
+
+  const dataPaths = panel.getAttribute('data-path').split(',');
+  const contentPath = dataPaths[0];
   let fragment = await fetchFragment(contentPath);
   fragment = await decorateFragment(fragment);
   if (fragment) {
@@ -26,6 +42,54 @@ async function loadTabPanel(panel) {
       panel.style.setProperty(`--${token}`, `${value}`);
       tabButton?.style.setProperty(`--${token}`, `${value}`);
     });
+  }
+
+  if (dataPaths.length > 1) {
+    const programButton = document.createElement('div');
+    const programButtonText = document.createElement('div');
+    const slidesElement = panel.querySelector('.slides-wrapper');
+    programButton.classList.add('clickable-program-overlay');
+    programButtonText.textContent = 'Click here for suggested programs';
+    programButton.append(programButtonText);
+    slidesElement.parentNode.insertBefore(programButton, slidesElement.nextSibling);
+    const programElements = panel.querySelectorAll('.program-content');
+    if (programElements.length === 0) {
+      await loadProgramPanel(panel, dataPaths[1], programButton.nextSibling);
+    }
+    const closeProgramView = createTag('div', { class: 'button-program-close' });
+    closeProgramView.classList.add('hidden');
+    closeProgramView.innerHTML = `<button type="button" aria-label="Close program view">
+        <span class="icon icon-close">
+          <svg xmlns="http://www.w3.org/2000/svg"><use href="#icons-sprite-close"></use></svg>
+        </span>
+      </button>`;
+    const closeProgramButton = closeProgramView.querySelector('button');
+    const programSlidesWrapper = panel.querySelector('.slides-wrapper.program-content');
+    programSlidesWrapper.parentNode.insertBefore(closeProgramView, programSlidesWrapper);
+
+    programButton.addEventListener('click', async () => {
+      // show program slide elements
+      const programContent = panel.querySelectorAll('.program-content');
+      [...programContent].forEach((child) => {
+        child.classList.remove('hidden');
+      });
+      closeProgramView.classList.remove('hidden');
+      // hide elements from "default" slide and mark them as slide content
+      slidesElement.classList.add('hidden', 'slide-content');
+      programButton.classList.add('hidden', 'slide-content');
+      slidesElement.previousSibling.classList.add('hidden', 'slide-content');
+    }, { passive: true });
+    closeProgramButton.addEventListener('click', () => {
+      const programContent = panel.querySelectorAll('.program-content');
+      [...programContent].forEach((child) => {
+        child.classList.add('hidden');
+      });
+      closeProgramView.classList.add('hidden');
+      const defaultSlideContent = panel.querySelectorAll('.slide-content');
+      [...defaultSlideContent].forEach((child) => {
+        child.classList.remove('hidden');
+      });
+    }, { passive: true });
   }
 }
 
@@ -61,16 +125,22 @@ export default async function decorate(block) {
           panel.classList.remove('active');
         }
       });
-    });
+    }, { passive: true });
 
-    const anchor = tabContent.querySelector('a');
+    const anchors = tabContent.querySelectorAll('a');
+    const anchor = anchors[0];
     const contentPath = anchor?.getAttribute('href');
     tabContent.textContent = '';
     tabContent.removeAttribute('class');
     tabContent.setAttribute('id', `tabpanel-${groupId}`);
     tabContent.setAttribute('role', 'tabpanel');
     tabContent.setAttribute('aria-labelledby', `tab=${groupId}`);
-    tabContent.setAttribute('data-path', contentPath || '');
+    if (anchors.length > 1) {
+      const dataPath = `${contentPath || ''},${anchors[1].getAttribute('href') || ''}`;
+      tabContent.setAttribute('data-path', dataPath);
+    } else {
+      tabContent.setAttribute('data-path', contentPath || '');
+    }
 
     tabList.append(tabButton);
     block.append(tabContent);

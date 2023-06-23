@@ -2,18 +2,23 @@
   background-color: var(--primary-color);
 }
 
-.slides {
+.slides.block {
   --avatar-background-size: 241px;
   --avatar-size: 269px;
 }
 
-.slides .slide .icon use {
+.slides.program .slide > div {
+  flex: 1;
+  padding-right: 0 !important;
+}
+
+.slides.block .slide .icon use {
   fill: var(--text-color-background);
 }
 
-.slides h3,
-.slides a:any-link,
-.slides {
+.slides.block h3,
+.slides.block a:any-link,
+.slides.block {
   color: var(--text-color-background);
 }
 
@@ -27,7 +32,7 @@
   text-transform: uppercase;
 }
 
-.slides h3::after {
+.slides.block h3::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -40,16 +45,16 @@
   font-family: var(--secondary-body-font-family);
 }
 
-.slides .slide {
+.slides.block .slide {
   display: none;
 }
 
-.slides .slide.active {
+.slides.block .slide.active {
   display: flex;
   flex-flow: row nowrap;
 }
 
-.slides .slide .avatar {
+.slides.block .slide .avatar {
   position: relative;
   padding: var(--layout-size-xl);
 }
@@ -65,18 +70,34 @@
   clip-path: circle(50% at 50% 50%);
 }
 
-.slides .slide .avatar picture:first-child img {
+.slides .slide .pairs-with-meal picture:first-child img {
+  margin-bottom: 16px;
+  border: 6px solid white;
+  box-sizing: border-box;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
+.slides .slide .pairs-with-meal picture:last-child img {
+  height: var(--avatar-size);
+  box-sizing: border-box;
+  aspect-ratio: auto;
+  object-fit: contain;
+  margin-left: -24px;
+}
+
+.slides.block .slide .avatar picture:first-child img {
   object-fit: cover;
 }
 
-.slides .slide .avatar picture:last-child {
+.slides.block .slide .avatar picture:last-child {
   position: absolute;
   top: calc(var(--layout-size-xl) - 14px);
   left: 50%;
   transform: translate(-50%, 0);
 }
 
-.slides .slide .avatar picture:last-child img {
+.slides.block .slide .avatar picture:last-child img {
   height: var(--avatar-size);
 }
 
@@ -178,22 +199,6 @@
 
 .slides .slide.show-pairing .pairs-with-meal.animate picture:last-child {
   animation: fade-in-from-none 0.5s ease-out;
-}
-
-.slides .slide .pairs-with-meal picture:first-child img {
-  margin-bottom: 16px;
-  border: 6px solid white;
-  box-sizing: border-box;
-  aspect-ratio: auto;
-  object-fit: contain;
-}
-
-.slides .slide .pairs-with-meal picture:last-child img {
-  height: var(--avatar-size);
-  box-sizing: border-box;
-  aspect-ratio: auto;
-  object-fit: contain;
-  margin-left: -24px;
 }
 
 .slides .slide .pairs-with-text {

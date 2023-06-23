@@ -1,7 +1,4 @@
-import {
-  fetchFragment,
-  decorateFragment,
-} from '../../scripts/scripts.js';
+import { fetchFragment, decorateFragment } from '../../scripts/scripts.js';
 
 export default async function decorate(block) {
   const link = block.querySelector('a');
@@ -12,11 +9,9 @@ export default async function decorate(block) {
     const fragmentSections = fragment.querySelectorAll(':scope .section');
     const section = block.closest('.section');
     if (fragmentSections.length === 1) {
-      // add to section
       section.classList.add(...fragmentSections[0].classList);
       block.closest('.fragment-wrapper').replaceWith(...fragmentSections[0].childNodes);
     } else {
-      // replace section
       section.replaceWith(...fragment.childNodes);
     }
   }
