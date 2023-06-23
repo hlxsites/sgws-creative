@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: row;
   aspect-ratio: 2.25;
+  overflow: hidden;
 }
 
 .poster.block .content-holder {
@@ -90,6 +91,7 @@
   display: flex;
   flex-wrap: nowrap;
   gap: 0.5rem;
+  align-items: center;
 }
 
 .poster.block .product-row-layout > div:nth-child(3) {
@@ -97,6 +99,7 @@
   display: flex;
   flex-wrap: nowrap;
   gap: 0.5rem;
+  align-items: center;
 }
 
 .poster.block .product-row-layout > div:nth-child(2) {
