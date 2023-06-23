@@ -65,7 +65,13 @@
   text-transform: uppercase;
 }
 
-.poster.block .product-row-layout p {
+.poster.block .product-row-layout .products-list-holder {
+  background-color:var(--secondary-color);
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.poster.block .product-row-layout .products-list-holder p {
   font-family: var(--heading-font-family);
   color: var(--static-color-white);
   text-transform: uppercase;
