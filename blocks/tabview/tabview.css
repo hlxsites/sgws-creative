@@ -164,6 +164,11 @@
   flex: 1;
 }
 
+.tabview [role="tabpanel"] .slides-wrapper .slides .stats-group .default-content-wrapper {
+  display:block;
+  padding: 0;
+}
+
 .tabview .button-program-close > button > .icon {
   display: inline-block;
   height: 2.5vw;
