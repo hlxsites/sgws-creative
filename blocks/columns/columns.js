@@ -67,20 +67,16 @@ export default function decorate(block) {
           helpDiv.append(helpP);
           col.append(helpDiv);
 
-          let imagesRoot = '/p/1';
-          const pIndex = document.location.pathname.indexOf('/p/');
-          if (pIndex >= 0) {
-            imagesRoot = `${document.location.pathname.substr(0, pIndex)}/images`;
-          }
-
+          // Image to overlay
           const navDiv = createTag('div', { class: 'nav-help animate' });
           const img = createTag('img', {
-            src: `${imagesRoot}/media_1b2d0c5c923af03695467204154a13945c5e1da53.jpeg`,
+            src: 'https://main--sgws-creative--hlxsites.hlx.page/bloominbrands/images/help-nav.jpg',
             alt: 'Navigation help',
             'aria-label': 'Navigation help',
           });
           navDiv.append(img);
 
+          // Button to close overlay
           const closeIcon = createIcon('close');
           closeIcon.classList.add('nav-help-close', 'animate');
           closeIcon.addEventListener('click', () => {
