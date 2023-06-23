@@ -83,12 +83,18 @@
 }
 
 .poster.block .product-row-layout > div:nth-child(1) {
-  margin-left: 1.5rem;
-  margin-right: 1.5rem;
+  margin-left: 1.0rem;
+  margin-right: 1.0rem;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
 }
 
 .poster.block .product-row-layout > div:nth-child(3) {
-  margin-left: 1.5rem;
+  margin-left: 1.0rem;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
 }
 
 .poster.block .product-row-layout > div:nth-child(2) {
