@@ -48,6 +48,19 @@ async function loadTabPanel(panel) {
       panel.style.setProperty(`--${token}`, `${value}`);
       tabButton?.style.setProperty(`--${token}`, `${value}`);
     });
+    // process product border
+    const border = panel.querySelector(':scope .default-content-wrapper > p.picture');
+    const slides = panel.querySelector(':scope .slides-wrapper');
+    if (border && slides) {
+      const borderNew = createTag('div', { class: 'default-content-wrapper' });
+      const borderNewContent = createTag('p', { class: 'border product' });
+      borderNewContent.classList.add('picture');
+      const img = border.querySelector('img')?.src;
+      borderNewContent.style.backgroundImage = `url(${img})`;
+      borderNew.append(borderNewContent);
+      border.remove();
+      slides.parentNode.insertBefore(borderNew, slides);
+    }
   }
 
   if (dataPaths.length > 1) {
