@@ -82,6 +82,7 @@
 
 .slides .slide .pairs-with-meal picture:last-child img {
   height: var(--avatar-size);
+  width: auto;
   box-sizing: border-box;
   aspect-ratio: auto;
   object-fit: contain;
@@ -101,6 +102,7 @@
 
 .slides.block .slide .avatar picture:last-child img {
   height: var(--avatar-size);
+  width: auto;
 }
 
 /* Pairs With View */
