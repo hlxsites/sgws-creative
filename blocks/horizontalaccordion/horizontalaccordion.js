@@ -123,7 +123,7 @@ export default async function decorate(block) {
       });
       fragmentSelectors.append(nextSelector);
 
-      await loadFragment(columns[1])
+      loadFragment(columns[1])
         .then((fragment) => {
           if (fragment) {
             const fragmentSection = fragment.querySelector(':scope .section');
