@@ -32,8 +32,8 @@ export default function decorate(block) {
   imageHolder.append(posterImage);
   block.append(contentHolder, imageHolder);
 
-  const themeName = [...block.closest('.section').classList].find((className) => hasTheme(className));
-  getTheme(themeName).forEach(({ token, value }) => {
-    block.style.setProperty(`--${token}`, `${value}`);
-  });
+  // const themeName = [...block.closest('.section').classList].find((className) => hasTheme(className));
+  // getTheme(themeName).forEach(({ token, value }) => {
+  //   block.style.setProperty(`--${token}`, `${value}`);
+  // });
 }
