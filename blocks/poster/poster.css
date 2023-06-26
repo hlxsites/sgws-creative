@@ -30,6 +30,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  margin-top: 1em;
 }
 
 .poster.block .teaser-row-layout{
@@ -48,6 +49,8 @@
 }
 
 .poster.block .title-row-layout h3 {
+  margin: unset;
+  padding-top: 1em !important;
   font-family: var(--heading-font-family);
   color: var(--secondary-color);
   font-size: 3.5vw;
@@ -105,11 +108,11 @@
 }
 
 .poster.block .product-row-layout > div:nth-child(2) {
-  text-align: center;
-}
-
-.poster.block .product-row-layout img {
-  max-height: 15vw;
+  display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
 }
 
 .logo-row-layout > div:nth-child(2) {

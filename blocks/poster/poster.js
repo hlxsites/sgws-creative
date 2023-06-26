@@ -19,18 +19,16 @@ export default function decorate(block) {
   teaser.classList.add('teaser-row-layout');
   productRow.classList.add('product-row-layout');
 
-  const textContent = productRow.querySelectorAll('p');
   const productsListHolder = createTag('div', { class: 'products-list-holder' });
-  productsListHolder.append(...textContent);
-  const productsListMarkers = block.querySelectorAll('h4');
-  const productsListMarkersArray = [...productsListMarkers];
-  const productsListMarker = productsListMarkersArray[productsListMarkersArray.length-1];
-  productsListMarker.closest('div').append(productsListHolder);
-
   const imageHolder = createTag('div', { class: 'poster-image-holder' });
   const contentHolder = createTag('div', { class: 'content-holder' });
+  const textContent = productRow.querySelectorAll('p');
+  const productsListMarkers = block.querySelectorAll('h4');
+  const productsListMarkersArray = [...productsListMarkers];
+  const productsListMarker = productsListMarkersArray[productsListMarkersArray.length - 1];
+  productsListHolder.append(...textContent);
+  productsListMarker.closest('div').append(productsListHolder);
   contentHolder.append(logo, title, teaser, productRow);
-
   imageHolder.append(posterImage);
   block.append(contentHolder, imageHolder);
 
