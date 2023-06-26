@@ -39,6 +39,26 @@ async function buildProgramFragmentSlide(slide, slideContentPath) {
   }
 }
 
+async function buildStatsFragmentSlide(slide, path, link) {
+  let fragment = await fetchFragment(path);
+  fragment = await decorateFragment(fragment);
+  if (fragment) {
+    const fragmentSection = fragment.querySelector(':scope .section');
+    const statsGroup = createTag('div', { class: 'stats-group' });
+    statsGroup.append(...fragmentSection.children);
+    slide.append(statsGroup);
+    link.remove();
+    // border tags
+    const selections = statsGroup.querySelectorAll('.default-content-wrapper p.picture:only-child');
+    selections.forEach((selection, selectionId) => {
+      selection.classList.add('border', `border-${selectionId}`);
+      const img = selection.querySelector('img')?.src;
+      selection.style.backgroundImage = `url(${img})`;
+      selection.querySelector('picture')?.remove();
+    });
+  }
+}
+
 export default async function decorate(block) {
   block.setAttribute('role', 'region');
   block.setAttribute('aria-label', 'Slides');
@@ -127,6 +147,13 @@ export default async function decorate(block) {
         slide.append(pairsWith);
       }
     }
+
+    // load stats fragment
+    const links = slide.querySelectorAll('a');
+    if (links.length === 0) return;
+    const link = links[links.length - 1];
+    const path = link ? link.getAttribute('href') : slide.textContent.trim();
+    await buildStatsFragmentSlide(slide, path, link);
   });
 
   decorateIcons(block);
