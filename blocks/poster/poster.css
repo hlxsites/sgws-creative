@@ -35,6 +35,8 @@
 
 .poster.block .teaser-row-layout {
   text-align: center;
+  padding-left: 5vw;
+  padding-right: 5vw;
 }
 
 .poster.block .teaser-row-layout > div > p {
@@ -61,11 +63,6 @@
   color: var(--secondary-color);
   font-size: 3.5vw;
   text-wrap: nowrap;
-}
-
-.poster.block .teaser-row-layout {
-  padding-left: 5vw;
-  padding-right: 5vw;
 }
 
 .poster.block .teaser-row-layout h4,
@@ -96,6 +93,15 @@
   text-wrap: nowrap;
 }
 
+.logo-row-layout > div:nth-child(2) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1vw;
+  margin-right: 1vw;
+  width: 200%;
+}
+
 .poster.block .product-row-layout > div:nth-child(1) {
   margin-left: 1.0rem;
   margin-right: 1.0rem;
@@ -119,13 +125,4 @@
     text-align: center;
     align-items: center;
     justify-content: center;
-}
-
-.logo-row-layout > div:nth-child(2) {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 1vw;
-  margin-right: 1vw;
-  width: 200%;
 }
