@@ -75,9 +75,9 @@ function computeFontSizes(block, theme) {
  */
 function getGradientStops(startColor, endColor) {
   return [{
-    offset: 0, color: startColor,
+    offset: 0, color: startColor || '#FFFFFF',
   }, {
-    offset: 1, color: endColor,
+    offset: 1, color: endColor || '#000000',
   }];
 }
 
