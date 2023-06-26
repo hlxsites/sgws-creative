@@ -25,18 +25,21 @@ function moveSlide(block, direction, count) {
     selectedSlide = selectedSlide.parentElement.lastElementChild;
   }
   selectedSlide.classList.add('active');
-
   // update nav
   count.textContent = `${getSlidePosition(selectedSlide)} of ${block.children.length}`;
 }
 
 async function buildProgramFragmentSlide(slide, slideContentPath) {
+  try{
   let fragment = await fetchFragment(slideContentPath);
   fragment = await decorateFragment(fragment);
   if (fragment) {
     const fragmentSection = fragment.querySelector(':scope .section');
     slide.append(...fragmentSection.children);
   }
+} catch(e){
+  console.log(e)
+}
 }
 
 async function buildStatsFragmentSlide(slide, path, link) {
