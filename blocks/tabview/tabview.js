@@ -109,7 +109,7 @@ async function loadTabPanel(panel) {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
         computeBadgePlacement(programButton, panel);
-      }, 250);
+      }, 100);
     });
   }
 }
