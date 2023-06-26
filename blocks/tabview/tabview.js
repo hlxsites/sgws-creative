@@ -104,6 +104,7 @@ async function loadTabPanel(panel) {
       slidesElement.classList.add('hidden', 'slide-content');
       programButton.classList.add('hidden', 'slide-content');
       slidesElement.previousSibling.classList.add('hidden', 'slide-content');
+      slidesElement.previousSibling.previousSibling?.classList.add('hidden', 'slide-content');
     }, { passive: true });
     closeProgramButton.addEventListener('click', () => {
       const programContent = panel.querySelectorAll('.program-content');
