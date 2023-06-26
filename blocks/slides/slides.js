@@ -78,7 +78,11 @@ export default async function decorate(block) {
       const slideContent = slide.querySelector('a');
       const slideContentPath = slideContent.getAttribute('href');
       slideContent.closest('div').remove();
-      await buildProgramFragmentSlide(slide, slideContentPath);
+      try{
+        await buildProgramFragmentSlide(slide, slideContentPath);
+      } catch (e) {
+        console.error(e);
+      }
     } else {
       // "Standard slide": create avatar container and set up 'pairs with' view if available
       const avatar = createTag('div', { class: 'avatar' });
