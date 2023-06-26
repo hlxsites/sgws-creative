@@ -169,6 +169,13 @@
   flex: 1;
 }
 
+ .tabview [role="tabpanel"] .default-content-wrapper p.border.product {
+  margin: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 3.5vw;
+}  
+
 .tabview [role="tabpanel"] .slides-wrapper .slides .stats-group .default-content-wrapper {
   display:block;
   padding: 0;
