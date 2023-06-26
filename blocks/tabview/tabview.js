@@ -92,7 +92,7 @@ async function loadTabPanel(panel) {
 
     setTimeout(() => {
       computeBadgePlacement(programButton, panel);
-    }, 250);
+    }, 20);
     programButton.addEventListener('click', async () => {
       // show program slide elements
       const programContent = panel.querySelectorAll('.program-content');
@@ -122,7 +122,7 @@ async function loadTabPanel(panel) {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
         computeBadgePlacement(programButton, panel);
-      }, 100);
+      }, 20);
     });
   }
 }
