@@ -21,11 +21,15 @@ const loadScript = (url, attrs) => {
 
 // add more delayed functionality here
 // Charts
-if (document.querySelector('div.chart-container')) {
+const hasCharts = document.querySelector('div.chart-container')
+  || document.querySelector('div.fragment-viewer');
+
+if (hasCharts) {
   const echarts = loadScript('https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js', {
     type: 'text/javascript',
   });
   echarts.onload = () => {
     document.dispatchEvent(new Event('echartsloaded'));
+    console.log("echarts loaded");
   };
 }

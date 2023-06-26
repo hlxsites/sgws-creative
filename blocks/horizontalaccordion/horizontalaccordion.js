@@ -11,8 +11,9 @@ import { decorateIcons } from '../../scripts/lib-franklin.js';
 async function loadFragment(cell) {
   const link = cell.querySelector('a');
   const path = link ? link.getAttribute('href') : cell.textContent.trim();
-  const fragment = await fetchFragment(path);
-  return decorateFragment(fragment);
+  let fragment = await fetchFragment(path);
+  fragment = await decorateFragment(fragment);
+  return fragment;
 }
 
 function appendVideoGroup(cell, target) {
@@ -87,7 +88,7 @@ export default async function decorate(block) {
   const fragmentViewer = createTag('div', { class: 'fragment-viewer', 'aria-label': 'Fragment View' });
   const fragmentSelectors = createTag('div', { class: 'fragment-selector', role: 'tablist', 'aria-label': 'Fragment View Selectors' });
 
-  [...block.children].forEach((row, rowIndex) => {
+  [...block.children].forEach(async (row, rowIndex) => {
     if (rowIndex === 0) {
       // Create default video - first, merged row - and activate (show) it.
       const nextViewer = createTag('div', { class: 'active default-viewer animate' });
@@ -120,7 +121,7 @@ export default async function decorate(block) {
       });
       fragmentSelectors.append(nextSelector);
 
-      loadFragment(columns[1])
+      await loadFragment(columns[1])
         .then((fragment) => {
           if (fragment) {
             const fragmentSection = fragment.querySelector(':scope .section');
