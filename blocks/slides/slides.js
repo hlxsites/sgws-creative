@@ -30,19 +30,17 @@ function moveSlide(block, direction, count) {
 }
 
 async function buildProgramFragmentSlide(slide, slideContentPath) {
-  try{
+  if (!slideContentPath) return;
   let fragment = await fetchFragment(slideContentPath);
   fragment = await decorateFragment(fragment);
   if (fragment) {
     const fragmentSection = fragment.querySelector(':scope .section');
     slide.append(...fragmentSection.children);
   }
-} catch(e){
-  console.log(e)
-}
 }
 
 async function buildStatsFragmentSlide(slide, path, link) {
+  if (!path) return;
   let fragment = await fetchFragment(path);
   fragment = await decorateFragment(fragment);
   if (fragment) {
