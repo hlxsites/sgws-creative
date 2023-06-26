@@ -46,6 +46,11 @@
   display: block;
 }
 
+.columns-wrapper:not(.help-open) .nav-help img,
+.columns-wrapper:not(.help-open) .nav-help-close {
+  height: 0;
+}
+
 .columns.inline-video > div {
   position: relative;
   height: 100%;
@@ -218,6 +223,25 @@
   flex-direction: row;
 }
 
+.columns-wrapper.help-open .nav-help img {
+  height: auto;
+  width: 100%;
+  padding-top: var(--layout-size-xxl);
+  animation: fade-in-right 0.25s ease-out;
+}
+
+.columns-wrapper.help-open .nav-help-close {
+  animation: fade-in-from-none 1.25s ease-out;
+}
+
+.columns-wrapper.help-open span.icon-close {
+  width: 40px;
+  height: 40px;
+  margin: 80px var(--layout-size-m) var(--layout-size-m);
+  position: absolute;
+  right: var(--layout-size-xxl);
+}
+
 .columns.image-overlay > div > div > p:last-child img {
   position: relative;
   max-width: 85%;
@@ -278,6 +302,46 @@
 .columns.inline-video > div:nth-of-type(even) .video-group.animate,
 .columns.inline-video > div:nth-of-type(even) .video-background.animate {
   animation-name: fade-in-left;
+}
+
+.columns.heading div.has-help {
+  display: flex;
+}
+
+.columns.heading div.has-help p:first-child {
+  width: calc(100% - 100px)
+}
+
+.columns.heading div.has-help p:last-child {
+  margin: auto 2% auto 4%;
+}
+
+.columns.heading span.icon-help {
+  width: 40px;
+  height: 40px;
+  margin-top: var(--layout-size-m);
+  animation-name: small-rotation;
+  animation-duration: 10000ms;
+  animation-iteration-count: infinite,infinite;
+}
+
+.columns-wrapper.help-open {
+  padding-bottom: 0 !important;
+  margin-bottom: -10px;
+}
+
+.columns-wrapper.help-open span.icon-help {
+  opacity: 0.1;
+}
+
+.columns.heading span.icon-help svg > * {
+  fill: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.columns.heading span.icon-help svg:hover > * {
+  fill: var(--secondary-color);
+  color: var(--secondary-color);
 }
 
 /* animations */
