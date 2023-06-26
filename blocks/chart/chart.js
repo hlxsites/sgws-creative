@@ -670,6 +670,7 @@ export default function decorate(block) {
   const cfg = readPredefinedBlockConfig(block, readOptions);
   const data = readBlockData(block);
 
+  window.hasCharts = true;
   let chartHolder = document.createElement('div');
   block.append(chartHolder);
 

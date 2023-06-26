@@ -85,6 +85,8 @@ function handleSelectorClick(scope, index) {
 }
 
 export default async function decorate(block) {
+  window.hasCharts = true;
+
   const fragmentViewer = createTag('div', { class: 'fragment-viewer', 'aria-label': 'Fragment View' });
   const fragmentSelectors = createTag('div', { class: 'fragment-selector', role: 'tablist', 'aria-label': 'Fragment View Selectors' });
 
