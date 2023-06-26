@@ -57,9 +57,14 @@ function prepareChartDataWithOverlay(chartData) {
 function computeFontSizes(block, theme) {
   const computedStyles = window.getComputedStyle(block);
   theme['computed-font-size-px'] = parseInt(computedStyles.fontSize, 10);
-  theme['font-size'] = `${theme['computed-font-size-px'] * 1.1}px`;
-  theme['axis-font-size'] = `${theme['computed-font-size-px'] * 0.8}px`;
-  theme['font-weight'] = computedStyles.fontWeight;
+  if(Number.isNaN(theme['computed-font-size-px'])){
+    theme['font-size'] = `12px`;
+  theme['axis-font-size'] = `12px`;
+  } else {
+    theme['font-size'] = `${theme['computed-font-size-px'] * 1.1}px`;
+    theme['axis-font-size'] = `${theme['computed-font-size-px'] * 0.8}px`;
+  }
+  theme['font-weight'] = computedStyles.fontWeight || 400;
 }
 
 /**
@@ -679,6 +684,7 @@ export default function decorate(block) {
 
   computeFontSizes(block, theme);
   theme['axis-color'] = 'rgb(0, 0, 0)';
+  console.log(theme)
 
   // listen for charting library to be loaded before starting to draw
   document.addEventListener(
