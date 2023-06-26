@@ -189,9 +189,11 @@ export default async function decorate(block) {
   await loadTabPanel(firstTab);
   firstTab.classList.add('active');
   // load the rest lazily
-  block.querySelectorAll(':scope > [role="tabpanel"]').forEach((tabPanel, index) => {
-    if (index > 0) {
-      loadTabPanel(tabPanel);
-    }
-  });
+  setTimeout(() => {
+    block.querySelectorAll(':scope > [role="tabpanel"]').forEach((tabPanel, index) => {
+      if (index > 0) {
+        loadTabPanel(tabPanel);
+      }
+    });
+  }, 1000);
 }
