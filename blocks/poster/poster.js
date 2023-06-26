@@ -33,6 +33,7 @@ export default function decorate(block) {
   block.append(contentHolder, imageHolder);
 
   /*
+  // Uncomment for debugging CSS with the block alone in a draft
   const themeName = [...block.closest('.section').classList].find(
     (className) => hasTheme(className));
   getTheme(themeName).forEach(({ token, value }) => {
