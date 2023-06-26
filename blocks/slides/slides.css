@@ -261,7 +261,7 @@
 .slides-container .slide-nav button {
   position: relative;
   width: 42px;
-  height: auto;
+  height: 50px;
   min-width: unset;
   border-radius: 50%;
   background-color: var(--secondary-color);
