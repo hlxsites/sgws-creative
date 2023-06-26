@@ -1,4 +1,4 @@
-import { getTheme, hasTheme, createTag } from '../../scripts/scripts.js';
+import { createTag } from '../../scripts/scripts.js';
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 export default function decorate(block) {
@@ -23,8 +23,12 @@ export default function decorate(block) {
   contentHolder.append(blockChildren[1], blockChildren[2], blockChildren[3], topBackgroundImage);
   block.append(contentHolder);
 
-  // const themeName = [...block.closest('.section').classList].find((className) => hasTheme(className));
-  // getTheme(themeName).forEach(({ token, value }) => {
-  //   block.style.setProperty(`--${token}`, `${value}`);
-  // });
+  /*
+  // Uncomment for debugging CSS with the block alone in a draft
+  const themeName = [...block.closest('.section').classList].find(
+    (className) => hasTheme(className));
+  getTheme(themeName).forEach(({ token, value }) => {
+    block.style.setProperty(`--${token}`, `${value}`);
+  });
+  // */
 }
