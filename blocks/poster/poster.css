@@ -121,8 +121,8 @@
 
 .poster.block .product-row-layout > div:nth-child(2) {
   display: flex;
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
 }
