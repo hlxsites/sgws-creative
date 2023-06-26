@@ -88,16 +88,16 @@ export default async function decorate(block) {
   const fragmentSelectors = createTag('div', { class: 'fragment-selector', role: 'tablist', 'aria-label': 'Fragment View Selectors' });
 
   [...block.children].forEach((row, rowIndex) => {
-    // Create default video - first, merged row.
     if (rowIndex === 0) {
-      const nextViewer = createTag('div', { class: 'active animate' });
+      // Create default video - first, merged row - and activate (show) it.
+      const nextViewer = createTag('div', { class: 'active default-viewer animate' });
       if (appendVideoGroup(row, nextViewer)) {
         block.classList.add('inline-video');
         fragmentViewer.appendChild(nextViewer);
       }
       block.removeChild(block.firstElementChild);
     } else {
-      // Set up selector and the fragment.
+      // Set up selector and its fragment.
       const columns = [...row.children];
 
       const nextSelector = createTag('div', {
