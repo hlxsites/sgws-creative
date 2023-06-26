@@ -33,8 +33,14 @@
   margin-top: 1em;
 }
 
-.poster.block .teaser-row-layout{
+.poster.block .teaser-row-layout {
   text-align: center;
+}
+
+.poster.block .teaser-row-layout > div > p {
+  text-align: center;
+  margin-top: unset;
+  margin-bottom: unset;
 }
 
 .poster.block .title-row-layout {
