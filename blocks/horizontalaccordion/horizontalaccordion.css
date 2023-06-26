@@ -1,0 +1,111 @@
+.horizontalaccordion .fragment-viewer video {
+  width: 100%;
+}
+
+.horizontalaccordion .fragment-viewer button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  background-color: #000000b3;
+  border-radius: 5vw;
+  cursor: pointer;
+  width: 5vw;
+  height: 5vw;
+}
+
+.horizontalaccordion .fragment-viewer button::before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0.8vw 0 0.8vw 1.6vw;
+  border-color: transparent transparent transparent #fffc;
+  position: absolute;
+  top: 50%;
+  left: 54%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+}
+
+.horizontalaccordion .fragment-viewer > *:not(.active) {
+  display: none;
+}
+
+.horizontalaccordion .fragment-viewer *.active {
+  display: block;
+  min-height: 60px;
+}
+
+.horizontalaccordion .fragment-viewer .video-group {
+  padding: 0;
+  margin: 0;
+}
+
+.horizontalaccordion .close-viewer span.icon-close svg > * {
+  fill: var(--static-color-black);
+  color: var(--static-color-black);
+}
+
+.horizontalaccordion .close-viewer span.icon-close:not(.active) {
+  opacity: 0;
+  display: none;
+}
+
+.horizontalaccordion .close-viewer span.icon-close.active {
+  height: 40px;
+  width: 40px;
+  right: 64px;
+  position: absolute;
+  z-index: 2;
+  margin: 20px 20px 0 0;
+  opacity: 1;
+}
+
+.horizontalaccordion .close-viewer span.icon-close.active.animate {
+  animation: fade-in-right 0.5s ease-out;
+}
+
+.horizontalaccordion .fragment-selector {
+  margin-top: 0;
+}
+
+.horizontalaccordion .fragment-selector > div {
+  display: flex;
+  background-color: var(--secondary-color);
+  border-bottom: 1px solid var(--neutral-color);
+  padding: var(--layout-size-s) var(--layout-size-l);
+}
+
+.horizontalaccordion .fragment-selector > div div.animate {
+  animation: fade-in-from-none 0.5s ease-out;
+}
+
+.horizontalaccordion .fragment-selector p {
+  color: var(--text-color-background);
+  text-transform: uppercase;
+  margin: 0 var(--layout-size-m) 0 0;
+}
+
+.horizontalaccordion .fragment-selector > div .icon {
+  margin-top: 3px;
+}
+
+.horizontalaccordion .fragment-selector > div .icon-check {
+  display: none;
+}
+
+.horizontalaccordion .fragment-selector > div.active .icon-check {
+  display: inline-block;
+}
+
+.horizontalaccordion .fragment-selector > div.active .icon-arrow-small {
+  display: none;
+}
+
+.horizontalaccordion .fragment-selector .icon-arrow-small svg {
+  transform: rotate(180deg);
+  transform-origin: center center;
+}
