@@ -3,8 +3,7 @@ import { getTheme, THEME_TOKEN } from '../../scripts/scripts.js';
 
 const MIN_MAP_HEIGHT = '400px';
 
-
-function drawMap(){
+function drawMap() {
 }
 
 let echartsLoaded = false;
