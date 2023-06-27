@@ -244,6 +244,21 @@ a:any-link span.icon-arrow-small {
   animation-name: fade-in-bottom;
 }
 
+/* Default animations for product template */
+.product main .animate {
+  animation-delay: 0.5s;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+.product main .stats h1.animate,
+.product main .stats h2.animate,
+.product main .stats h3.animate,
+.product main .stats p.animate  { 
+  animation-name: fade-in-right;
+}
+
+
 main img {
   max-width: 100%;
   width: auto;
