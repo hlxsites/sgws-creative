@@ -23,6 +23,7 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
         name: 'USA partners',
         type: 'map',
         map: 'USA',
+        data: mapData,
       }
     ]
   };
