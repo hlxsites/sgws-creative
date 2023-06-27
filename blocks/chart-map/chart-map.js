@@ -10,7 +10,23 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
   mapHolder.style.width = '800px'; // TODO: Use mapConfig instead
   mapHolder.style.height = '400px'; // TODO: Use mapConfig instead
   const mapChart = window.echarts.init(mapHolder);
-  console.log(mapChart);
+  const mapRepresentation = {
+    title: {
+      text: 'USA map title',
+      left: 'right'
+    },
+    tooltip: {
+      /* TO DO: Show images of partners */
+    },
+    series : [
+      {
+        name: 'USA partners',
+        type: 'map',
+        map: 'USA',
+      }
+    ]
+  };
+  mapChart.setOption(mapRepresentation);
 }
 
 let echartsLoaded = false;
