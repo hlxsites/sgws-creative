@@ -61,7 +61,7 @@ function handleSelectorClick(scope, index) {
   const displayedViewer = viewer.querySelector('div.vs-active');
 
   // Ignore the click if already selected.
-  if (displayedViewer.classList.contains(`fragment-viewer-${index}`)) {
+  if (displayedViewer && displayedViewer.classList.contains(`fragment-viewer-${index}`)) {
     return;
   }
 
