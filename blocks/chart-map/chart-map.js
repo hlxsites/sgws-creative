@@ -9,7 +9,11 @@ function handleStateDataOverlay(block, data, coordinates) {
   console.log("coordinates: ", coordinates);
 
   // uneven list of div means not all images are clickable, ignore
-  if (data.partners.children.length % 2 !== 0) return;
+  if (!data
+    || !data.partners
+    || data.partners.children.length % 2 !== 0) {
+      return;
+  }
 
   let partnersHolder = document.createElement('div');
   partnersHolder.id = `partners-holder-${data.name}`;
@@ -28,6 +32,9 @@ function handleStateDataOverlay(block, data, coordinates) {
   });
 
   partnersHolder.append(...partnerClickableImages);
+  partnersHolder.style.position = 'absolute';
+  partnersHolder.style.top = `${coordinates.y}px`;
+  partnersHolder.style.left = `${coordinates.y}px`;
   block.append(partnersHolder);
 }
 
