@@ -25,6 +25,22 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
       },
       calculable: false
     },
+    emphasis: {
+          label: {
+            show: true
+          }
+        },
+        tooltip: {
+          trigger: 'item',
+          showDelay: 0,
+          transitionDuration: 0.2,
+          formatter: function (params) {
+            if(params.value === 1){
+              return params.data.name;
+            }
+            return '';
+          }
+        },
     series : [
       {
         name: 'Continental USA partners',
@@ -32,14 +48,7 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
         map: 'USA',
         colorBy: 'series',
         emphasis: {
-          label: {
-            formatter: function (params) {
-              return '';
-            }
-          },
-          itemStyle: {
-            areaColor: 'green'
-          }
+          disabled: true,
         },
         projection: {
           project: function (point) {
