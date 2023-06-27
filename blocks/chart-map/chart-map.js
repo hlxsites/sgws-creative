@@ -14,10 +14,6 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
 
   const projection = d3.geoAlbersUsa(); // https://github.com/d3/d3-geo#geoAlbersUsa
   const mapRepresentation = {
-    title: {
-      text: 'USA map title',
-      left: 'right'
-    },
     visualMap: {
       show:false,
       min: 0,
@@ -35,6 +31,16 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
         type: 'map',
         map: 'USA',
         colorBy: 'series',
+        emphasis: {
+          label: {
+            formatter: function (params) {
+              return '';
+            }
+          },
+          itemStyle: {
+            areaColor: 'green'
+          }
+        },
         projection: {
           project: function (point) {
             return projection(point);
@@ -43,7 +49,7 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
             return projection.invert(point);
           }
         },
-        selectedMode: 'multiple',
+        selectedMode: false,
         data: mapData,
       }
     ]
