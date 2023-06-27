@@ -10,6 +10,8 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
   mapHolder.style.width = '800px'; // TODO: Use mapConfig instead
   mapHolder.style.height = '400px'; // TODO: Use mapConfig instead
   const mapChart = window.echarts.init(mapHolder);
+
+  const projection = d3.geoAlbersUsa(); // https://github.com/d3/d3-geo#geoAlbersUsa
   const mapRepresentation = {
     title: {
       text: 'USA map title',
@@ -20,9 +22,17 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
     },
     series : [
       {
-        name: 'USA partners',
+        name: 'Continental USA partners',
         type: 'map',
         map: 'USA',
+        projection: {
+          project: function (point) {
+            return projection(point);
+          },
+          unproject: function (point) {
+            return projection.invert(point);
+          }
+        },
         data: mapData,
       }
     ]

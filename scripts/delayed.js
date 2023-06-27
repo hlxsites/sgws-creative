@@ -20,6 +20,18 @@ const loadScript = (url, attrs) => {
 };
 
 // add more delayed functionality here
+// Maps
+
+
+if (document.querySelector('div.chart-map-container')) {
+  loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3-geo/1.9.1/d3-geo.min.js', {
+    type: 'text/javascript',
+  });
+  loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3-array/1.2.2/d3-array.min.js', {
+    type: 'text/javascript',
+  });
+}
+
 // Charts
 if (document.querySelector('div.chart-container') || document.querySelector('div.chart-map-container')) {
   const echarts = loadScript('https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js', {
