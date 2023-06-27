@@ -1,8 +1,35 @@
 import { USA_MAP } from './usa-map.js';
-
+import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 const MIN_MAP_HEIGHT = '500px';
 const MIN_MAP_WIDTH = '700px';
+
+function handleStateDataOverlay(block, data, coordinates) {
+  console.log("data: ", data);
+  console.log("coordinates: ", coordinates);
+
+  // uneven list of div means not all images are clickable, ignore
+  if (data.partners.children.length % 2 !== 0) return;
+
+  let partnersHolder = document.createElement('div');
+  partnersHolder.id = `partners-holder-${data.name}`;
+  let partnerClickableImages = [];
+  let imageToUse = null;
+  [...data.partners.children].forEach((partnerItem, index) => {
+    if(index % 2 === 0){ //image
+      imageToUse = partnerItem.querySelector('img');
+    } else { //link
+      const clickableImage = partnerItem.querySelector('a');
+      clickableImage.innerText = '';
+      clickableImage.append(createOptimizedPicture(imageToUse.src, imageToUse.alt, false, [{ width: '150' }]));
+
+      partnerClickableImages.push(clickableImage);
+    }
+  });
+
+  partnersHolder.append(...partnerClickableImages);
+  block.append(partnersHolder);
+}
 
 function drawMap(block, mapHolder, mapData, mapConfig) {
   console.log("Drawing map");
@@ -15,7 +42,7 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
   const projection = d3.geoAlbersUsa(); // https://github.com/d3/d3-geo#geoAlbersUsa
   const mapRepresentation = {
     visualMap: {
-      show:false,
+      show: false,
       min: 0,
       max: 1,
       inRange: {
@@ -26,22 +53,22 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
       calculable: false
     },
     emphasis: {
-          label: {
-            show: true
-          }
-        },
-        tooltip: {
-          trigger: 'item',
-          showDelay: 0,
-          transitionDuration: 0.2,
-          formatter: function (params) {
-            if(params.value === 1){
-              return params.data.name;
-            }
-            return '';
-          }
-        },
-    series : [
+      label: {
+        show: true
+      }
+    },
+    tooltip: {
+      trigger: 'item',
+      showDelay: 0,
+      transitionDuration: 0.2,
+      formatter: function (params) {
+        if (params.value === 1) {
+          return params.data.name;
+        }
+        return '';
+      }
+    },
+    series: [
       {
         name: 'Continental USA partners',
         type: 'map',
@@ -64,17 +91,12 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
     ]
   };
   mapChart.setOption(mapRepresentation);
-
   mapChart.on('click', function (params) {
-    console.log(params);
-    // show partners
-    /*
-    - build DOM element
-    - place it absolutely
-    - show it
-    - hide it if reclicked
-    */
-});
+    handleStateDataOverlay(block, params.data, {
+      x: params.event.offsetX,
+      y: params.event.offsetY
+    });
+  });
 }
 
 let echartsLoaded = false;
