@@ -59,14 +59,13 @@ function handleSelectorClick(scope, index) {
   const viewer = scope.querySelector('.fragment-viewer');
   const closeButton = scope.querySelector('span.icon-close');
   const displayedViewer = viewer.querySelector('div.vs-active');
-  const wasAlreadyDisplayed = displayedViewer.classList.contains(`fragment-viewer-${index}`);
-  if (wasAlreadyDisplayed) {
+
+  // Ignore the click if already selected.
+  if (displayedViewer.classList.contains(`fragment-viewer-${index}`)) {
     return;
   }
-  if (displayedViewer) {
-    displayedViewer.classList.remove('vs-active');
-  }
 
+  // Toggle the icon, in the selector.
   const selector = scope.querySelector('.fragment-selector');
   [...selector.children].forEach((child, childIndex) => {
     if (childIndex === index - 1) {
@@ -76,7 +75,10 @@ function handleSelectorClick(scope, index) {
     }
   });
 
-  if (wasAlreadyDisplayed || index === 0) {
+  if (displayedViewer) {
+    displayedViewer.classList.remove('vs-active');
+  }
+  if (index === 0) {
     // Show the first (default) child again.
     viewer.querySelector('div.default-viewer').classList.add('vs-active');
     closeButton.classList.remove('vs-active');
@@ -107,7 +109,6 @@ export default async function decorate(block) {
 
       const nextSelector = createTag('div', {
         class: `fragment-selector-${rowIndex} animate`,
-        role: 'tablist',
         'aria-label': `Fragment View Selector ${rowIndex}`,
       });
       const selectorText = createTag('p', {});
