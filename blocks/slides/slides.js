@@ -25,12 +25,12 @@ function moveSlide(block, direction, count) {
     selectedSlide = selectedSlide.parentElement.lastElementChild;
   }
   selectedSlide.classList.add('active');
-
   // update nav
   count.textContent = `${getSlidePosition(selectedSlide)} of ${block.children.length}`;
 }
 
 async function buildProgramFragmentSlide(slide, slideContentPath) {
+  if (!slideContentPath) return;
   let fragment = await fetchFragment(slideContentPath);
   fragment = await decorateFragment(fragment);
   if (fragment) {
@@ -40,6 +40,7 @@ async function buildProgramFragmentSlide(slide, slideContentPath) {
 }
 
 async function buildStatsFragmentSlide(slide, path, link) {
+  if (!path) return;
   let fragment = await fetchFragment(path);
   fragment = await decorateFragment(fragment);
   if (fragment) {

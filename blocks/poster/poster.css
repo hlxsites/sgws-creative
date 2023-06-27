@@ -1,0 +1,128 @@
+.poster.block {
+  display: flex;
+  flex-direction: row;
+  aspect-ratio: 2.25;
+  overflow: hidden;
+}
+
+.poster.block .content-holder {
+  width:60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.poster.block .poster-image-holder {
+  width:40%;
+}
+
+.poster.block .poster-image-holder > .picture {
+  height:100%
+}
+
+.poster.block .poster-image-holder > .picture > picture > img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.poster.block .logo-row-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1em;
+}
+
+.poster.block .teaser-row-layout {
+  text-align: center;
+  padding-left: 5vw;
+  padding-right: 5vw;
+}
+
+.poster.block .teaser-row-layout > div > p {
+  text-align: center;
+  margin-top: unset;
+  margin-bottom: unset;
+}
+
+.poster.block .title-row-layout {
+  text-align: center;
+  margin-top: -1.75rem;
+}
+
+.poster.block .product-row-layout {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.poster.block .title-row-layout h3 {
+  margin: unset;
+  padding-top: 1em !important;
+  font-family: var(--heading-font-family);
+  color: var(--secondary-color);
+  font-size: 3.5vw;
+  text-wrap: nowrap;
+}
+
+.poster.block .teaser-row-layout h4,
+.poster.block .product-row-layout h4 {
+  font-family: var(--heading-font-family);
+  color: var(--static-color-black);
+  text-transform: uppercase;
+  font-size: 1.5vw;
+}
+
+.poster.block .product-row-layout .products-list-holder {
+  background-color:var(--secondary-color);
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.poster.block .product-row-layout .products-list-holder p {
+  font-family: var(--heading-font-family);
+  color: var(--static-color-white);
+  text-transform: uppercase;
+  background-color:var(--secondary-color);
+  margin-top: unset;
+  margin-bottom: unset;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 1.2vw;
+  line-height: 1.5;
+  text-wrap: nowrap;
+}
+
+.logo-row-layout > div:nth-child(2) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1vw;
+  margin-right: 1vw;
+  width: 200%;
+}
+
+.poster.block .product-row-layout > div:nth-child(1) {
+  margin-left: 1.0rem;
+  margin-right: 1.0rem;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.poster.block .product-row-layout > div:nth-child(3) {
+  margin-left: 1.0rem;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.poster.block .product-row-layout > div:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}

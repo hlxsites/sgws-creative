@@ -92,7 +92,7 @@ async function loadTabPanel(panel) {
 
     setTimeout(() => {
       computeBadgePlacement(programButton, panel);
-    }, 250);
+    }, 20);
     programButton.addEventListener('click', async () => {
       // show program slide elements
       const programContent = panel.querySelectorAll('.program-content');
@@ -104,6 +104,7 @@ async function loadTabPanel(panel) {
       slidesElement.classList.add('hidden', 'slide-content');
       programButton.classList.add('hidden', 'slide-content');
       slidesElement.previousSibling.classList.add('hidden', 'slide-content');
+      slidesElement.previousSibling.previousSibling?.classList.add('hidden', 'slide-content');
     }, { passive: true });
     closeProgramButton.addEventListener('click', () => {
       const programContent = panel.querySelectorAll('.program-content');
@@ -122,7 +123,7 @@ async function loadTabPanel(panel) {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
         computeBadgePlacement(programButton, panel);
-      }, 250);
+      }, 20);
     });
   }
 }
@@ -188,9 +189,11 @@ export default async function decorate(block) {
   await loadTabPanel(firstTab);
   firstTab.classList.add('active');
   // load the rest lazily
-  block.querySelectorAll(':scope > [role="tabpanel"]').forEach((tabPanel, index) => {
-    if (index > 0) {
-      loadTabPanel(tabPanel);
-    }
-  });
+  setTimeout(() => {
+    block.querySelectorAll(':scope > [role="tabpanel"]').forEach((tabPanel, index) => {
+      if (index > 0) {
+        loadTabPanel(tabPanel);
+      }
+    });
+  }, 1000);
 }

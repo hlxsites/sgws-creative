@@ -69,6 +69,7 @@
 .tabview .button-program-close > button {
   background-color: transparent !important;
   margin-top: 20px;
+  height:unset;
 }
 
 .tabview [role="tablist"] button:focus:not(:focus-visible) {

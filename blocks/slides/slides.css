@@ -82,6 +82,7 @@
 
 .slides .slide .pairs-with-meal picture:last-child img {
   height: var(--avatar-size);
+  width: auto;
   box-sizing: border-box;
   aspect-ratio: auto;
   object-fit: contain;
@@ -101,6 +102,7 @@
 
 .slides.block .slide .avatar picture:last-child img {
   height: var(--avatar-size);
+  width: auto;
 }
 
 /* Pairs With View */
@@ -261,7 +263,7 @@
 .slides-container .slide-nav button {
   position: relative;
   width: 42px;
-  height: 42px;
+  height: 50px;
   min-width: unset;
   border-radius: 50%;
   background-color: var(--secondary-color);
