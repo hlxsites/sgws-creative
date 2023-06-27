@@ -39,6 +39,13 @@
   display: none;
 }
 
+.vertical-selector .fragment-viewer *.vs-active h2,
+.vertical-selector .fragment-viewer *.vs-active h3 {
+  padding-left: 15%;
+  padding-right: 15%;
+  text-align: center;
+}
+
 .vertical-selector .fragment-viewer *.vs-active {
   display: block;
   min-height: 60px;

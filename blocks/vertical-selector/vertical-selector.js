@@ -60,18 +60,11 @@ function handleSelectorClick(scope, index) {
   const closeButton = scope.querySelector('span.icon-close');
   const displayedViewer = viewer.querySelector('div.vs-active');
   const wasAlreadyDisplayed = displayedViewer.classList.contains(`fragment-viewer-${index}`);
+  if (wasAlreadyDisplayed) {
+    return;
+  }
   if (displayedViewer) {
     displayedViewer.classList.remove('vs-active');
-  }
-  if (wasAlreadyDisplayed || index === 0) {
-    // Show the first (default) child again.
-    viewer.querySelector('div.default-viewer').classList.add('vs-active');
-    closeButton.classList.remove('vs-active');
-  } else {
-    const showViewer = viewer.querySelector(`div.fragment-viewer-${index}`);
-    showViewer.classList.add('vs-active');
-    closeButton.classList.add('vs-active');
-    window.dispatchEvent(new Event('drawChart'));
   }
 
   const selector = scope.querySelector('.fragment-selector');
@@ -83,21 +76,30 @@ function handleSelectorClick(scope, index) {
     }
   });
 
-  closeButton.scrollIntoView(true);
+  if (wasAlreadyDisplayed || index === 0) {
+    // Show the first (default) child again.
+    viewer.querySelector('div.default-viewer').classList.add('vs-active');
+    closeButton.classList.remove('vs-active');
+  } else {
+    const showViewer = viewer.querySelector(`div.fragment-viewer-${index}`);
+    showViewer.classList.add('vs-active');
+    closeButton.classList.add('vs-active');
+    window.dispatchEvent(new Event('drawChart'));
+    scope.querySelector('.vertical-selector').scrollIntoView(true);
+  }
 }
 
 export default async function decorate(block) {
   const fragmentViewer = createTag('div', { class: 'fragment-viewer', 'aria-label': 'Fragment View' });
   const fragmentSelectors = createTag('div', { class: 'fragment-selector', 'aria-label': 'Fragment View Selectors' });
 
-  for (const row of [...block.children].reverse()) {
-    const rowIndex = [...block.children].indexOf(row);
+  [...block.children].forEach((row, rowIndex) => {
     if (rowIndex === 0) {
       // Create default video - first, merged row - and activate (show) it.
       const nextViewer = createTag('div', { class: 'vs-active default-viewer animate' });
       if (appendVideoGroup(row, nextViewer)) {
         block.classList.add('inline-video');
-        fragmentViewer.prepend(nextViewer);
+        fragmentViewer.append(nextViewer);
       }
     } else {
       // Set up selector and its fragment.
@@ -121,24 +123,27 @@ export default async function decorate(block) {
       nextSelector.addEventListener('click', () => {
         handleSelectorClick(block, rowIndex);
       });
-      fragmentSelectors.prepend(nextSelector);
+      fragmentSelectors.append(nextSelector);
 
       loadFragment(columns[1])
         .then((fragment) => {
           if (fragment) {
-
             const fragmentSection = fragment.querySelector(':scope .section');
             fragmentSection.classList.add(`fragment-viewer-${rowIndex}`);
 
+            const viewerHeader = createTag('h2', {});
+            viewerHeader.innerHTML = columns[0].innerHTML;
+
             // setupCharting(block);
             const nextViewer = createTag('div', { class: `fragment-viewer-${rowIndex} animate` });
+            nextViewer.append(viewerHeader);
             nextViewer.append(...fragmentSection.children);
-            fragmentViewer.prepend(nextViewer);
+            fragmentViewer.append(nextViewer);
           }
         });
     }
     block.removeChild(row);
-  }
+  });
 
   // Button to close overlay
   const closeContainer = createTag('div', { class: 'close-viewer' });
