@@ -8,52 +8,54 @@ const MIN_MAP_WIDTH = '700px';
 function handleStateDataOverlay(block, data, coordinates) {
   console.log("click: ", coordinates);
 
-  // uneven list of div means not all images are clickable, ignore
   if (!data
     || !data.partners
     || data.partners.children.length % 2 !== 0) {
-      return;
+    // uneven list of div means not all images are clickable, ignore
+    return;
   }
 
-  let partnersHolder = document.createElement('div'); // TODO: replace with createTag
-  partnersHolder.id = `partners-holder-${data.name}`;
-  partnersHolder.classList.add('partners-holder');
-  // TODO: Add close button to partnersHolder
+  let partnersHolder = document.getElementById(`partners-holder-${data.name}`);
+  if (partnersHolder) {
+    partnersHolder.classList.remove('hidden');
+  } else {
+    partnersHolder = document.createElement('div'); // TODO: replace with createTag
+    partnersHolder.id = `partners-holder-${data.name}`;
+    partnersHolder.classList.add('partners-holder');
 
-  let partnerClickableImages = [];
-
-  let imageToUse = null;
-  // TODO: Only do this if there is no pop-up already
-  // else just switch visibility on the existing one
-  [...data.partners.children].forEach((partnerItem, index) => {
-    if(index % 2 === 0){ //image
-      imageToUse = partnerItem.querySelector('img');
-    } else { //link
-      const clickableImage = partnerItem.querySelector('a');
-      if(!clickableImage) return;
-      if(clickableImage.innerText){
-        clickableImage.innerText = '';
+    let partnerClickableImages = [];
+    let imageToUse = null;
+    [...data.partners.children].forEach((partnerItem, index) => {
+      if (index % 2 === 0) { //image
+        imageToUse = partnerItem.querySelector('img');
+      } else { //link
+        const clickableImage = partnerItem.querySelector('a');
+        if (!clickableImage) return;
+        if (clickableImage.innerText) {
+          clickableImage.innerText = '';
+        }
+        clickableImage.append(createOptimizedPicture(imageToUse.src, imageToUse.alt, false, [{ width: '150' }]));
+        partnerClickableImages.push(clickableImage);
       }
-      clickableImage.append(createOptimizedPicture(imageToUse.src, imageToUse.alt, false, [{ width: '150' }]));
-      partnerClickableImages.push(clickableImage);
-    }
-  });
+    });
 
-  const closePartnersView = createTag('div', { class: 'partners-holder-close' });
-  closePartnersView.innerHTML = `<button type="button" aria-label="Close partners view">
-    <span class="icon icon-close">X</span>
-  </button>`;
+    // TODO: Add proper close button to partnersHolder
+    const closePartnersView = createTag('div', { class: 'partners-holder-close' });
+    closePartnersView.innerHTML = `<button type="button" aria-label="Close partners view">
+        <span class="icon icon-close">X</span>
+      </button>`;
 
-  partnersHolder.append(closePartnersView, ...partnerClickableImages);
-  partnersHolder.style.position = 'absolute';
-  partnersHolder.style.top = `${coordinates.y}px`;
-  partnersHolder.style.left = `${coordinates.x}px`;
-  block.append(partnersHolder);
+    partnersHolder.append(closePartnersView, ...partnerClickableImages);
+    partnersHolder.style.position = 'absolute';
+    partnersHolder.style.top = `${coordinates.y}px`;
+    partnersHolder.style.left = `${coordinates.x}px`;
+    block.append(partnersHolder);
 
-  const closePartnersButton = closePartnersView.querySelector('button');
-  closePartnersButton.addEventListener('click', () => {
-    partnersHolder.classList.add('hidden');
-  }, { passive: true });
+    const closePartnersButton = closePartnersView.querySelector('button');
+    closePartnersButton.addEventListener('click', () => {
+      partnersHolder.classList.add('hidden');
+    }, { passive: true });
+  }
 }
 
 function drawMap(block, mapHolder, mapData, mapConfig) {
