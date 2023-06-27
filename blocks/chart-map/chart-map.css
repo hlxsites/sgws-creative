@@ -10,6 +10,7 @@
   flex-direction: column;
   background-color: var(--static-color-white);
   padding: 1.5vw;
+  position: absolute;
 }
 
 .chart-map.block .partners-holder img {

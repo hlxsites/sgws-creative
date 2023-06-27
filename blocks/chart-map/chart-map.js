@@ -3,7 +3,7 @@ import { createTag } from '../../scripts/scripts.js';
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 const MIN_MAP_HEIGHT = '500px';
-const MIN_MAP_WIDTH = '700px';
+const MIN_MAP_WIDTH = '800px';
 
 function handleStateDataOverlay(block, data, coordinates) {
   console.log("click: ", coordinates);
@@ -49,15 +49,26 @@ function handleStateDataOverlay(block, data, coordinates) {
       </button>`;
 
     partnersHolder.append(closePartnersView, ...partnerClickableImages);
-    partnersHolder.style.position = 'absolute';
-    partnersHolder.style.top = `${coordinates.y}px`;
-    partnersHolder.style.left = `${coordinates.x}px`;
     block.append(partnersHolder);
 
     const closePartnersButton = closePartnersView.querySelector('button');
     closePartnersButton.addEventListener('click', () => {
       partnersHolder.classList.add('hidden');
     }, { passive: true });
+  }
+
+  // TODO: compute nicer position
+  const mapWidthMiddle = block.offsetWidth / 2;
+  if(coordinates.x >= mapWidthMiddle){
+    partnersHolder.style.left = `calc(${coordinates.x}px + 4vw)`;
+  } else {
+    partnersHolder.style.left = `calc(${coordinates.x}px - 12vw)`;
+  }
+  const mapHeightMiddle = block.offsetHeight / 2;
+  if(coordinates.y >= mapHeightMiddle){
+    partnersHolder.style.top = `calc(${coordinates.y}px + 4vw)`;
+  } else {
+    partnersHolder.style.top = `calc(${coordinates.y}px - 8vw)`;
   }
 }
 
