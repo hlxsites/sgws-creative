@@ -10,20 +10,18 @@ let echartsLoaded = false;
 export default function decorate(block) {
   const mapData = [];
   [...block.children].forEach((dataItem) => {
-    //console.log(dataItem);
+    const dataElements = [...dataItem.children]
     mapData.push({
-      name: dataItem.firstElementChild.textContent,
+      name: dataElements[0].textContent,
       value: 1,
-      partners: "todo",
+      partners: dataElements[1],
     });
+    dataItem.remove();
   });
-  console.log(mapData);
 
   let mapHolder = document.createElement('div');
+  mapHolder.classList.add('map-holder');
   block.append(mapHolder);
-
-  // const pageTheme = getTheme() || [];
-  // const theme = pageTheme.reduce((obj, { token, value }) => ({ ...obj, [token]: value }), {});
 
   // listen for charting library to be loaded before starting to draw
   document.addEventListener(
