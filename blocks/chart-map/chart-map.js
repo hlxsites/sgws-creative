@@ -1,12 +1,12 @@
 import { USA_MAP } from './usa-map.js';
+import { createTag } from '../../scripts/scripts.js';
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 const MIN_MAP_HEIGHT = '500px';
 const MIN_MAP_WIDTH = '700px';
 
 function handleStateDataOverlay(block, data, coordinates) {
-  console.log("data: ", data);
-  console.log("coordinates: ", coordinates);
+  console.log("click: ", coordinates);
 
   // uneven list of div means not all images are clickable, ignore
   if (!data
@@ -39,11 +39,21 @@ function handleStateDataOverlay(block, data, coordinates) {
     }
   });
 
-  partnersHolder.append(...partnerClickableImages);
+  const closePartnersView = createTag('div', { class: 'partners-holder-close' });
+  closePartnersView.innerHTML = `<button type="button" aria-label="Close partners view">
+    <span class="icon icon-close">X</span>
+  </button>`;
+
+  partnersHolder.append(closePartnersView, ...partnerClickableImages);
   partnersHolder.style.position = 'absolute';
   partnersHolder.style.top = `${coordinates.y}px`;
-  partnersHolder.style.left = `${coordinates.y}px`;
+  partnersHolder.style.left = `${coordinates.x}px`;
   block.append(partnersHolder);
+
+  const closePartnersButton = closePartnersView.querySelector('button');
+  closePartnersButton.addEventListener('click', () => {
+    partnersHolder.classList.add('hidden');
+  }, { passive: true });
 }
 
 function drawMap(block, mapHolder, mapData, mapConfig) {

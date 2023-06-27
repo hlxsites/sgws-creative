@@ -1,3 +1,10 @@
+.chart-map.block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid red;
+}
+
 .chart-map.block .partners-holder {
   display: flex;
   flex-direction: column;
@@ -7,5 +14,13 @@
 
 .chart-map.block .partners-holder img {
   max-width: 15vw;
-  height:auto:
+  height:auto;
+}
+
+.chart-map.block .map-holder{
+  margin-left: -4rem;
+}
+
+.hidden {
+  display: none !important;
 }
