@@ -57,8 +57,14 @@ function prepareChartDataWithOverlay(chartData) {
 function computeFontSizes(block, theme) {
   const computedStyles = window.getComputedStyle(block);
   theme['computed-font-size-px'] = parseInt(computedStyles.fontSize, 10);
-  theme['font-size'] = `${theme['computed-font-size-px'] * 1.1}px`;
-  theme['axis-font-size'] = `${theme['computed-font-size-px'] * 0.8}px`;
+
+  if (Number.isNaN(theme['computed-font-size-px'])) {
+    theme['font-size'] = '12px';
+    theme['axis-font-size'] = '12px';
+  } else {
+    theme['font-size'] = `${theme['computed-font-size-px'] * 1.1}px`;
+    theme['axis-font-size'] = `${theme['computed-font-size-px'] * 0.8}px`;
+  }
   theme['font-weight'] = computedStyles.fontWeight;
 }
 
@@ -70,9 +76,9 @@ function computeFontSizes(block, theme) {
  */
 function getGradientStops(startColor, endColor) {
   return [{
-    offset: 0, color: startColor,
+    offset: 0, color: startColor || '#FFFFFF',
   }, {
-    offset: 1, color: endColor,
+    offset: 1, color: endColor || '#000000',
   }];
 }
 
@@ -107,9 +113,7 @@ function getInteractivitySettings() {
 
 /**
  * Build shared parts of chart representation
- * @param {*} chartData Chart data (will be used to determine which chart to draw)
  * @param {*} chartConfig Chart configuration
- * @param {*} chartHolder Element (div) holding the chart
  * @param {*} theme Theming details, optional
  */
 function buildChartRepresentation(chartConfig, theme) {
@@ -670,6 +674,7 @@ export default function decorate(block) {
   const cfg = readPredefinedBlockConfig(block, readOptions);
   const data = readBlockData(block);
 
+  window.hasCharts = true;
   let chartHolder = document.createElement('div');
   block.append(chartHolder);
 
@@ -702,5 +707,17 @@ export default function decorate(block) {
         drawChart(block, data, cfg, chartHolder, theme);
       }
     }, 500);
+  });
+  // Trigger this event type to draw the charts immediately.
+  window.addEventListener('drawChart', () => {
+    if (echartsLoaded) {
+      computeFontSizes(block, theme);
+
+      // redraw scaled chart
+      chartHolder.remove();
+      chartHolder = document.createElement('div');
+      block.append(chartHolder);
+      drawChart(block, data, cfg, chartHolder, theme);
+    }
   });
 }
