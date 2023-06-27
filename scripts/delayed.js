@@ -21,7 +21,7 @@ const loadScript = (url, attrs) => {
 
 // add more delayed functionality here
 // Charts
-if (document.querySelector('div.chart-container')) {
+if (document.querySelector('div.chart-container') || document.querySelector('div.chart-map-container')) {
   const echarts = loadScript('https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js', {
     type: 'text/javascript',
   });

@@ -595,7 +595,6 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
   chartConfig.chartHeight = block.clientHeight !== 0 ? block.clientHeight : MIN_CHART_HEIGHT;
   if (blockClassList.contains('bars')) {
     chartConfig.legend = blockClassList.contains('graph-legend');
-
     if (chartData.length === 2) {
       // comparison
       drawComparisonBarChart(chartData, chartConfig, chartHolder, theme);
@@ -643,7 +642,6 @@ function readBlockData(block) {
     }
     row.remove();
   });
-
   return data;
 }
 

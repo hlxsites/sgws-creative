@@ -1,9 +1,16 @@
-import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
-import { getTheme, THEME_TOKEN } from '../../scripts/scripts.js';
+import { USA_MAP } from './usa-map.js';
+
 
 const MIN_MAP_HEIGHT = '400px';
 
-function drawMap() {
+function drawMap(block, mapHolder, mapData, mapConfig) {
+  console.log("Drawing map");
+  echarts.registerMap('USA', USA_MAP);
+
+  mapHolder.style.width = '800px'; // TODO: Use mapConfig instead
+  mapHolder.style.height = '400px'; // TODO: Use mapConfig instead
+  const mapChart = window.echarts.init(mapHolder);
+  console.log(mapChart);
 }
 
 let echartsLoaded = false;
@@ -23,26 +30,14 @@ export default function decorate(block) {
   mapHolder.classList.add('map-holder');
   block.append(mapHolder);
 
+  const mapConfig = {};
+
   // listen for charting library to be loaded before starting to draw
   document.addEventListener(
     'echartsloaded',
     () => {
       echartsLoaded = true;
-      drawMap();
+      drawMap(block, mapHolder, mapData, mapConfig);
     },
   );
-
-  // let resizeTimeout;
-  // window.addEventListener('resize', () => {
-  //   clearTimeout(resizeTimeout);
-  //   resizeTimeout = setTimeout(() => {
-  //     if (echartsLoaded) {
-  //       // redraw scaled chart
-  //       mapHolder.remove();
-  //       mapHolder = document.createElement('div');
-  //       block.append(mapHolder);
-  //       drawMap();
-  //     }
-  //   }, 500);
-  // });
 }
