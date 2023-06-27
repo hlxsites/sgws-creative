@@ -24,12 +24,18 @@ const loadScript = (url, attrs) => {
 
 
 if (document.querySelector('div.chart-map-container')) {
-  loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3-geo/1.9.1/d3-geo.min.js', {
+  const d3Array = loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3-geo/1.9.1/d3-geo.min.js', {
     type: 'text/javascript',
   });
-  loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3-array/1.2.2/d3-array.min.js', {
+  const d3Maps = loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3-array/1.2.2/d3-array.min.js', {
     type: 'text/javascript',
   });
+  d3Array.onload = () => {
+    console.log("d3Array loaded")
+  };
+  d3Maps.onload = () => {
+    console.log("d3Maps loaded")
+  };
 }
 
 // Charts

@@ -1,14 +1,16 @@
 import { USA_MAP } from './usa-map.js';
 
 
-const MIN_MAP_HEIGHT = '400px';
+const MIN_MAP_HEIGHT = '500px';
+const MIN_MAP_WIDTH = '700px';
 
 function drawMap(block, mapHolder, mapData, mapConfig) {
   console.log("Drawing map");
   echarts.registerMap('USA', USA_MAP);
 
-  mapHolder.style.width = '800px'; // TODO: Use mapConfig instead
-  mapHolder.style.height = '400px'; // TODO: Use mapConfig instead
+  console.log(mapConfig);
+  mapHolder.style.width = mapConfig.chartWidth;
+  mapHolder.style.height = mapConfig.chartHeight;
   const mapChart = window.echarts.init(mapHolder);
 
   const projection = d3.geoAlbersUsa(); // https://github.com/d3/d3-geo#geoAlbersUsa
@@ -18,7 +20,9 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
       left: 'right'
     },
     tooltip: {
-      /* TO DO: Show images of partners */
+      trigger: 'item',
+      showDelay: 0,
+      transitionDuration: 0.2
     },
     series : [
       {
@@ -31,6 +35,11 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
           },
           unproject: function (point) {
             return projection.invert(point);
+          }
+        },
+        emphasis: {
+          label: {
+            show: true
           }
         },
         data: mapData,
@@ -58,6 +67,8 @@ export default function decorate(block) {
   block.append(mapHolder);
 
   const mapConfig = {};
+  mapConfig.chartWidth = block.clientWidth !== 0 ? block.clientWidth : MIN_MAP_WIDTH;
+  mapConfig.chartHeight = block.clientHeight !== 0 ? block.clientHeight : MIN_MAP_HEIGHT;
 
   // listen for charting library to be loaded before starting to draw
   document.addEventListener(
