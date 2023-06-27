@@ -68,7 +68,6 @@ function computeFontSizes(block, theme) {
   theme['font-weight'] = computedStyles.fontWeight;
 }
 
-
 /**
  * Create a gradient color
  * @param {*} startColor Start gradient color
@@ -721,5 +720,4 @@ export default function decorate(block) {
       drawChart(block, data, cfg, chartHolder, theme);
     }
   });
-
 }
