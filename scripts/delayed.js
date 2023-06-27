@@ -20,22 +20,11 @@ const loadScript = (url, attrs) => {
 };
 
 // add more delayed functionality here
-// Maps
-
-
+// Maps (projections)
 if (document.querySelector('div.chart-map-container')) {
-  const d3Array = loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3-geo/1.9.1/d3-geo.min.js', {
+  loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3-geo/1.9.1/d3-geo.min.js', {
     type: 'text/javascript',
   });
-  const d3Maps = loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3-array/1.2.2/d3-array.min.js', {
-    type: 'text/javascript',
-  });
-  d3Array.onload = () => {
-    console.log("d3Array loaded")
-  };
-  d3Maps.onload = () => {
-    console.log("d3Maps loaded")
-  };
 }
 
 // Charts

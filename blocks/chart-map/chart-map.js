@@ -8,7 +8,6 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
   console.log("Drawing map");
   echarts.registerMap('USA', USA_MAP);
 
-  console.log(mapConfig);
   mapHolder.style.width = mapConfig.chartWidth;
   mapHolder.style.height = mapConfig.chartHeight;
   const mapChart = window.echarts.init(mapHolder);
@@ -19,16 +18,23 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
       text: 'USA map title',
       left: 'right'
     },
-    tooltip: {
-      trigger: 'item',
-      showDelay: 0,
-      transitionDuration: 0.2
+    visualMap: {
+      show:false,
+      min: 0,
+      max: 1,
+      inRange: {
+        color: [
+          'red'
+        ]
+      },
+      calculable: false
     },
     series : [
       {
         name: 'Continental USA partners',
         type: 'map',
         map: 'USA',
+        colorBy: 'series',
         projection: {
           project: function (point) {
             return projection(point);
@@ -37,16 +43,22 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
             return projection.invert(point);
           }
         },
-        emphasis: {
-          label: {
-            show: true
-          }
-        },
+        selectedMode: 'multiple',
         data: mapData,
       }
     ]
   };
   mapChart.setOption(mapRepresentation);
+
+  mapChart.on('click', function (params) {
+    // show partners
+    /*
+    - build DOM element
+    - place it absolutely
+    - show it
+    - hide it if reclicked
+    */
+});
 }
 
 let echartsLoaded = false;
