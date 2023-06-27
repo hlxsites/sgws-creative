@@ -8,10 +8,9 @@ const MIN_MAP_WIDTH = '700px';
 function handleStateDataOverlay(block, data, coordinates) {
   console.log("click: ", coordinates);
 
-  if (!data
-    || !data.partners
-    || data.partners.children.length % 2 !== 0) {
-    // uneven list of div means not all images are clickable, ignore
+  console.log(data.partners.children.length);
+  if ( !data
+    || !data.partners) {
     return;
   }
 
@@ -29,7 +28,11 @@ function handleStateDataOverlay(block, data, coordinates) {
       if (index % 2 === 0) { //image
         imageToUse = partnerItem.querySelector('img');
       } else { //link
-        const clickableImage = partnerItem.querySelector('a');
+        let clickableImage = partnerItem;
+        if(!clickableImage.href){
+          clickableImage = partnerItem.querySelector('a');
+        }
+
         if (!clickableImage) return;
         if (clickableImage.innerText) {
           clickableImage.innerText = '';
