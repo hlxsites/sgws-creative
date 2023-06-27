@@ -8,11 +8,22 @@ function drawMap() {
 
 let echartsLoaded = false;
 export default function decorate(block) {
+  const mapData = [];
+  [...block.children].forEach((dataItem) => {
+    //console.log(dataItem);
+    mapData.push({
+      name: dataItem.firstElementChild.textContent,
+      value: 1,
+      partners: "todo",
+    });
+  });
+  console.log(mapData);
+
   let mapHolder = document.createElement('div');
   block.append(mapHolder);
 
-  const pageTheme = getTheme() || [];
-  const theme = pageTheme.reduce((obj, { token, value }) => ({ ...obj, [token]: value }), {});
+  // const pageTheme = getTheme() || [];
+  // const theme = pageTheme.reduce((obj, { token, value }) => ({ ...obj, [token]: value }), {});
 
   // listen for charting library to be loaded before starting to draw
   document.addEventListener(
@@ -23,17 +34,17 @@ export default function decorate(block) {
     },
   );
 
-  let resizeTimeout;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      if (echartsLoaded) {
-        // redraw scaled chart
-        mapHolder.remove();
-        mapHolder = document.createElement('div');
-        block.append(mapHolder);
-        drawMap();
-      }
-    }, 500);
-  });
+  // let resizeTimeout;
+  // window.addEventListener('resize', () => {
+  //   clearTimeout(resizeTimeout);
+  //   resizeTimeout = setTimeout(() => {
+  //     if (echartsLoaded) {
+  //       // redraw scaled chart
+  //       mapHolder.remove();
+  //       mapHolder = document.createElement('div');
+  //       block.append(mapHolder);
+  //       drawMap();
+  //     }
+  //   }, 500);
+  // });
 }
