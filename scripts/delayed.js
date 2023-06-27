@@ -1,6 +1,8 @@
 // eslint-disable-next-line import/no-cycle
 import { sampleRUM } from './lib-franklin.js';
 
+window.hasCharts = window.hasCharts || false;
+
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
 
@@ -21,7 +23,7 @@ const loadScript = (url, attrs) => {
 
 // add more delayed functionality here
 // Charts
-if (document.querySelector('div.chart-container')) {
+if (window.hasCharts) {
   const echarts = loadScript('https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js', {
     type: 'text/javascript',
   });

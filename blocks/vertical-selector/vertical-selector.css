@@ -1,8 +1,8 @@
-.horizontalaccordion .default-viewer video {
+.vertical-selector .default-viewer video {
   width: 100%;
 }
 
-.horizontalaccordion .default-viewer button {
+.vertical-selector .default-viewer button {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -15,7 +15,7 @@
   height: 5vw;
 }
 
-.horizontalaccordion .default-viewer button::before {
+.vertical-selector .default-viewer button::before {
   content: "";
   display: block;
   width: 0;
@@ -30,32 +30,37 @@
   margin: auto;
 }
 
-.horizontalaccordion .fragment-viewer > *:not(.active) {
+.vertical-selector .fragment-selector svg > * {
+  color: var(--text-color-background);
+  fill: var(--text-color-background);
+}
+
+.vertical-selector .fragment-viewer > *:not(.vs-active) {
   display: none;
 }
 
-.horizontalaccordion .fragment-viewer *.active {
+.vertical-selector .fragment-viewer *.vs-active {
   display: block;
   min-height: 60px;
 }
 
-.horizontalaccordion .fragment-viewer .video-group {
+.vertical-selector .fragment-viewer .video-group {
   display: flex;
   padding: 0;
   margin: 0;
 }
 
-.horizontalaccordion .close-viewer span.icon-close svg > * {
+.vertical-selector .close-viewer span.icon-close svg > * {
   fill: var(--static-color-black);
   color: var(--static-color-black);
 }
 
-.horizontalaccordion .close-viewer span.icon-close:not(.active) {
+.vertical-selector .close-viewer span.icon-close:not(.vs-active) {
   opacity: 0;
   display: none;
 }
 
-.horizontalaccordion .close-viewer span.icon-close.active {
+.vertical-selector .close-viewer span.icon-close.vs-active {
   height: 40px;
   width: 40px;
   right: 64px;
@@ -65,48 +70,49 @@
   opacity: 1;
 }
 
-.horizontalaccordion .close-viewer span.icon-close.active.animate {
+.vertical-selector .close-viewer span.icon-close.vs-active.animate {
   animation: fade-in-right 0.5s ease-out;
 }
 
-.horizontalaccordion .fragment-selector {
+.vertical-selector .fragment-selector {
   margin-top: 0;
 }
 
-.horizontalaccordion .fragment-selector > div {
+.vertical-selector .fragment-selector > div {
   display: flex;
   background-color: var(--secondary-color);
   border-bottom: 1px solid var(--neutral-color);
   padding: var(--layout-size-s) var(--layout-size-l);
 }
 
-.horizontalaccordion .fragment-selector > div div.animate {
+.vertical-selector .fragment-selector > div div.animate {
   animation: fade-in-from-none 0.5s ease-out;
 }
 
-.horizontalaccordion .fragment-selector p {
+.vertical-selector .fragment-selector p {
   color: var(--text-color-background);
   text-transform: uppercase;
   margin: 0 var(--layout-size-m) 0 0;
 }
 
-.horizontalaccordion .fragment-selector > div .icon {
+.vertical-selector .fragment-selector > div .icon {
   margin-top: 3px;
 }
 
-.horizontalaccordion .fragment-selector > div .icon-check {
+.vertical-selector .fragment-selector > div .icon-check {
   display: none;
 }
 
-.horizontalaccordion .fragment-selector > div.active .icon-check {
+.vertical-selector .fragment-selector > div.vs-active .icon-check {
   display: inline-block;
 }
 
-.horizontalaccordion .fragment-selector > div.active .icon-arrow-small {
+.vertical-selector .fragment-selector > div.vs-active .icon-arrow-small {
   display: none;
 }
 
-.horizontalaccordion .fragment-selector .icon-arrow-small svg {
+.vertical-selector .fragment-selector .icon-arrow-small svg {
   transform: rotate(180deg);
   transform-origin: center center;
 }
+

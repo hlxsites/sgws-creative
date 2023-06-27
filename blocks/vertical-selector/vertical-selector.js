@@ -11,8 +11,9 @@ import { decorateIcons } from '../../scripts/lib-franklin.js';
 async function loadFragment(cell) {
   const link = cell.querySelector('a');
   const path = link ? link.getAttribute('href') : cell.textContent.trim();
-  const fragment = await fetchFragment(path);
-  return decorateFragment(fragment);
+  let fragment = await fetchFragment(path);
+  fragment = await decorateFragment(fragment);
+  return fragment;
 }
 
 function appendVideoGroup(cell, target) {
@@ -57,26 +58,28 @@ function appendVideoGroup(cell, target) {
 function handleSelectorClick(scope, index) {
   const viewer = scope.querySelector('.fragment-viewer');
   const closeButton = scope.querySelector('span.icon-close');
-  const displayedViewer = viewer.querySelector('div.active');
+  const displayedViewer = viewer.querySelector('div.vs-active');
   const wasAlreadyDisplayed = displayedViewer.classList.contains(`fragment-viewer-${index}`);
   if (displayedViewer) {
-    displayedViewer.classList.remove('active');
+    displayedViewer.classList.remove('vs-active');
   }
   if (wasAlreadyDisplayed || index === 0) {
     // Show the first (default) child again.
-    viewer.firstChild.classList.add('active');
-    closeButton.classList.remove('active');
+    viewer.querySelector('div.default-viewer').classList.add('vs-active');
+    closeButton.classList.remove('vs-active');
   } else {
-    viewer.querySelector(`div.fragment-viewer-${index}`).classList.add('active');
-    closeButton.classList.add('active');
+    const showViewer = viewer.querySelector(`div.fragment-viewer-${index}`);
+    showViewer.classList.add('vs-active');
+    closeButton.classList.add('vs-active');
+    window.dispatchEvent(new Event('drawChart'));
   }
 
   const selector = scope.querySelector('.fragment-selector');
   [...selector.children].forEach((child, childIndex) => {
     if (childIndex === index - 1) {
-      child.classList.toggle('active');
+      child.classList.toggle('vs-active');
     } else {
-      child.classList.remove('active');
+      child.classList.remove('vs-active');
     }
   });
 
@@ -85,17 +88,17 @@ function handleSelectorClick(scope, index) {
 
 export default async function decorate(block) {
   const fragmentViewer = createTag('div', { class: 'fragment-viewer', 'aria-label': 'Fragment View' });
-  const fragmentSelectors = createTag('div', { class: 'fragment-selector', role: 'tablist', 'aria-label': 'Fragment View Selectors' });
+  const fragmentSelectors = createTag('div', { class: 'fragment-selector', 'aria-label': 'Fragment View Selectors' });
 
-  [...block.children].forEach((row, rowIndex) => {
+  for (const row of [...block.children].reverse()) {
+    const rowIndex = [...block.children].indexOf(row);
     if (rowIndex === 0) {
       // Create default video - first, merged row - and activate (show) it.
-      const nextViewer = createTag('div', { class: 'active default-viewer animate' });
+      const nextViewer = createTag('div', { class: 'vs-active default-viewer animate' });
       if (appendVideoGroup(row, nextViewer)) {
         block.classList.add('inline-video');
-        fragmentViewer.appendChild(nextViewer);
+        fragmentViewer.prepend(nextViewer);
       }
-      block.removeChild(block.firstElementChild);
     } else {
       // Set up selector and its fragment.
       const columns = [...row.children];
@@ -118,37 +121,38 @@ export default async function decorate(block) {
       nextSelector.addEventListener('click', () => {
         handleSelectorClick(block, rowIndex);
       });
-      fragmentSelectors.append(nextSelector);
+      fragmentSelectors.prepend(nextSelector);
 
       loadFragment(columns[1])
         .then((fragment) => {
           if (fragment) {
+
             const fragmentSection = fragment.querySelector(':scope .section');
             fragmentSection.classList.add(`fragment-viewer-${rowIndex}`);
 
             // setupCharting(block);
             const nextViewer = createTag('div', { class: `fragment-viewer-${rowIndex} animate` });
             nextViewer.append(...fragmentSection.children);
-            fragmentViewer.append(nextViewer);
-            block.removeChild(block.firstElementChild);
+            fragmentViewer.prepend(nextViewer);
           }
         });
     }
-  });
+    block.removeChild(row);
+  }
 
   // Button to close overlay
-  const closeButton = createTag('div', { class: 'close-viewer', 'aria-label': 'Close Fragment View' });
+  const closeContainer = createTag('div', { class: 'close-viewer' });
   const closeIcon = createIcon('close');
   closeIcon.classList.add('animate');
   closeIcon.addEventListener('click', () => {
     handleSelectorClick(block, 0);
   });
-  closeButton.append(closeIcon);
+  closeContainer.append(closeIcon);
 
-  decorateIcons(closeButton);
+  decorateIcons(closeContainer);
   decorateIcons(fragmentSelectors);
 
-  block.append(closeButton);
+  block.append(closeContainer);
   block.append(fragmentViewer);
   block.append(fragmentSelectors);
 }
