@@ -15,18 +15,26 @@ function handleStateDataOverlay(block, data, coordinates) {
       return;
   }
 
-  let partnersHolder = document.createElement('div');
+  let partnersHolder = document.createElement('div'); // TODO: replace with createTag
   partnersHolder.id = `partners-holder-${data.name}`;
+  partnersHolder.classList.add('partners-holder');
+  // TODO: Add close button to partnersHolder
+
   let partnerClickableImages = [];
+
   let imageToUse = null;
+  // TODO: Only do this if there is no pop-up already
+  // else just switch visibility on the existing one
   [...data.partners.children].forEach((partnerItem, index) => {
     if(index % 2 === 0){ //image
       imageToUse = partnerItem.querySelector('img');
     } else { //link
       const clickableImage = partnerItem.querySelector('a');
-      clickableImage.innerText = '';
+      if(!clickableImage) return;
+      if(clickableImage.innerText){
+        clickableImage.innerText = '';
+      }
       clickableImage.append(createOptimizedPicture(imageToUse.src, imageToUse.alt, false, [{ width: '150' }]));
-
       partnerClickableImages.push(clickableImage);
     }
   });

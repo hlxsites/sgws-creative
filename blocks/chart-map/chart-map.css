@@ -1,0 +1,11 @@
+.chart-map.block .partners-holder {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 1.5vw;
+}
+
+.chart-map.block .partners-holder img {
+  max-width: 15vw;
+  height: auto;
+}
