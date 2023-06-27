@@ -20,7 +20,7 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
       max: 1,
       inRange: {
         color: [
-          'red'
+          'grey'
         ]
       },
       calculable: false
@@ -66,6 +66,7 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
   mapChart.setOption(mapRepresentation);
 
   mapChart.on('click', function (params) {
+    console.log(params);
     // show partners
     /*
     - build DOM element
@@ -97,6 +98,8 @@ export default function decorate(block) {
   mapConfig.chartWidth = block.clientWidth !== 0 ? block.clientWidth : MIN_MAP_WIDTH;
   mapConfig.chartHeight = block.clientHeight !== 0 ? block.clientHeight : MIN_MAP_HEIGHT;
 
+  // TODO: load themes, uses colors from themes like in chart.js
+
   // listen for charting library to be loaded before starting to draw
   document.addEventListener(
     'echartsloaded',
@@ -105,4 +108,6 @@ export default function decorate(block) {
       drawMap(block, mapHolder, mapData, mapConfig);
     },
   );
+
+  // TODO: Properly size map and resize when resizing event is fired
 }
