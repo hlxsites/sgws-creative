@@ -699,6 +699,6 @@ export default function decorate(block) {
         block.append(chartHolder);
         drawChart(block, data, cfg, chartHolder, theme);
       }
-    }, 500);
+    }, 250);
   });
 }

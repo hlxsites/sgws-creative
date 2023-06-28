@@ -3,11 +3,12 @@ import { createTag } from '../../scripts/scripts.js';
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 // also gives the aspect ratio of the map
-const MIN_MAP_HEIGHT = '500px';
-const MIN_MAP_WIDTH = '800px';
+const MIN_MAP_HEIGHT_INT = 500;
+const MIN_MAP_WIDTH_INT = 800;
+const MIN_MAP_WIDTH = `${MIN_MAP_WIDTH_INT}px`;
 
 function handleStateDataOverlay(block, data, coordinates) {
-  if ( !data
+  if (!data
     || !data.partners) {
     return;
   }
@@ -27,7 +28,7 @@ function handleStateDataOverlay(block, data, coordinates) {
         imageToUse = partnerItem.querySelector('img');
       } else { //link
         let clickableImage = partnerItem;
-        if(!clickableImage.href){
+        if (!clickableImage.href) {
           clickableImage = partnerItem.querySelector('a');
         }
 
@@ -57,13 +58,13 @@ function handleStateDataOverlay(block, data, coordinates) {
 
   // TODO: compute nicer position
   const mapWidthMiddle = block.offsetWidth / 2;
-  if(coordinates.x >= mapWidthMiddle){
+  if (coordinates.x >= mapWidthMiddle) {
     partnersHolder.style.left = `calc(${coordinates.x}px)`;
   } else {
     partnersHolder.style.left = `calc(${coordinates.x}px)`;
   }
   const mapHeightMiddle = block.offsetHeight / 2;
-  if(coordinates.y >= mapHeightMiddle){
+  if (coordinates.y >= mapHeightMiddle) {
     partnersHolder.style.top = `calc(${coordinates.y}px)`;
   } else {
     partnersHolder.style.top = `calc(${coordinates.y}px)`;
@@ -74,10 +75,10 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
   console.log("Drawing map");
   echarts.registerMap('USA', USA_MAP);
 
-  mapHolder.style.width = mapConfig.chartWidth;
-  mapHolder.style.height = mapConfig.chartHeight;
-  const mapChart = window.echarts.init(mapHolder);
+  mapHolder.style.width = `${mapConfig.chartWidth}px`;
+  mapHolder.style.height = `${mapConfig.chartHeight}px`;
 
+  const mapChart = window.echarts.init(mapHolder);
   const projection = d3.geoAlbersUsa(); // https://github.com/d3/d3-geo#geoAlbersUsa
   const mapRepresentation = {
     visualMap: {
@@ -132,8 +133,8 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
   mapChart.setOption(mapRepresentation);
   mapChart.on('click', function (params) {
     handleStateDataOverlay(block, params.data, {
-      x: params.event.offsetX + block.offsetLeft + mapHolder.offsetLeft/2,
-      y: params.event.offsetY+ block.offsetTop,
+      x: params.event.offsetX + block.offsetLeft + mapHolder.offsetLeft / 2,
+      y: params.event.offsetY + block.offsetTop,
     });
   });
 }
@@ -155,21 +156,43 @@ export default function decorate(block) {
   mapHolder.classList.add('map-holder');
   block.append(mapHolder);
 
-  const mapConfig = {};
-  mapConfig.chartWidth = block.clientWidth !== 0 ? block.clientWidth : MIN_MAP_WIDTH;
-  mapConfig.chartHeight = block.clientHeight !== 0 ? block.clientHeight : MIN_MAP_HEIGHT;
+  setTimeout(() => {
+    // Make sure DOM sizes have been computed
+
+    const mapConfig = {};
+    mapConfig.chartWidth = block.clientWidth !== 0 ? block.clientWidth : MIN_MAP_WIDTH;
+    mapConfig.chartHeight = Math.floor(mapConfig.chartWidth * MIN_MAP_HEIGHT_INT / MIN_MAP_WIDTH_INT);
+
+    // listen for charting library to be loaded before starting to draw
+    // TODO: Make sure d3 is also loaded (fix race condition)
+    document.addEventListener(
+      'echartsloaded',
+      () => {
+        echartsLoaded = true;
+        drawMap(block, mapHolder, mapData, mapConfig);
+      },
+    );
+  }, 0);
 
   // TODO: load themes, uses colors from themes like in chart.js
 
-  // listen for charting library to be loaded before starting to draw
-  // TODO: Make sure d3 is also loaded (fix race condition)
-  document.addEventListener(
-    'echartsloaded',
-    () => {
-      echartsLoaded = true;
-      drawMap(block, mapHolder, mapData, mapConfig);
-    },
-  );
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      if (echartsLoaded) {
+        // redraw scaled map
+        mapHolder.remove();
+        mapHolder = document.createElement('div');
+        mapHolder.classList.add('map-holder');
+        block.append(mapHolder);
 
-  // TODO: Properly size map and resize when resizing event is fired
+        const mapConfig = {};
+        mapConfig.chartWidth = block.clientWidth !== 0 ? block.clientWidth : MIN_MAP_WIDTH;
+        mapConfig.chartHeight = Math.floor(mapConfig.chartWidth * MIN_MAP_HEIGHT_INT / MIN_MAP_WIDTH_INT);
+
+        drawMap(block, mapHolder, mapData, mapConfig);
+      }
+    }, 250);
+  });
 }
