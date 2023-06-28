@@ -54,7 +54,11 @@ function handleStateDataOverlay(block, data, coordinates) {
     partnersHolder.append(closePartnersView, partnersRegion, ...partnerClickableImages);
     block.append(partnersHolder);
     closePartnersView.querySelector('button')?.addEventListener('click', () => {
-      partnersHolder.classList.add('hidden');
+      partnersHolder.classList.add('fade-out');
+      setTimeout(() => {
+        partnersHolder.classList.remove('fade-out');
+        partnersHolder.classList.add('hidden');
+      }, 400);
     }, { passive: true });
   }
 
