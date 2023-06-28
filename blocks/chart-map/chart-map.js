@@ -149,7 +149,6 @@ function drawRawMap(block, mapHolder, mapData, mapConfig) {
  */
 function drawMap(block, mapHolder, mapData) {
   const mapConfig = {};
-  // TODO: Make sure maps fit in holding div
   mapConfig.chartWidth = block.clientWidth !== 0 ? block.clientWidth : MIN_MAP_WIDTH_PX;
   mapConfig.chartHeight = Math.floor((mapConfig.chartWidth * MIN_MAP_HEIGHT) / MIN_MAP_WIDTH);
   drawRawMap(block, mapHolder, mapData, mapConfig);
