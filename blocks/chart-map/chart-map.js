@@ -61,19 +61,8 @@ function handleStateDataOverlay(block, data, coordinates) {
       }, 400);
     }, { passive: true });
   }
-
-  const mapWidthMiddle = block.offsetWidth / 2;
-  if (coordinates.x >= mapWidthMiddle) {
-    partnersHolder.style.left = `calc(${coordinates.x}px)`;
-  } else {
-    partnersHolder.style.left = `calc(${coordinates.x}px)`;
-  }
-  const mapHeightMiddle = block.offsetHeight / 2;
-  if (coordinates.y >= mapHeightMiddle) {
-    partnersHolder.style.top = `calc(${coordinates.y}px)`;
-  } else {
-    partnersHolder.style.top = `calc(${coordinates.y}px)`;
-  }
+  partnersHolder.style.left = `calc(${coordinates.x}px)`;
+  partnersHolder.style.top = `calc(${coordinates.y}px)`;
 }
 
 /**
