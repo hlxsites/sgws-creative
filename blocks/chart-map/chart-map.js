@@ -133,6 +133,9 @@ function drawRawMap(block, mapHolder, mapData, mapConfig) {
         data: mapData,
         itemStyle: {
           areaColor: mapConfig.theme['secondary-color'],
+          borderColor: mapConfig.theme['neutral-color'],
+          shadowColor: 'rgba(0, 0, 0, 0.15)',
+          shadowBlur: 5
         }
       },
     ],
