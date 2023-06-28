@@ -1,5 +1,5 @@
 import { USA_MAP } from './usa-map.js';
-import { createTag } from '../../scripts/scripts.js';
+import { createTag, getTheme } from '../../scripts/scripts.js';
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 const MIN_MAP_HEIGHT = 500;
@@ -141,14 +141,16 @@ function drawRawMap(block, mapHolder, mapData, mapConfig) {
   });
 }
 
+// TODO: use colors from themes like in chart.js
 /**
  * Sets up config to draw map, then draws map
  * @param {*} block Block holding the map
  * @param {*} mapHolder Div holding the map canvas
  * @param {*} mapData Data to show on map
  */
-function drawMap(block, mapHolder, mapData) {
+function drawMap(block, mapHolder, mapData, theme) {
   const mapConfig = {
+    theme: theme,
     chartWidth: block.clientWidth !== 0 ? block.clientWidth : MIN_MAP_WIDTH_PX,
   };
   mapConfig.chartHeight = Math.floor((mapConfig.chartWidth * MIN_MAP_HEIGHT) / MIN_MAP_WIDTH);
@@ -173,17 +175,18 @@ export default function decorate(block) {
   let mapHolder = createTag('div', { class: 'map-holder' });
   block.append(mapHolder);
 
+  const pageTheme = getTheme() || [];
+  const theme = pageTheme.reduce((obj, { token, value }) => ({ ...obj, [token]: value }), {});
+
   setTimeout(() => { // to make sure DOM sizes have been computed
     document.addEventListener(
       'echartsloaded',
       () => {
         echartsLoaded = true;
-        drawMap(block, mapHolder, mapData);
+        drawMap(block, mapHolder, mapData, theme);
       },
     );
   }, 0);
-
-  // TODO: load themes, uses colors from themes like in chart.js
 
   let resizeTimeout;
   window.addEventListener('resize', () => {
@@ -199,7 +202,7 @@ export default function decorate(block) {
         mapHolder.remove();
         mapHolder = createTag('div', { class: 'map-holder' });
         block.prepend(mapHolder);
-        drawMap(block, mapHolder, mapData);
+        drawMap(block, mapHolder, mapData, theme);
       }
     }, 100);
   }, { passive: true });
