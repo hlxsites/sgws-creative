@@ -148,14 +148,17 @@ function drawRawMap(block, mapHolder, mapData, mapConfig) {
  * @param {*} mapData Data to show on map
  */
 function drawMap(block, mapHolder, mapData) {
-  const mapConfig = {};
-  mapConfig.chartWidth = block.clientWidth !== 0 ? block.clientWidth : MIN_MAP_WIDTH_PX;
+  const mapConfig = {
+    chartWidth: block.clientWidth !== 0 ? block.clientWidth : MIN_MAP_WIDTH_PX,
+  };
   mapConfig.chartHeight = Math.floor((mapConfig.chartWidth * MIN_MAP_HEIGHT) / MIN_MAP_WIDTH);
   drawRawMap(block, mapHolder, mapData, mapConfig);
 }
 
 let echartsLoaded = false;
 export default function decorate(block) {
+  window.hasCharts = true;
+
   const mapData = [];
   [...block.children].forEach((dataItem) => {
     const dataElements = [...dataItem.children];
@@ -171,7 +174,6 @@ export default function decorate(block) {
   block.append(mapHolder);
 
   setTimeout(() => { // to make sure DOM sizes have been computed
-    // TODO: Make sure d3 is also loaded (fix race condition)
     document.addEventListener(
       'echartsloaded',
       () => {
