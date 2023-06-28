@@ -131,6 +131,9 @@ function drawRawMap(block, mapHolder, mapData, mapConfig) {
         },
         selectedMode: false,
         data: mapData,
+        itemStyle: {
+          areaColor: mapConfig.theme['secondary-color'],
+        }
       },
     ],
   };
