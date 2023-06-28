@@ -31,7 +31,6 @@
   position: absolute;
   right: 1rem;
   left: auto;
-  z-index: 2;
 }
 
 .chart-map.block .partners-holder-close button {

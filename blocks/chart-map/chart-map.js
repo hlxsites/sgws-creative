@@ -177,11 +177,15 @@ export default function decorate(block) {
     resizeTimeout = setTimeout(() => {
       if (echartsLoaded) {
         // TODO: hide all open popups if resizing occurs
+        const allStateOverlays = block.getElementsByClassName('partners-holder');
+        [...allStateOverlays].forEach((overlay) => {
+          overlay.classList.add('hidden');
+        });
 
         // redraw scaled map
         mapHolder.remove();
         mapHolder = createTag('div', { class: 'map-holder' });
-        block.append(mapHolder);
+        block.prepend(mapHolder);
         drawMap(block, mapHolder, mapData);
       }
     }, 250);
