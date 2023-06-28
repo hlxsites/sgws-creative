@@ -6,6 +6,12 @@ const MIN_MAP_HEIGHT = 500;
 const MIN_MAP_WIDTH = 800;
 const MIN_MAP_WIDTH_PX = `${MIN_MAP_WIDTH}px`;
 
+/**
+ * Handles the overlay popup listing partners for a state
+ * @param {*} block Block holding the map
+ * @param {*} data Data to show in the pop-up
+ * @param {*} coordinates Coordinates where to place the pop-up
+ */
 function handleStateDataOverlay(block, data, coordinates) {
   if (!data || !data.partners) return;
 
@@ -66,6 +72,13 @@ function handleStateDataOverlay(block, data, coordinates) {
   }
 }
 
+/**
+ * Draws a raw map using mapconfig and widths heights from mapConfig
+ * @param {*} block Block holding the map
+ * @param {*} mapHolder Div holding the map canvas
+ * @param {*} mapData Data to show on map
+ * @param {*} mapConfig Map configuration (eg. width/height)
+ */
 function drawRawMap(block, mapHolder, mapData, mapConfig) {
   window.echarts.registerMap('USA', USA_MAP);
   mapHolder.style.width = `${mapConfig.chartWidth}px`;
@@ -128,6 +141,12 @@ function drawRawMap(block, mapHolder, mapData, mapConfig) {
   });
 }
 
+/**
+ * Sets up config to draw map, then draws map
+ * @param {*} block Block holding the map
+ * @param {*} mapHolder Div holding the map canvas
+ * @param {*} mapData Data to show on map
+ */
 function drawMap(block, mapHolder, mapData) {
   const mapConfig = {};
   // TODO: Make sure maps fit in holding div
