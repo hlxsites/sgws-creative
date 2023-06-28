@@ -30,8 +30,6 @@ export const THEME_TOKEN = Object.freeze({
   BODY_FONT_FAMILY: 'body-font-family',
   SECONDARY_BODY_FONT_FAMILY: 'secondary-body-font-family',
   HEADING_FONT_WEIGHT: 'heading-font-weight',
-  //primary-gradient-color
-  //neutral-gradient-color
 });
 
 export const animationObserver = new IntersectionObserver((entries) => {

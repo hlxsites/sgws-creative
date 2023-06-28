@@ -3,9 +3,9 @@ import { createTag } from '../../scripts/scripts.js';
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 // also gives the aspect ratio of the map
-const MIN_MAP_HEIGHT_INT = 500;
-const MIN_MAP_WIDTH_INT = 800;
-const MIN_MAP_WIDTH = `${MIN_MAP_WIDTH_INT}px`;
+const MIN_MAP_HEIGHT = 500;
+const MIN_MAP_WIDTH = 800;
+const MIN_MAP_WIDTH_PX = `${MIN_MAP_WIDTH}px`;
 
 function handleStateDataOverlay(block, data, coordinates) {
   if (!data
@@ -17,16 +17,14 @@ function handleStateDataOverlay(block, data, coordinates) {
   if (partnersHolder) {
     partnersHolder.classList.remove('hidden');
   } else {
-    partnersHolder = document.createElement('div'); // TODO: replace with createTag
-    partnersHolder.id = `partners-holder-${data.name}`;
-    partnersHolder.classList.add('partners-holder');
+    partnersHolder = createTag('div', { class: 'partners-holder', id: `partners-holder-${data.name}` });
 
-    let partnerClickableImages = [];
+    const partnerClickableImages = [];
     let imageToUse = null;
     [...data.partners.children].forEach((partnerItem, index) => {
-      if (index % 2 === 0) { //image
+      if (index % 2 === 0) { // image
         imageToUse = partnerItem.querySelector('img');
-      } else { //link
+      } else { // link
         let clickableImage = partnerItem;
         if (!clickableImage.href) {
           clickableImage = partnerItem.querySelector('a');
@@ -50,13 +48,11 @@ function handleStateDataOverlay(block, data, coordinates) {
     partnersHolder.append(closePartnersView, ...partnerClickableImages);
     block.append(partnersHolder);
 
-    const closePartnersButton = closePartnersView.querySelector('button');
-    closePartnersButton.addEventListener('click', () => {
+    closePartnersView.querySelector('button')?.addEventListener('click', () => {
       partnersHolder.classList.add('hidden');
     }, { passive: true });
   }
 
-  // TODO: compute nicer position
   const mapWidthMiddle = block.offsetWidth / 2;
   if (coordinates.x >= mapWidthMiddle) {
     partnersHolder.style.left = `calc(${coordinates.x}px)`;
@@ -71,15 +67,13 @@ function handleStateDataOverlay(block, data, coordinates) {
   }
 }
 
-function drawMap(block, mapHolder, mapData, mapConfig) {
-  console.log("Drawing map");
-  echarts.registerMap('USA', USA_MAP);
-
+function drawRawMap(block, mapHolder, mapData, mapConfig) {
+  window.echarts.registerMap('USA', USA_MAP);
   mapHolder.style.width = `${mapConfig.chartWidth}px`;
   mapHolder.style.height = `${mapConfig.chartHeight}px`;
-
   const mapChart = window.echarts.init(mapHolder);
-  const projection = d3.geoAlbersUsa(); // https://github.com/d3/d3-geo#geoAlbersUsa
+
+  const projection = window.d3.geoAlbersUsa(); // https://github.com/d3/d3-geo#geoAlbersUsa
   const mapRepresentation = {
     visualMap: {
       show: false,
@@ -87,26 +81,26 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
       max: 1,
       inRange: {
         color: [
-          'grey'
-        ]
+          'grey',
+        ],
       },
-      calculable: false
+      calculable: false,
     },
     emphasis: {
       label: {
-        show: true
-      }
+        show: true,
+      },
     },
     tooltip: {
       trigger: 'item',
       showDelay: 0,
       transitionDuration: 0.2,
-      formatter: function (params) {
+      formatter: (params) => {
         if (params.value === 1) {
           return params.data.name;
         }
         return '';
-      }
+      },
     },
     series: [
       {
@@ -118,20 +112,16 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
           disabled: true,
         },
         projection: {
-          project: function (point) {
-            return projection(point);
-          },
-          unproject: function (point) {
-            return projection.invert(point);
-          }
+          project: (point) => projection(point),
+          unproject: (point) => projection.invert(point),
         },
         selectedMode: false,
         data: mapData,
-      }
-    ]
+      },
+    ],
   };
   mapChart.setOption(mapRepresentation);
-  mapChart.on('click', function (params) {
+  mapChart.on('click', (params) => {
     handleStateDataOverlay(block, params.data, {
       x: params.event.offsetX + block.offsetLeft + mapHolder.offsetLeft / 2,
       y: params.event.offsetY + block.offsetTop,
@@ -139,11 +129,18 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
   });
 }
 
+function drawMap(block, mapHolder, mapData) {
+  const mapConfig = {};
+  mapConfig.chartWidth = block.clientWidth !== 0 ? block.clientWidth : MIN_MAP_WIDTH_PX;
+  mapConfig.chartHeight = Math.floor((mapConfig.chartWidth * MIN_MAP_HEIGHT) / MIN_MAP_WIDTH);
+  drawRawMap(block, mapHolder, mapData, mapConfig);
+}
+
 let echartsLoaded = false;
 export default function decorate(block) {
   const mapData = [];
   [...block.children].forEach((dataItem) => {
-    const dataElements = [...dataItem.children]
+    const dataElements = [...dataItem.children];
     mapData.push({
       name: dataElements[0].textContent,
       value: 1,
@@ -152,16 +149,11 @@ export default function decorate(block) {
     dataItem.remove();
   });
 
-  let mapHolder = document.createElement('div');
-  mapHolder.classList.add('map-holder');
+  let mapHolder = createTag('div', { class: 'map-holder' });
   block.append(mapHolder);
 
   setTimeout(() => {
     // Make sure DOM sizes have been computed
-
-    const mapConfig = {};
-    mapConfig.chartWidth = block.clientWidth !== 0 ? block.clientWidth : MIN_MAP_WIDTH;
-    mapConfig.chartHeight = Math.floor(mapConfig.chartWidth * MIN_MAP_HEIGHT_INT / MIN_MAP_WIDTH_INT);
 
     // listen for charting library to be loaded before starting to draw
     // TODO: Make sure d3 is also loaded (fix race condition)
@@ -169,7 +161,7 @@ export default function decorate(block) {
       'echartsloaded',
       () => {
         echartsLoaded = true;
-        drawMap(block, mapHolder, mapData, mapConfig);
+        drawMap(block, mapHolder, mapData);
       },
     );
   }, 0);
@@ -181,17 +173,13 @@ export default function decorate(block) {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
       if (echartsLoaded) {
+        // TODO: hide all open popups
+
         // redraw scaled map
         mapHolder.remove();
-        mapHolder = document.createElement('div');
-        mapHolder.classList.add('map-holder');
+        mapHolder = createTag('div', { class: 'map-holder' });
         block.append(mapHolder);
-
-        const mapConfig = {};
-        mapConfig.chartWidth = block.clientWidth !== 0 ? block.clientWidth : MIN_MAP_WIDTH;
-        mapConfig.chartHeight = Math.floor(mapConfig.chartWidth * MIN_MAP_HEIGHT_INT / MIN_MAP_WIDTH_INT);
-
-        drawMap(block, mapHolder, mapData, mapConfig);
+        drawMap(block, mapHolder, mapData);
       }
     }, 250);
   });
