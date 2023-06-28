@@ -2,16 +2,12 @@ import { USA_MAP } from './usa-map.js';
 import { createTag } from '../../scripts/scripts.js';
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
-// also gives the aspect ratio of the map
 const MIN_MAP_HEIGHT = 500;
 const MIN_MAP_WIDTH = 800;
 const MIN_MAP_WIDTH_PX = `${MIN_MAP_WIDTH}px`;
 
 function handleStateDataOverlay(block, data, coordinates) {
-  if (!data
-    || !data.partners) {
-    return;
-  }
+  if (!data || !data.partners) return;
 
   let partnersHolder = document.getElementById(`partners-holder-${data.name}`);
   if (partnersHolder) {
@@ -28,7 +24,6 @@ function handleStateDataOverlay(block, data, coordinates) {
         if (!clickableImage.href) {
           clickableImage = partnerItem.querySelector('a');
         }
-
         if (!clickableImage) return;
         if (clickableImage.innerText) {
           clickableImage.innerText = '';
@@ -158,7 +153,6 @@ export default function decorate(block) {
   block.append(mapHolder);
 
   setTimeout(() => { // to make sure DOM sizes have been computed
-    // listen for charting library to be loaded before starting to draw
     // TODO: Make sure d3 is also loaded (fix race condition)
     document.addEventListener(
       'echartsloaded',
@@ -176,7 +170,6 @@ export default function decorate(block) {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
       if (echartsLoaded) {
-        // TODO: hide all open popups if resizing occurs
         const allStateOverlays = block.getElementsByClassName('partners-holder');
         [...allStateOverlays].forEach((overlay) => {
           overlay.classList.add('hidden');
@@ -188,6 +181,6 @@ export default function decorate(block) {
         block.prepend(mapHolder);
         drawMap(block, mapHolder, mapData);
       }
-    }, 250);
-  });
+    }, 100);
+  }, { passive: true });
 }
