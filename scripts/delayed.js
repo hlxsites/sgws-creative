@@ -1,6 +1,8 @@
 // eslint-disable-next-line import/no-cycle
 import { sampleRUM } from './lib-franklin.js';
 
+window.hasCharts = window.hasCharts || false;
+
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
 
@@ -28,7 +30,7 @@ if (document.querySelector('div.chart-map-container')) {
 }
 
 // Charts
-if (document.querySelector('div.chart-container') || document.querySelector('div.chart-map-container')) {
+if (window.hasCharts) {
   const echarts = loadScript('https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js', {
     type: 'text/javascript',
   });
