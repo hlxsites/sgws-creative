@@ -374,6 +374,13 @@ main .section.background-video .default-content-wrapper h1 {
 }
 
 /* product template styling */
+.product main .section.primary,
+.product main .section.secondary,
+.product main .section {
+  width: auto;
+  height: auto;
+}
+
 .product main .section.primary:has(div:only-child),
 .product main .section.secondary:has(div:only-child) {
   padding: var(--layout-size-l) var(--layout-size-xxl);
