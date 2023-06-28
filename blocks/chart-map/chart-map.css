@@ -12,6 +12,7 @@
   border: 1px solid var(--primary-color);
   box-shadow: var(--primary-color) 0 0 5px 0;
   background-color: var(--secondary-color);
+  animation: fade-in-from-none 0.5s ease-out;
 }
 
 .chart-map.block .partners-holder img {
@@ -26,11 +27,11 @@
 .chart-map.block .partners-holder-close {
   text-align: right;
   line-height: unset;
-  margin-top: -1rem;
-  margin-right: -1rem;
   position: absolute;
-  right: 1rem;
+  right: 0;
   left: auto;
+  top: 0;
+  bottom: auto;
 }
 
 .chart-map.block .partners-holder-close button {
@@ -62,4 +63,21 @@
 
 .chart-map.block .hidden {
   display: none !important;
+}
+
+@keyframes fade-out {
+  1% {
+    display: block;
+    opacity: 1;
+  }
+
+  99% {
+    display: block;
+    opacity: 0;
+  }
+
+  100% {
+    display: none;
+    opacity: 0;
+  }
 }

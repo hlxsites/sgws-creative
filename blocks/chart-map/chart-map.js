@@ -139,6 +139,7 @@ function drawRawMap(block, mapHolder, mapData, mapConfig) {
       },
     ],
   };
+  console.log(mapConfig.theme);
   mapChart.setOption(mapRepresentation);
   mapChart.on('click', (params) => {
     handleStateDataOverlay(block, params.data, {
