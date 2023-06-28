@@ -15,6 +15,15 @@ export default function decorate(block) {
     block.classList.add('icon-list');
   }
 
+  let contentLink;
+  if (block.classList.contains('link')) {
+    // URL is the first cell/row
+    contentLink = block.firstElementChild.textContent.trim();
+    block.querySelector(':first-child').remove();
+    block.classList.add('animate');
+    animationObserver.observe(block);
+  }
+
   // setup image columns and help button
   [...block.children].forEach((row) => {
     [...row.children].forEach((col) => {
@@ -52,6 +61,13 @@ export default function decorate(block) {
           // picture is only content in column
           picWrapper.classList.add('columns-img-col');
         }
+      }
+
+      if (contentLink) {
+        col.addEventListener('click', (e) => {
+          e.stopPropagation();
+          window.open(contentLink, '_columnsLink');
+        });
       }
 
       const helpIcon = col.querySelector(':scope span.icon-help');
@@ -98,12 +114,15 @@ export default function decorate(block) {
   });
 
   // stats background image
-  const backgroundPicture = block.querySelector(':scope > div > .columns-img-col');
-  if (backgroundPicture) {
-    const pictureParent = backgroundPicture.parentElement;
-    const img = backgroundPicture.querySelector('img');
-    pictureParent.remove();
-    block.firstElementChild.style.backgroundImage = `url(${img.src})`;
-    block.classList.add('background-image');
+  const stats = block.classList.contains('stats');
+  if (stats) {
+    const backgroundPicture = block.querySelector(':scope > div > .columns-img-col');
+    if (backgroundPicture) {
+      const pictureParent = backgroundPicture.parentElement;
+      const img = backgroundPicture.querySelector('img');
+      pictureParent.remove();
+      block.firstElementChild.style.backgroundImage = `url(${img.src})`;
+      block.classList.add('background-image');
+    }
   }
 }

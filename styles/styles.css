@@ -36,6 +36,7 @@
   --background-color: var(--static-color-white);
   --text-color: var(--static-color-black);
   --text-color-background: var(--static-color-white);
+  --text-secondary-color-background: #f2f2f2;
   --secondary-text-color-background: var(--text-color-background);
   --heading-font-size: 2rem;
   --body-font-size: 1rem;
@@ -505,6 +506,18 @@ main .back-to-home span.icon {
 
     100% {
       display: block;
+      opacity: 1;
+    }
+  }
+
+  @keyframes background-from-right {
+    0% {
+      background-position: left;
+      opacity: 0;
+    }
+
+    100% {
+      background-position: right;
       opacity: 1;
     }
   }
