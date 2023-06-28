@@ -86,7 +86,8 @@ function drawRawMap(block, mapHolder, mapData, mapConfig) {
   const mapChart = window.echarts.init(mapHolder);
 
   console.log(mapConfig.theme);
-  const projection = window.d3.geoAlbersUsa(); // https://github.com/d3/d3-geo#geoAlbersUsa
+  // Projection used: https://github.com/d3/d3-geo#geoAlbersUsa
+  const projection = window.d3.geoAlbersUsa();
   const mapRepresentation = {
     visualMap: {
       show: false,
