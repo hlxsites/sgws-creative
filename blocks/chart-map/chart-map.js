@@ -85,7 +85,6 @@ function drawRawMap(block, mapHolder, mapData, mapConfig) {
   mapHolder.style.height = `${mapConfig.chartHeight}px`;
   const mapChart = window.echarts.init(mapHolder);
 
-  console.log(mapConfig.theme);
   // Projection used: https://github.com/d3/d3-geo#geoAlbersUsa
   const projection = window.d3.geoAlbersUsa();
   const mapRepresentation = {
@@ -135,8 +134,8 @@ function drawRawMap(block, mapHolder, mapData, mapConfig) {
           areaColor: mapConfig.theme['secondary-color'],
           borderColor: mapConfig.theme['neutral-color'],
           shadowColor: 'rgba(0, 0, 0, 0.15)',
-          shadowBlur: 5
-        }
+          shadowBlur: 5,
+        },
       },
     ],
   };
@@ -149,7 +148,6 @@ function drawRawMap(block, mapHolder, mapData, mapConfig) {
   });
 }
 
-// TODO: use colors from themes like in chart.js
 /**
  * Sets up config to draw map, then draws map
  * @param {*} block Block holding the map
@@ -158,7 +156,7 @@ function drawRawMap(block, mapHolder, mapData, mapConfig) {
  */
 function drawMap(block, mapHolder, mapData, theme) {
   const mapConfig = {
-    theme: theme,
+    theme,
     chartWidth: block.clientWidth !== 0 ? block.clientWidth : MIN_MAP_WIDTH_PX,
   };
   mapConfig.chartHeight = Math.floor((mapConfig.chartWidth * MIN_MAP_HEIGHT) / MIN_MAP_WIDTH);
