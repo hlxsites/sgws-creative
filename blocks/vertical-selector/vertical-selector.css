@@ -1,3 +1,7 @@
+.vertical-selector {
+  min-height: 60vw;
+}
+
 .vertical-selector .default-viewer video {
   width: 100%;
 }
@@ -48,7 +52,25 @@
 
 .vertical-selector .fragment-viewer *.vs-active {
   display: block;
-  min-height: 60px;
+  min-height: 45vw;
+  z-index:50;
+  background-color: #fffffff0;
+}
+
+.vertical-selector .fragment-viewer .vs-bkg {
+  display:block;
+  position: relative;
+  z-index:-1;
+}
+
+.vertical-selector .fragment-viewer .vs-bkg picture {
+  position:absolute;
+  width:100%;
+}
+
+.vertical-selector .fragment-viewer .vs-bkg picture img {
+  width:100%;
+  max-height:45vw;
 }
 
 .vertical-selector .fragment-viewer .video-group {
@@ -82,7 +104,7 @@
 }
 
 .vertical-selector .fragment-selector {
-  margin-top: 0;
+  margin: 0;
 }
 
 .vertical-selector .fragment-selector > div {

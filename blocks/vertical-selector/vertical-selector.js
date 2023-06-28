@@ -87,7 +87,7 @@ function handleSelectorClick(scope, index) {
     showViewer.classList.add('vs-active');
     closeButton.classList.add('vs-active');
     window.dispatchEvent(new Event('drawChart'));
-    scope.querySelector('.vertical-selector').scrollIntoView(true);
+    scope.querySelector('.vertical-selector')?.scrollIntoView(true);
   }
 }
 
@@ -101,8 +101,12 @@ export default async function decorate(block) {
       const nextViewer = createTag('div', { class: 'vs-active default-viewer animate' });
       if (appendVideoGroup(row, nextViewer)) {
         block.classList.add('inline-video');
-        fragmentViewer.append(nextViewer);
+      } else {
+        // No video, so just show the row.
+        nextViewer.classList.add('vs-bkg');
+        nextViewer.replaceChildren(...row.children);
       }
+      fragmentViewer.append(nextViewer);
     } else {
       // Set up selector and its fragment.
       const columns = [...row.children];
