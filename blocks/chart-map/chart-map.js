@@ -85,6 +85,7 @@ function drawRawMap(block, mapHolder, mapData, mapConfig) {
   mapHolder.style.height = `${mapConfig.chartHeight}px`;
   const mapChart = window.echarts.init(mapHolder);
 
+  console.log(mapConfig.theme);
   const projection = window.d3.geoAlbersUsa(); // https://github.com/d3/d3-geo#geoAlbersUsa
   const mapRepresentation = {
     visualMap: {
@@ -93,7 +94,7 @@ function drawRawMap(block, mapHolder, mapData, mapConfig) {
       max: 1,
       inRange: {
         color: [
-          'grey',
+          mapConfig.theme['primary-color'],
         ],
       },
       calculable: false,
