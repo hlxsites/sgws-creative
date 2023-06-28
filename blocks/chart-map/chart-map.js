@@ -2,13 +2,11 @@ import { USA_MAP } from './usa-map.js';
 import { createTag } from '../../scripts/scripts.js';
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
+// also gives the aspect ratio of the map
 const MIN_MAP_HEIGHT = '500px';
 const MIN_MAP_WIDTH = '800px';
 
 function handleStateDataOverlay(block, data, coordinates) {
-  console.log("click: ", coordinates);
-
-  console.log(data.partners.children.length);
   if ( !data
     || !data.partners) {
     return;
@@ -60,15 +58,15 @@ function handleStateDataOverlay(block, data, coordinates) {
   // TODO: compute nicer position
   const mapWidthMiddle = block.offsetWidth / 2;
   if(coordinates.x >= mapWidthMiddle){
-    partnersHolder.style.left = `calc(${coordinates.x}px + 4vw)`;
+    partnersHolder.style.left = `calc(${coordinates.x}px)`;
   } else {
-    partnersHolder.style.left = `calc(${coordinates.x}px - 12vw)`;
+    partnersHolder.style.left = `calc(${coordinates.x}px)`;
   }
   const mapHeightMiddle = block.offsetHeight / 2;
   if(coordinates.y >= mapHeightMiddle){
-    partnersHolder.style.top = `calc(${coordinates.y}px + 4vw)`;
+    partnersHolder.style.top = `calc(${coordinates.y}px)`;
   } else {
-    partnersHolder.style.top = `calc(${coordinates.y}px - 8vw)`;
+    partnersHolder.style.top = `calc(${coordinates.y}px)`;
   }
 }
 
@@ -134,8 +132,8 @@ function drawMap(block, mapHolder, mapData, mapConfig) {
   mapChart.setOption(mapRepresentation);
   mapChart.on('click', function (params) {
     handleStateDataOverlay(block, params.data, {
-      x: params.event.offsetX,
-      y: params.event.offsetY
+      x: params.event.offsetX + block.offsetLeft + mapHolder.offsetLeft/2,
+      y: params.event.offsetY+ block.offsetTop,
     });
   });
 }
@@ -164,6 +162,7 @@ export default function decorate(block) {
   // TODO: load themes, uses colors from themes like in chart.js
 
   // listen for charting library to be loaded before starting to draw
+  // TODO: Make sure d3 is also loaded (fix race condition)
   document.addEventListener(
     'echartsloaded',
     () => {
