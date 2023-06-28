@@ -38,6 +38,8 @@ function handleStateDataOverlay(block, data, coordinates) {
       }
     });
     const closePartnersView = createTag('div', { class: 'partners-holder-close' });
+    const partnersRegion = createTag('div', { class: 'partners-title-region' });
+    partnersRegion.textContent = data.name;
     closePartnersView.innerHTML = `<button type="button" aria-label="Close partners view">
         <span class="icon icon-close">
             <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
@@ -48,7 +50,7 @@ function handleStateDataOverlay(block, data, coordinates) {
           </svg>
         </span>
       </button>`;
-    partnersHolder.append(closePartnersView, ...partnerClickableImages);
+    partnersHolder.append(closePartnersView, partnersRegion, ...partnerClickableImages);
     block.append(partnersHolder);
     closePartnersView.querySelector('button')?.addEventListener('click', () => {
       partnersHolder.classList.add('hidden');
