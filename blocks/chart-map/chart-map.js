@@ -18,7 +18,6 @@ function handleStateDataOverlay(block, data, coordinates) {
     partnersHolder.classList.remove('hidden');
   } else {
     partnersHolder = createTag('div', { class: 'partners-holder', id: `partners-holder-${data.name}` });
-
     const partnerClickableImages = [];
     let imageToUse = null;
     [...data.partners.children].forEach((partnerItem, index) => {
@@ -38,16 +37,19 @@ function handleStateDataOverlay(block, data, coordinates) {
         partnerClickableImages.push(clickableImage);
       }
     });
-
-    // TODO: Add proper close button to partnersHolder
     const closePartnersView = createTag('div', { class: 'partners-holder-close' });
     closePartnersView.innerHTML = `<button type="button" aria-label="Close partners view">
-        <span class="icon icon-close">X</span>
+        <span class="icon icon-close">
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+        viewBox="0 0 96 96" x="0px" y="0px" width="40" height="40" fill="currentColor">
+        <path d="M32.444 65.556c-0.512 0-1.024-0.196-1.416-0.584-0.78-0.768-0.78-2.048 0-2.828l31.108-31.096c0.776-0.768 2.048-0.768 2.828 0 0.776 0.768 0.776 2.060 0 2.828l-31.108 31.096c-0.388 0.388-0.9 0.584-1.412 0.584z"/>
+        <path d="M63.556 65.556c-0.512 0-1.024-0.196-1.416-0.584l-31.108-31.1c-0.78-0.768-0.78-2.060 0-2.828s2.048-0.768 2.828 0l31.108 31.096c0.78 0.78 0.78 2.060 0 2.828-0.388 0.392-0.896 0.588-1.412 0.588z"/>
+        <path d="M48 94c-25.364 0-46-20.64-46-46 0-25.368 20.636-46 46-46s46 20.632 46 46c0 25.36-20.636 46-46 46zM48 6c-23.16 0-42 18.836-42 42 0 23.156 18.84 42 42 42s42-18.844 42-42c0-23.164-18.84-42-42-42z"/>
+          </svg>
+        </span>
       </button>`;
-
     partnersHolder.append(closePartnersView, ...partnerClickableImages);
     block.append(partnersHolder);
-
     closePartnersView.querySelector('button')?.addEventListener('click', () => {
       partnersHolder.classList.add('hidden');
     }, { passive: true });
@@ -131,6 +133,7 @@ function drawRawMap(block, mapHolder, mapData, mapConfig) {
 
 function drawMap(block, mapHolder, mapData) {
   const mapConfig = {};
+  // TODO: Make sure maps fit in holding div
   mapConfig.chartWidth = block.clientWidth !== 0 ? block.clientWidth : MIN_MAP_WIDTH_PX;
   mapConfig.chartHeight = Math.floor((mapConfig.chartWidth * MIN_MAP_HEIGHT) / MIN_MAP_WIDTH);
   drawRawMap(block, mapHolder, mapData, mapConfig);
@@ -152,9 +155,7 @@ export default function decorate(block) {
   let mapHolder = createTag('div', { class: 'map-holder' });
   block.append(mapHolder);
 
-  setTimeout(() => {
-    // Make sure DOM sizes have been computed
-
+  setTimeout(() => { // to make sure DOM sizes have been computed
     // listen for charting library to be loaded before starting to draw
     // TODO: Make sure d3 is also loaded (fix race condition)
     document.addEventListener(
@@ -173,7 +174,7 @@ export default function decorate(block) {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
       if (echartsLoaded) {
-        // TODO: hide all open popups
+        // TODO: hide all open popups if resizing occurs
 
         // redraw scaled map
         mapHolder.remove();
