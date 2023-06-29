@@ -438,6 +438,42 @@ main .back-to-home span.icon {
   fill: white;
 }
 
+/* BANNER */
+main div.section.banner {
+  padding: 0;
+  animation-delay: 0.25s;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: background-from-right;
+  background: linear-gradient(to right, var(--background-color) 50%, var(--text-secondary-color-background) 50%) left;
+  background-size: 200%;
+  transition: .5s ease-out;
+}
+
+main div.section.banner:hover {
+  background-position: right;
+}
+
+main div.section.banner > div {
+  display: flex;
+  gap: 16px;
+  margin-left: 32vw;
+  margin-right: 32vw;
+}
+
+main div.section.banner > div > * {
+  width: 14vw;
+  margin: var(--layout-size-s) 0;
+  animation-delay: 0.25s;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: fade-in-bottom;
+}
+
+main div.section.banner > div > *:nth-child(odd) {
+  text-align: right;
+}
+
 /* animations */
 @media (prefers-reduced-motion: no-preference) {
   .presentation main .default-content-wrapper > h1,
@@ -513,12 +549,10 @@ main .back-to-home span.icon {
   @keyframes background-from-right {
     0% {
       background-position: left;
-      opacity: 0;
     }
 
     100% {
       background-position: right;
-      opacity: 1;
     }
   }
 

@@ -346,6 +346,29 @@ export function decoratePictureParagraph(main) {
   });
 }
 
+export function decorateBannerSections(main) {
+  const banners = main.querySelectorAll('div.section.banner');
+  if (banners) {
+    [...banners].forEach((banner) => {
+      console.log(banner.outerText.trim());
+      const wrapper = banner.querySelector('.default-content-wrapper');
+      let bannerLink;
+      [...wrapper.querySelectorAll('p')].forEach((p) => {
+        const text = p.innerText;
+        if (text.startsWith("http")) {
+          bannerLink = text;
+          wrapper.removeChild(p);
+        }
+      });
+
+      wrapper.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.open(bannerLink, '_columnsLink');
+      });
+    });
+  }
+}
+
 /**
  * Decorates the background of all highlighted sections.
  * @param {Element} main The container element
@@ -376,6 +399,7 @@ function decorateMain(main) {
   decoratePictureParagraph(main);
   buildAutoBlocks(main);
   decorateSections(main);
+  decorateBannerSections(main);
   decorateBlocks(main);
   decorateSectionBackgrounds(main);
   decorateBorders(main);
