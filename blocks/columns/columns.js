@@ -28,7 +28,11 @@ export default function decorate(block) {
         };
 
         const video = createVideoTag(videoLink.href, posterImage?.src, attributes);
-        const playButton = createTag('button', { class: 'play-button', type: 'button', 'aria-label': 'Play Video' });
+        const playButton = createTag('button', {
+          class: 'play-button',
+          type: 'button',
+          'aria-label': 'Play Video',
+        });
         const background = createTag('div', { class: 'video-background' });
         playButton.addEventListener('click', () => {
           video.controls = true;
@@ -45,6 +49,7 @@ export default function decorate(block) {
         animationObserver.observe(videoGroup);
         animationObserver.observe(background);
       }
+
       const pic = col.querySelector('picture');
       if (pic) {
         const picWrapper = pic.closest('div');
@@ -98,12 +103,14 @@ export default function decorate(block) {
   });
 
   // stats background image
-  const backgroundPicture = block.querySelector(':scope > div > .columns-img-col');
-  if (backgroundPicture) {
-    const pictureParent = backgroundPicture.parentElement;
-    const img = backgroundPicture.querySelector('img');
-    pictureParent.remove();
-    block.firstElementChild.style.backgroundImage = `url(${img.src})`;
-    block.classList.add('background-image');
+  if (block.classList.contains('stats')) {
+    const backgroundPicture = block.querySelector(':scope > div > .columns-img-col');
+    if (backgroundPicture) {
+      const pictureParent = backgroundPicture.parentElement;
+      const img = backgroundPicture.querySelector('img');
+      pictureParent.remove();
+      block.firstElementChild.style.backgroundImage = `url(${img.src})`;
+      block.classList.add('background-image');
+    }
   }
 }
