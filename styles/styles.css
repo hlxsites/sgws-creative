@@ -287,6 +287,16 @@ main .section.highlight:not(.background-image) {
   color: var(--text-color-background);
 }
 
+main div.section.banner > div p,
+main div.section.banner > div h3 {
+  width: 14vw;
+  margin: 0;
+  animation-delay: 0.25s;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: fade-in-bottom;
+}
+
 main .section.highlight.dark h2,
 main .section.highlight.dark h3,
 main .section.highlight:not(.background-image) h2,
@@ -459,19 +469,12 @@ main div.section.banner > div {
   gap: 16px;
   margin-left: 32vw;
   margin-right: 32vw;
-}
-
-main div.section.banner > div > * {
-  width: 14vw;
-  margin: var(--layout-size-s) 0;
-  animation-delay: 0.25s;
-  animation-duration: 1s;
-  animation-fill-mode: both;
-  animation-name: fade-in-bottom;
+  align-items: center;
 }
 
 main div.section.banner > div > *:nth-child(odd) {
   text-align: right;
+  margin: var(--layout-size-xs) 0;
 }
 
 /* animations */
