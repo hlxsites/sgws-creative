@@ -350,12 +350,11 @@ export function decorateBannerSections(main) {
   const banners = main.querySelectorAll('div.section.banner');
   if (banners) {
     [...banners].forEach((banner) => {
-      console.log(banner.outerText.trim());
       const wrapper = banner.querySelector('.default-content-wrapper');
       let bannerLink;
       [...wrapper.querySelectorAll('p')].forEach((p) => {
         const text = p.innerText;
-        if (text.startsWith("http")) {
+        if (text.startsWith('http')) {
           bannerLink = text;
           wrapper.removeChild(p);
         }
