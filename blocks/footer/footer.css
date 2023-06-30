@@ -22,7 +22,8 @@ footer p {
 }
 
 footer h2.animate,
-footer p.animate {
+footer p.animate,
+footer span.icon {
   animation-delay: 0.25s;
   animation-duration: 1s;
   animation-fill-mode: both;
@@ -76,6 +77,54 @@ footer .sources .header a.button {
   animation-duration: 1s;
   animation-fill-mode: both;
   animation-name: fade-in;
+}
+
+footer .sources > div > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer .footer-content > div {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 150px;
+}
+
+.product .footer > div {
+  display: flex;
+  flex-flow: row nowrap;
+  padding-left: var(--layout-size-l);
+}
+
+.product .product-footer-nav > div {
+  padding: 40px;
+  background-color: var(--link-color-background);
+  border: 4px solid var(--link-color);;
+  display: flex;
+  gap: 24px;
+  color: var(--primary-color);
+}
+
+.product .product-footer-nav {
+  position: absolute;
+  right: 0;
+  background-color: var(--link-color-background);
+  padding: var(--layout-size-xl);
+}
+
+.product .product-footer-nav > div p {
+  color: var(--primary-color);
+  margin: 0;
+}
+
+.product .product-footer-nav:hover > div {
+  border-color: var(--nav-footer-hover-color) !important;
+}
+
+.product .product-footer-nav:hover,
+.product .product-footer-nav:hover p {
+  color: var(--nav-footer-hover-color) !important;
+  fill: var(--nav-footer-hover-color) !important;
 }
 
 footer .sources .header h2 {
@@ -156,11 +205,6 @@ footer .sources .header .close .icon {
   height: 3.5em;
 }
 
-footer .sources > div > div {
-  display: flex;
-  flex-direction: column;
-}
-
 footer .sources ol {
   counter-reset: orderedList;
   animation-delay: 0s;
@@ -185,12 +229,6 @@ footer .sources ol > li::marker {
   content: counter(orderedList) ")\a0";
 }
 
-.product .footer > div {
-  display: flex;
-  flex-flow: row nowrap;
-  padding-left: var(--layout-size-l);
-}
-
 .product .footer p.picture {
   position: absolute;
   top: 0;
@@ -207,12 +245,6 @@ footer .sources ol > li::marker {
 .product .footer picture img {
   width: 8vw;
   height: auto;
-}
-
-.footer .footer-content > div {
-  display: flex;
-  flex-flow: row nowrap;
-  gap: 150px;
 }
 
 .footer .footer-content > div > div:first-child {
@@ -257,6 +289,10 @@ footer .sources ol > li::marker {
 
 @media (prefers-reduced-motion: no-preference) {
   .product footer p.picture {
+    opacity: 0;
+  }
+
+  .product .product-footer-nav span.icon {
     opacity: 0;
   }
 
