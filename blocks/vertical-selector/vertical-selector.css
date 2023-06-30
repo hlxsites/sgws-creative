@@ -51,10 +51,13 @@
 }
 
 .vertical-selector .fragment-viewer *.vs-active {
-  display: block;
   min-height: 45vw;
+  max-height: 45vw;
   z-index:50;
   background-color: #fffffff0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .vertical-selector .fragment-viewer .vs-bkg {
