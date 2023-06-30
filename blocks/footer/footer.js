@@ -171,7 +171,7 @@ export default async function decorate(block) {
   const observer = new IntersectionObserver((entries) => {
     // Loop over the entries
     entries.forEach((entry) => {
-      const elements = entry.target.querySelectorAll('h2, p, picture, span.icon');
+      const elements = entry.target.querySelectorAll('h2, p, div.picture, span.icon');
       elements.forEach((el) => {
         console.log(el.innerHTML);
         // If the element is visible

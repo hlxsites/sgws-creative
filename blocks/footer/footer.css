@@ -91,29 +91,32 @@ footer .sources > div > div {
 }
 
 .product .footer > div {
-  display: flex;
-  flex-flow: row nowrap;
+  display: grid;
+  grid-template-columns: fit-content(100%) minmax(300px, 1fr);
+  gap: var(--layout-size-xl);
   padding-left: var(--layout-size-l);
-}
-
-.product .product-footer-nav > div {
-  padding: 40px;
-  background-color: var(--link-color-background);
-  border: 4px solid var(--link-color);;
-  display: flex;
-  gap: 24px;
-  color: var(--primary-color);
 }
 
 .product .product-footer-nav {
   position: absolute;
   right: 0;
   background-color: var(--link-color-background);
-  padding: var(--layout-size-xl);
 }
 
-.product .product-footer-nav > div p {
+.product .product-footer-nav > div {
+  display: flex;
+  gap: var(--layout-size-l);
+  padding: var(--layout-size-m) var(--layout-size-l);
+  margin: var(--layout-size-m) var(--layout-size-l);
+  background-color: var(--link-color-background);
+  border: var(--layout-size-xxs) solid var(--link-color);
   color: var(--primary-color);
+}
+
+.product .product-footer-nav > div p,
+.product .product-footer-nav > div svg {
+  color: var(--primary-color);
+  fill: var(--primary-color);
   margin: 0;
 }
 
@@ -121,7 +124,7 @@ footer .sources > div > div {
   border-color: var(--nav-footer-hover-color) !important;
 }
 
-.product .product-footer-nav:hover,
+.product .product-footer-nav:hover svg,
 .product .product-footer-nav:hover p {
   color: var(--nav-footer-hover-color) !important;
   fill: var(--nav-footer-hover-color) !important;
@@ -235,6 +238,11 @@ footer .sources ol > li::marker {
   margin: 0;
 }
 
+.product .footer div.picture {
+  position: absolute;
+  height: 0;
+}
+
 .product .footer p.picture.animate {
   animation-delay: 0.5s;
   animation-duration: 1s;
@@ -242,9 +250,34 @@ footer .sources ol > li::marker {
   animation-name: fade-in-bottom;
 }
 
+.product .footer div.picture.animate  {
+  animation-delay: 1.25s;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: fade-in-bottom-higher;
+}
+
+.product .footer div:nth-child(2) {
+  margin-left: 15vw;
+}
+
+.product .footer div:nth-child(2) p:not(:first-child) {
+  margin-top: 0;
+  margin-bottom: var(--layout-size-l);
+  line-height: 21px;
+}
+
+.product .footer div:nth-child(2) p:first-child {
+  margin-top: var(--layout-size-xl);
+  margin-bottom: 0;
+  line-height: 21px;
+}
+
 .product .footer picture img {
-  width: 8vw;
+  width: 6vw;
   height: auto;
+  min-height: 220px;
+  min-width: 65px;
 }
 
 .footer .footer-content > div > div:first-child {
@@ -283,12 +316,13 @@ footer .sources ol > li::marker {
 }
 
 .product .footer > div > div:first-child {
-  display: flex;
-  flex-flow: row nowrap;
+  max-height: 210px;
+  overflow: hidden;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .product footer p.picture {
+  .product footer p.picture,
+  .product footer div.picture {
     opacity: 0;
   }
 
