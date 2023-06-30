@@ -12,7 +12,7 @@
 
 .comparison-wrapper {
     flex-grow: 1;
-    max-height: calc(40vw - 1.5em);
+    max-height: calc(39.5vw);
     z-index:20;
 }
 
@@ -36,7 +36,7 @@
     margin-top: 10px;
 }
 
-@media screen and (min-width: 1500px) {
+@media screen and (min-width: 1540px) {
     .comparison.size.block {
         padding-top:8vw;
     }
@@ -75,19 +75,20 @@
 @media screen and (max-width: 900px) {
     .comparison.size.block {
         transform: scale(0.6);
+        padding-top:unset;
     }
 }
 
 @media screen and (max-width: 800px) {
     .comparison.size.block {
         transform: scale(0.5);
-        padding-top:unset;
+        padding-top:4em;
     }
 }
 
 @media screen and (max-width: 675px) {
     .comparison.size.block {
         transform: scale(0.45);
-        padding-top:7em;
+        padding-top:8em;
     }
 }
