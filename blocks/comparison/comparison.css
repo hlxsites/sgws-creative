@@ -1,5 +1,5 @@
 /* select comparison-wrapper that has a child having .wood-table class */
-.vs-active:has(.wood-table):after {
+.vs-active.wood-table:after {
     content: " ";
     display: block;
     width: 100%;

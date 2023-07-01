@@ -142,6 +142,11 @@ export default async function decorate(block) {
             // setupCharting(block);
             const nextViewer = createTag('div', { class: `fragment-viewer-${rowIndex} animate` });
             nextViewer.append(viewerHeader);
+            // If the fragment has a wood table style apply it to the viewer
+            if (fragmentSection.querySelector('.wood-table')) {
+              nextViewer.classList.add('wood-table');
+            }
+
             nextViewer.append(...fragmentSection.children);
             fragmentViewer.append(nextViewer);
           }
