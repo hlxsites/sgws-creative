@@ -143,7 +143,7 @@ export default async function decorate(block) {
     const lastNavElement = block.querySelector('.product .footer > div > div:last-child');
     if (lastNavElement) {
       const nav = lastNavElement.querySelector(':first-child > :first-child');
-      if (nav.nodeName === "A") {
+      if (nav.nodeName === 'A') {
         lastNavElement.classList.add('product-footer-nav');
         lastNavElement.addEventListener('click', (e) => {
           e.preventDefault();
@@ -173,7 +173,6 @@ export default async function decorate(block) {
     entries.forEach((entry) => {
       const elements = entry.target.querySelectorAll('h2, p, div.picture, span.icon');
       elements.forEach((el) => {
-        console.log(el.innerHTML);
         // If the element is visible
         if (entry.isIntersecting) {
           // Add the animation class
