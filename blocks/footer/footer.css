@@ -95,11 +95,11 @@ footer .sources > div > div {
   grid-template-columns: fit-content(100%) minmax(300px, 1fr);
   gap: var(--layout-size-xl);
   padding-left: var(--layout-size-xl);
-  bottom: 0;
 }
 
 .product .product-footer-nav {
   height: 100%;
+  display: flex;
   position: absolute;
   right: 0;
   background-color: var(--link-color-background);
@@ -107,6 +107,7 @@ footer .sources > div > div {
 
 .product .product-footer-nav > div {
   display: flex;
+  align-items: center;
   gap: var(--layout-size-l);
   padding: var(--layout-size-m) var(--layout-size-l);
   margin: var(--layout-size-m) var(--layout-size-l);
@@ -241,7 +242,6 @@ footer .sources ol > li::marker {
 }
 
 .product .footer div.picture {
-  position: absolute;
   height: 0;
 }
 
@@ -253,6 +253,7 @@ footer .sources ol > li::marker {
 }
 
 .product .footer div.picture.animate  {
+  position: absolute;
   animation-delay: 1.25s;
   animation-duration: 1s;
   animation-fill-mode: both;
@@ -273,13 +274,11 @@ footer .sources ol > li::marker {
 .product .footer div:nth-child(2) p:first-child {
   margin-top: var(--layout-size-xl);
   margin-bottom: 0;
-  line-height: 21px;
 }
 
 .product .footer picture img {
   width: 8vw;
   height: auto;
-  min-height: 220px;
   min-width: 65px;
 }
 
@@ -319,7 +318,6 @@ footer .sources ol > li::marker {
 }
 
 .product .footer > div > div:first-child {
-  max-height: 280px;
   overflow: hidden;
 }
 

@@ -503,8 +503,8 @@ main div.section.banner > div > *:nth-child(odd) {
 
     to {
       opacity: 1;
+      bottom: 0;
       height: auto;
-      transform: translateY(-190px);
     }
   }
 
