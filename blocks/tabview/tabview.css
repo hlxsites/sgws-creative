@@ -39,7 +39,7 @@
 }
 
 .tabview {
-  --tabview-tab-background-color: #f2f2f2;
+  --tabview-tab-background-color: var(--text-secondary-color-background);
 }
 
 .tabview .tabs {
@@ -174,7 +174,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   height: 3.5vw;
-}  
+}
 
 .tabview [role="tabpanel"] .slides-wrapper .slides .stats-group .default-content-wrapper {
   display:block;

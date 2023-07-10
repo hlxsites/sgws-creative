@@ -36,6 +36,7 @@
   --background-color: var(--static-color-white);
   --text-color: var(--static-color-black);
   --text-color-background: var(--static-color-white);
+  --text-secondary-color-background: #f2f2f2;
   --secondary-text-color-background: var(--text-color-background);
   --heading-font-size: 2rem;
   --body-font-size: 1rem;
@@ -301,6 +302,16 @@ main .section.highlight:not(.background-image) {
   color: var(--text-color-background);
 }
 
+main div.section.banner > div p,
+main div.section.banner > div h3 {
+  width: 14vw;
+  margin: 0;
+  animation-delay: 0.25s;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: fade-in-bottom;
+}
+
 main .section.highlight.dark h2,
 main .section.highlight.dark h3,
 main .section.highlight:not(.background-image) h2,
@@ -459,6 +470,35 @@ main .back-to-home span.icon {
   fill: white;
 }
 
+/* BANNER */
+main div.section.banner {
+  padding: 0;
+  animation-delay: 0.25s;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: background-from-right;
+  background: linear-gradient(to right, var(--background-color) 50%, var(--text-secondary-color-background) 50%) left;
+  background-size: 200%;
+  transition: .5s ease-out;
+}
+
+main div.section.banner:hover {
+  background-position: right;
+}
+
+main div.section.banner > div {
+  display: flex;
+  gap: 16px;
+  margin-left: 32vw;
+  margin-right: 32vw;
+  align-items: center;
+}
+
+main div.section.banner > div > *:nth-child(odd) {
+  text-align: right;
+  margin: var(--layout-size-xs) 0;
+}
+
 /* animations */
 @media (prefers-reduced-motion: no-preference) {
   .presentation main .default-content-wrapper > h1,
@@ -528,6 +568,16 @@ main .back-to-home span.icon {
     100% {
       display: block;
       opacity: 1;
+    }
+  }
+
+  @keyframes background-from-right {
+    0% {
+      background-position: left;
+    }
+
+    100% {
+      background-position: right;
     }
   }
 
