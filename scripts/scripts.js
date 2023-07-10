@@ -11,6 +11,7 @@ import {
   loadBlocks,
   loadFooter,
   loadCSS,
+  createOptimizedPicture,
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = ['video']; // add your LCP blocks to the list
@@ -388,7 +389,8 @@ export function decorateSectionBackgrounds(main) {
     if (backgroundPicture) {
       section.classList.add('background-image');
       const pictureParent = backgroundPicture.closest('p.picture');
-      section.append(backgroundPicture);
+      const image = backgroundPicture.querySelector('img');
+      section.append(createOptimizedPicture(image.src, image.alt, true));
       pictureParent.remove();
     }
   });
