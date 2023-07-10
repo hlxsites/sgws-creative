@@ -29,6 +29,10 @@ export default function decorate(block) {
   const newImagePicture = createOptimizedPicture(image.src, image.alt, true);
   imagePicture.remove();
   block.append(newImagePicture);
+  const posterImage = newImagePicture.querySelector('img');
+  posterImage.width = 750;
+  posterImage.height = 422;
+
   // only one video link per block
   const videoLink = block.querySelector('a');
   block.textContent = '';
