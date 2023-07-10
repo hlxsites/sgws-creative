@@ -132,8 +132,8 @@ h2 {
   display: block;
   border-bottom: 3px solid var(--primary-color);
   padding-top: 0.5vw;
-  width: 25%;
-  transform: translate(150%);
+  width: 12.5%;
+  margin: 1px auto;
 }
 
 h3 {
@@ -336,10 +336,6 @@ main div.section.banner > div h3 {
   font-size: clamp(calc(var(--heading-font-size-m) * 0.5), 1.559vw + 0.596rem, var(--heading-font-size-m));
 }
 
-main div.section.banner picture {
-  cursor: pointer;
-}
-
 main .section.highlight.dark h2,
 main .section.highlight.dark h3,
 main .section.highlight:not(.background-image) h2,
@@ -371,6 +367,10 @@ main .section.background-image > picture {
 
 main .section.background-image > picture > img {
   width: 100%;
+}
+
+main div.section.banner picture {
+  cursor: pointer;
 }
 
 main .section.background-image:not(:first-child) > picture {
