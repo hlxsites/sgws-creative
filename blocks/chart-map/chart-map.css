@@ -13,6 +13,7 @@
   box-shadow: var(--primary-color) 0 0 5px 0;
   background-color: var(--secondary-color);
   animation: fade-in-from-none 0.5s ease-out;
+  z-index: 5;
 }
 
 .chart-map.block .partners-holder img {

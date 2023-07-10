@@ -345,6 +345,10 @@ main .section.background-image {
   padding-bottom: unset;
 }
 
+main .section.chart-map-container.background-image {
+  overflow: unset;
+}
+
 main .section.background-image > picture {
   position: absolute;
   z-index: -5;
