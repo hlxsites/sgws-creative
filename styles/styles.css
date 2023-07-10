@@ -121,7 +121,7 @@ h2 {
   font-size: clamp(calc(var(--heading-font-size-l) * 0.5), 1.559vw + 0.596rem, var(--heading-font-size-l));
 }
 
-.product .quote {
+.product h2 {
   text-align: center;
 }
 
@@ -254,6 +254,12 @@ a:any-link span.icon-arrow-small {
   animation-delay: 0.5s;
   animation-duration: 1s;
   animation-fill-mode: both;
+}
+
+.product .default-content-wrapper p,
+.product h2,
+.product .quote {
+  text-align: center;
 }
 
 .product main .stats h1.animate,
@@ -480,7 +486,7 @@ main .back-to-home span.icon {
 
 /* BANNER */
 main div.section.banner {
-  padding: 0;
+  padding: var(--layout-size-l);
   animation-delay: 0.25s;
   animation-duration: 1s;
   animation-fill-mode: both;

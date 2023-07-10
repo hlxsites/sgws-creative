@@ -23,7 +23,7 @@
     border: none;
     background-color: rgb(255 255 255 / 0%);
     z-index: -1;
-    fill: var(--secondary-color);
+    fill: var(--primary-color);
     padding: 0;
     line-height: inherit;
 }
