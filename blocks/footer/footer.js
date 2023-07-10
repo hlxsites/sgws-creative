@@ -81,6 +81,8 @@ export default async function decorate(block) {
     return;
   }
 
+  let observerElementQuery = 'h2, p';
+
   const sources = block.querySelector('.sources');
   if (sources) {
     const viewSourceBtn = createTag('p', { class: 'button-container' });
@@ -154,10 +156,14 @@ export default async function decorate(block) {
           'aria-label': 'Return',
         });
         const returnIcon = createIcon('arrow-left');
-        returnIcon.classList.add('animate');
         returnNav.append(returnIcon);
 
-        const textP = createTag('p', {});
+        const paragraphs = block.querySelectorAll('p');
+        paragraphs.forEach((p) => {
+          p.classList.add('no-animate');
+        });
+
+        const textP = createTag('p', { class: 'no-animate' });
         textP.textContent = nav.textContent;
         nav.parentNode.append(textP);
         returnNav.append(nav.parentNode);
@@ -165,13 +171,15 @@ export default async function decorate(block) {
         lastNavElement.append(returnNav);
       }
       decorateIcons(lastNavElement);
+
+      observerElementQuery = 'div.picture';
     }
   }
 
   const observer = new IntersectionObserver((entries) => {
     // Loop over the entries
     entries.forEach((entry) => {
-      const elements = entry.target.querySelectorAll('h2, p, div.picture, span.icon');
+      const elements = entry.target.querySelectorAll(observerElementQuery);
       elements.forEach((el) => {
         // If the element is visible
         if (entry.isIntersecting) {

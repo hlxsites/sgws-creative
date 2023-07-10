@@ -331,6 +331,10 @@ footer .sources ol > li::marker {
     opacity: 0;
   }
 
+  .product .no-animate {
+    opacity: 1;
+  }
+
   footer .footer .header button,
   footer .footer ol,
   footer .footer h2,
