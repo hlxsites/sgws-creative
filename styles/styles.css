@@ -366,6 +366,7 @@ main .section.background-image > picture > img {
 
 main .section.background-image:not(:first-child) > picture {
   opacity: 0.5;
+  top: auto;
 }
 
 main .product .section.background-image > picture img {
