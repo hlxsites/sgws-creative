@@ -515,6 +515,7 @@ main .back-to-home span.icon {
 /* BANNER */
 main div.section.banner {
   padding: var(--layout-size-l);
+  transform: translateZ(0);
   animation-delay: 0.25s;
   animation-duration: 1s;
   animation-fill-mode: both;
