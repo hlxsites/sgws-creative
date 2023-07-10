@@ -359,7 +359,7 @@ main .section.background-image > picture > img {
 }
 
 main .section.background-image:not(:first-child) > picture {
-  opacity: 50%;
+  opacity: 0.5;
 }
 
 main .product .section.background-image > picture img {
