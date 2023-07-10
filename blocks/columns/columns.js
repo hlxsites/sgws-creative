@@ -113,4 +113,8 @@ export default function decorate(block) {
       block.classList.add('background-image');
     }
   }
+  if (block.classList.contains('product-stats')) {
+    const paragraphs = block.querySelectorAll('p, em');
+    paragraphs.forEach((p) => { p.classList.add('no-animate'); });
+  }
 }

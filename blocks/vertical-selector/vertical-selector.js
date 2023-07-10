@@ -87,7 +87,10 @@ function handleSelectorClick(scope, index) {
     showViewer.classList.add('vs-active');
     closeButton.classList.add('vs-active');
     window.dispatchEvent(new Event('drawChart'));
-    scope.querySelector('.vertical-selector').scrollIntoView(true);
+    const vertSelector = scope.querySelector('.vertical-selector');
+    if (vertSelector) {
+      vertSelector.scrollIntoView(true);
+    }
   }
 }
 
