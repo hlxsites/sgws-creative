@@ -119,10 +119,6 @@
   margin-top: 0.5em;
 }
 
-.product .columns.stats > div p {
-  color: var(--text-color);
-}
-
 .columns.inline-video > div > div:last-child {
   margin-bottom: 10%;
 }
@@ -190,6 +186,10 @@
   height: auto;
   width: 100%;
   margin: 39px 0 0;
+}
+
+.product .columns.stats > div p {
+  color: var(--text-color);
 }
 
 .columns.icon-list span.icon {
