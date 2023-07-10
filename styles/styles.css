@@ -340,7 +340,7 @@ main .section.background-image:not(:first-child) > picture {
   opacity: 50%;
 }
 
-main .section.background-image > picture img {
+main .product .section.background-image > picture img {
   width: 100%;
   min-height: 100%;
   object-fit: cover;
