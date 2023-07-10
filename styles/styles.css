@@ -313,12 +313,20 @@ main .section.highlight:not(.background-image) {
 
 main div.section.banner > div p,
 main div.section.banner > div h3 {
-  width: 14vw;
   margin: 0;
   animation-delay: 0.25s;
   animation-duration: 1s;
   animation-fill-mode: both;
   animation-name: fade-in-bottom;
+}
+
+main div.section.banner > div h3 {
+  width: 14vw;
+  font-size: clamp(calc(var(--heading-font-size-m) * 0.5), 1.559vw + 0.596rem, var(--heading-font-size-m));
+}
+
+main div.section.banner picture {
+  cursor: pointer;
 }
 
 main .section.highlight.dark h2,
@@ -510,6 +518,7 @@ main div.section.banner > div {
   margin-left: 32vw;
   margin-right: 32vw;
   align-items: center;
+  justify-content: center;
 }
 
 main div.section.banner > div > *:nth-child(odd) {
