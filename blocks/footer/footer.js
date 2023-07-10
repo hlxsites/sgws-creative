@@ -81,6 +81,8 @@ export default async function decorate(block) {
     return;
   }
 
+  let observerElementQuery = 'h2, p';
+
   const sources = block.querySelector('.sources');
   if (sources) {
     const viewSourceBtn = createTag('p', { class: 'button-container' });
@@ -139,12 +141,45 @@ export default async function decorate(block) {
 
     showSources(block, 0, pageCount);
     decorateIcons(sources);
+  } else {
+    const lastNavElement = block.querySelector('.product .footer > div > div:last-child');
+    if (lastNavElement) {
+      const nav = lastNavElement.querySelector(':first-child > :first-child');
+      if (nav.nodeName === 'A') {
+        lastNavElement.classList.add('product-footer-nav');
+        lastNavElement.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.location.href = nav.href;
+        });
+
+        const returnNav = createTag('div', {
+          'aria-label': 'Return',
+        });
+        const returnIcon = createIcon('arrow-left');
+        returnNav.append(returnIcon);
+
+        const paragraphs = block.querySelectorAll('p');
+        paragraphs.forEach((p) => {
+          p.classList.add('no-animate');
+        });
+
+        const textP = createTag('p', { class: 'no-animate' });
+        textP.textContent = nav.textContent;
+        nav.parentNode.append(textP);
+        returnNav.append(nav.parentNode);
+        nav.remove();
+        lastNavElement.append(returnNav);
+      }
+      decorateIcons(lastNavElement);
+
+      observerElementQuery = 'div.picture';
+    }
   }
 
   const observer = new IntersectionObserver((entries) => {
     // Loop over the entries
     entries.forEach((entry) => {
-      const elements = entry.target.querySelectorAll('h2, p');
+      const elements = entry.target.querySelectorAll(observerElementQuery);
       elements.forEach((el) => {
         // If the element is visible
         if (entry.isIntersecting) {

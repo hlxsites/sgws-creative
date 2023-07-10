@@ -22,7 +22,8 @@ footer p {
 }
 
 footer h2.animate,
-footer p.animate {
+footer p.animate,
+footer span.icon {
   animation-delay: 0.25s;
   animation-duration: 1s;
   animation-fill-mode: both;
@@ -76,6 +77,60 @@ footer .sources .header a.button {
   animation-duration: 1s;
   animation-fill-mode: both;
   animation-name: fade-in;
+}
+
+footer .sources > div > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer .footer-content > div {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 150px;
+}
+
+.product .footer > div {
+  display: grid;
+  grid-template-columns: fit-content(100%) minmax(300px, 1fr);
+  gap: var(--layout-size-xl);
+  padding-left: var(--layout-size-xl);
+}
+
+.product .product-footer-nav {
+  height: 100%;
+  display: flex;
+  position: absolute;
+  right: 0;
+  background-color: var(--link-color-background);
+}
+
+.product .product-footer-nav > div {
+  display: flex;
+  align-items: center;
+  gap: var(--layout-size-l);
+  padding: var(--layout-size-m) var(--layout-size-l);
+  margin: var(--layout-size-m) var(--layout-size-l);
+  background-color: var(--link-color-background);
+  border: var(--layout-size-xxs) solid var(--link-color);
+  color: var(--primary-color);
+}
+
+.product .product-footer-nav > div p,
+.product .product-footer-nav > div svg {
+  color: var(--primary-color);
+  fill: var(--primary-color);
+  margin: 0;
+}
+
+.product .product-footer-nav:hover > div {
+  border-color: var(--nav-footer-hover-color) !important;
+}
+
+.product .product-footer-nav:hover svg,
+.product .product-footer-nav:hover p {
+  color: var(--nav-footer-hover-color) !important;
+  fill: var(--nav-footer-hover-color) !important;
 }
 
 footer .sources .header h2 {
@@ -156,11 +211,6 @@ footer .sources .header .close .icon {
   height: 3.5em;
 }
 
-footer .sources > div > div {
-  display: flex;
-  flex-direction: column;
-}
-
 footer .sources ol {
   counter-reset: orderedList;
   animation-delay: 0s;
@@ -185,16 +235,14 @@ footer .sources ol > li::marker {
   content: counter(orderedList) ")\a0";
 }
 
-.product .footer > div {
-  display: flex;
-  flex-flow: row nowrap;
-  padding-left: var(--layout-size-l);
-}
-
 .product .footer p.picture {
   position: absolute;
   top: 0;
   margin: 0;
+}
+
+.product .footer div.picture {
+  height: 0;
 }
 
 .product .footer p.picture.animate {
@@ -204,15 +252,34 @@ footer .sources ol > li::marker {
   animation-name: fade-in-bottom;
 }
 
+.product .footer div.picture.animate  {
+  position: absolute;
+  animation-delay: 1.25s;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: fade-in-bottom-higher;
+}
+
+.product .footer div:nth-child(2) {
+  margin-left: 5vw;
+  padding-left: 70px;
+}
+
+.product .footer div:nth-child(2) p:not(:first-child) {
+  margin-top: 0;
+  margin-bottom: var(--layout-size-l);
+  line-height: 21px;
+}
+
+.product .footer div:nth-child(2) p:first-child {
+  margin-top: var(--layout-size-xl);
+  margin-bottom: 0;
+}
+
 .product .footer picture img {
   width: 8vw;
   height: auto;
-}
-
-.footer .footer-content > div {
-  display: flex;
-  flex-flow: row nowrap;
-  gap: 150px;
+  min-width: 65px;
 }
 
 .footer .footer-content > div > div:first-child {
@@ -251,13 +318,21 @@ footer .sources ol > li::marker {
 }
 
 .product .footer > div > div:first-child {
-  display: flex;
-  flex-flow: row nowrap;
+  overflow: hidden;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .product footer p.picture {
+  .product footer p.picture,
+  .product footer div.picture {
     opacity: 0;
+  }
+
+  .product .product-footer-nav span.icon {
+    opacity: 0;
+  }
+
+  .product .no-animate {
+    opacity: 1;
   }
 
   footer .footer .header button,
