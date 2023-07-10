@@ -1,4 +1,5 @@
 import { createTag } from '../../scripts/scripts.js';
+import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
 function observeVideo(block, rootMargin) {
   const observer = new IntersectionObserver((entries) => {
@@ -25,8 +26,9 @@ export default function decorate(block) {
   // only one poster image (before or after the video link)
   const image = block.querySelector('img');
   const imagePicture = image.closest('picture');
-  block.append(imagePicture);
-
+  const newImagePicture = createOptimizedPicture(image.src, image.alt, true);
+  imagePicture.remove();
+  block.append(newImagePicture);
   // only one video link per block
   const videoLink = block.querySelector('a');
   block.textContent = '';
@@ -45,10 +47,10 @@ export default function decorate(block) {
   }
 
   videoDiv.appendChild(videoElement);
-  block.append(imagePicture, videoDiv);
+  block.append(newImagePicture, videoDiv);
 
   videoElement.addEventListener('loadeddata', () => {
-    imagePicture.classList.add('hidden');
+    newImagePicture.classList.add('hidden');
   }, { passive: true });
   if (!block.closest('.section').classList.contains('background-video')) {
     observeVideo(block, '0px');
