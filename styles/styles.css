@@ -121,6 +121,10 @@ h2 {
   font-size: clamp(calc(var(--heading-font-size-l) * 0.5), 1.559vw + 0.596rem, var(--heading-font-size-l));
 }
 
+.product .quote {
+  text-align: center;
+}
+
 h3 {
   font-size: clamp(calc(var(--heading-font-size-m) * 0.5), 1.17vw + 0.447rem, var(--heading-font-size-m));
 }
@@ -258,7 +262,6 @@ a:any-link span.icon-arrow-small {
 .product main .stats p.animate  { 
   animation-name: fade-in-right;
 }
-
 
 main img {
   max-width: 100%;
