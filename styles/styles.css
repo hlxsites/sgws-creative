@@ -127,6 +127,15 @@ h2 {
   text-align: center;
 }
 
+.product .section:not(.quote) .default-content-wrapper h2::after {
+  content: "";
+  display: block;
+  border-bottom: 3px solid var(--primary-color);
+  padding-top: 0.5vw;
+  width: 25%;
+  transform: translate(150%);
+}
+
 h3 {
   font-size: clamp(calc(var(--heading-font-size-m) * 0.5), 1.17vw + 0.447rem, var(--heading-font-size-m));
 }
@@ -261,10 +270,6 @@ a:any-link span.icon-arrow-small {
 .product .default-content-wrapper p,
 .product h2,
 .product .quote {
-  text-align: center;
-}
-
-.product h2 {
   text-align: center;
 }
 
