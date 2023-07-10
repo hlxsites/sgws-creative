@@ -519,6 +519,7 @@ main div.section.banner {
   animation-delay: 0.25s;
   animation-duration: 1s;
   animation-fill-mode: both;
+  will-change: background-position-x, background-position-y;
   animation-name: background-from-right;
   background: linear-gradient(to right, var(--background-color) 50%, var(--text-secondary-color-background) 50%) left;
   background-size: 200%;
