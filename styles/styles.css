@@ -264,6 +264,10 @@ a:any-link span.icon-arrow-small {
   text-align: center;
 }
 
+.product h2 {
+  text-align: center;
+}
+
 .product main .stats h1.animate,
 .product main .stats h2.animate,
 .product main .stats h3.animate,
