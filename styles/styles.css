@@ -346,6 +346,10 @@ main .section.background-image > picture {
   right: 0;
 }
 
+main .section.background-image > picture > img {
+  width: 100%;
+}
+
 main .section.background-image:not(:first-child) > picture {
   opacity: 50%;
 }
