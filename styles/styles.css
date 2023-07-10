@@ -38,6 +38,7 @@
   --text-color: var(--static-color-black);
   --text-color-background: var(--static-color-white);
   --text-secondary-color-background: #f2f2f2;
+  --link-color-background: #d1d1d1;
   --secondary-text-color-background: var(--text-color-background);
   --heading-font-size: 2rem;
   --body-font-size: 1rem;
@@ -50,6 +51,7 @@
 
   /* Other colors */
   --nav-home-color: #001E5B;
+  --nav-footer-hover-color: #E5E5E5;
 
   /* fluid font sizing */
   --min-vw: 600;
@@ -514,6 +516,19 @@ main div.section.banner > div > *:nth-child(odd) {
       opacity: 0;
     }
     to { opacity: 1 }
+  }
+
+  @keyframes fade-in-bottom-higher {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+
+    to {
+      opacity: 1;
+      bottom: 0;
+      height: auto;
+    }
   }
 
   @keyframes fade-in-bottom {
