@@ -11,6 +11,7 @@ import {
   loadBlocks,
   loadFooter,
   loadCSS,
+  createOptimizedPicture,
 } from './lib-franklin.js';
 
 const LCP_BLOCKS = ['video']; // add your LCP blocks to the list
@@ -346,6 +347,35 @@ export function decoratePictureParagraph(main) {
   });
 }
 
+export function decorateBannerSections(main) {
+  const banners = main.querySelectorAll('div.section.banner');
+  if (banners) {
+    [...banners].forEach((banner) => {
+      const wrapper = banner.querySelector('.default-content-wrapper');
+      let bannerLink;
+      [...wrapper.querySelectorAll('p')].forEach((p) => {
+        const text = p.innerText;
+        if (text.startsWith('http')) {
+          bannerLink = text;
+          wrapper.removeChild(p);
+        }
+      });
+
+      // Wrap headings in a div for better alignment in row.
+      [...wrapper.querySelectorAll('h3')].forEach((heading) => {
+        const textDiv = createTag('div', {});
+        textDiv.append(heading);
+        wrapper.append(textDiv);
+      });
+
+      wrapper.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.open(bannerLink, '_columnsLink');
+      });
+    });
+  }
+}
+
 /**
  * Decorates the background of all highlighted sections.
  * @param {Element} main The container element
@@ -359,7 +389,8 @@ export function decorateSectionBackgrounds(main) {
     if (backgroundPicture) {
       section.classList.add('background-image');
       const pictureParent = backgroundPicture.closest('p.picture');
-      section.append(backgroundPicture);
+      const image = backgroundPicture.querySelector('img');
+      section.append(createOptimizedPicture(image.src, image.alt, true));
       pictureParent.remove();
     }
   });
@@ -376,6 +407,7 @@ function decorateMain(main) {
   decoratePictureParagraph(main);
   buildAutoBlocks(main);
   decorateSections(main);
+  decorateBannerSections(main);
   decorateBlocks(main);
   decorateSectionBackgrounds(main);
   decorateBorders(main);

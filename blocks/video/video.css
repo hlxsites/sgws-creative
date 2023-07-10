@@ -1,5 +1,7 @@
 .video.block .video-content {
   display: flex;
+  width: auto;
+  height: auto;
 }
 
 .video.block .video-content video {
