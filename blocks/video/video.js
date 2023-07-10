@@ -27,11 +27,11 @@ export default function decorate(block) {
   const image = block.querySelector('img');
   const imagePicture = image.closest('picture');
   const newImagePicture = createOptimizedPicture(image.src, image.alt, true);
-  imagePicture.remove();
-  block.append(newImagePicture);
   const posterImage = newImagePicture.querySelector('img');
   posterImage.width = 750;
   posterImage.height = 422;
+  imagePicture.remove();
+  block.append(newImagePicture);
 
   // only one video link per block
   const videoLink = block.querySelector('a');
