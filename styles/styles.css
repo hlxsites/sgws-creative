@@ -325,6 +325,7 @@ main .section.background-image {
   position: relative;
   overflow: hidden;
   width: 100%;
+  padding-bottom: unset;
 }
 
 main .section.background-image > picture {

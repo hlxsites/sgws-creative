@@ -20,6 +20,10 @@
   margin-bottom: 0;
 }
 
+.product .section.columns-container .columns.stats h2 {
+  color: var(--primary-color);
+}
+
 .columns > div {
   display: flex;
   flex-flow: row nowrap;
@@ -113,6 +117,10 @@
   font-family: var(--static-body-font-family);
   color: var(--stats-body-text-color);
   margin-top: 0.5em;
+}
+
+.product .columns.stats > div p {
+  color: var(--text-color);
 }
 
 .columns.inline-video > div > div:last-child {
