@@ -234,6 +234,10 @@
   background-image: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 250%);
 }
 
+.product .columns.stats > div p {
+  color: var(--text-color);
+}
+
 .columns.product-stats > div > div:first-child p,
 .columns.product-stats > div > div:first-child em {
   color: var(--text-secondary-color-background);
@@ -307,29 +311,6 @@
   right: 0;
   bottom: 0;
   z-index: -1;
-}
-
-/* ICONS: Text area */
-.columns.icon-list p:last-child {
-  margin: 0 20%;
-  line-height: 1.5;
-  color: var(--secondary-color);
-  font-size: 2vw;
-  word-wrap: break-word;
-}
-
-.columns.icon-list > div > div:not(:last-child) {
-  border-right: 1px solid var(--secondary-color);
-}
-
-.columns.icon-list p:first-child {
-  height: auto;
-  width: 100%;
-  margin: 39px 0 0;
-}
-
-.product .columns.stats > div p {
-  color: var(--text-color);
 }
 
 .columns.icon-list span.icon {
