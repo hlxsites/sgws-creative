@@ -145,7 +145,7 @@ export default async function decorate(block) {
     const lastNavElement = block.querySelector('.product .footer > div > div:last-child');
     if (lastNavElement) {
       const nav = lastNavElement.querySelector(':first-child > :first-child');
-      if (nav.nodeName === 'A') {
+      if (nav && nav.nodeName === 'A') {
         lastNavElement.classList.add('product-footer-nav');
         lastNavElement.addEventListener('click', (e) => {
           e.preventDefault();
