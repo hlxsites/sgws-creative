@@ -29,7 +29,7 @@ function prepareChartData(chartData) {
  * @returns {Object} Object containing barNames and corresponding dataValues
  */
 function prepareChartDataWithOverlay(chartData) {
-  const barNames = new Array(chartData.length / 2);
+  const barNames = new Array(chartData.length);
   const dataValues = new Array(chartData.length);
   const overlayValues = new Array(chartData.length);
   chartData.forEach((row, index) => {
@@ -596,7 +596,16 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
 function drawChart(block, chartData, chartConfig, chartHolder, theme) {
   const blockClassList = block.classList;
   chartConfig.chartWidth = block.clientWidth;
-  chartConfig.chartHeight = block.clientHeight !== 0 ? block.clientHeight : MIN_CHART_HEIGHT;
+  chartConfig.chartHeight = MIN_CHART_HEIGHT;
+  let elem = block;
+  for (let i = 0; i < 4; i += 1) {
+    if (elem.clientHeight > 0) {
+      chartConfig.chartHeight = `${elem.clientHeight - 105}px`;
+      break;
+    }
+    elem = elem.parentElement;
+  }
+
   if (blockClassList.contains('bars')) {
     chartConfig.legend = blockClassList.contains('graph-legend');
 

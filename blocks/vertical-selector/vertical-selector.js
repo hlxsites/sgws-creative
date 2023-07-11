@@ -61,7 +61,7 @@ function handleSelectorClick(scope, index) {
   const displayedViewer = viewer.querySelector('div.vs-active');
 
   // Ignore the click if already selected.
-  if (displayedViewer.classList.contains(`fragment-viewer-${index}`)) {
+  if (displayedViewer && displayedViewer.classList.contains(`fragment-viewer-${index}`)) {
     return;
   }
 
@@ -104,8 +104,12 @@ export default async function decorate(block) {
       const nextViewer = createTag('div', { class: 'vs-active default-viewer animate' });
       if (appendVideoGroup(row, nextViewer)) {
         block.classList.add('inline-video');
-        fragmentViewer.append(nextViewer);
+      } else {
+        // No video, so just show the row.
+        nextViewer.classList.add('vs-bkg');
+        nextViewer.replaceChildren(...row.children);
       }
+      fragmentViewer.append(nextViewer);
     } else {
       // Set up selector and its fragment.
       const columns = [...row.children];
@@ -141,6 +145,11 @@ export default async function decorate(block) {
             // setupCharting(block);
             const nextViewer = createTag('div', { class: `fragment-viewer-${rowIndex} animate` });
             nextViewer.append(viewerHeader);
+            // If the fragment has a wood table style apply it to the viewer
+            if (fragmentSection.querySelector('.wood-table')) {
+              nextViewer.classList.add('wood-table');
+            }
+
             nextViewer.append(...fragmentSection.children);
             fragmentViewer.append(nextViewer);
           }
