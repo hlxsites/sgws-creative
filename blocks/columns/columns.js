@@ -116,5 +116,9 @@ export default function decorate(block) {
   if (block.classList.contains('product-stats')) {
     const paragraphs = block.querySelectorAll('p, em');
     paragraphs.forEach((p) => { p.classList.add('no-animate'); });
+    const trailingText = block.parentElement.parentElement.querySelector('.default-content-wrapper');
+    if (trailingText) {
+      trailingText.classList.add('product-stats-footer');
+    }
   }
 }
