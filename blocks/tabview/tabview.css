@@ -68,7 +68,8 @@
 
 .tabview .button-program-close > button {
   background-color: transparent !important;
-  margin-top: 20px;
+  margin-top: 10px;
+  padding-right: 10px;
   height:unset;
 }
 
