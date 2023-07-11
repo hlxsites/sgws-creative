@@ -5,7 +5,7 @@
     width: 100%;
     margin-top: calc(-9vw);
     height: 10vw;
-    background: url("https://media-s3-us-east-1.ceros.com/southern-glazers/images/2023/04/18/1ec7669e44ab282115f474839b13461c/wood-table-top-on-light-blur-background-empty-brown-wood-table-image.jpg?imageOpt=1&fit=bounds&width=2600&crop=4000,539,x0,y1764");
+    background: url("/styles/wood-table-top.avif");
     background-size: cover;
     z-index: 10;
 }
