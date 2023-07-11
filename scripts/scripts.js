@@ -38,13 +38,7 @@ export const animationObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     const { target, isIntersecting } = entry;
     if (!target.closest('.no-animate')) {
-      // If the element is visible
-      if (isIntersecting) {
-        // Add the animation class
-        target.classList.add('animate');
-      } else {
-        target.classList.remove('animate');
-      }
+      isIntersecting ? target.classList.add('animate') : target.classList.remove('animate');
     }
   }, { threshold: 0.1 });
 });
