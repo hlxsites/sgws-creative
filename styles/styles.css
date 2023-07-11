@@ -475,10 +475,6 @@ main .section .outback .default-content-wrapper .border-0 {
   filter: drop-shadow(0 -4px 1px #00000080);
 }
 
-main .section .tabview .carrabbas .default-content-wrapper .border-0 {
-  margin-bottom: 2.3vw;
-}
-
 main .section .outback .default-content-wrapper .border-1 {
   filter: drop-shadow(0 4px 1px #00000080);
 }
