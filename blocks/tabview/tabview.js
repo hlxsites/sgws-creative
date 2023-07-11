@@ -19,8 +19,9 @@ async function loadProgramPanel(panel, programPath, restOfPanel) {
 
 function computeBadgePlacement(programButton, panel) {
   const badgeHolderElement = panel.querySelector('.slides > .slide.active > .stats-group > .columns-wrapper > .stats > div');
+
   if (!badgeHolderElement) return;
-  programButton.style.marginTop = `calc(-${programButton.offsetHeight}px - ${badgeHolderElement.offsetHeight}px)`;
+  programButton.style.marginTop = `calc(-${programButton.offsetHeight}px - ${badgeHolderElement.offsetHeight}px + 2vw)`;
 }
 
 async function loadTabPanel(panel) {
