@@ -75,7 +75,7 @@
 @media screen and (max-width: 900px) {
     .comparison.size.block {
         transform: scale(0.6);
-        padding-top:unset;
+        padding-top: unset;
     }
 }
 
