@@ -9,8 +9,8 @@
   flex-direction: column;
   padding: 1.5vw;
   position: absolute;
-  border: 1px solid var(--primary-color);
-  box-shadow: var(--primary-color) 0 0 5px 0;
+  border: 1px solid var(--neutral-color);
+  box-shadow: var(--neutral-color) 0 0 5px 0;
   background-color: var(--secondary-color);
   animation: fade-in-from-none 0.5s ease-out;
   z-index: 5;
