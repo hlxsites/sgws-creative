@@ -49,6 +49,7 @@
 
 .slides.block .slide {
   display: none;
+  max-height:39.8vw;
 }
 
 .slides.block .slide.active {
