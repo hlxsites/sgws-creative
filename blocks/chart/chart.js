@@ -598,14 +598,14 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
   chartConfig.chartWidth = block.clientWidth;
   chartConfig.chartHeight = MIN_CHART_HEIGHT;
   let elem = block;
-  for (let i=0; i < 4; i++) {
+  for (let i = 0; i < 4; i += 1) {
     if (elem.clientHeight > 0) {
-      chartConfig.chartHeight = (elem.clientHeight-105)+"px";
+      chartConfig.chartHeight = `${elem.clientHeight - 105}px`;
       break;
     }
-    elem=elem.parentElement;
+    elem = elem.parentElement;
   }
-  block.parentElement.parentElement.parentElement.clientHeight;
+
   if (blockClassList.contains('bars')) {
     chartConfig.legend = blockClassList.contains('graph-legend');
 
