@@ -178,7 +178,7 @@ async function loadTheme() {
 }
 async function loadFonts() {
   const allFonts = window.sgws.config.fonts;
-  await Promise.allSettled(allFonts.map((fontConfig) => {
+  return Promise.allSettled(allFonts.map((fontConfig) => {
     const [fontFamily, fontUrl, ...fontDescriptors] = fontConfig.split(';');
     if (fontFamily.startsWith('http')) {
       const head = document.getElementsByTagName('head')[0];
