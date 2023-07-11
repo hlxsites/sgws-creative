@@ -44,6 +44,8 @@
   min-width: unset;
   background-color: var(--secondary-color);
   color: var(--primary-color);
+  padding-top: 10px;
+  padding-right: 15px;
 }
 
 .chart-map.block .partners-holder-close button svg {
