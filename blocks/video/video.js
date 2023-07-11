@@ -39,7 +39,9 @@ export default function decorate(block) {
 
   const videoDiv = createTag('div', { class: 'video-content' });
   const videoElement = document.createElement('video');
+  setTimeout(() => {
   videoElement.innerHTML = `<source src="${videoLink.href}" type="video/mp4">`;
+  }, 3000);
 
   videoElement.muted = true;
   videoElement.autoplay = false;
