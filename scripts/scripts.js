@@ -160,11 +160,13 @@ async function loadTheme() {
       const json = await resp.json();
       const tokens = json?.data || json?.page?.data || {};
       const root = document.querySelector(':root');
+      let styleText = '';
       tokens.forEach((e) => {
         if (e.token !== 'font') {
-          root.style.setProperty(`--${e.token}`, `${e.value}`);
+          styleText = `${styleText} --${e.token}: ${e.value};`;
         }
       });
+      root.style.cssText = styleText;
       theme = json || theme;
     }
   }
@@ -189,7 +191,6 @@ async function loadFonts() {
       if (head.querySelector(`link[href='${fontFamily}']`)) {
         return Promise.resolve();
       }
-      // add stylesheet
       const link = createTag('link', {
         rel: 'stylesheet', type: 'text/css', media: 'all',
       });
