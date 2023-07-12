@@ -58,6 +58,12 @@
   flex-direction: row;
   gap: 2vw;
   padding-left: 15%;
+  max-height: 100%;
+}
+
+.comparison.bottles.block .main-bottle-grid .picture img {
+  max-height: 100%;
+  width: auto;
 }
 
 .comparison.bottles.block .secondary-bottle-grid {
@@ -67,6 +73,12 @@
   transform-origin: left bottom;
   transform: scale(0.8);
   gap: 4vw;
+  max-height: 100%;
+}
+
+.comparison.bottles.block .secondary-bottle-grid .picture img {
+  max-height: 100%;
+  width: auto;
 }
 
 .comparison.bottles.block .secondary-bottle-grid > :first-child {
@@ -75,7 +87,7 @@
 
 /* Media queries for size comparison block */
 @media screen and (min-width: 2000px) {
-  .bottles-comparison-placeholder {
+  .comparison.size.block .bottles-comparison-placeholder {
     height: 8vw;
   }
 
@@ -89,11 +101,38 @@
   .comparison.size.block {
     padding-top: 8vw;
   }
+
+  .comparison.bottles.block .bottles-comparison-placeholder {
+    height: 4vw;
+  }
+
+  .comparison.bottles.block .bottles-comparison-holder > div {
+    max-height: 33vw;
+  }
+
+  .comparison.bottles.block .secondary-bottle-grid {
+    margin-left: -2.5em;
+    margin-bottom: 0.5;
+    padding-right: 15%;
+  }
 }
 
 @media screen and (max-width: 1275px) {
   .comparison.size.block {
     transform: scale(0.95);
+  }
+
+  .comparison.bottles.block .bottles-comparison-placeholder {
+    height: 2vw;
+  }
+
+  .comparison.bottles.block .bottles-comparison-holder > div {
+    max-height: 32vw;
+  }
+
+  .comparison.bottles.block .secondary-bottle-grid {
+    margin-left: -1.25em;
+    padding-right: 20%;
   }
 }
 
@@ -101,11 +140,24 @@
   .comparison.size.block {
     transform: scale(0.9);
   }
+
+  .comparison.bottles.block .bottles-comparison-holder > div {
+    max-height: 31.75vw;
+  }
+
+  .comparison.bottles.block .secondary-bottle-grid {
+    margin-left: -1.75em;
+    padding-right: 20%;
+  }
 }
 
 @media screen and (max-width: 1150px) {
   .comparison.size.block {
     transform: scale(0.85);
+  }
+
+  .comparison.bottles.block .bottles-comparison-holder > div {
+    max-height: 31.5vw;
   }
 }
 
@@ -113,11 +165,19 @@
   .comparison.size.block {
     transform: scale(0.8);
   }
+
+  .comparison.bottles.block .bottles-comparison-holder > div {
+    max-height: 31vw;
+  }
 }
 
 @media screen and (max-width: 1025px) {
   .comparison.size.block {
     transform: scale(0.7);
+  }
+
+  .comparison.bottles.block .bottles-comparison-holder > div {
+    max-height: 30vw;
   }
 }
 
@@ -126,6 +186,10 @@
     transform: scale(0.6);
     padding-top: unset;
   }
+
+  .comparison.bottles.block .bottles-comparison-holder > div {
+    max-height: 28vw;
+  }
 }
 
 @media screen and (max-width: 800px) {
@@ -133,11 +197,19 @@
     transform: scale(0.5);
     padding-top: 4em;
   }
+
+  .comparison.bottles.block .bottles-comparison-holder > div {
+    max-height: 25vw;
+  }
 }
 
 @media screen and (max-width: 675px) {
   .comparison.size.block {
     transform: scale(0.45);
     padding-top: 8em;
+  }
+
+  .comparison.bottles.block .bottles-comparison-holder > div {
+    max-height: 23vw;
   }
 }
