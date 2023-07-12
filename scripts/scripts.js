@@ -191,7 +191,6 @@ async function loadFonts() {
       if (head.querySelector(`link[href='${fontFamily}']`)) {
         return Promise.resolve();
       }
-      // add stylesheet
       const link = createTag('link', {
         rel: 'stylesheet', type: 'text/css', media: 'all',
       });
