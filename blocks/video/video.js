@@ -1,6 +1,9 @@
 import { createTag } from '../../scripts/scripts.js';
 import { createOptimizedPicture } from '../../scripts/lib-franklin.js';
 
+const VIDEO_IMAGE_DEFAULT_WIDTH = 750;
+const VIDEO_IMAGE_DEFAULT_HEIGHT = 422;
+
 function observeVideo(block, rootMargin) {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -28,8 +31,8 @@ export default function decorate(block) {
   const imagePicture = image.closest('picture');
   const newImagePicture = createOptimizedPicture(image.src, image.alt, true);
   const posterImage = newImagePicture.querySelector('img');
-  posterImage.width = 750;
-  posterImage.height = 422;
+  posterImage.width = VIDEO_IMAGE_DEFAULT_WIDTH;
+  posterImage.height = VIDEO_IMAGE_DEFAULT_HEIGHT;
   imagePicture.remove();
   block.append(newImagePicture);
 
