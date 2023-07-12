@@ -38,7 +38,11 @@ export const animationObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     const { target, isIntersecting } = entry;
     if (!target.closest('.no-animate')) {
-      (isIntersecting ? target.classList.add : target.classList.remove)('animate');
+      if (isIntersecting) {
+        target.classList.add('animate');
+      } else {
+        target.classList.remove('animate');
+      }
     }
   }, { threshold: 0.1 });
 });
