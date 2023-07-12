@@ -65,6 +65,7 @@
   display: flex;
   flex-direction: row;
   z-index: -1;
+  transform-origin: left bottom;
   transform: scale(0.8);
   gap: 4vw;
   border: 3px solid purple;
@@ -74,7 +75,18 @@
   filter: grayscale(0.8);
 }
 
+.bottles-comparison-placeholder {
+  border: 3px dashed blue;
+  content: '';
+}
+
 /* Media queries for size comparison block */
+@media screen and (min-width: 2000px) {
+  .bottles-comparison-placeholder {
+    height: 8vw;
+  }
+}
+
 @media screen and (min-width: 1540px) {
   .comparison.size.block {
     padding-top: 8vw;

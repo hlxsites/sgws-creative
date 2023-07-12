@@ -22,6 +22,7 @@ export default async function decorate(block) {
       child.remove();
     });
 
-    block.append(comparisonHolder);
+    const placeholder = createTag('div', { class: 'bottles-comparison-placeholder' });
+    block.append(placeholder, comparisonHolder);
   }
 }
