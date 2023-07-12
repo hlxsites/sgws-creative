@@ -39,6 +39,10 @@
   align-items: flex-start;
 }
 
+.comparison.bottles.block .bottles-comparison-holder > div {
+  text-align: center;
+}
+
 .comparison.size.block > div > div:nth-child(2n) {
   margin-top: 10px;
 }
@@ -47,10 +51,6 @@
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-}
-
-.comparison.bottles.block .bottles-comparison-holder > div {
-  text-align: center;
 }
 
 .comparison.bottles.block .main-bottle-grid {
