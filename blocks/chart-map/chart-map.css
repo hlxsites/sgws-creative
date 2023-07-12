@@ -1,0 +1,89 @@
+.chart-map.block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart-map.block .partners-holder {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5vw;
+  position: absolute;
+  border: 1px solid var(--neutral-color);
+  box-shadow: var(--neutral-color) 0 0 5px 0;
+  background-color: var(--secondary-color);
+  animation: fade-in-from-none 0.5s ease-out;
+  z-index: 5;
+}
+
+.chart-map.block .partners-holder img {
+  max-width: 15vw;
+  height:auto;
+}
+
+.chart-map.block .partners-holder  > a:first-of-type {
+  margin-top: 5px;
+}
+
+.chart-map.block .partners-holder-close {
+  text-align: right;
+  line-height: unset;
+  position: absolute;
+  right: 0;
+  left: auto;
+  top: 0;
+  bottom: auto;
+}
+
+.chart-map.block .partners-holder-close button {
+  height: 40px;
+  width: 40px;
+  line-height: unset;
+  padding: unset;
+  border: unset;
+  min-width: unset;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  padding-top: 10px;
+  padding-right: 15px;
+}
+
+.chart-map.block .partners-holder-close button svg {
+  min-height: 30px;
+  min-width: 30px;
+}
+
+.chart-map.block .partners-title-region {
+  text-align: center;
+  margin-top: -0.5rem;
+}
+
+.chart-map.block .map-holder {
+  margin-left: -4rem;
+  margin-top: -4rem;
+}
+
+.chart-map.block .hidden {
+  display: none !important;
+}
+
+.chart-map.block .fade-out {
+  animation: fade-out 0.5s ease-out;
+}
+
+@keyframes fade-out {
+  1% {
+    display: block;
+    opacity: 1;
+  }
+
+  99% {
+    display: block;
+    opacity: 0;
+  }
+
+  100% {
+    display: none;
+    opacity: 0;
+  }
+}

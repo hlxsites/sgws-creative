@@ -124,6 +124,19 @@ h2 {
   font-size: clamp(calc(var(--heading-font-size-l) * 0.5), 1.559vw + 0.596rem, var(--heading-font-size-l));
 }
 
+.product h2 {
+  text-align: center;
+}
+
+.product .section:not(.quote) .default-content-wrapper h2::after {
+  content: "";
+  display: block;
+  border-bottom: 3px solid var(--primary-color);
+  padding-top: 0.5vw;
+  width: 12.5%;
+  margin: 1px auto;
+}
+
 h3 {
   font-size: clamp(calc(var(--heading-font-size-m) * 0.5), 1.17vw + 0.447rem, var(--heading-font-size-m));
 }
@@ -255,13 +268,18 @@ a:any-link span.icon-arrow-small {
   animation-fill-mode: both;
 }
 
+.product .default-content-wrapper p,
+.product h2,
+.product .quote {
+  text-align: center;
+}
+
 .product main .stats h1.animate,
 .product main .stats h2.animate,
 .product main .stats h3.animate,
 .product main .stats p.animate  {
   animation-name: fade-in-right;
 }
-
 
 main img {
   max-width: 100%;
@@ -307,12 +325,16 @@ main .section.highlight:not(.background-image) {
 
 main div.section.banner > div p,
 main div.section.banner > div h3 {
-  width: 14vw;
   margin: 0;
   animation-delay: 0.25s;
   animation-duration: 1s;
   animation-fill-mode: both;
   animation-name: fade-in-bottom;
+}
+
+main div.section.banner > div h3 {
+  width: 14vw;
+  font-size: clamp(calc(var(--heading-font-size-m) * 0.5), 1.559vw + 0.596rem, var(--heading-font-size-m));
 }
 
 main .section.highlight.dark h2,
@@ -328,6 +350,11 @@ main .section.background-image {
   position: relative;
   overflow: hidden;
   width: 100%;
+  padding-bottom: unset;
+}
+
+main .section.chart-map-container.background-image {
+  overflow: unset;
 }
 
 main .section.background-image > picture {
@@ -339,7 +366,20 @@ main .section.background-image > picture {
   right: 0;
 }
 
-main .section.background-image > picture img {
+main .section.background-image > picture > img {
+  width: 100%;
+}
+
+main div.section.banner picture {
+  cursor: pointer;
+}
+
+main .section.background-image:not(:first-child) > picture {
+  opacity: 0.5;
+  top: auto;
+}
+
+main .product .section.background-image > picture img {
   width: 100%;
   min-height: 100%;
   object-fit: cover;
@@ -471,7 +511,8 @@ main .back-to-home span.icon {
 
 /* BANNER */
 main div.section.banner {
-  padding: 0;
+  padding: var(--layout-size-l);
+  transform: translateZ(0);
   animation-delay: 0.25s;
   animation-duration: 1s;
   animation-fill-mode: both;
@@ -491,6 +532,7 @@ main div.section.banner > div {
   margin-left: 32vw;
   margin-right: 32vw;
   align-items: center;
+  justify-content: center;
 }
 
 main div.section.banner > div > *:nth-child(odd) {

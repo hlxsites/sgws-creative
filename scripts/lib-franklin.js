@@ -572,9 +572,11 @@ export function normalizeHeadings(el, allowedHeadings) {
  */
 export function decorateTemplateAndTheme() {
   const addClasses = (element, classes) => {
+    const classesToAdd = [];
     classes.split(',').forEach((c) => {
-      element.classList.add(toClassName(c.trim()));
+      classesToAdd.push(toClassName(c.trim()));
     });
+    element.classList.add(...classesToAdd);
   };
   const template = getMetadata('template');
   if (template) addClasses(document.body, template);
