@@ -6,6 +6,7 @@
 .section.columns-container.highlight .columns {
   background-color: var(--background-color);
   color: var(--text-color);
+  overflow: hidden;
 }
 
 .section.columns-container.highlight .columns h2 {
