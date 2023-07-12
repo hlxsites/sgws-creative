@@ -15,7 +15,7 @@ const MIN_MAP_WIDTH_PX = `${MIN_MAP_WIDTH}px`;
 function handleStateDataOverlay(block, data, coordinates) {
   if (!data || !data.partners) return;
 
-  let partnersHolder = document.getElementById(`partners-holder-${data.name}`);
+  let partnersHolder = block.getElementById(`partners-holder-${data.name}`);
   if (partnersHolder) {
     partnersHolder.classList.remove('hidden');
   } else {
