@@ -34,7 +34,12 @@
   flex-direction: row;
 }
 
-.comparison.bottles.block > div {
+.comparison.bottles.block > div:nth-child(1) {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.comparison.bottles.block > div:nth-child(2) {
   display: flex;
   flex-direction: row;
 }
