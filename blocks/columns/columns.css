@@ -172,7 +172,7 @@
 
 .columns.image-overlay > div > div:first-child {
   display: flex;
-  align-items: center;
+  align-items: end;
   flex-direction: row;
 }
 
@@ -370,13 +370,15 @@
   position: relative;
   max-width: 95%;
   left: 130px;
-  top: -80px;
+  top: -3em;
+  /* top: -80px; */
 }
 
 .columns.image-overlay > div > div > p:last-child img {
   position: relative;
   max-width: 90%;
-  top: -90px;
+  /* top: -90px; */
+  top: calc(-15px - 3em);
   left: 80px;
   height: 30%;
 }
