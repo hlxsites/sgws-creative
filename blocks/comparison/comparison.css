@@ -15,6 +15,8 @@
   max-height: calc(39.5vw);
   z-index: 20;
   overflow: hidden;
+  border: 3px solid red;
+  margin-bottom: 1rem;
 }
 
 .comparison.size.block {
