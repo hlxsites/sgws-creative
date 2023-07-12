@@ -608,7 +608,6 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
 
   if (blockClassList.contains('bars')) {
     chartConfig.legend = blockClassList.contains('graph-legend');
-
     if (chartData.length === 2) {
       // comparison
       drawComparisonBarChart(chartData, chartConfig, chartHolder, theme);
@@ -656,7 +655,6 @@ function readBlockData(block) {
     }
     row.remove();
   });
-
   return data;
 }
 
@@ -715,7 +713,7 @@ export default function decorate(block) {
         block.append(chartHolder);
         drawChart(block, data, cfg, chartHolder, theme);
       }
-    }, 500);
+    }, 250);
   });
   // Trigger this event type to draw the charts immediately.
   window.addEventListener('drawChart', () => {

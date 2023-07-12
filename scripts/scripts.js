@@ -38,9 +38,7 @@ export const animationObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     const { target, isIntersecting } = entry;
     if (!target.closest('.no-animate')) {
-      // If the element is visible
       if (isIntersecting) {
-        // Add the animation class
         target.classList.add('animate');
       } else {
         target.classList.remove('animate');
@@ -184,7 +182,7 @@ async function loadTheme() {
 }
 async function loadFonts() {
   const allFonts = window.sgws.config.fonts;
-  await Promise.allSettled(allFonts.map((fontConfig) => {
+  return Promise.allSettled(allFonts.map((fontConfig) => {
     const [fontFamily, fontUrl, ...fontDescriptors] = fontConfig.split(';');
     if (fontFamily.startsWith('http')) {
       const head = document.getElementsByTagName('head')[0];

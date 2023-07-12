@@ -22,6 +22,13 @@ const loadScript = (url, attrs) => {
 };
 
 // add more delayed functionality here
+// Maps (projections)
+if (document.querySelector('div.chart-map-container')) {
+  loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3-geo/1.9.1/d3-geo.min.js', {
+    type: 'text/javascript',
+  });
+}
+
 // Charts
 if (window.hasCharts) {
   const echarts = loadScript('https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js', {
