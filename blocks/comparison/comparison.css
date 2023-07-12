@@ -15,7 +15,6 @@
   max-height: calc(39.5vw);
   z-index: 20;
   overflow: hidden;
-  border: 3px solid red;
   margin-bottom: 1rem;
 }
 
@@ -47,6 +46,7 @@
 .comparison.bottles.block .bottles-comparison-holder {
   display: flex;
   flex-direction: row;
+  align-items: flex-end;
 }
 
 .comparison.bottles.block .bottles-comparison-holder > div {
@@ -58,7 +58,6 @@
   flex-direction: row;
   gap: 2vw;
   padding-left: 15%;
-  border: 3px solid green;
 }
 
 .comparison.bottles.block .secondary-bottle-grid {
@@ -68,22 +67,21 @@
   transform-origin: left bottom;
   transform: scale(0.8);
   gap: 4vw;
-  border: 3px solid purple;
 }
 
 .comparison.bottles.block .secondary-bottle-grid > :first-child {
   filter: grayscale(0.8);
 }
 
-.bottles-comparison-placeholder {
-  border: 3px dashed blue;
-  content: '';
-}
-
 /* Media queries for size comparison block */
 @media screen and (min-width: 2000px) {
   .bottles-comparison-placeholder {
     height: 8vw;
+  }
+
+  .comparison.bottles.block .secondary-bottle-grid {
+    margin-left: -3em;
+    margin-bottom: 1em;
   }
 }
 

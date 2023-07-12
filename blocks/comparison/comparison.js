@@ -17,11 +17,6 @@ export default async function decorate(block) {
     secondBottleGrid.append(blockChildren[1].firstElementChild, blockChildren[1].firstElementChild.nextElementSibling);
     comparisonHolder.append(mainBottleGrid, secondBottleGrid);
 
-    blockChildren.forEach((child) => {
-      // clean up empty divs
-      child.remove();
-    });
-
     const placeholder = createTag('div', { class: 'bottles-comparison-placeholder' });
     block.append(placeholder, comparisonHolder);
   }
