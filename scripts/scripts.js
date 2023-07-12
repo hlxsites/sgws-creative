@@ -160,15 +160,12 @@ async function loadTheme() {
       const json = await resp.json();
       const tokens = json?.data || json?.page?.data || {};
       const root = document.querySelector(':root');
-      const themeStyles = {};
       let styleText = '';
       tokens.forEach((e) => {
         if (e.token !== 'font') {
-          //root.style.setProperty(`--${e.token}`, `${e.value}`);
-          styleText = `${styleText} --${e.token}: ${e.value};`
+          styleText = `${styleText} --${e.token}: ${e.value};`;
         }
       });
-      console.log(styleText)
       root.style.cssText = styleText;
       theme = json || theme;
     }
