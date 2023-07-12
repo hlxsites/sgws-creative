@@ -14,6 +14,7 @@
   flex-grow: 1;
   max-height: calc(39.5vw);
   z-index: 20;
+  overflow: hidden;
 }
 
 .comparison.size.block {
@@ -44,7 +45,6 @@
 .comparison.bottles.block .bottles-comparison-holder {
   display: flex;
   flex-direction: row;
-  max-height: 10vw;
 }
 
 .comparison.bottles.block .bottles-comparison-holder > div {
@@ -56,6 +56,7 @@
   flex-direction: row;
   gap: 2vw;
   padding-left: 15%;
+  border: 3px solid green;
 }
 
 .comparison.bottles.block .secondary-bottle-grid {
@@ -64,6 +65,7 @@
   z-index: -1;
   transform: scale(0.8);
   gap: 4vw;
+  border: 3px solid purple;
 }
 
 .comparison.bottles.block .secondary-bottle-grid > :first-child {
@@ -74,16 +76,6 @@
 @media screen and (min-width: 1540px) {
   .comparison.size.block {
     padding-top: 8vw;
-  }
-
-  .comparison.bottles.block .secondary-bottle-grid {
-    padding-right: 10%;
-    margin-top: 4em;
-    margin-left: -4.5em;
-  }
-
-  .comparison.bottles.block .main-bottle-grid {
-    padding-left: 10%;
   }
 }
 
@@ -109,21 +101,11 @@
   .comparison.size.block {
     transform: scale(0.8);
   }
-
-  .comparison.bottles.block .secondary-bottle-grid {
-    padding-right: 25%;
-    margin-top: 4em;
-    margin-left: -4.5em;
-  }
 }
 
 @media screen and (max-width: 1025px) {
   .comparison.size.block {
     transform: scale(0.7);
-  }
-
-  .comparison.bottles.block .secondary-bottle-grid {
-    margin-left: -4em;
   }
 }
 
@@ -132,10 +114,6 @@
     transform: scale(0.6);
     padding-top: unset;
   }
-
-  .comparison.bottles.block .secondary-bottle-grid {
-    margin-left: -3.75em;
-  }
 }
 
 @media screen and (max-width: 800px) {
@@ -143,33 +121,11 @@
     transform: scale(0.5);
     padding-top: 4em;
   }
-
-  .comparison.bottles.block .secondary-bottle-grid {
-    padding-right:30%;
-    margin-top: 2.5em;
-  }
-
-  .comparison.bottles.block .main-bottle-grid {
-    padding-left: 17%;
-  }
 }
 
 @media screen and (max-width: 675px) {
   .comparison.size.block {
     transform: scale(0.45);
     padding-top: 8em;
-  }
-
-  .comparison.bottles.block .secondary-bottle-grid {
-    border: 3px solid pink;
-    padding-right:30%;
-    margin-top: 2.5em;
-    transform: scale(1.0);
-  }
-
-  .comparison.bottles.block .main-bottle-grid {
-    border: 3px solid yellow;
-    padding-left: 20%;
-    padding-right: 4em;
   }
 }
