@@ -369,17 +369,15 @@
 .columns.image-overlay > div > div > p:first-child img {
   position: relative;
   max-width: 95%;
-  left: 130px;
+  left: min(10vw, 130px);
   top: -3em;
-  /* top: -80px; */
 }
 
 .columns.image-overlay > div > div > p:last-child img {
   position: relative;
   max-width: 90%;
-  /* top: -90px; */
   top: calc(-15px - 3em);
-  left: 80px;
+  left: min(6vw, 80px);
   height: 30%;
 }
 
