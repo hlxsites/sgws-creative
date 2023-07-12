@@ -50,7 +50,7 @@ async function loadTabPanel(panel) {
       styleText = `${styleText} --${token}: ${value};`;
     });
     panel.style.cssText = styleText;
-    if(tabButton){
+    if (tabButton) {
       tabButton.style.cssText = styleText;
     }
     // process product border
@@ -182,11 +182,10 @@ export default async function decorate(block) {
       tabContent.setAttribute('data-path', contentPath || '');
     }
 
-    tabList.append(tabButton);
     block.removeChild(group);
+    tabList.append(tabButton);
     block.append(tabContent);
   });
-
   block.prepend(tabList);
 
   // load content of first tab (lazy load the rest)
