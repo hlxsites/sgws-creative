@@ -128,6 +128,15 @@ h2 {
   text-align: center;
 }
 
+main div.section.images-border .default-content-wrapper h2::after {
+  content: '';
+  position: absolute;
+  left: calc(50% - 5vw);
+  width: 10vw;
+  border-bottom: 2px solid var(--text-color-highlight);
+  margin-top: var(--layout-size-xxl);
+}
+
 .product .section:not(.quote) .default-content-wrapper h2::after {
   content: "";
   display: block;
@@ -559,15 +568,6 @@ main div.section.images-border > div p:not(:last-child) {
 
 main div.section.images-border > div p:last-child {
   right: 0;
-}
-
-main div.section.images-border h2::after {
-  content: '';
-  position: absolute;
-  left: calc(50% - 5vw);
-  width: 10vw;
-  border-bottom: 2px solid var(--text-color-highlight);
-  margin-top: var(--layout-size-xxl);
 }
 
 /* animations */
