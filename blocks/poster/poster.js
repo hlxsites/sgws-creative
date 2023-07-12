@@ -31,13 +31,4 @@ export default function decorate(block) {
   contentHolder.append(logo, title, teaser, productRow);
   imageHolder.append(posterImage);
   block.append(contentHolder, imageHolder);
-
-  /*
-  // Uncomment for debugging CSS with the block alone in a draft
-  const themeName = [...block.closest('.section').classList].find(
-    (className) => hasTheme(className));
-  getTheme(themeName).forEach(({ token, value }) => {
-    block.style.setProperty(`--${token}`, `${value}`);
-  });
-  // */
 }

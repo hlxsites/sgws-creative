@@ -45,10 +45,14 @@ async function loadTabPanel(panel) {
     // apply theme to tab content
     const themeName = [...panel.classList].find((className) => hasTheme(className));
     const theme = getTheme(themeName);
+    let styleText = '';
     theme.forEach(({ token, value }) => {
-      panel.style.setProperty(`--${token}`, `${value}`);
-      tabButton?.style.setProperty(`--${token}`, `${value}`);
+      styleText = `${styleText} --${token}: ${value};`;
     });
+    panel.style.cssText = styleText;
+    if (tabButton) {
+      tabButton.style.cssText = styleText;
+    }
     // process product border
     const border = panel.querySelector(':scope .default-content-wrapper > p.picture');
     const slides = panel.querySelector(':scope .slides-wrapper');
@@ -178,11 +182,10 @@ export default async function decorate(block) {
       tabContent.setAttribute('data-path', contentPath || '');
     }
 
-    tabList.append(tabButton);
     block.removeChild(group);
+    tabList.append(tabButton);
     block.append(tabContent);
   });
-
   block.prepend(tabList);
 
   // load content of first tab (lazy load the rest)

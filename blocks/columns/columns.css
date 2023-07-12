@@ -172,7 +172,7 @@
 
 .columns.image-overlay > div > div:first-child {
   display: flex;
-  align-items: center;
+  align-items: end;
   flex-direction: row;
 }
 
@@ -340,28 +340,45 @@
   right: var(--layout-size-xxl);
 }
 
-.columns.image-overlay > div > div > p:last-child img {
-  position: relative;
-  max-width: 85%;
-  top: -90px;
-  left: 40px;
-  height: 30%;
-}
-
-.columns.image-overlay > div > div > p:first-child img {
-  position: relative;
-  max-width: 90%;
-  left: 130px;
-  top: -80px;
-  z-index: 1;
-}
-
 .columns.button-full > div:nth-of-type(odd) > div:nth-of-type(even) {
   flex-grow: 1.5;
 }
 
 .columns.button-full > div:nth-of-type(even) > div:nth-of-type(odd) {
   flex-grow: 1.5;
+}
+
+/* Wine bottle animation needs to clip at the bottom edge of the div */
+.presentation main .columns-2-cols p:not(.border).picture.animate {
+  animation-name: fade-in-bottom-edge;
+  margin-bottom: 0;
+}
+
+.presentation main .columns.image-overlay.columns-2-cols > div > div {
+  flex: auto;
+}
+
+.columns.image-overlay > div > div > .picture {
+  position: relative;
+}
+
+.columns.image-overlay > div > div > .picture:first-child {
+  z-index: 10;
+}
+
+.columns.image-overlay > div > div > p:first-child img {
+  position: relative;
+  max-width: 95%;
+  left: min(10vw, 130px);
+  top: -3em;
+}
+
+.columns.image-overlay > div > div > p:last-child img {
+  position: relative;
+  max-width: 90%;
+  top: calc(-15px - 3em);
+  left: min(6vw, 80px);
+  height: 30%;
 }
 
 .columns.inline-video > div:nth-of-type(odd) .video-background {
