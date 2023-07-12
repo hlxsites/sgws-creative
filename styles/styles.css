@@ -570,6 +570,10 @@ main div.section.images-border > div p:last-child {
   right: 0;
 }
 
+main div.section.images-border > div p.full-width {
+  width: 100vw;
+}
+
 /* animations */
 @media (prefers-reduced-motion: no-preference) {
   .presentation main .default-content-wrapper > h1,
