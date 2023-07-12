@@ -575,6 +575,7 @@ main div.section.banner > div > *:nth-child(odd) {
       transform: translateY(100%);
       clip-path: inset(100% 0 0 100%);
     }
+    
     to { 
       opacity: 1;
       clip-path: inset(0 0 0 100%);
