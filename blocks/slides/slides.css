@@ -49,6 +49,8 @@
 
 .slides.block .slide {
   display: none;
+  max-height: 39.8vw;
+  overflow: hidden;
 }
 
 .slides.block .slide.active {
@@ -242,6 +244,22 @@
 }
 
 /* End of Pairs With View */
+
+/* Slide billboard, used for "All Italania Grill" slide */
+.slides .slide .billboard .picture {
+  zoom:0.8;
+}
+
+.slides .slide .billboard.block[data-block-status="loaded"] .logo-row-layout {
+  padding-top:2.5rem;
+}
+
+.slides .slide .billboard .main-row-layout {
+  flex-grow: 1;
+  margin-top: -22px;
+}
+
+/* End "All Italania Grill" slide */
 
 .slides .slide > div:nth-child(2) {
   flex: 1;

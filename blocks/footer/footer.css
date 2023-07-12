@@ -16,6 +16,11 @@ footer {
   padding : 0;
 }
 
+.product footer img {
+  position: relative;
+  bottom: -0.75em;
+}
+
 footer h2,
 footer p {
   color: var(--static-color-white);

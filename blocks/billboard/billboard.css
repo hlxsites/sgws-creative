@@ -137,7 +137,8 @@
 }
 
 .billboard.block .main-row-layout > div:last-child img {
-  margin-left: 9vw;
+  margin-top: 1vw;
+  margin-left: 3vw;
 }
 
 .billboard.block .products-row-layout > div:last-child img,
