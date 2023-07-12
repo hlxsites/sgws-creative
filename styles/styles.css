@@ -540,6 +540,36 @@ main div.section.banner > div > *:nth-child(odd) {
   margin: var(--layout-size-xs) 0;
 }
 
+main div.images-border {
+  padding: 24px 0 0;
+  text-align: center;
+  font-size: larger;
+}
+
+main div.section.images-border > div p {
+  position: absolute;
+  width: 60vw;
+  margin: 0;
+  transform: translateY(-80%);
+}
+
+main div.section.images-border > div p:not(:last-child) {
+  left: 0;
+}
+
+main div.section.images-border > div p:last-child {
+  right: 0;
+}
+
+main div.section.images-border h2::after {
+  content: '';
+  position: absolute;
+  left: calc(50% - 5vw);
+  width: 10vw;
+  border-bottom: 2px solid var(--text-color-highlight);
+  margin-top: var(--layout-size-xxl);
+}
+
 /* animations */
 @media (prefers-reduced-motion: no-preference) {
   .presentation main .default-content-wrapper > h1,
