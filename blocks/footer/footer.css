@@ -107,7 +107,7 @@ footer .sources > div > div {
   display: flex;
   position: absolute;
   right: 0;
-  background-color: var(--link-color-background);
+  background-color: var(--secondary-color);
 }
 
 .product .product-footer-nav > div {
@@ -116,7 +116,7 @@ footer .sources > div > div {
   gap: var(--layout-size-l);
   padding: var(--layout-size-m) var(--layout-size-l);
   margin: var(--layout-size-m) var(--layout-size-l);
-  background-color: var(--link-color-background);
+  background-color: var(--secondary-color);
   border: var(--layout-size-xxs) solid var(--link-color);
   color: var(--primary-color);
 }
