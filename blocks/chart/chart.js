@@ -1,7 +1,8 @@
 import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
 import { getTheme, THEME_TOKEN } from '../../scripts/scripts.js';
 
-const MIN_CHART_HEIGHT = '400px';
+const MIN_CHART_HEIGHT_INT = 400;
+const MIN_CHART_HEIGHT = `${MIN_CHART_HEIGHT_INT}ps`;
 
 /**
  * Prepare data to be displayed in a bar chart
@@ -386,6 +387,7 @@ function drawHistogramTimeline(chartData, chartConfig, chartHolder, theme) {
         cursor: 'auto',
         colorBy: 'data',
         data: formattedData.dataValues,
+        barWidth: '95%',
         ...getInteractivitySettings(),
       },
     ],
@@ -714,11 +716,13 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
   let elem = block;
   for (let i = 0; i < 4; i += 1) {
     if (elem.clientHeight > 0) {
-      chartConfig.chartHeight = MIN_CHART_HEIGHT; //`${elem.clientHeight - 105}px`; // TMN - debug for timeline charts
+      let chartHeight = Math.max(MIN_CHART_HEIGHT_INT, elem.clientHeight - 105);
+      chartConfig.chartHeight = `${chartHeight}px`;
       break;
     }
     elem = elem.parentElement;
   }
+  console.log(chartConfig.chartHeight)
 
   if (blockClassList.contains('bars')) {
     chartConfig.legend = blockClassList.contains('graph-legend');
