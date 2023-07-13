@@ -309,10 +309,15 @@ function drawHistogramTimeline(chartData, chartConfig, chartHolder, theme) {
   chartConfig['chart-scale-step'] = parseInt(chartConfig['chart-scale-step'], 10);
 
   // stylings
+  formattedData.barNames.forEach(function(element, index) {
+    this[index] = Number.parseInt(element, 10);
+  }, formattedData.barNames); // use arr as this
   let max = Number.NEGATIVE_INFINITY;
-  formattedData.dataValues.forEach((datapoint) => {
+  formattedData.dataValues.forEach((datapoint, i) => {
     datapoint.value = Number(datapoint.value);
     max = Math.max(max, datapoint.value);
+
+    // TODO - style depending on if it is present or future timeline
     datapoint.itemStyle = {
       color: getLinearColorGradient(theme[THEME_TOKEN.PRIMARY_COLOR], theme['primary-gradient-color']),
     };
