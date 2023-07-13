@@ -46,7 +46,7 @@
 .showcase button div {
     position: absolute;
     border-width: 0;
-    max-width: 200px;
+    width: 230px;
     background-color: rgb(255 255 255);
     background-image: none;
     box-shadow: rgba(95 95 95 / 50%) 0 0 5px 0;
@@ -73,9 +73,7 @@
 /* Popover when 'hover' is activated. */
 .showcase button:hover div {
     visibility: visible;
-    display: inline;
     opacity: 1;
-    min-width: 200px;
     transition: visibility 2s, opacity 2s, display 2s linear;
 }
 
@@ -94,13 +92,16 @@
     justify-content: right;
 }
 
-.showcase > div div.showcase-hotspot-left button > div {
+.showcase > div div.showcase-hotspot-left button > div * {
     margin-right: 2px;
-    text-align: right;
+    text-align: right !important;
+    justify-content: right;
+    display: flex;
 }
 
-.showcase > div div.showcase-hotspot-right {
+.showcase > div div.showcase-hotspot-right button > div * {
     justify-content: left;
+    display: flex;
 }
 
 .showcase > div > .showcase-image-cell picture img {

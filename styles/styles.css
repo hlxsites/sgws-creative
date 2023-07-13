@@ -618,8 +618,8 @@ main div.section.images-border > div p.full-width {
       transform: translateY(100%);
       clip-path: inset(-100% -150% 100% 0);
     }
-    
-    to { 
+
+    to {
       opacity: 1;
       clip-path: inset(-100% -150% 0 0);
     }
