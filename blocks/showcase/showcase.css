@@ -75,7 +75,8 @@
     visibility: visible;
     display: inline;
     opacity: 1;
-    min-width: 200px;
+    min-width: min-content;
+    width: 200px;
     transition: visibility 2s, opacity 2s, display 2s linear;
 }
 
