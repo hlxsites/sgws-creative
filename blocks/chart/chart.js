@@ -830,13 +830,7 @@ export default function decorate(block) {
   window.addEventListener('drawChart', () => {
     if (echartsLoaded) {
       computeFontSizes(block, theme);
-
-      // redraw scaled chart
-      // TMN-TODO: resize() call?
-      chartHolder.remove();
-      chartHolder = document.createElement('div');
-      block.append(chartHolder);
-      drawChart(block, data, cfg, chartHolder, theme);
+      chartHolder.resize();
     }
   });
 }
