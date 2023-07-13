@@ -311,7 +311,7 @@ function drawHistogramTimeline(chartData, chartConfig, chartHolder, theme) {
   chartConfig['chart-data-ending'] = parseInt(chartConfig['chart-data-ending'], 10);
 
   // stylings
-  formattedData.barNames.forEach((element, index) => {
+  formattedData.barNames.forEach(function (element, index) {
     this[index] = Number.parseInt(element, 10);
   }, formattedData.barNames);
   let max = Number.NEGATIVE_INFINITY;
@@ -383,7 +383,7 @@ function drawHistogramTimeline(chartData, chartConfig, chartHolder, theme) {
         cursor: 'auto',
         colorBy: 'data',
         data: formattedData.dataValues,
-        barWidth: '95%',
+        barWidth: '99%',
         ...getInteractivitySettings(),
       },
     ],
