@@ -326,6 +326,10 @@ main .section.secondary {
   background-color: var(--secondary-color);
 }
 
+main .section.neutral {
+  background-color: var(--neutral-color);
+}
+
 main .section.highlight:not(.background-image) {
   /* background styles, unless a background image is used. */
   background-image: var(--background-color-highlight);
