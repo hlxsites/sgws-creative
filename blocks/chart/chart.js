@@ -176,7 +176,7 @@ function getBarChartAxisFontStyle(theme) {
 
 /**
  * Draw a histogram chart with an overlayed trend line
- * @param {*} chartData Chart data (will be used to determine which chart to draw)
+ * @param {*} chartData Chart data
  * @param {*} chartConfig Chart configuration
  * @param {*} chartHolder Element (div) holding the chart
  * @param {*} theme Theming details, optional
@@ -298,8 +298,95 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
 }
 
 /**
+ * Draw a histogram chart representing an evolution over time,
+ * @param {*} chartData Chart data (x-axis is time), with a present and future limit
+ * @param {*} chartConfig Chart configuration
+ * @param {*} chartHolder Element (div) holding the chart
+ * @param {*} theme Theming details, optional
+ */
+function drawHistogramTimeline(chartData, chartConfig, chartHolder, theme) {
+  const formattedData = prepareChartData(chartData);
+  chartConfig['chart-scale-step'] = parseInt(chartConfig['chart-scale-step'], 10);
+
+  // stylings
+  let max = Number.NEGATIVE_INFINITY;
+  formattedData.dataValues.forEach((datapoint) => {
+    datapoint.value = Number(datapoint.value);
+    max = Math.max(max, datapoint.value);
+    datapoint.itemStyle = {
+      color: getLinearColorGradient(theme[THEME_TOKEN.PRIMARY_COLOR], theme['primary-gradient-color']),
+    };
+  });
+  const axisFontStyle = getBarChartAxisFontStyle(theme);
+  console.log('===========================')
+  console.log(formattedData)
+  console.log('===========================')
+
+  // build chart representation
+  const barChartSpecificDescription = {
+    title: {
+      text: chartConfig.title,
+    },
+    xAxis: {
+      data: formattedData.barNames,
+      axisTick: {
+        show: false,
+      },
+      axisLabel: axisFontStyle,
+    },
+    yAxis: {
+      type: 'value',
+      silent: true,
+      axisLine: {
+        show: true,
+        symbol: 'none',
+        lineStyle: {
+          type: 'solid',
+        },
+      },
+      interval: chartConfig['chart-scale-step'],
+      axisLabel: {
+        formatter: `{value}${chartConfig['scale-step-suffix']}`,
+        align: 'center',
+        margin: '22',
+        ...axisFontStyle,
+      },
+      max: (Math.floor(max / chartConfig['chart-scale-step']) + 1) * chartConfig['chart-scale-step'], // chart scale end
+      splitLine: { show: false },
+    },
+    series: [
+      {
+        name: chartConfig.title,
+        type: 'bar',
+        cursor: 'auto',
+        colorBy: 'data',
+        data: formattedData.dataValues,
+        ...getInteractivitySettings(),
+      },
+    ],
+  };
+  const barChartRepresentation = buildChartRepresentation(chartConfig, theme);
+  if (chartConfig.legend) {
+    barChartSpecificDescription.legend = {
+      ...barChartRepresentation.legend,
+      formatter: chartConfig.unit,
+      textStyle: axisFontStyle,
+    };
+  }
+
+  console.log('===========================')
+  console.log(chartConfig)
+  console.log('===========================')
+  const barChart = initializeChart(chartHolder, chartConfig);
+  barChart.setOption({
+    ...barChartRepresentation,
+    ...barChartSpecificDescription,
+  });
+}
+
+/**
  * Draw a histogram chart
- * @param {*} chartData Chart data (will be used to determine which chart to draw)
+ * @param {*} chartData Chart data
  * @param {*} chartConfig Chart configuration
  * @param {*} chartHolder Element (div) holding the chart
  * @param {*} theme Theming details, optional
@@ -380,7 +467,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
 
 /**
  * Draw a bar chart comparing two values/series
- * @param {*} chartData Chart data (will be used to determine which chart to draw)
+ * @param {*} chartData Chart data
  * @param {*} chartConfig Chart configuration
  * @param {*} chartHolder Element (div) holding the chart
  * @param {*} theme Theming details, optional
@@ -600,7 +687,7 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
   let elem = block;
   for (let i = 0; i < 4; i += 1) {
     if (elem.clientHeight > 0) {
-      chartConfig.chartHeight = `${elem.clientHeight - 105}px`;
+      chartConfig.chartHeight = MIN_CHART_HEIGHT; //`${elem.clientHeight - 105}px`; // TMN - debug for timeline charts
       break;
     }
     elem = elem.parentElement;
@@ -614,6 +701,13 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
     } else if (blockClassList.contains('overlay-data')) {
       // histogram with trend line
       drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, theme);
+    } else if (blockClassList.contains('timeline')) {
+      // histogram for evolution of time
+      console.log('Data ~~~~~~~~~~~~~~~~~~')
+      console.log(chartData)
+      console.log('Conf ~~~~~~~~~~~~~~~~~~')
+      console.log(chartConfig)
+      drawHistogramTimeline(chartData, chartConfig, chartHolder, theme);
     } else {
       // default, histogram (one series)
       drawHistogramChart(chartData, chartConfig, chartHolder, theme);
@@ -667,6 +761,7 @@ export default function decorate(block) {
       'unit',
       'overlay-unit',
       'title',
+      'subtitle',
       'chart-scale',
       'chart-scale-step',
       'chart-scale-overlay-step',
@@ -675,6 +770,7 @@ export default function decorate(block) {
       'scale-step-suffix',
       'scale-overlay-label-suffix',
       'scale-step-prefix',
+      'chart-data-ending',
     ],
     removeAfterRead: true,
   };
@@ -721,6 +817,7 @@ export default function decorate(block) {
       computeFontSizes(block, theme);
 
       // redraw scaled chart
+      // TMN-TODO: resize() call?
       chartHolder.remove();
       chartHolder = document.createElement('div');
       block.append(chartHolder);
