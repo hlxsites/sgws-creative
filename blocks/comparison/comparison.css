@@ -36,6 +36,12 @@
   flex-basis: 60%;
 }
 
+.comparison.size.block > div {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
 .comparison.bottles.block > div:nth-child(1) {
   display: flex;
   flex-direction: row-reverse;
@@ -47,6 +53,10 @@
   transform: scale(0.9);
 }
 
+.comparison.size.block > div > div:nth-child(2n) {
+  margin-top: 10px;
+}
+
 .comparison.bottles.block > div:nth-child(2) > div:not(.picture),
 .comparison.bottles.block > div:nth-child(1) > div:not(.picture) {
   text-align: center;
@@ -55,16 +65,6 @@
 .comparison.bottles.block > div:nth-child(2) > div > picture {
   filter: grayscale(90%);
   z-index: -1;
-}
-
-.comparison.size.block > div {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-}
-
-.comparison.size.block > div > div:nth-child(2n) {
-  margin-top: 10px;
 }
 
 /* Media queries for size comparison block */
