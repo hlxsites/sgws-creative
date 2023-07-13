@@ -1,7 +1,8 @@
 import { readPredefinedBlockConfig } from '../../scripts/lib-franklin.js';
 import { getTheme, THEME_TOKEN } from '../../scripts/scripts.js';
 
-const MIN_CHART_HEIGHT = '400px';
+const MIN_CHART_HEIGHT_INT = 400;
+const MIN_CHART_HEIGHT = `${MIN_CHART_HEIGHT_INT}ps`;
 
 /**
  * Prepare data to be displayed in a bar chart
@@ -176,7 +177,7 @@ function getBarChartAxisFontStyle(theme) {
 
 /**
  * Draw a histogram chart with an overlayed trend line
- * @param {*} chartData Chart data (will be used to determine which chart to draw)
+ * @param {*} chartData Chart data
  * @param {*} chartConfig Chart configuration
  * @param {*} chartHolder Element (div) holding the chart
  * @param {*} theme Theming details, optional
@@ -298,8 +299,114 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
 }
 
 /**
+ * Draw a histogram chart representing an evolution over time,
+ * @param {*} chartData Chart data (x-axis is time), with a present and future limit
+ * @param {*} chartConfig Chart configuration
+ * @param {*} chartHolder Element (div) holding the chart
+ * @param {*} theme Theming details, optional
+ */
+function drawHistogramTimeline(chartData, chartConfig, chartHolder, theme) {
+  const formattedData = prepareChartData(chartData);
+  chartConfig['chart-scale-step'] = parseInt(chartConfig['chart-scale-step'], 10);
+  chartConfig['chart-data-ending'] = parseInt(chartConfig['chart-data-ending'], 10);
+
+  formattedData.barNames.forEach((element, index) => {
+    formattedData.barNames[index] = Number.parseInt(element, 10);
+  });
+  let max = Number.NEGATIVE_INFINITY;
+  formattedData.dataValues.forEach((datapoint, i) => {
+    datapoint.value = Number(datapoint.value);
+    max = Math.max(max, datapoint.value);
+    datapoint.itemStyle = {
+      color: getLinearColorGradient(theme[THEME_TOKEN.PRIMARY_COLOR], theme['primary-gradient-color']),
+    };
+    if (formattedData.barNames[i] <= chartConfig['chart-data-ending']) {
+      datapoint.itemStyle.opacity = 0.6;
+    }
+  });
+  const axisFontStyle = getBarChartAxisFontStyle(theme);
+
+  const barChartSpecificDescription = {
+    title: {
+      text: chartConfig.title,
+      left: 'center',
+    },
+    xAxis: {
+      name: chartConfig.subtitle,
+      nameLocation: 'center',
+      nameGap: 50,
+      nameTextStyle: {
+        ...axisFontStyle,
+      },
+      data: formattedData.barNames,
+      axisTick: {
+        show: false,
+      },
+      axisLabel: {
+        formatter: (value) => {
+          if (value > chartConfig['chart-data-ending']) {
+            return `${value} (predicted)`;
+          }
+          return value;
+        },
+        rotate: 45,
+        margin: 25,
+        ...axisFontStyle,
+      },
+    },
+    yAxis: {
+      type: 'value',
+      silent: true,
+      axisLine: {
+        show: true,
+        symbol: 'none',
+        lineStyle: {
+          type: 'solid',
+        },
+      },
+      interval: chartConfig['chart-scale-step'],
+      axisLabel: {
+        formatter: `{value}${chartConfig['scale-step-suffix']}`,
+        align: 'center',
+        margin: '22',
+        ...axisFontStyle,
+      },
+      max: (Math.floor(max / chartConfig['chart-scale-step']) + 1) * chartConfig['chart-scale-step'], // chart scale end
+      splitLine: { show: false },
+    },
+    series: [
+      {
+        name: chartConfig.title,
+        type: 'bar',
+        cursor: 'auto',
+        colorBy: 'data',
+        data: formattedData.dataValues,
+        barWidth: '99%',
+        ...getInteractivitySettings(),
+      },
+    ],
+  };
+  const barChartRepresentation = buildChartRepresentation(chartConfig, theme);
+  if (chartConfig.legend) {
+    barChartSpecificDescription.legend = {
+      ...barChartRepresentation.legend,
+      left: 'center',
+      formatter: chartConfig.unit,
+      textStyle: axisFontStyle,
+    };
+    barChartSpecificDescription.legend.textStyle.width = '400';
+  }
+
+  const barChart = initializeChart(chartHolder, chartConfig);
+  barChart.setOption({
+    ...barChartRepresentation,
+    ...barChartSpecificDescription,
+  });
+}
+
+/**
  * Draw a histogram chart
- * @param {*} chartData Chart data (will be used to determine which chart to draw)
+ * @param {*} chartData Chart data
  * @param {*} chartConfig Chart configuration
  * @param {*} chartHolder Element (div) holding the chart
  * @param {*} theme Theming details, optional
@@ -380,7 +487,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
 
 /**
  * Draw a bar chart comparing two values/series
- * @param {*} chartData Chart data (will be used to determine which chart to draw)
+ * @param {*} chartData Chart data
  * @param {*} chartConfig Chart configuration
  * @param {*} chartHolder Element (div) holding the chart
  * @param {*} theme Theming details, optional
@@ -600,12 +707,11 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
   let elem = block;
   for (let i = 0; i < 4; i += 1) {
     if (elem.clientHeight > 0) {
-      chartConfig.chartHeight = `${elem.clientHeight - 105}px`;
+      chartConfig.chartHeight = `${Math.max(MIN_CHART_HEIGHT_INT, elem.clientHeight - 105)}px`;
       break;
     }
     elem = elem.parentElement;
   }
-
   if (blockClassList.contains('bars')) {
     chartConfig.legend = blockClassList.contains('graph-legend');
     if (chartData.length === 2) {
@@ -614,6 +720,9 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
     } else if (blockClassList.contains('overlay-data')) {
       // histogram with trend line
       drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, theme);
+    } else if (blockClassList.contains('timeline')) {
+      // histogram for evolution of time
+      drawHistogramTimeline(chartData, chartConfig, chartHolder, theme);
     } else {
       // default, histogram (one series)
       drawHistogramChart(chartData, chartConfig, chartHolder, theme);
@@ -667,6 +776,7 @@ export default function decorate(block) {
       'unit',
       'overlay-unit',
       'title',
+      'subtitle',
       'chart-scale',
       'chart-scale-step',
       'chart-scale-overlay-step',
@@ -675,6 +785,7 @@ export default function decorate(block) {
       'scale-step-suffix',
       'scale-overlay-label-suffix',
       'scale-step-prefix',
+      'chart-data-ending',
     ],
     removeAfterRead: true,
   };
@@ -706,7 +817,6 @@ export default function decorate(block) {
     resizeTimeout = setTimeout(() => {
       if (echartsLoaded) {
         computeFontSizes(block, theme);
-
         // redraw scaled chart
         chartHolder.remove();
         chartHolder = document.createElement('div');
@@ -719,9 +829,6 @@ export default function decorate(block) {
   window.addEventListener('drawChart', () => {
     if (echartsLoaded) {
       computeFontSizes(block, theme);
-
-      // redraw scaled chart
-      chartHolder.remove();
       chartHolder = document.createElement('div');
       block.append(chartHolder);
       drawChart(block, data, cfg, chartHolder, theme);
