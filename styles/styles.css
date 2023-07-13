@@ -128,6 +128,15 @@ h2 {
   text-align: center;
 }
 
+main div.section.images-border .default-content-wrapper h2::after {
+  content: '';
+  position: absolute;
+  left: calc(50% - 5vw);
+  width: 10vw;
+  border-bottom: 2px solid var(--text-color-highlight);
+  margin-top: var(--layout-size-xxl);
+}
+
 .product .section:not(.quote) .default-content-wrapper h2::after {
   content: "";
   display: block;
@@ -540,6 +549,31 @@ main div.section.banner > div > *:nth-child(odd) {
   margin: var(--layout-size-xs) 0;
 }
 
+main div.images-border {
+  padding: 24px 0 0;
+  text-align: center;
+  font-size: larger;
+}
+
+main div.section.images-border > div p {
+  position: absolute;
+  width: 60vw;
+  margin: 0;
+  transform: translateY(-80%);
+}
+
+main div.section.images-border > div p:not(:last-child) {
+  left: 0;
+}
+
+main div.section.images-border > div p:last-child {
+  right: 0;
+}
+
+main div.section.images-border > div p.full-width {
+  width: 100vw;
+}
+
 /* animations */
 @media (prefers-reduced-motion: no-preference) {
   .presentation main .default-content-wrapper > h1,
@@ -584,8 +618,8 @@ main div.section.banner > div > *:nth-child(odd) {
       transform: translateY(100%);
       clip-path: inset(-100% -150% 100% 0);
     }
-    
-    to { 
+
+    to {
       opacity: 1;
       clip-path: inset(-100% -150% 0 0);
     }

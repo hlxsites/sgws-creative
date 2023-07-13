@@ -334,6 +334,14 @@ function decorateBorders(main) {
       selection.querySelector('picture')?.remove();
     }
   });
+
+  const imageBorders = main.querySelectorAll('.section.images-border');
+  imageBorders.forEach((selection) => {
+    const pictures = selection.querySelectorAll('p.picture');
+    if (pictures.length === 1) {
+      pictures[0].classList.add('full-width');
+    }
+  });
 }
 
 export function decoratePictureParagraph(main) {
