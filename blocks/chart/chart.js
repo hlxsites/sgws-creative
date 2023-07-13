@@ -311,21 +311,17 @@ function drawHistogramTimeline(chartData, chartConfig, chartHolder, theme) {
   chartConfig['chart-data-ending'] = parseInt(chartConfig['chart-data-ending'], 10);
 
   // stylings
-  formattedData.barNames.forEach(function(element, index) {
+  formattedData.barNames.forEach((element, index) => {
     this[index] = Number.parseInt(element, 10);
   }, formattedData.barNames);
   let max = Number.NEGATIVE_INFINITY;
   formattedData.dataValues.forEach((datapoint, i) => {
     datapoint.value = Number(datapoint.value);
     max = Math.max(max, datapoint.value);
-
     datapoint.itemStyle = {
       color: getLinearColorGradient(theme[THEME_TOKEN.PRIMARY_COLOR], theme['primary-gradient-color']),
     };
-    if(formattedData.barNames[i] > chartConfig['chart-data-ending']) {
-      console.log("Value is in future: ", formattedData.barNames[i]);
-    } else {
-      console.log("Value is present: ", formattedData.barNames[i]);
+    if (formattedData.barNames[i] <= chartConfig['chart-data-ending']) {
       datapoint.itemStyle.opacity = 0.6;
     }
   });
@@ -335,14 +331,14 @@ function drawHistogramTimeline(chartData, chartConfig, chartHolder, theme) {
   const barChartSpecificDescription = {
     title: {
       text: chartConfig.title,
-      left: 'center'
+      left: 'center',
     },
     xAxis: {
-      name: chartConfig['subtitle'],
-      nameLocation : 'center',
+      name: chartConfig.subtitle,
+      nameLocation: 'center',
       nameGap: 50,
       nameTextStyle: {
-        ...axisFontStyle
+        ...axisFontStyle,
       },
       data: formattedData.barNames,
       axisTick: {
@@ -350,8 +346,8 @@ function drawHistogramTimeline(chartData, chartConfig, chartHolder, theme) {
       },
       axisLabel: {
         formatter: (value) => {
-          if(value > chartConfig['chart-data-ending']) {
-            return value + ' (predicted)';
+          if (value > chartConfig['chart-data-ending']) {
+            return `${value} (predicted)`;
           }
           return value;
         },
@@ -403,9 +399,6 @@ function drawHistogramTimeline(chartData, chartConfig, chartHolder, theme) {
     barChartSpecificDescription.legend.textStyle.width = '400';
   }
 
-  console.log('===========================')
-  console.log(barChartSpecificDescription)
-  console.log('===========================')
   const barChart = initializeChart(chartHolder, chartConfig);
   barChart.setOption({
     ...barChartRepresentation,
@@ -716,14 +709,11 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
   let elem = block;
   for (let i = 0; i < 4; i += 1) {
     if (elem.clientHeight > 0) {
-      let chartHeight = Math.max(MIN_CHART_HEIGHT_INT, elem.clientHeight - 105);
-      chartConfig.chartHeight = `${chartHeight}px`;
+      chartConfig.chartHeight = `${Math.max(MIN_CHART_HEIGHT_INT, elem.clientHeight - 105)}px`;
       break;
     }
     elem = elem.parentElement;
   }
-  console.log(chartConfig.chartHeight)
-
   if (blockClassList.contains('bars')) {
     chartConfig.legend = blockClassList.contains('graph-legend');
     if (chartData.length === 2) {
@@ -734,10 +724,6 @@ function drawChart(block, chartData, chartConfig, chartHolder, theme) {
       drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, theme);
     } else if (blockClassList.contains('timeline')) {
       // histogram for evolution of time
-      console.log('Data ~~~~~~~~~~~~~~~~~~')
-      console.log(chartData)
-      console.log('Conf ~~~~~~~~~~~~~~~~~~')
-      console.log(chartConfig)
       drawHistogramTimeline(chartData, chartConfig, chartHolder, theme);
     } else {
       // default, histogram (one series)
