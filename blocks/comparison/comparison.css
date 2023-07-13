@@ -50,6 +50,7 @@
 .comparison.bottles.block>div:nth-child(2) {
   display: flex;
   flex-direction: row;
+  z-index: -1;
   transform: scale(0.9);
 }
 
