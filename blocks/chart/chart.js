@@ -329,21 +329,35 @@ function drawHistogramTimeline(chartData, chartConfig, chartHolder, theme) {
     }
   });
   const axisFontStyle = getBarChartAxisFontStyle(theme);
-  console.log('===========================')
-  console.log(formattedData)
-  console.log('===========================')
 
   // build chart representation
   const barChartSpecificDescription = {
     title: {
       text: chartConfig.title,
+      left: 'center'
     },
     xAxis: {
+      name: chartConfig['subtitle'],
+      nameLocation : 'center',
+      nameGap: 50,
+      nameTextStyle: {
+        ...axisFontStyle
+      },
       data: formattedData.barNames,
       axisTick: {
         show: false,
       },
-      axisLabel: axisFontStyle,
+      axisLabel: {
+        formatter: (value) => {
+          if(value > chartConfig['chart-data-ending']) {
+            return value + ' (predicted)';
+          }
+          return value;
+        },
+        rotate: 45,
+        margin: 25,
+        ...axisFontStyle,
+      },
     },
     yAxis: {
       type: 'value',
@@ -380,13 +394,15 @@ function drawHistogramTimeline(chartData, chartConfig, chartHolder, theme) {
   if (chartConfig.legend) {
     barChartSpecificDescription.legend = {
       ...barChartRepresentation.legend,
+      left: 'center',
       formatter: chartConfig.unit,
       textStyle: axisFontStyle,
     };
+    barChartSpecificDescription.legend.textStyle.width = '400';
   }
 
   console.log('===========================')
-  console.log(chartConfig)
+  console.log(barChartSpecificDescription)
   console.log('===========================')
   const barChart = initializeChart(chartHolder, chartConfig);
   barChart.setOption({
