@@ -51,6 +51,8 @@
   display: flex;
   flex-direction: row;
   z-index: -1;
+  margin-left: calc(-2.75vw);
+  padding-right: 5%;
   transform: scale(0.9);
 }
 
