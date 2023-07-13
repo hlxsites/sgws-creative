@@ -115,6 +115,8 @@
   background-color: var(--secondary-color);
   border-bottom: 1px solid var(--neutral-color);
   padding: var(--layout-size-s) var(--layout-size-l);
+  position: relative;
+  z-index: 25;
 }
 
 .vertical-selector .fragment-selector > div div.animate {

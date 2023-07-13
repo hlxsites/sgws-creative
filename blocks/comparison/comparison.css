@@ -1,94 +1,134 @@
 /* select comparison-wrapper that has a child having .wood-table class */
 .vs-active.wood-table::after {
-    content: " ";
-    display: block;
-    width: 100%;
-    margin-top: calc(-9vw);
-    height: 10vw;
-    background: url("/styles/wood-table-top.avif");
-    background-size: cover;
-    z-index: 10;
+  content: " ";
+  display: block;
+  width: 100%;
+  margin-top: calc(-9vw);
+  height: 10vw;
+  background: url("/styles/wood-table-top.avif");
+  background-size: cover;
+  z-index: 10;
 }
 
 .comparison-wrapper {
-    flex-grow: 1;
-    max-height: calc(39.5vw);
-    z-index: 20;
+  flex-grow: 1;
+  max-height: calc(39.5vw);
+  z-index: 20;
+  margin-bottom: 1rem;
+  display: flex;
 }
 
 .comparison.size.block {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    margin: 0 auto;
-    width: fit-content;
-    column-gap: 50px;
-    transform-origin: top center;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  margin: 0 auto;
+  width: fit-content;
+  column-gap: 50px;
+  transform-origin: top center;
 }
 
-.comparison.size.block > div {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+.comparison.bottles.block {
+  margin: 0 auto;
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  flex-basis: 60%;
 }
 
-.comparison.size.block > div > div:nth-child(2n) {
-    margin-top: 10px;
+.comparison.size.block>div {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.comparison.bottles.block>div:nth-child(1) {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.comparison.bottles.block>div:nth-child(2) {
+  display: flex;
+  flex-direction: row;
+  z-index: -1;
+  margin-left: calc(-2.75vw);
+  padding-right: 5%;
+  transform: scale(0.9);
+}
+
+.comparison.size.block>div>div:nth-child(2n) {
+  margin-top: 10px;
+}
+
+.comparison.bottles.block>div:nth-child(2)>div:not(.picture),
+.comparison.bottles.block>div:nth-child(1)>div:not(.picture) {
+  text-align: center;
+}
+
+.comparison.bottles.block>div:nth-child(2)>div>picture {
+  filter: grayscale(90%);
+}
+
+/* Media queries for size comparison block */
+@media screen and (min-width: 2000px) {
+  .comparison.size.block .bottles-comparison-placeholder {
+    height: 8vw;
+  }
 }
 
 @media screen and (min-width: 1540px) {
-    .comparison.size.block {
-        padding-top:8vw;
-    }
+  .comparison.size.block {
+    padding-top: 8vw;
+  }
 }
 
 @media screen and (max-width: 1275px) {
-    .comparison.size.block {
-        transform: scale(0.95);
-    }
+  .comparison.size.block {
+    transform: scale(0.95);
+  }
 }
 
 @media screen and (max-width: 1225px) {
-    .comparison.size.block {
-        transform: scale(0.9);
-    }
+  .comparison.size.block {
+    transform: scale(0.9);
+  }
 }
 
 @media screen and (max-width: 1150px) {
-    .comparison.size.block {
-        transform: scale(0.85);
-    }
+  .comparison.size.block {
+    transform: scale(0.85);
+  }
 }
 
 @media screen and (max-width: 1100px) {
-    .comparison.size.block {
-        transform: scale(0.8);
-    }
+  .comparison.size.block {
+    transform: scale(0.8);
+  }
 }
 
 @media screen and (max-width: 1025px) {
-    .comparison.size.block {
-        transform: scale(0.7);
-    }
+  .comparison.size.block {
+    transform: scale(0.7);
+  }
 }
 
 @media screen and (max-width: 900px) {
-    .comparison.size.block {
-        transform: scale(0.6);
-        padding-top: unset;
-    }
+  .comparison.size.block {
+    transform: scale(0.6);
+    padding-top: unset;
+  }
 }
 
 @media screen and (max-width: 800px) {
-    .comparison.size.block {
-        transform: scale(0.5);
-        padding-top:4em;
-    }
+  .comparison.size.block {
+    transform: scale(0.5);
+    padding-top: 4em;
+  }
 }
 
 @media screen and (max-width: 675px) {
-    .comparison.size.block {
-        transform: scale(0.45);
-        padding-top:8em;
-    }
+  .comparison.size.block {
+    transform: scale(0.45);
+    padding-top: 8em;
+  }
 }
