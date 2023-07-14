@@ -69,7 +69,15 @@ function computeFontSizes(block, theme) {
   theme['font-weight'] = computedStyles.fontWeight;
 }
 
+/**
+ * Linear color interpolation to change color shade
+ * @param {*} min Start color red, blue or green value
+ * @param {*} max Max allowed red, blue or green color value
+ * @param {*} percentage Percentage to change shade
+ * @returns A changed color red, blue or green value
+ */
 function linearColor(min, max, percentage){
+  if(percentage <= 0 || percentage >= 100) return min;
   const diff = max - min;
   const value = diff * percentage;
   const result = min + value;
@@ -78,8 +86,8 @@ function linearColor(min, max, percentage){
 
 /**
  * Lighten or darken a color to create a gradient
- * @param {*} hexColor Base color
- * @param {*} shadeChangePercentage Lighten/Darken
+ * @param {*} hexColor Start color
+ * @param {*} shadeChangePercentage Lighten/Darken percentage
  * @returns New hexcolor value
  */
 function changeShade(hexColor, shadeChangePercentage) {
@@ -94,7 +102,7 @@ function changeShade(hexColor, shadeChangePercentage) {
   hexColor = [red, green, blue].map((x) => {
     return Math.floor(x).toString(16);
   }).join('');
-  return '#' + hexColor;
+  return `#${hexColor}`;
 }
 
 /**
