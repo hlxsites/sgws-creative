@@ -98,7 +98,7 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  min-height: 50vw;
+  height: 30vw;
 }
 
 .columns.product-stats > div:nth-child(3),
@@ -135,6 +135,10 @@
   column-gap: 5px;
   text-align: unset;
   padding: unset;
+}
+
+.columns.inline-video.video-tall > div > div {
+  min-height: 50vw;
 }
 
 .columns.inline-video > div > div:last-child {

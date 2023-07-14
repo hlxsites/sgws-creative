@@ -93,7 +93,9 @@ export default async function decorate(block) {
     });
 
     const buttonSibling = block.querySelector('.footer-content p.button-container');
-    buttonSibling.parentElement.insertBefore(viewSourceBtn, buttonSibling.nextElementSibling);
+    if (buttonSibling) {
+      buttonSibling.parentElement.insertBefore(viewSourceBtn, buttonSibling.nextElementSibling);
+    }
 
     const sourcesHeader = createTag('div', { class: 'header' });
     const sourcesTitle = sources.querySelector('h2');

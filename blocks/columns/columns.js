@@ -15,8 +15,15 @@ export default function decorate(block) {
     block.classList.add('icon-list');
   }
 
+  /* Enable variations in the inline video component.
+   *  no-animate: Do not animate the image into view
+   *  no-video-background: No offset background
+   *  video-tall: Allow video to be larger (but at least) 50vw.
+   */
   const animate = !block.classList.contains('no-animate');
   block.classList.remove('no-animate');
+  const videoBackground = !block.classList.contains('no-video-background');
+  block.classList.remove('no-video-background');
 
   // setup image columns and help button
   [...block.children].forEach((row) => {
@@ -46,7 +53,7 @@ export default function decorate(block) {
         videoGroup.append(video, playButton);
 
         let background;
-        if (animate) {
+        if (videoBackground) {
           background = createTag('div', { class: 'video-background' });
           col.append(videoGroup, background);
         } else {
