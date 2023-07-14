@@ -69,34 +69,60 @@ function computeFontSizes(block, theme) {
   theme['font-weight'] = computedStyles.fontWeight;
 }
 
+function linearColor(min, max, percentage){
+  const diff = max - min;
+  const value = diff * percentage;
+  const result = min + value;
+  return result;
+}
+
+/**
+ * Lighten or darken a color to create a gradient
+ * @param {*} hexColor Base color
+ * @param {*} shadeChangePercentage Lighten/Darken
+ * @returns New hexcolor value
+ */
+function changeShade(hexColor, shadeChangePercentage) {
+  hexColor = hexColor.replace('#', '');
+  const decimalColor = parseInt(hexColor, 16);
+  let red = (decimalColor >> 16);
+  let green = ((decimalColor >> 8) & 0x00FF);
+  let blue = (decimalColor & 0x0000FF);
+  red = linearColor(red, 255, shadeChangePercentage / 100);
+  green = linearColor(green, 255, shadeChangePercentage / 100);
+  blue = linearColor(blue, 255, shadeChangePercentage / 100);
+  hexColor = [red, green, blue].map((x) => {
+    return Math.floor(x).toString(16);
+  }).join('');
+  return '#' + hexColor;
+}
+
 /**
  * Create a gradient color
- * @param {*} startColor Start gradient color
- * @param {*} endColor End gradient color
+ * @param {*} colorToGradient Start gradient color
  * @returns An array containing two gradient steps
  */
-function getGradientStops(startColor, endColor) {
+function getGradientStops(colorToGradient) {
   return [{
-    offset: 0, color: startColor || '#FFFFFF',
+    offset: 0, color: colorToGradient || '#FFFFFF',
   }, {
-    offset: 1, color: endColor || '#000000',
+    offset: 1, color: changeShade(colorToGradient, 35) || '#000000',
   }];
 }
 
 /**
  * Create a chart gradient color
- * @param {*} startColor Start gradient color
- * @param {*} endColor End gradient color
+ * @param {*} colorToGradient Start gradient color
  * @returns A chart gradient color
  */
-function getLinearColorGradient(startColor, endColor) {
+function getLinearColorGradient(colorToGradient) {
   return {
     type: 'linear',
     x: 0,
     y: 0,
     x2: 0,
     y2: 1,
-    colorStops: getGradientStops(startColor, endColor),
+    colorStops: getGradientStops(colorToGradient),
   };
 }
 
@@ -137,7 +163,7 @@ function buildChartRepresentation(chartConfig, theme) {
       top: '10%',
       right: '17.5%',
       itemStyle: {
-        color: getLinearColorGradient(theme[THEME_TOKEN.PRIMARY_COLOR], theme['primary-gradient-color']),
+        color: getLinearColorGradient(theme[THEME_TOKEN.PRIMARY_COLOR]),
       },
     };
   }
@@ -193,7 +219,7 @@ function drawHistogramChartWithOverlay(chartData, chartConfig, chartHolder, them
     datapoint.value = Number(datapoint.value);
     max = Math.max(max, datapoint.value);
     datapoint.itemStyle = {
-      color: getLinearColorGradient(theme[THEME_TOKEN.PRIMARY_COLOR], theme['primary-gradient-color']),
+      color: getLinearColorGradient(theme[THEME_TOKEN.PRIMARY_COLOR]),
     };
   });
   formattedData.dataValuesOverlay.forEach((datapoint) => {
@@ -313,17 +339,20 @@ function drawHistogramTimeline(chartData, chartConfig, chartHolder, theme) {
   formattedData.barNames.forEach((element, index) => {
     formattedData.barNames[index] = Number.parseInt(element, 10);
   });
+
   let max = Number.NEGATIVE_INFINITY;
   formattedData.dataValues.forEach((datapoint, i) => {
     datapoint.value = Number(datapoint.value);
     max = Math.max(max, datapoint.value);
+    console.log(getLinearColorGradient(theme[THEME_TOKEN.PRIMARY_COLOR]));
     datapoint.itemStyle = {
-      color: getLinearColorGradient(theme[THEME_TOKEN.PRIMARY_COLOR], theme['primary-gradient-color']),
+      color: getLinearColorGradient(theme[THEME_TOKEN.PRIMARY_COLOR]),
     };
     if (formattedData.barNames[i] <= chartConfig['chart-data-ending']) {
       datapoint.itemStyle.opacity = 0.6;
     }
   });
+
   const axisFontStyle = getBarChartAxisFontStyle(theme);
 
   const barChartSpecificDescription = {
@@ -421,7 +450,7 @@ function drawHistogramChart(chartData, chartConfig, chartHolder, theme) {
     datapoint.value = Number(datapoint.value);
     max = Math.max(max, datapoint.value);
     datapoint.itemStyle = {
-      color: getLinearColorGradient(theme[THEME_TOKEN.PRIMARY_COLOR], theme['primary-gradient-color']),
+      color: getLinearColorGradient(theme[THEME_TOKEN.PRIMARY_COLOR]),
     };
   });
   const axisFontStyle = getBarChartAxisFontStyle(theme);
@@ -498,10 +527,10 @@ function drawComparisonBarChart(chartData, chartConfig, chartHolder, theme) {
   // chart stylings
   // for comparison chart we have only two values, so...
   formattedData.dataValues[0].itemStyle = {
-    color: getLinearColorGradient(theme[THEME_TOKEN.PRIMARY_COLOR], theme['primary-gradient-color']),
+    color: getLinearColorGradient(theme[THEME_TOKEN.PRIMARY_COLOR]),
   };
   formattedData.dataValues[1].itemStyle = {
-    color: getLinearColorGradient(theme[THEME_TOKEN.NEUTRAL_COLOR], theme['neutral-gradient-color']),
+    color: getLinearColorGradient(theme[THEME_TOKEN.NEUTRAL_COLOR]),
   };
   const axisFontStyle = getBarChartAxisFontStyle(theme);
   const dataLabelFontStyle = {
@@ -593,7 +622,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
           x: 0.5,
           y: 0.5,
           r: 0.70,
-          colorStops: getGradientStops(theme['primary-gradient-color'], theme[THEME_TOKEN.PRIMARY_COLOR]),
+          colorStops: getGradientStops(theme[THEME_TOKEN.PRIMARY_COLOR]),
         },
       },
     },
@@ -616,7 +645,7 @@ function drawComparisonPieChart(chartData, chartConfig, chartHolder, theme) {
           x: 0.66,
           y: 0.66,
           r: 0.75,
-          colorStops: getGradientStops(theme['neutral-gradient-color'], theme[THEME_TOKEN.NEUTRAL_COLOR]),
+          colorStops: getGradientStops(theme[THEME_TOKEN.NEUTRAL_COLOR]),
         },
       },
     },
