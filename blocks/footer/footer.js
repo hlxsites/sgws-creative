@@ -92,8 +92,15 @@ export default async function decorate(block) {
       sources.classList.add('open');
     });
 
-    const buttonSibling = block.querySelector('.footer-content p.button-container');
-    buttonSibling.parentElement.insertBefore(viewSourceBtn, buttonSibling.nextElementSibling);
+    const footerButtonsWrapperDiv = createTag('div');
+    const contactUsWrapperPara = createTag('p', { class: 'button-container' });
+    const footerContentFlexDiv = block.querySelector('.footer-content div');
+    const contactUsAnchor = block.querySelector('.footer-content .button-container a');
+    contactUsAnchor.classList.add('button', 'primary');
+    footerContentFlexDiv.appendChild(footerButtonsWrapperDiv);
+    contactUsWrapperPara.appendChild(contactUsAnchor);
+    footerButtonsWrapperDiv.appendChild(contactUsWrapperPara);
+    footerButtonsWrapperDiv.appendChild(viewSourceBtn);
 
     const sourcesHeader = createTag('div', { class: 'header' });
     const sourcesTitle = sources.querySelector('h2');
