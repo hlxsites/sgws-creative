@@ -4,6 +4,7 @@ footer {
   position: relative;
   background-color: var(--secondary-color);
   padding: var(--layout-size-xl);
+  z-index: 10000;
 }
 
 .presentation footer {

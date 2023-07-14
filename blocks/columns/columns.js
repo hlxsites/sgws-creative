@@ -15,6 +15,16 @@ export default function decorate(block) {
     block.classList.add('icon-list');
   }
 
+  /* Enable variations in the inline video component.
+   *  no-animate: Do not animate the image into view
+   *  no-video-background: No offset background
+   *  video-tall: Allow video to be larger (but at least) 50vw.
+   */
+  const animate = !block.classList.contains('no-animate');
+  block.classList.remove('no-animate');
+  const videoBackground = !block.classList.contains('no-video-background');
+  block.classList.remove('no-video-background');
+
   // setup image columns and help button
   [...block.children].forEach((row) => {
     [...row.children].forEach((col) => {
@@ -33,21 +43,31 @@ export default function decorate(block) {
           type: 'button',
           'aria-label': 'Play Video',
         });
-        const background = createTag('div', { class: 'video-background' });
+
         playButton.addEventListener('click', () => {
           video.controls = true;
           video.play();
           playButton.remove();
         }, { passive: true });
-        const videoGroup = createTag('p', { class: 'video-group' });
+        const videoGroup = createTag('p', { class: `video-group ${animate ? '' : 'no-animate'}` });
         videoGroup.append(video, playButton);
-        col.append(videoGroup, background);
+
+        let background;
+        if (videoBackground) {
+          background = createTag('div', { class: 'video-background' });
+          col.append(videoGroup, background);
+        } else {
+          col.append(videoGroup);
+        }
+
         videoP.remove();
         posterP.remove();
         block.classList.add('inline-video');
 
         animationObserver.observe(videoGroup);
-        animationObserver.observe(background);
+        if (background) {
+          animationObserver.observe(background);
+        }
       }
 
       const pic = col.querySelector('picture');

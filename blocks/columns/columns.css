@@ -90,6 +90,10 @@
   text-transform: uppercase;
 }
 
+.columns.inline-video {
+  display: contents;
+}
+
 .columns.inline-video > div > div {
   position: relative;
   z-index: 1;
@@ -131,6 +135,10 @@
   column-gap: 5px;
   text-align: unset;
   padding: unset;
+}
+
+.columns.inline-video.video-tall > div > div {
+  min-height: 50vw;
 }
 
 .columns.inline-video > div > div:last-child {
@@ -274,7 +282,7 @@
 
 .columns.inline-video > div > div .video-group button {
   position: absolute;
-  top: 50%;
+  top: 35%;
   left: 50%;
   transform: translate(-50%, -50%);
   border: none;
